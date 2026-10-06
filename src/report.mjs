@@ -39,8 +39,26 @@ export function executionChecks(execution, command, assertions) {
   }];
   for (const assertion of assertions) {
     const runs = result?.runData?.[assertion.node] ?? [];
-    const actual = runs.flatMap(run => run.data?.main?.[assertion.output ?? 0] ?? []).map(item => item.json);
-    checks.push({ name: `${assertion.node}: output ${assertion.output ?? 0}`, passed: isDeepStrictEqual(actual, assertion.equals), expected: assertion.equals, actual });
+    const items = runs.flatMap(run => run.data?.main?.[assertion.output ?? 0] ?? []);
+    const name = `${assertion.node}: output ${assertion.output ?? 0}`;
+    if (assertion.count !== undefined) checks.push({ name: `${name} count`, passed: items.length === assertion.count, expected: assertion.count, actual: items.length });
+    if (assertion.equals !== undefined) {
+      const missingItems = [];
+      const path = assertion.pluck?.split('.');
+      const actual = items.map((item, index) => {
+        if (!path) return item.json;
+        let value = item;
+        for (const key of path) {
+          if (value === null || typeof value !== 'object' || !Object.hasOwn(value, key)) {
+            missingItems.push(index);
+            return undefined;
+          }
+          value = value[key];
+        }
+        return value;
+      });
+      checks.push({ name: path ? `${name} pluck ${assertion.pluck}` : name, passed: missingItems.length === 0 && isDeepStrictEqual(actual, assertion.equals), expected: assertion.equals, actual: missingItems.length ? { values: actual, missingItems } : actual });
+    }
   }
   return checks;
 }

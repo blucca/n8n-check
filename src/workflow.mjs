@@ -33,7 +33,12 @@ export function validateCase(spec) {
   }
   ensure(Array.isArray(spec.assertions) && spec.assertions.length, 'At least one output assertion is required');
   for (const assertion of spec.assertions) {
-    ensure(typeof assertion.node === 'string' && Array.isArray(assertion.equals), 'Each assertion needs node and equals (array of JSON outputs)');
+    ensure(plain(assertion) && typeof assertion.node === 'string' && assertion.node.length > 0, 'Each assertion needs a non-empty node name');
+    ensure(assertion.equals !== undefined || assertion.count !== undefined, 'Each assertion needs equals or count');
+    ensure(assertion.equals === undefined || Array.isArray(assertion.equals), 'assertion.equals must be an array');
+    ensure(assertion.count === undefined || (Number.isInteger(assertion.count) && assertion.count >= 0), 'assertion.count must be a non-negative integer');
+    ensure(assertion.pluck === undefined || (typeof assertion.pluck === 'string' && assertion.pluck.split('.').every(part => part.length > 0)), 'assertion.pluck must be a non-empty dot-separated path');
+    ensure(assertion.pluck === undefined || Array.isArray(assertion.equals), 'assertion.pluck requires equals');
     ensure(assertion.output === undefined || (Number.isInteger(assertion.output) && assertion.output >= 0), 'assertion.output must be a non-negative integer');
   }
   ensure(spec.timeoutMs === undefined || (Number.isInteger(spec.timeoutMs) && spec.timeoutMs >= 1000 && spec.timeoutMs <= 600000), 'timeoutMs must be 1000–600000');

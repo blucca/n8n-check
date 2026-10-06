@@ -214,7 +214,28 @@ From a repository checkout, you can use `examples/object-body/fixed.json` as the
 - **`responses`** are returned in order **per route**. The final response repeats. Use e.g. 503 → 200 for retry or `PENDING` → `COMPLETED` for polling. Response `headers` is an optional string-valued object.
 - **`expect.count`** is required and exact. Optional **`expect.bodies`** checks the parsed JSON request bodies, in arrival order. The array length matches the expected count. Text bodies are compared as strings; empty bodies become `null`.
 - **`assertions[].equals`** checks the exact JSON items at a named node, across all its executions in run order. **`output`** selects an output branch; default `0`. Array order and item count matter. For loops, choose the terminal output node when you want final items.
+- **`assertions[].count`** (main / next release) optionally checks the exact number of items using the same node, output and run selection. It can be used alone or alongside `equals`.
+- **`assertions[].pluck`** (main / next release) optionally projects a field from each n8n item before comparing `equals`, e.g. `"pluck": "json.id"` with `"equals": ["row-A", "row-B"]`. Paths are dot-separated own-property names; numeric segments address array entries. Every segment must exist; missing fields fail with zero-based `missingItems` indexes in JSON/JUnit diagnostics. Use full `equals` for keys containing literal dots. Projection preserves order and duplicates, and requires `equals`.
 - **`timeoutMs`** defaults to 60,000 for workflow execution, configurable from 1,000 to 600,000. Each setup command has a 120-second cap. **`maxRequests`** defaults to 100, configurable up to 10,000. Incoming mock bodies have a 1 MiB limit; CLI output has a 16 MiB limit.
+
+Count and projection are available on `main` for the next release. To run the example from a current source checkout:
+
+```sh
+node bin/n8n-check.mjs examples/identity-projection/workflow.json \
+  examples/identity-projection/case.json --out ./identity-report --allow-network
+```
+
+This uses the locally installed n8n runtime and host networking for the bundled local-only example. For stable identities with changing timestamps or scores:
+
+```json
+"assertions": [
+  { "node": "Select rows", "count": 2, "pluck": "json.id", "equals": ["row-A", "row-B"] }
+]
+```
+
+The self-contained [identity projection fixture](examples/identity-projection/case.json) runs against [this workflow](examples/identity-projection/workflow.json), which adds a current timestamp to each selected row. Dropped rows fail the count and identity checks; a wrong ID with the same count fails the identity check. Other fields can change freely within this contract.
+
+Each run starts its own local HTTP mock server and closes it on completion. Response fixtures travel in the case file. The prepared workflow copy rewrites HTTP Request URLs to that server and removes their authentication settings. These checks cover request construction, response handling and downstream routing. Original endpoint connectivity and authentication belong in separate integration checks.
 
 See [`examples/object-body/retry-case.json`](examples/object-body/retry-case.json) with [`retry.json`](examples/object-body/retry.json) for a real HTTP Request retry example:
 

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "name": "Preserve row identities while metadata changes",
+  "input": {
+    "node": "Rows",
+    "items": [
+      {
+        "id": "row-A",
+        "score": 0.9
+      },
+      {
+        "id": "row-B",
+        "score": 0.8
+      },
+      {
+        "id": "distractor",
+        "score": 0.2
+      }
+    ]
+  },
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Select rows",
+      "count": 2,
+      "pluck": "json.id",
+      "equals": [
+        "row-A",
+        "row-B"
+      ]
+    }
+  ]
+}
