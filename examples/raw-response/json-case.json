@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "name": "One request returns a readable delivery receipt",
+  "input": {
+    "node": "When clicking Test workflow",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Send raw request",
+      "url": "/deliver",
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/deliver",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "id": "delivery-42",
+                "status": "accepted",
+                "message": "Livré · 已送达"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              {
+                "message": "hello"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Send raw request",
+      "equals": [
+        {
+          "id": "delivery-42",
+          "status": "accepted",
+          "message": "Livré · 已送达"
+        }
+      ]
+    }
+  ]
+}

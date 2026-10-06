@@ -27,10 +27,15 @@ export function executionFrom(text) {
 
 export function executionChecks(execution, command, assertions) {
   const result = execution?.data?.resultData;
+  // Preserve the runtime's explanation when it fails before emitting execution JSON,
+  // including errors while serializing a node's response stream.
+  const cliOutputTail = !execution
+    ? (command.stderr?.trim() || command.stdout?.trim() || '').slice(-4000) || undefined
+    : undefined;
   const checks = [{
     name: 'n8n execution succeeds',
     passed: Boolean(execution && !result.error && command.exitCode === 0 && !command.error),
-    actual: { cliExitCode: command.exitCode, processError: command.error, lastNode: result?.lastNodeExecuted, message: result?.error?.message, description: result?.error?.description, executionFound: Boolean(execution) },
+    actual: { cliExitCode: command.exitCode, processError: command.error, lastNode: result?.lastNodeExecuted, message: result?.error?.message, description: result?.error?.description, executionFound: Boolean(execution), cliOutputTail },
   }];
   for (const assertion of assertions) {
     const runs = result?.runData?.[assertion.node] ?? [];

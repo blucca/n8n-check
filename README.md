@@ -48,6 +48,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Verify a real Nextcloud PROPFIND upgrade](examples/propfind-body/):** a user-reported workflow now sends all 698 characters of its XML body on n8n 2.41.7. Keep the supplied exact-body case beside your export; an omitted-body control turns the check red.
 
+**[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
@@ -226,7 +228,7 @@ n8n-check workflow.json case.json --out results --allow-network --json
 | `1` | Execution failed/timed out, request mismatch, or output mismatch |
 | `2` | Case/configuration, network precondition, runtime setup or import error |
 
-`results/report.json` is the machine-readable case result. `results/junit.xml` contains one testcase per check; setup failures use JUnit errors. `--json` also prints the report to stdout. Argument parsing errors are printed to stderr with exit 2.
+`results/report.json` is the machine-readable case result. `results/junit.xml` contains one testcase per check; setup failures use JUnit errors. `--json` also prints the report to stdout. Argument parsing errors are printed to stderr with exit 2. When the runtime emits no execution JSON, the current runner includes up to 4,000 characters of its stderr (or stdout fallback) in the failed execution check; full logs remain in the run directory.
 
 Each `results/run-*` directory retains the prepared workflow, real n8n execution JSON when emitted, command logs and isolated SQLite state. Use a distinct `--out` directory per concurrent case; rerunning the same directory replaces its summary reports and retains previous run directories.
 

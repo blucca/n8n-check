@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "name": "Keep raw body and decode the UTF-8 receipt",
+  "input": {
+    "node": "When clicking Test workflow",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Send raw request",
+      "url": "/deliver",
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/deliver",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "id": "delivery-42",
+                "status": "accepted",
+                "message": "Livré · 已送达"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              {
+                "message": "hello"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Read receipt",
+      "equals": [
+        {
+          "receipt": {
+            "id": "delivery-42",
+            "status": "accepted",
+            "message": "Livré · 已送达"
+          }
+        }
+      ]
+    }
+  ]
+}

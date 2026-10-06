@@ -108,6 +108,27 @@ jobs:
             assert.equal(report.checks.filter(c => !c.passed).length, 1);
             assert.deepEqual(report.checks.find(c => c.name.endsWith("request bodies")).actual, [null]);
           '
+      - name: Raw request yields a readable UTF-8 receipt through File extraction
+        run: |
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+            examples/raw-response/raw-file.json examples/raw-response/file-case.json \
+            --out temp/ci/raw-file
+          set +e
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+            examples/raw-response/raw-json.json examples/raw-response/json-case.json \
+            --out temp/ci/raw-json
+          code=$?
+          set -e
+          test "$code" = 1
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const report = JSON.parse(readFileSync("temp/ci/raw-json/report.json"));
+            assert.equal(report.requests.length, 1);
+            assert.equal(report.requests[0].status, 200);
+            assert.equal(report.checks[0].passed, false);
+            assert.match(report.checks[0].actual.cliOutputTail, /circular structure/i);
+          '
       - uses: actions/upload-artifact@v4
         if: always()
         with:

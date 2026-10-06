@@ -108,6 +108,16 @@ test('n8n error fails even when CLI exits zero', () => {
   assert.equal(executionChecks(execution, { exitCode: 0 }, [])[0].passed, false);
 });
 
+test('missing execution JSON includes a bounded runtime diagnostic', () => {
+  const command = { exitCode: 1, stdout: 'Runtime started', stderr: 'Converting circular structure to JSON' };
+  const check = executionChecks(null, command, [])[0];
+  assert.equal(check.passed, false);
+  assert.equal(check.actual.cliOutputTail, command.stderr);
+  assert.equal(executionChecks(null, { exitCode: 1, stdout: 'x'.repeat(5000) }, [])[0].actual.cliOutputTail.length, 4000);
+  const execution = { data: { resultData: {} } };
+  assert.equal(executionChecks(execution, command, [])[0].actual.cliOutputTail, undefined);
+});
+
 test('output checks preserve run order and exact item cardinality', () => {
   const execution = { data: { resultData: { runData: { Render: [{ data: { main: [[{ json: { id: 1 } }]] } }, { data: { main: [[{ json: { id: 2 } }]] } }] } } } };
   assert.equal(executionChecks(execution, { exitCode: 0 }, [{ node: 'Render', equals: [{ id: 1 }, { id: 2 }] }])[1].passed, true);

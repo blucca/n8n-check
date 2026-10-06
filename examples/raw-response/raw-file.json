@@ -1,0 +1,88 @@
+{
+  "name": "Raw body + File response + UTF-8 JSON extraction",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "raw-response-node-0",
+      "name": "When clicking Test workflow",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://postman-echo.com/post",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "{\"message\": \"hello\"}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "id": "raw-response-node-1",
+      "name": "Send raw request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "binaryPropertyName": "data",
+        "destinationKey": "receipt",
+        "options": {
+          "encoding": "utf8"
+        }
+      },
+      "id": "raw-response-node-2",
+      "name": "Read receipt",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking Test workflow": {
+      "main": [
+        [
+          {
+            "node": "Send raw request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send raw request": {
+      "main": [
+        [
+          {
+            "node": "Read receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
