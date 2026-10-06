@@ -1,0 +1,134 @@
+{
+  "name": "Invoice notifications — complete synthetic export",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "read-invoices",
+      "name": "Read invoices",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {},
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "synthetic-sheets",
+          "name": "Synthetic Sheets"
+        }
+      }
+    },
+    {
+      "id": "prepare-notification",
+      "name": "Prepare notification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().slice(0, 1).map(({ json }) => ({ json: { invoiceId: json.invoiceId, text: `Invoice ${json.invoiceId}: $${(json.totalCents / 100).toFixed(2)}` } }));"
+      }
+    },
+    {
+      "id": "notify-team",
+      "name": "Notify team",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {},
+      "credentials": {
+        "slackApi": {
+          "id": "synthetic-slack",
+          "name": "Synthetic Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Read invoices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read invoices": {
+      "main": [
+        [
+          {
+            "node": "Prepare notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare notification": {
+      "main": [
+        [
+          {
+            "node": "Notify team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Read invoices": [
+      {
+        "json": {
+          "invoiceId": "INV-42",
+          "totalCents": 65000
+        }
+      },
+      {
+        "json": {
+          "invoiceId": "INV-43",
+          "totalCents": 12050
+        }
+      }
+    ],
+    "Prepare notification": [
+      {
+        "json": {
+          "invoiceId": "INV-42",
+          "text": "Invoice INV-42: $650.00"
+        }
+      },
+      {
+        "json": {
+          "invoiceId": "INV-43",
+          "text": "Invoice INV-43: $120.50"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC"
+  },
+  "active": false
+}

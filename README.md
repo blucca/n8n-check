@@ -8,9 +8,11 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a case and GitHub Actions file.
 
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.4** CLI or Action.
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.5** CLI or Action.
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
+
+**Working between Google Sheets, Slack, or other credentialed integrations?** Choose the input boundary and output, then enable **Run through selected output**. The optional `stopAfter` case field cuts the selected node's outgoing connections while preserving independently reachable branches. Your full export stays unchanged. [Try the two-invoice transformation example](examples/stop-after/).
 
 <a id="try-it-in-your-browser"></a>
 
@@ -73,7 +75,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.4
+      - uses: blucca/n8n-check@v0.1.5
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -101,7 +103,7 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 Set `n8n-version` to an exact official image release:
 
 ```yaml
-      - uses: blucca/n8n-check@v0.1.4
+      - uses: blucca/n8n-check@v0.1.5
         with:
           n8n-version: '2.38.4'
           workflow: workflows/render.json
@@ -118,7 +120,7 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.4 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.5 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -151,7 +153,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.4/blucca-n8n-check-0.1.4.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.5/blucca-n8n-check-0.1.5.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -172,7 +174,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.4/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.5/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```
@@ -205,6 +207,7 @@ From a repository checkout, you can use `examples/object-body/fixed.json` as the
 ```
 
 - **`input.node`** is replaced with a fixture Code node returning your JSON items. Its reachable downstream nodes execute with their exported parameters, expressions, item pairing and connections. A fresh Manual Trigger starts the slice.
+- **`stopAfter`** optionally names the node whose outgoing connections are cut. This node executes; independently reachable branches continue to execute. For example, `"stopAfter": "Prepare notification"` checks a transformation before Slack delivery. The node must be reachable from the fixture and outside every directed cycle. Omit the field to execute all reachable downstream nodes.
 - **`mocks[].node`** names an HTTP Request node. Every HTTP Request node in the slice needs a mock. Its URL is redirected to a local server; its credential reference is removed and authentication is set to `none`. HTTP method, body expressions, retry settings and other node options stay intact.
 - **`mocks[].url`** is the replacement URL path. It supports n8n inline expressions, e.g. `/renders/{{ $json.renderId }}`. Each mock gets a separate local URL prefix.
 - **`routes[].path`** matches the exact path and query string after that prefix. Method matches exactly; use uppercase. Declare concrete paths for fixture IDs.
@@ -228,6 +231,12 @@ In the retry example, the first item receives 503 and the second receives 200. n
 The test executes the **selected workflow slice in real n8n**. HTTP responses come from the declared local mock contracts. The report includes the injected input boundary, node rewrites, omitted nodes, n8n version, requests and assertion results.
 
 Choose a self-contained slice. A static reference such as `$('Earlier node')`, `$node["Earlier node"]` or `$items('Earlier node')` to a node outside the slice produces a setup error with that name. Incoming connections from omitted branches also produce a setup error. Place the input boundary before a loop. Dynamic node-name references resolve during n8n execution and surface in its error output.
+
+### Stop after a business transformation
+
+For `Read invoices (Google Sheets) → Prepare notification (Code) → Notify team (Slack)`, use `Read invoices` as the fixture boundary, assert `Prepare notification`, and add `"stopAfter": "Prepare notification"` to the case. The real Code node runs against your fixture; Slack stays outside that branch's execution. [Complete export, passing case and deliberate data-loss variant](examples/stop-after/).
+
+`stopAfter` removes all outgoing connections of one named node. Other branches reachable from the input remain in the run, including their HTTP mock and credential checks. The builder displays the resulting slice. Assertions and static references must point to kept nodes, and original incoming dependencies remain checked. Choose a node after a loop's completed output; a stopping node inside a directed cycle produces a setup error. Reports record the boundary change and omitted nodes. Date-dependent nodes continue to use the runtime's clock.
 
 Each run gets a fresh SQLite database, home directory and encryption key. Source pin data, static data, ownership and production workflow settings stay outside the test; execution order and workflow timezone are retained. Other integration nodes with credential references require a fixture boundary or HTTP mock. The fixture format accepts JSON input items; binary fixture inputs, additional workflow imports, credential imports and trigger/webhook delivery are outside v0.1's supported test surface.
 
@@ -257,7 +266,7 @@ The [one-file GitHub Actions integration](#add-a-check-to-github-actions) brings
 
 ## Draft a case with the CLI
 
-The `init` command ships in **v0.1.4**. After [installing the CLI](#install-the-cli-from-github):
+The `init` command is available from **v0.1.4**; `--stop-after` is available from **v0.1.5**. After [installing the CLI](#install-the-cli-from-github):
 
 ```sh
 n8n-check init /path/to/workflow.json \
@@ -266,6 +275,8 @@ n8n-check init /path/to/workflow.json \
 ```
 
 From a repository checkout, use `node bin/n8n-check.mjs init` with the same arguments.
+
+To end the selected branch at the assertion node, add `--stop-after "Build context"`. The draft stores a top-level `stopAfter` field; independent branches remain in the slice. With `--stop-after` and an omitted `--assert`, the stopped node becomes the suggested assertion.
 
 This reads the export locally and writes a new file. Node.js 24+ is sufficient for drafting; install n8n when you are ready to execute the case. `--input` and `--assert` can be omitted to use suggested nodes. An existing output file is preserved and yields exit 2.
 

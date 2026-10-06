@@ -6,6 +6,7 @@ export function validateCase(spec) {
   ensure(plain(spec) && spec.version === 1, 'Case version must be 1');
   ensure(typeof spec.name === 'string' && spec.name.length, 'Case name is required');
   ensure(plain(spec.input) && typeof spec.input.node === 'string', 'input.node is required');
+  ensure(spec.stopAfter === undefined || (typeof spec.stopAfter === 'string' && spec.stopAfter.length > 0), 'stopAfter must be a non-empty node name');
   ensure(Array.isArray(spec.input.items) && spec.input.items.every(plain), 'input.items must be an array of JSON objects');
   ensure(Array.isArray(spec.mocks), 'mocks must be an array (use [] for local-only workflows)');
   const names = new Set();
@@ -43,6 +44,31 @@ export function validateCase(spec) {
 const edges = connections => Object.entries(connections ?? {}).flatMap(([from, types]) =>
   Object.entries(types).flatMap(([type, branches]) => branches.flatMap(branch => branch.map(edge => ({ from, type, ...edge })))));
 
+/** Select the execution graph; sibling branches remain reachable after a stop. */
+export function executionSlice(source, inputNode, stopAfter) {
+  const byName = new Map(source.nodes.map(node => [node.name, node]));
+  ensure(byName.has(inputNode), `Input node not found: ${inputNode}`);
+  const links = edges(source.connections);
+  const reachable = (start, stop) => {
+    const found = new Set([start]);
+    for (const name of found) if (name !== stop) for (const edge of links) if (edge.from === name) found.add(edge.node);
+    return found;
+  };
+  if (stopAfter !== undefined) {
+    ensure(typeof stopAfter === 'string' && stopAfter.length > 0, 'stopAfter must be a non-empty node name');
+    ensure(byName.has(stopAfter), `stopAfter node not found: ${stopAfter}`);
+    ensure(reachable(inputNode).has(stopAfter), `stopAfter node "${stopAfter}" must be reachable from input "${inputNode}".`);
+    const afterStop = new Set(links.filter(edge => edge.from === stopAfter).map(edge => edge.node));
+    for (const name of afterStop) for (const edge of links) if (edge.from === name) afterStop.add(edge.node);
+    ensure(!afterStop.has(stopAfter), `stopAfter node "${stopAfter}" lies inside a loop. Choose a node after the loop's completed output.`);
+  }
+  const kept = reachable(inputNode, stopAfter);
+  for (const edge of links) if (kept.has(edge.from) && edge.from !== stopAfter) {
+    ensure(byName.has(edge.node), `Connection from ${edge.from} references missing node: ${edge.node}`);
+  }
+  return { kept, links };
+}
+
 export function prepareWorkflow(source, spec, mockBase) {
   validateCase(spec);
   if (Array.isArray(source)) {
@@ -53,19 +79,14 @@ export function prepareWorkflow(source, spec, mockBase) {
   const workflow = structuredClone(source);
   const byName = new Map(workflow.nodes.map(node => [node.name, node]));
   ensure(byName.size === workflow.nodes.length, 'Workflow node names must be unique');
-  ensure(byName.has(spec.input.node), `Input node not found: ${spec.input.node}`);
-  const links = edges(workflow.connections);
-  const kept = new Set([spec.input.node]);
-  for (const name of kept) for (const edge of links) if (edge.from === name) {
-    ensure(byName.has(edge.node), `Connection from ${name} references missing node: ${edge.node}`);
-    kept.add(edge.node);
-  }
+  const { kept, links } = executionSlice(workflow, spec.input.node, spec.stopAfter);
   for (const edge of links) {
     if (kept.has(edge.node) && edge.node !== spec.input.node && !kept.has(edge.from)) {
       throw new Error(`Slice needs incoming ${edge.type} connection from "${edge.from}" to "${edge.node}". Move input.node earlier or provide a self-contained workflow slice.`);
     }
   }
   const changes = [{ node: spec.input.node, change: 'replace with fixture JSON items' }];
+  if (spec.stopAfter !== undefined) changes.push({ node: spec.stopAfter, change: 'stop this branch after the node; remove outgoing connections; retain independently reachable branches' });
   const fixture = byName.get(spec.input.node);
   const fixtureNode = {
     id: fixture.id || randomUUID(), name: fixture.name, position: fixture.position || [0, 0],
@@ -73,7 +94,9 @@ export function prepareWorkflow(source, spec, mockBase) {
     parameters: { mode: 'runOnceForAllItems', jsCode: `return JSON.parse(${JSON.stringify(JSON.stringify(spec.input.items))}).map(json => ({json}));` },
   };
   workflow.nodes = workflow.nodes.filter(node => kept.has(node.name)).map(node => node.name === fixture.name ? fixtureNode : node);
-  workflow.connections = Object.fromEntries(Object.entries(workflow.connections).filter(([name]) => kept.has(name)));
+  workflow.connections = Object.fromEntries(Object.entries(workflow.connections).filter(([name]) => kept.has(name) && name !== spec.stopAfter).map(([name, types]) => [name,
+    Object.fromEntries(Object.entries(types).map(([type, branches]) => [type, branches.map(branch => branch.filter(edge => kept.has(edge.node)))])),
+  ]));
   for (const edge of links) ensure(!(kept.has(edge.from) && edge.node === fixture.name), `Input node "${fixture.name}" lies inside a loop. Choose a fixture boundary before the loop.`);
   let triggerName = 'n8n-check start';
   while (byName.has(triggerName)) triggerName += '_';

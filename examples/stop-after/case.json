@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "name": "Preserve both invoice notifications before Slack delivery",
+  "input": {
+    "node": "Read invoices",
+    "items": [
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-43",
+        "totalCents": 12050
+      }
+    ]
+  },
+  "stopAfter": "Prepare notification",
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Prepare notification",
+      "equals": [
+        {
+          "invoiceId": "INV-42",
+          "text": "Invoice INV-42: $650.00"
+        },
+        {
+          "invoiceId": "INV-43",
+          "text": "Invoice INV-43: $120.50"
+        }
+      ]
+    }
+  ]
+}

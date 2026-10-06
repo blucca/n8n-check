@@ -103,8 +103,10 @@ test('init writes a first draft without a runtime and protects existing files', 
   const workflow = join(dir, 'workflow.json'); const out = join(dir, 'case.json');
   await writeFile(workflow, JSON.stringify(source));
   const cli = new URL('../bin/n8n-check.mjs', import.meta.url);
-  const run = () => spawnSync(process.execPath, [cli.pathname, 'init', workflow, '--input', 'Input', '--assert', 'Mapped', '--out', out], { encoding: 'utf8', env: { ...process.env, N8N_BINARY: '/runtime-intentionally-absent' } });
+  const run = () => spawnSync(process.execPath, [cli.pathname, 'init', workflow, '--input', 'Input', '--assert', 'Mapped', '--stop-after', 'Mapped', '--out', out], { encoding: 'utf8', env: { ...process.env, N8N_BINARY: '/runtime-intentionally-absent' } });
   const first = run(); assert.equal(first.status, 0, first.stderr); assert.match(first.stdout, /ready for a first run/);
   assert.deepEqual(JSON.parse(await readFile(out, 'utf8')).input.items, [{ id: 42 }]);
+  assert.equal(JSON.parse(await readFile(out, 'utf8')).stopAfter, 'Mapped');
+  assert.match(first.stdout, /Stop after: Mapped/);
   const second = run(); assert.equal(second.status, 2); assert.match(second.stderr, /File already exists/);
 });

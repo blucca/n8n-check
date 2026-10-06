@@ -1,4 +1,4 @@
-import { prepareWorkflow, validateCase } from './workflow.mjs';
+import { prepareWorkflow, validateCase, executionSlice } from './workflow.mjs';
 
 const plain = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const copy = value => structuredClone(value);
@@ -27,9 +27,9 @@ function linksFrom(source) {
   return links;
 }
 
-function reachable(input, links) {
+function reachable(input, links, stopAfter) {
   const kept = new Set(input ? [input] : []);
-  for (const name of kept) for (const link of links) if (link.from === name) kept.add(link.to);
+  for (const name of kept) if (name !== stopAfter) for (const link of links) if (link.from === name) kept.add(link.to);
   return kept;
 }
 
@@ -55,9 +55,11 @@ export function draftCase(raw, options = {}) {
   const inspected = inspectWorkflow(source);
   const links = linksFrom(source);
   const inputNode = options.inputNode ?? inspected.suggestedInputNode;
-  const assertNode = options.assertNode ?? targetFor(source, inputNode, links);
+  const assertNode = options.assertNode ?? options.stopAfter ?? targetFor(source, inputNode, links);
   const output = options.output ?? 0;
-  const kept = reachable(inputNode, links);
+  let kept;
+  try { ({ kept } = executionSlice(source, inputNode, options.stopAfter)); }
+  catch { kept = reachable(inputNode, links, options.stopAfter); } // The structural probe below reports the error alongside pending fields.
   const selected = source.nodes.filter(node => kept.has(node.name));
   const http = selected.filter(node => node.name !== inputNode && node.type === 'n8n-nodes-base.httpRequest');
   const issues = [];
@@ -104,10 +106,11 @@ export function draftCase(raw, options = {}) {
     if (path === '/TODO') issue('mock_path_required', `mocks[${index}].url`, `"${node.name}": set the local URL expression and concrete route paths for your fixture IDs.`);
     return { node: node.name, url: path, routes: [{ method, path, responses: [{ status: null, json: null }], expect: { count: null } }] };
   });
-  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} check`, input: { node: inputNode, items: inputItems }, mocks, assertions: [{ node: assertNode, ...(output ? { output } : {}), equals: expectedItems }] };
+  const boundary = options.stopAfter === undefined ? {} : { stopAfter: options.stopAfter };
+  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} check`, input: { node: inputNode, items: inputItems }, ...boundary, mocks, assertions: [{ node: assertNode, ...(output ? { output } : {}), equals: expectedItems }] };
   // Valid placeholders exist only in this structural probe; the saved draft retains pending fields.
   const probe = {
-    version: 1, name: 'Draft structure check', input: { node: inputNode, items: [] },
+    version: 1, name: 'Draft structure check', input: { node: inputNode, items: [] }, ...boundary,
     mocks: http.map(node => ({ node: node.name, url: '/draft', routes: [{ method: 'GET', path: '/draft', responses: [{ status: 200, json: {} }], expect: { count: 0 } }] })),
     assertions: [{ node: assertNode, equals: [] }],
   };
@@ -120,5 +123,5 @@ export function draftCase(raw, options = {}) {
     try { validateCase({ ...spec, input: { node: inputNode, items: [] }, assertions: [{ node: assertNode, equals: [] }] }); }
     catch (error) { issue('case_invalid', 'case', error.message); }
   }
-  return { spec, issues, ready: issues.length === 0, summary: { inputNode, assertNode, keptNodes: selected.map(node => node.name), omittedNodes: source.nodes.filter(node => !kept.has(node.name)).map(node => node.name), httpNodes: http.map(node => node.name) } };
+  return { spec, issues, ready: issues.length === 0, summary: { inputNode, assertNode, ...(options.stopAfter === undefined ? {} : { stopAfter: options.stopAfter }), keptNodes: selected.map(node => node.name), omittedNodes: source.nodes.filter(node => !kept.has(node.name)).map(node => node.name), httpNodes: http.map(node => node.name) } };
 }

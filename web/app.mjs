@@ -4,6 +4,7 @@ const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
 let source, inspection, plan, originalText, isExample = false;
 const editors = ['input-items', 'expected-items', 'mocks'];
+const boundary = () => $('stop-after').checked ? { stopAfter: $('assert-node').value } : {};
 
 function importStatus(message, error = false) {
   $('import-status').textContent = message;
@@ -23,7 +24,7 @@ function editorValue(id, name) {
   catch { throw new Error(`${name}: enter valid JSON. Arrays use square brackets and property names use double quotes.`); }
 }
 function seedEditors() {
-  const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, output: Number($('output').value), name: $('case-name').value });
+  const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, output: Number($('output').value), name: $('case-name').value, ...boundary() });
   $('input-items').value = pretty(next.spec.input.items);
   $('expected-items').value = pretty(next.spec.assertions[0].equals);
   $('mocks').value = pretty(next.spec.mocks);
@@ -44,7 +45,7 @@ function update() {
     plan = draftCase(source, {
       inputNode: $('input-node').value, assertNode: $('assert-node').value, output,
       inputItems: editorValue('input-items', 'Input items'), expectedItems: editorValue('expected-items', 'Expected output'),
-      mocks: editorValue('mocks', 'Mocks'), name: $('case-name').value,
+      mocks: editorValue('mocks', 'Mocks'), name: $('case-name').value, ...boundary(),
     });
     $('readiness-title').textContent = plan.ready ? 'Ready for a runtime check.' : 'Finish the case draft.';
     $('readiness-detail').textContent = plan.ready ? 'Fixture values, HTTP contracts, and the selected slice pass preparation checks. Review the expected behavior, then run it.' : `${plan.issues.length} preparation item${plan.issues.length === 1 ? '' : 's'} to resolve before running.`;
@@ -84,6 +85,7 @@ function load(text, label, example = false) {
   optionsFor($('assert-node'), nodes.filter(node => initial.summary.keptNodes.includes(node.name) && node.name !== checked.suggestedInputNode), initial.summary.assertNode);
   $('case-name').value = `${workflow.name || 'Workflow'} check`;
   $('output').value = '0';
+  $('stop-after').checked = false;
   $('builder').hidden = false;
   $('example-detail').hidden = !isExample;
   seedEditors();
@@ -124,11 +126,25 @@ $('input-node').addEventListener('change', () => {
 });
 $('assert-node').addEventListener('change', () => {
   $('output').value = '0';
-  const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value });
+  const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, ...boundary() });
   $('expected-items').value = pretty(next.spec.assertions[0].equals);
   $('expected-origin').textContent = next.spec.assertions[0].equals === null ? 'Enter the expected JSON items' : 'Prefilled from exported pins';
+  refreshMocks(next);
   update();
 });
+$('stop-after').addEventListener('change', () => {
+  refreshMocks(draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, ...boundary() }));
+  update();
+});
+function refreshMocks(next) {
+  // Retain authored contracts for kept HTTP nodes; add drafts when a boundary is expanded.
+  let current;
+  try { current = JSON.parse($('mocks').value); } catch { return; }
+  if (!Array.isArray(current)) return;
+  const byNode = new Map(current.map(mock => [mock?.node, mock]));
+  $('mocks').value = pretty(next.spec.mocks.map(mock => byNode.get(mock.node) ?? mock));
+  $('mock-section').open = next.summary.httpNodes.length > 0;
+}
 $('output').addEventListener('input', () => {
   $('expected-items').value = 'null';
   $('expected-origin').textContent = 'Enter expected items for this branch';
@@ -153,7 +169,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.4
+      - uses: blucca/n8n-check@v0.1.5
         with:
           n8n-version: '${$('runtime-version').value}'
           workflow: workflow.json

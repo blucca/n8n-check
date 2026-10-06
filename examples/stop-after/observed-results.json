@@ -1,0 +1,162 @@
+{
+  "description": "Synthetic full Sheets-to-Slack exports; only the fixture and business transformation run. Real n8n, loopback-only network.",
+  "files": {
+    "fixed.json": "a20e75366252c5cd165821eeca8b54671b69df51242fe6e6c3f847bc7d651ec6",
+    "broken.json": "899bb0f39ce8f494b9f44e9b4b79874f93065b4bc379fab970aad90ee907ed14",
+    "case.json": "81fe5dcca0b261ca97fb7cff1d27ce5a177ffbb61aeec7c75cb1c63fb28f0ded"
+  },
+  "runs": {
+    "fixed": {
+      "runnerVersion": "0.1.5",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "startedAt": "2026-10-06T22:13:13.515Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Prepare notification",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Prepare notification: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            },
+            {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          ],
+          "actual": [
+            {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            },
+            {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "preparation": {
+        "inputNode": "Read invoices",
+        "changes": [
+          {
+            "node": "Read invoices",
+            "change": "replace with fixture JSON items"
+          },
+          {
+            "node": "Prepare notification",
+            "change": "stop this branch after the node; remove outgoing connections; retain independently reachable branches"
+          }
+        ],
+        "omittedNodes": [
+          "Start",
+          "Notify team"
+        ]
+      },
+      "requests": []
+    },
+    "broken": {
+      "runnerVersion": "0.1.5",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "startedAt": "2026-10-06T22:13:22.755Z",
+      "status": "failed",
+      "exitCode": 1,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Prepare notification",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Prepare notification: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            },
+            {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          ],
+          "actual": [
+            {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "preparation": {
+        "inputNode": "Read invoices",
+        "changes": [
+          {
+            "node": "Read invoices",
+            "change": "replace with fixture JSON items"
+          },
+          {
+            "node": "Prepare notification",
+            "change": "stop this branch after the node; remove outgoing connections; retain independently reachable branches"
+          }
+        ],
+        "omittedNodes": [
+          "Start",
+          "Notify team"
+        ]
+      },
+      "requests": []
+    }
+  }
+}
