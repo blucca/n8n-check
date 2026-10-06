@@ -110,7 +110,7 @@ The test executes the **selected workflow slice in real n8n**. HTTP responses co
 
 Choose a self-contained slice. A static reference such as `$('Earlier node')`, `$node["Earlier node"]` or `$items('Earlier node')` to a node outside the slice produces a setup error with that name. Incoming connections from omitted branches also produce a setup error. Place the input boundary before a loop. Dynamic node-name references resolve during n8n execution and surface in its error output.
 
-Each run gets a fresh SQLite database, home directory and encryption key. Source pin data, static data, ownership and production workflow settings stay outside the test; execution order is retained. Other integration nodes with credential references require a fixture boundary or HTTP mock. The fixture format accepts JSON input items; binary fixture inputs, additional workflow imports, credential imports and trigger/webhook delivery are outside v0.1's supported test surface.
+Each run gets a fresh SQLite database, home directory and encryption key. Source pin data, static data, ownership and production workflow settings stay outside the test; execution order and workflow timezone are retained. Other integration nodes with credential references require a fixture boundary or HTTP mock. The fixture format accepts JSON input items; binary fixture inputs, additional workflow imports, credential imports and trigger/webhook delivery are outside v0.1's supported test surface.
 
 ### Network and local data
 

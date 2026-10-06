@@ -14,12 +14,14 @@ test('prepares real downstream nodes, fresh identity and synthetic input', () =>
   const source = copy(workflow);
   source.pinData = { Render: [{ json: { fake: true } }] };
   source.staticData = { secret: true };
+  source.settings.timezone = 'Asia/Shanghai';
   const { workflow: result, omittedNodes } = prepareWorkflow(source, fixture, 'http://127.0.0.1:1234');
   assert.deepEqual(omittedNodes, ['Start']);
   assert.equal(result.nodes.find(n => n.name === 'Fixture').type, 'n8n-nodes-base.code');
   assert.equal(result.nodes.find(n => n.name === 'Render').parameters.jsonBody, workflow.nodes[2].parameters.jsonBody);
   assert.equal(result.nodes.find(n => n.name === 'Render').parameters.url, 'http://127.0.0.1:1234/0/renders');
   assert.equal(result.pinData, undefined); assert.equal(result.staticData, undefined);
+  assert.equal(result.settings.timezone, 'Asia/Shanghai');
   assert.equal(source.nodes[2].parameters.url, 'https://api.example.com/renders');
 });
 

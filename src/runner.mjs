@@ -40,14 +40,18 @@ export async function command(binary, args, env, timeoutMs = 120000) {
     catch (e) { return resolve({ stdout, stderr, exitCode: null, error: e.message }); }
     const timer = setTimeout(() => { error = `Process timeout after ${timeoutMs} ms`; stop(); }, timeoutMs);
     const capture = stream => chunk => {
-      bytes += chunk.length;
+      bytes += Buffer.byteLength(chunk);
       if (bytes > 16 * 1024 * 1024) { error = 'Process output exceeded 16 MiB'; stop(); return; }
       if (stream === 'stdout') stdout += chunk.toString(); else stderr += chunk.toString();
     };
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8');
     child.stdout.on('data', capture('stdout')); child.stderr.on('data', capture('stderr'));
+    const interrupt = () => { error = 'Process interrupted'; stop(); };
+    process.once('SIGINT', interrupt); process.once('SIGTERM', interrupt);
     child.on('error', e => { error = e.message; });
     child.on('close', (exitCode, signal) => {
       if (settled) return; settled = true; clearTimeout(timer);
+      process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', interrupt);
       // Ensure task-runner descendants terminate with their CLI parent.
       stop();
       resolve({ stdout, stderr, exitCode, signal, error });
