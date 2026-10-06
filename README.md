@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.2
+      - uses: blucca/n8n-check@v0.1.3
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -85,7 +85,7 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.2 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.3 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -118,7 +118,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.2/n8n-check-0.1.2.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.3/blucca-n8n-check-0.1.3.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -137,7 +137,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.2/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.3/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```

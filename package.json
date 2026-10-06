@@ -1,17 +1,43 @@
 {
-  "name": "n8n-check",
-  "version": "0.1.2",
+  "name": "@blucca/n8n-check",
+  "version": "0.1.3",
   "description": "Run n8n workflow regression checks with fixtures, local HTTP mocks and JUnit reports.",
   "type": "module",
-  "bin": { "n8n-check": "bin/n8n-check.mjs" },
+  "bin": {
+    "n8n-check": "bin/n8n-check.mjs"
+  },
   "exports": "./src/runner.mjs",
-  "files": ["bin", "src", "examples", "Dockerfile", "README.md", "LICENSE"],
-  "scripts": { "test": "node --test test/*.test.mjs" },
-  "engines": { "node": ">=24" },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "Dockerfile",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
   "license": "MIT",
   "author": "blucca",
-  "repository": { "type": "git", "url": "git+https://github.com/blucca/n8n-check.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blucca/n8n-check.git"
+  },
   "homepage": "https://github.com/blucca/n8n-check#readme",
   "bugs": "https://github.com/blucca/n8n-check/issues",
-  "keywords": ["n8n", "testing", "workflow", "regression", "junit", "mock"]
+  "keywords": [
+    "n8n",
+    "testing",
+    "workflow",
+    "regression",
+    "junit",
+    "mock"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

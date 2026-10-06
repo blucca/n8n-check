@@ -1,0 +1,43 @@
+name: Publish npm package
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to publish (for example v0.1.3)'
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Validate release tag
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: '[[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install --global npm@12.2.0
+      - name: Verify package matches the release
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import assert from "node:assert/strict";
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            assert.equal(pkg.name, "@blucca/n8n-check");
+            assert.equal(`v${pkg.version}`, process.env.RELEASE_TAG);
+          '
+      - run: npm test
+      - name: Publish using npm trusted publishing
+        run: npm publish --access public

@@ -1,5 +1,5 @@
 name: n8n-check
-description: Run a real n8n workflow against fixture inputs and local HTTP mocks. Fail on regressions and show the results in your job summary.
+description: Test real n8n workflows with fixtures and HTTP mocks. Catch regressions with JSON, JUnit, and job summaries.
 author: blucca
 branding:
   icon: check-circle

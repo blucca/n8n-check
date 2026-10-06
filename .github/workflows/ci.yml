@@ -52,7 +52,7 @@ jobs:
             const broken = JSON.parse(readFileSync("temp/ci/broken/report.json"));
             assert.equal(fixed.exitCode, 0);
             assert.equal(broken.exitCode, 1);
-            assert.equal(fixed.runnerVersion, "0.1.2");
+            assert.equal(fixed.runnerVersion, "0.1.3");
             assert.equal(fixed.requests.length, 2);
             assert.equal(broken.requests.length, 0);
           '
