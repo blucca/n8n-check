@@ -1,0 +1,168 @@
+{
+  "id": "retryOneHttpItem",
+  "name": "Retry One HTTP Item at a Time",
+  "description": "Process two synthetic HTTP operations sequentially, with a bounded retry for each input item and a combined done output.",
+  "active": false,
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "fixture",
+      "name": "Fixture",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [\n  {\n    \"shortId\": 42,\n    \"styling\": {\n      \"color\": \"#112233\",\n      \"fontSize\": 31\n    }\n  },\n  {\n    \"shortId\": 43,\n    \"styling\": {\n      \"color\": \"#aabbcc\",\n      \"fontSize\": 47\n    }\n  }\n].map(json => ({ json }));"
+      },
+      "notes": "Two synthetic inputs with distinct IDs and styling. Replace with your source items after validating the test service."
+    },
+    {
+      "id": "render",
+      "name": "Render",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.example.com/renders/{{ $json.shortId }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { shortId: $json.shortId, renderOptions: $json.styling } }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 1000,
+      "notes": "Replace the api.example.com placeholder with your test endpoint. Each node execution receives one item; two total attempts are allowed."
+    },
+    {
+      "id": "done",
+      "name": "Done",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "loop",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "setup-note",
+      "name": "Import and configure",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -590,
+        -720
+      ],
+      "parameters": {
+        "content": "## Retry one HTTP item at a time\n**Loop Over Items → Batch Size = 1** gives each HTTP node execution one input item. The retry budget applies to that item.\n\n### Run in the editor\n1. Import this JSON with **Import from File**.\n2. Open **Render** and replace `https://api.example.com` with your test service base URL, keeping `/renders/{{ $json.shortId }}`. Configure your test service credentials in that node as needed.\n3. Click **Execute workflow**. **Fixture** supplies two synthetic operations, 42 and 43, each with its own nested styling object.\n4. Inspect **Done** for the two completed HTTP response items.\n\nThe loop output goes to Render; Render connects back to Loop Over Items; the done output goes to Done. Keep **Reset** off for this fixed input list.\n\n**Tested:** n8n 2.41.7, HTTP Request v4.2, Loop Over Items v3; 2026-10-06.",
+        "width": 715,
+        "height": 600
+      }
+    },
+    {
+      "id": "checks-note",
+      "name": "Expected requests and adaptation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -720
+      ],
+      "parameters": {
+        "content": "## Verify the retry boundary\nFor a reproducible test, configure your test service as follows:\n- `POST /renders/42`: first response **503**, then **200** with `{\"id\":\"render-42\"}`.\n- `POST /renders/43`: always **200** with `{\"id\":\"render-43\"}`.\n\n**Observed:** 42→503, 42→200, 43→200. Done receives `render-42` and `render-43`. Both request attempts for 42 retain its complete JSON body.\n\nRender uses **Max Tries = 2**, **Wait Between Tries = 1000 ms**, and a **10-second timeout**. A second failure stops this workflow. HTTP Request's built-in batching paces items inside a node execution; the outer loop defines this per-item retry boundary.\n\nFor real writes, reuse a stable business operation key across retries and use the destination's durable idempotency contract to recover an accepted write whose response is lost.\n\nOptional [n8n-check fixture and request traces](https://github.com/blucca/n8n-check/tree/v0.1.1/examples/retry-isolation) provide a local mock and JSON/JUnit checks for this pattern. The editor workflow uses standard n8n nodes.",
+        "width": 735,
+        "height": 600
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Fixture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixture": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Done",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

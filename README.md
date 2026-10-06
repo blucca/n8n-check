@@ -52,6 +52,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Preserve every Article in a real Miniflux batch](examples/agregado-enrichment/):** Agregado’s original workflow sends one Enrichment request for two Articles. A one-item loop preserves the batch, mixed Bridge content, and a transient retry. The pack downloads pinned source exports and checks complete request bodies.
 
+**[Replay invoice-history checks against real Data Tables](examples/morsof-invoice-history/):** seven batch cases from Morsof’s invoice follow-up template, plus a second execution that preserves stored IDs and preparation timestamps. Includes a version-pinned Data Table CLI adapter.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**

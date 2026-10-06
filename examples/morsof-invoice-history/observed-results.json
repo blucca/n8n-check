@@ -1,0 +1,113 @@
+{
+  "recordedAt": "2026-10-06T18:48:00Z",
+  "runtime": {
+    "n8n": "2.41.7",
+    "n8nCheck": "0.1.3",
+    "node": "26.10.0",
+    "network": "Linux loopback-only",
+    "dataTableAdapter": "Real upstream module initialized for CLI execute"
+  },
+  "sources": {
+    "fixed": [
+      "3d8c61ee5b0e37e7e0052f53e7839db011b9c0de",
+      "b29612d4206a557129f0f97b7ca6619419033bff7940bc2366370fd20838e180"
+    ],
+    "broken": [
+      "adb2d3c3aa7534bcce53d955938e24c9f061b315",
+      "43bb3d16f4e1bf10a01cbb75b257e7bdb8e536d2aaedb94f1d05464137dda23a"
+    ]
+  },
+  "cases": [
+    {
+      "name": "two-eligible",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 2
+    },
+    {
+      "name": "eligible-paid",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 1
+    },
+    {
+      "name": "existing-new",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 2
+    },
+    {
+      "name": "duplicate",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 1
+    },
+    {
+      "name": "reordered",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 2
+    },
+    {
+      "name": "empty-history",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 3
+    },
+    {
+      "name": "multiple-existing",
+      "status": "passed",
+      "checksPassed": 9,
+      "checksTotal": 9,
+      "exitCode": 0,
+      "persistedRowCount": 4
+    },
+    {
+      "name": "broken",
+      "status": "failed",
+      "checksPassed": 6,
+      "checksTotal": 9,
+      "exitCode": 1,
+      "persistedRowCount": 0
+    }
+  ],
+  "historicalFailure": {
+    "node": "Check Reminder History",
+    "message": "Multiple matches",
+    "writes": 0
+  },
+  "duplicateSemantics": {
+    "physicalNode": "Ready for Review",
+    "outputPaths": [
+      "ready_for_review",
+      "already_prepared"
+    ],
+    "secondReason": "duplicate_in_execution",
+    "sharedHistoryRecordId": 1
+  },
+  "persistentReplay": {
+    "checksPassed": 9,
+    "checksTotal": 9,
+    "status": "passed",
+    "persistedRowCount": 2,
+    "secondExecutionWrites": 0,
+    "originalRowIds": [
+      1,
+      2
+    ],
+    "completeRowsUnchanged": true,
+    "preparationTimestampsPreserved": true
+  }
+}

@@ -41,6 +41,8 @@ On Linux, add `--user "$(id -u):$(id -g)"` when your user ID differs from the im
 
 ## Import the workflow into n8n
 
+**[Download the annotated editor template](editor-template.json)** for the one-item loop. Its two canvas notes include setup, connections, the exact response sequence and the adaptation contract. It uses built-in n8n nodes and your configured test endpoint.
+
 Import `direct.json`, `http-batching.json` or `loop.json` using **Import from File**. Each is a complete workflow with a Manual Trigger, a `Fixture` Code node containing the two synthetic items, and a terminal `Done` node. The `*-case.json` files are inputs to n8n-check.
 
 For an editor run, replace `Render`'s placeholder URL with your test service. The service must implement the response sequence above to reproduce the table; n8n-check provides it automatically during CLI runs. The exported URL expression is `https://api.example.com/renders/{{ $json.shortId }}`. Configure any credentials on your test service node as needed.
