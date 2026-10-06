@@ -8,7 +8,7 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a case and GitHub Actions file.
 
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.3** CLI or Action.
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.4** CLI or Action.
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
 
@@ -46,7 +46,7 @@ One HTTP request failed, and n8n retried **both** input items. We ran the same t
 
 Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
 
-**[Verify a real Nextcloud PROPFIND upgrade](examples/propfind-body/):** a user-reported workflow now sends all 698 characters of its XML body on n8n 2.41.7. Keep the supplied exact-body case beside your export; an omitted-body control turns the check red.
+**[Compare n8n versions before upgrading](examples/version-matrix/):** run the same workflow and contract on your deployed and candidate releases. The real Nextcloud PROPFIND reproduction exercises an engine-level difference: preserving the complete XML request body.
 
 **[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
 
@@ -73,7 +73,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.3
+      - uses: blucca/n8n-check@v0.1.4
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -96,12 +96,29 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 
 [See the action source](action.yml) · [Runnable consumer example](https://github.com/blucca/flowdelta/tree/main/examples/ci-checks)
 
+### Choose your runtime or compare an upgrade
+
+Set `n8n-version` to an exact official image release:
+
+```yaml
+      - uses: blucca/n8n-check@v0.1.4
+        with:
+          n8n-version: '2.38.4'
+          workflow: workflows/render.json
+          case: tests/render.case.json
+          out: results/render
+```
+
+The default remains **2.41.7**. Every report records the actual runtime version. The same case can run in a two-version matrix with independent results: **[copy the upgrade workflow](examples/version-matrix/upgrade-check.yml)** or **[inspect the measured PROPFIND comparison](examples/version-matrix/)**. Select both the deployed release and the proposed upgrade; an exact contract makes changed request or output behavior visible in either one. Available versions follow n8n's official image registry; node availability and CLI behavior follow the selected release.
+
+For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-check:2.38.4 .` and run that tag. The CLI's `--n8n /path/to/n8n` continues to select an installed runtime.
+
 ## Try a failure, then its fix
 
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.3 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.4 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -134,7 +151,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.3/blucca-n8n-check-0.1.3.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.4/blucca-n8n-check-0.1.4.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -144,7 +161,7 @@ n8n-check workflow.json case.json --allow-network --out results
 n8n-check workflow.json case.json --n8n /path/to/n8n --allow-network
 ```
 
-The GitHub release package works independently of npm registry availability. Docker is the simplest route to a pinned runtime and loopback-only networking. Supported/tested runtime: **n8n 2.41.7**; Node.js **24+**. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
+The GitHub release package works independently of npm registry availability. Docker is the simplest route to a pinned runtime and loopback-only networking. Default runtime: **n8n 2.41.7**; local CLI installation: Node.js **24+**. The [version matrix](examples/version-matrix/) also exercises 2.38.4, and the JSON request/output case passes on 2.37.9. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
 
 ## Your first case
 
@@ -155,7 +172,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.3/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.4/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```
@@ -238,17 +255,17 @@ Each `results/run-*` directory retains the prepared workflow, real n8n execution
 
 The [one-file GitHub Actions integration](#add-a-check-to-github-actions) brings the runner into your workflow repository. Our [own CI](.github/workflows/ci.yml) exercises the action with passing, regression, and setup-error cases alongside all three retry designs.
 
-## Draft a case from the repository checkout
+## Draft a case with the CLI
 
-The `init` command is available on **main**. The currently released v0.1.3 CLI provides case execution; this authoring command will ship with the next CLI release.
+The `init` command ships in **v0.1.4**. After [installing the CLI](#install-the-cli-from-github):
 
 ```sh
-git clone https://github.com/blucca/n8n-check.git
-cd n8n-check
-node bin/n8n-check.mjs init /path/to/workflow.json \
+n8n-check init /path/to/workflow.json \
   --input "Retrieved rows" --assert "Build context" \
   --out /path/to/case.draft.json
 ```
+
+From a repository checkout, use `node bin/n8n-check.mjs init` with the same arguments.
 
 This reads the export locally and writes a new file. Node.js 24+ is sufficient for drafting; install n8n when you are ready to execute the case. `--input` and `--assert` can be omitted to use suggested nodes. An existing output file is preserved and yields exit 2.
 

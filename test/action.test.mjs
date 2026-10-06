@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync, rmSync, readFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
-import { summary, workspacePath, dockerArguments } from '../src/action.mjs';
+import { summary, workspacePath, dockerArguments, buildArguments } from '../src/action.mjs';
 import { version } from '../src/version.mjs';
 
 test('CLI, package and runtime use one version source', () => {
@@ -44,4 +44,14 @@ test('Action mounts only input files and reports, preserves spaces, isolates net
   assert.ok(args.includes('type=bind,source=/repo/my workflow.json,target=/inputs/workflow.json,readonly'));
   assert.ok(args.includes('type=bind,source=/repo/case.json,target=/inputs/case.json,readonly'));
   assert.ok(args.includes('type=bind,source=/repo/results,target=/results'));
+});
+
+test('Action builds an exact official n8n version with separate Docker arguments', () => {
+  for (const n8nVersion of ['2.37.9', '2.41.7', '2.42.0-beta.1']) {
+    assert.deepEqual(buildArguments({ actionRoot: '/my action', image: 'test:1', n8nVersion }),
+      ['build', '--build-arg', `N8N_VERSION=${n8nVersion}`, '--tag', 'test:1', '/my action']);
+  }
+  for (const n8nVersion of ['latest', '2', '2.41', 'v2.41.7', '2.41.7 --network host', '2.41.7\n', '', '02.41.7']) {
+    assert.throws(() => buildArguments({ actionRoot: '/action', image: 'test:1', n8nVersion }), /exact release/);
+  }
 });

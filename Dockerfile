@@ -1,4 +1,5 @@
-FROM ghcr.io/n8n-io/n8n:2.41.7
+ARG N8N_VERSION=2.41.7
+FROM ghcr.io/n8n-io/n8n:${N8N_VERSION}
 USER root
 COPY --chown=node:node bin /opt/n8n-check/bin
 COPY --chown=node:node src /opt/n8n-check/src

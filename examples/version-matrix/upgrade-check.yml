@@ -1,0 +1,32 @@
+# Save as .github/workflows/n8n-upgrade.yml in your own repository.
+# Replace both releases and both file paths with your project's values.
+name: n8n upgrade contract
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  contract:
+    name: n8n ${{ matrix.n8n }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        n8n: ['2.38.4', '2.41.7']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: blucca/n8n-check@v0.1.4
+        with:
+          n8n-version: ${{ matrix.n8n }}
+          workflow: workflows/workflow.json
+          case: tests/workflow.case.json
+          out: results/contract
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n8n-contract-${{ matrix.n8n }}
+          path: |
+            results/contract/report.json
+            results/contract/junit.xml

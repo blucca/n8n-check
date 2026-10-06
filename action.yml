@@ -14,6 +14,9 @@ inputs:
   out:
     description: Report directory inside the checked-out repository. Use a different path for each case.
     default: .n8n-check
+  n8n-version:
+    description: Exact n8n release from the official image registry. Choose your deployed or candidate version.
+    default: '2.41.7'
 outputs:
   report:
     description: Absolute host path to report.json, when the runner produced it.
@@ -35,4 +38,5 @@ runs:
         CHECK_WORKFLOW: ${{ inputs.workflow }}
         CHECK_CASE: ${{ inputs.case }}
         CHECK_OUT: ${{ inputs.out }}
+        CHECK_N8N_VERSION: ${{ inputs.n8n-version }}
       run: node "$ACTION_ROOT/src/action.mjs"

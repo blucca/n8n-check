@@ -1,0 +1,53 @@
+name: Compare n8n versions on a real PROPFIND regression
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  compare:
+    name: PROPFIND on n8n ${{ matrix.n8n }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        n8n: ['2.38.4', '2.41.7']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run the same export and exact-body contract
+        id: contract
+        continue-on-error: true
+        uses: ./
+        with:
+          n8n-version: ${{ matrix.n8n }}
+          workflow: examples/propfind-body/workflow.json
+          case: examples/propfind-body/case.json
+          out: temp/upgrade-results
+      - name: Verify the known version difference
+        env:
+          N8N_VERSION: ${{ matrix.n8n }}
+          CHECK_EXIT: ${{ steps.contract.outputs.exit-code }}
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import assert from "node:assert/strict";
+            const report = JSON.parse(fs.readFileSync("temp/upgrade-results/report.json", "utf8"));
+            const spec = JSON.parse(fs.readFileSync("examples/propfind-body/case.json", "utf8"));
+            const legacy = process.env.N8N_VERSION === "2.38.4";
+            assert.equal(report.n8nVersion, process.env.N8N_VERSION);
+            assert.equal(report.checks[0].passed, true);
+            assert.equal(report.requests.length, 1);
+            assert.equal(report.requests[0].method, "PROPFIND");
+            assert.equal(report.requests[0].body, legacy ? null : spec.mocks[0].routes[0].expect.bodies[0]);
+            assert.equal(report.checks.filter(c => !c.passed).length, legacy ? 1 : 0);
+            assert.equal(report.exitCode, legacy ? 1 : 0);
+            assert.equal(Number(process.env.CHECK_EXIT), report.exitCode);
+          '
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: propfind-n8n-${{ matrix.n8n }}
+          path: |
+            temp/upgrade-results/report.json
+            temp/upgrade-results/junit.xml

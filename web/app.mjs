@@ -141,7 +141,7 @@ for (const id of [...editors, 'case-name']) $(id).addEventListener('input', () =
 });
 $('download-case').addEventListener('click', () => { if (plan) download(plan.ready ? 'case.json' : 'case.draft.json', pretty(plan.spec)); });
 $('download-workflow').addEventListener('click', () => download('workflow.json', originalText));
-$('download-ci').addEventListener('click', () => { if (plan?.ready) download('n8n-check.yml', `name: n8n release check
+$('download-ci').addEventListener('click', () => { if (plan?.ready && $('runtime-version').reportValidity()) download('n8n-check.yml', `name: n8n release check
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
@@ -153,8 +153,9 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.3
+      - uses: blucca/n8n-check@v0.1.4
         with:
+          n8n-version: '${$('runtime-version').value}'
           workflow: workflow.json
           case: case.json
           out: results/check

@@ -51,6 +51,13 @@ export function dockerArguments({ workflow, caseFile, out, image, uid, gid }) {
     image, '/inputs/workflow.json', '/inputs/case.json', '--out', '/results'];
 }
 
+export function buildArguments({ actionRoot, image, n8nVersion }) {
+  if (!/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$/.test(n8nVersion)) {
+    throw new Error('n8n-version: supply an exact release, such as 2.41.7.');
+  }
+  return ['build', '--build-arg', `N8N_VERSION=${n8nVersion}`, '--tag', image, actionRoot];
+}
+
 function execute(args) {
   const result = spawnSync('docker', args, { stdio: 'inherit' });
   if (result.error) throw result.error;
@@ -64,6 +71,10 @@ export function main(env = process.env) {
     if (process.platform !== 'linux') throw new Error('Use a Linux runner with Docker, such as ubuntu-latest.');
     const workspace = env.GITHUB_WORKSPACE;
     const actionRoot = env.ACTION_ROOT;
+    const n8nVersion = env.CHECK_N8N_VERSION || '2.41.7';
+    const hash = createHash('sha256').update(`${actionRoot}\0${n8nVersion}`).digest('hex').slice(0, 16);
+    const image = `n8n-check-action:${hash}`;
+    const build = buildArguments({ actionRoot, image, n8nVersion });
     const workflow = workspacePath(workspace, env.CHECK_WORKFLOW, 'workflow');
     const caseFile = workspacePath(workspace, env.CHECK_CASE, 'case');
     const out = workspacePath(workspace, env.CHECK_OUT || '.n8n-check', 'out');
@@ -74,10 +85,8 @@ export function main(env = process.env) {
     mkdirSync(out, { recursive: true });
     // Each invocation reports its own result, including a build or startup failure.
     for (const file of ['report.json', 'junit.xml']) rmSync(join(out, file), { force: true });
-    const hash = createHash('sha256').update(actionRoot).digest('hex').slice(0, 16);
-    const image = `n8n-check-action:${hash}`;
-    console.log('::group::Build n8n-check with pinned n8n runtime');
-    const built = execute(['build', '--tag', image, actionRoot]);
+    console.log(`::group::Build n8n-check with n8n ${n8nVersion}`);
+    const built = execute(build);
     console.log('::endgroup::');
     if (built !== 0) throw new Error(`Docker build exited ${built}.`);
     const code = execute(dockerArguments({ workflow, caseFile, out, image, uid: process.getuid(), gid: process.getgid() }));
