@@ -1,0 +1,806 @@
+{
+  "recordedAtTimezone": "Asia/Shanghai",
+  "recordedDate": "2026-10-07",
+  "originalCommit": "0cbbac9c7c6e19f2b9f82bab57cf75a171279eac",
+  "patchedCommit": "b4e4332b57341f1afdb7a3be7a9069540b8a15f4",
+  "scope": "Real n8n downstream of the injected Parse entries boundary; synthetic environment and loopback HTTP responses.",
+  "runs": [
+    {
+      "name": "baseline",
+      "startedAt": "2026-10-06T17:21:52.576Z",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "runnerVersion": "0.1.3",
+      "status": "failed",
+      "exitCode": 1,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Call enrich API",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Build enrich request: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://example.test/article-102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://example.test/article-102",
+                "title": "Article 102"
+              }
+            }
+          ],
+          "actual": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request count",
+          "passed": false,
+          "expected": 2,
+          "actual": 1
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request bodies",
+          "passed": false,
+          "expected": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            }
+          ],
+          "actual": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            }
+          ]
+        },
+        {
+          "name": "Lookup bridge content: POST /d1/content request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Claim alert: POST /d1/claim request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Notify: POST /alert request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 101,
+            "canonical_url": "https://example.test/article-101",
+            "title": "Article 101"
+          },
+          "status": 200
+        }
+      ],
+      "loopDoneItems": 0
+    },
+    {
+      "name": "fixed-ordinary",
+      "startedAt": "2026-10-06T17:23:38.516Z",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "runnerVersion": "0.1.3",
+      "status": "passed",
+      "exitCode": 0,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Loop Articles",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Build enrich request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://example.test/article-102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://example.test/article-102",
+                "title": "Article 102"
+              }
+            }
+          ],
+          "actual": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://example.test/article-102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://example.test/article-102",
+                "title": "Article 102"
+              }
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            }
+          ],
+          "actual": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            }
+          ]
+        },
+        {
+          "name": "Lookup bridge content: POST /d1/content request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Claim alert: POST /d1/claim request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Notify: POST /alert request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 101,
+            "canonical_url": "https://example.test/article-101",
+            "title": "Article 101"
+          },
+          "status": 200
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 102,
+            "canonical_url": "https://example.test/article-102",
+            "title": "Article 102"
+          },
+          "status": 200
+        }
+      ],
+      "loopDoneItems": 2
+    },
+    {
+      "name": "fixed-mixed",
+      "startedAt": "2026-10-06T17:23:48.107Z",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "runnerVersion": "0.1.3",
+      "status": "passed",
+      "exitCode": 0,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Loop Articles",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Build enrich request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+                "title": "Article 102",
+                "bridge_content": "<p>Content for 102</p>"
+              }
+            },
+            {
+              "entry": {
+                "id": 103,
+                "url": "https://example.test/article-103",
+                "title": "Article 103"
+              },
+              "body": {
+                "entry_id": 103,
+                "canonical_url": "https://example.test/article-103",
+                "title": "Article 103"
+              }
+            },
+            {
+              "entry": {
+                "id": 104,
+                "url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+                "title": "Article 104"
+              },
+              "body": {
+                "entry_id": 104,
+                "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+                "title": "Article 104",
+                "bridge_content": "<p>Content for 104</p>"
+              }
+            }
+          ],
+          "actual": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+                "title": "Article 102",
+                "bridge_content": "<p>Content for 102</p>"
+              }
+            },
+            {
+              "entry": {
+                "id": 103,
+                "url": "https://example.test/article-103",
+                "title": "Article 103"
+              },
+              "body": {
+                "entry_id": 103,
+                "canonical_url": "https://example.test/article-103",
+                "title": "Article 103"
+              }
+            },
+            {
+              "entry": {
+                "id": 104,
+                "url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+                "title": "Article 104"
+              },
+              "body": {
+                "entry_id": 104,
+                "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+                "title": "Article 104",
+                "bridge_content": "<p>Content for 104</p>"
+              }
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request count",
+          "passed": true,
+          "expected": 4,
+          "actual": 4
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+              "title": "Article 102",
+              "bridge_content": "<p>Content for 102</p>"
+            },
+            {
+              "entry_id": 103,
+              "canonical_url": "https://example.test/article-103",
+              "title": "Article 103"
+            },
+            {
+              "entry_id": 104,
+              "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+              "title": "Article 104",
+              "bridge_content": "<p>Content for 104</p>"
+            }
+          ],
+          "actual": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+              "title": "Article 102",
+              "bridge_content": "<p>Content for 102</p>"
+            },
+            {
+              "entry_id": 103,
+              "canonical_url": "https://example.test/article-103",
+              "title": "Article 103"
+            },
+            {
+              "entry_id": 104,
+              "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+              "title": "Article 104",
+              "bridge_content": "<p>Content for 104</p>"
+            }
+          ]
+        },
+        {
+          "name": "Lookup bridge content: POST /d1/content request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Claim alert: POST /d1/claim request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Notify: POST /alert request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 101,
+            "canonical_url": "https://example.test/article-101",
+            "title": "Article 101"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup bridge content",
+          "method": "POST",
+          "path": "/d1/content",
+          "body": {
+            "sql": "SELECT readable_content FROM entries WHERE permalink_uuid = ?",
+            "params": [
+              "00000000-0000-4000-8000-000000000102"
+            ]
+          },
+          "status": 200
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 102,
+            "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000102",
+            "title": "Article 102",
+            "bridge_content": "<p>Content for 102</p>"
+          },
+          "status": 200
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 103,
+            "canonical_url": "https://example.test/article-103",
+            "title": "Article 103"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup bridge content",
+          "method": "POST",
+          "path": "/d1/content",
+          "body": {
+            "sql": "SELECT readable_content FROM entries WHERE permalink_uuid = ?",
+            "params": [
+              "00000000-0000-4000-8000-000000000104"
+            ]
+          },
+          "status": 200
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 104,
+            "canonical_url": "https://bridge.example.test/p/00000000-0000-4000-8000-000000000104",
+            "title": "Article 104",
+            "bridge_content": "<p>Content for 104</p>"
+          },
+          "status": 200
+        }
+      ],
+      "loopDoneItems": 4
+    },
+    {
+      "name": "fixed-retry",
+      "startedAt": "2026-10-06T17:23:57.565Z",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "runnerVersion": "0.1.3",
+      "status": "passed",
+      "exitCode": 0,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Loop Articles",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Build enrich request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://example.test/article-102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://example.test/article-102",
+                "title": "Article 102"
+              }
+            }
+          ],
+          "actual": [
+            {
+              "entry": {
+                "id": 101,
+                "url": "https://example.test/article-101",
+                "title": "Article 101"
+              },
+              "body": {
+                "entry_id": 101,
+                "canonical_url": "https://example.test/article-101",
+                "title": "Article 101"
+              }
+            },
+            {
+              "entry": {
+                "id": 102,
+                "url": "https://example.test/article-102",
+                "title": "Article 102"
+              },
+              "body": {
+                "entry_id": 102,
+                "canonical_url": "https://example.test/article-102",
+                "title": "Article 102"
+              }
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request count",
+          "passed": true,
+          "expected": 3,
+          "actual": 3
+        },
+        {
+          "name": "Call enrich API: POST /api/private/articles/enrich request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            }
+          ],
+          "actual": [
+            {
+              "entry_id": 101,
+              "canonical_url": "https://example.test/article-101",
+              "title": "Article 101"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            },
+            {
+              "entry_id": 102,
+              "canonical_url": "https://example.test/article-102",
+              "title": "Article 102"
+            }
+          ]
+        },
+        {
+          "name": "Lookup bridge content: POST /d1/content request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Claim alert: POST /d1/claim request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Notify: POST /alert request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 101,
+            "canonical_url": "https://example.test/article-101",
+            "title": "Article 101"
+          },
+          "status": 200
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 102,
+            "canonical_url": "https://example.test/article-102",
+            "title": "Article 102"
+          },
+          "status": 503
+        },
+        {
+          "node": "Call enrich API",
+          "method": "POST",
+          "path": "/api/private/articles/enrich",
+          "body": {
+            "entry_id": 102,
+            "canonical_url": "https://example.test/article-102",
+            "title": "Article 102"
+          },
+          "status": 200
+        }
+      ],
+      "loopDoneItems": 2
+    }
+  ]
+}

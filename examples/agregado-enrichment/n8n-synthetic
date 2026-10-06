@@ -1,0 +1,11 @@
+#!/bin/sh
+# Isolated test runtime; all integration values below are synthetic.
+export NODE_FUNCTION_ALLOW_BUILTIN=crypto
+export N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+export BRIDGE_ORIGIN=https://bridge.example.test
+export AGREGADO_BASE_URL=http://127.0.0.1:1
+export ENRICHMENT_SECRET=synthetic-test-value
+export CF_ACCOUNT_ID=synthetic-account
+export BRIDGE_D1_DATABASE_ID=synthetic-database
+export BRIDGE_ALERT_URL=http://127.0.0.1:1/alert
+exec n8n "$@"

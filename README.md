@@ -50,6 +50,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
 
+**[Preserve every Article in a real Miniflux batch](examples/agregado-enrichment/):** Agregado’s original workflow sends one Enrichment request for two Articles. A one-item loop preserves the batch, mixed Bridge content, and a transient retry. The pack downloads pinned source exports and checks complete request bodies.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
