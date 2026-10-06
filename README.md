@@ -6,12 +6,26 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **A real check caught this:** one HTTP request failed, and n8n retried **both** input items. Our initial three-request expectation failed; the observed sequence contained four requests. The [retry fixture](examples/object-body/retry-case.json) now checks both IDs twice and both final outputs (HTTP Request node v4.2, n8n 2.41.7).
 
+## Which retry boundary protects the successful item?
+
+We ran the same two inputs with a single transient 503 through three workflow shapes:
+
+| Shape | Requests for 42 | Requests for 43 | Total |
+|---|---:|---:|---:|
+| Direct HTTP retry | 2 | 2 | 4 |
+| HTTP internal batching = 1 | 2 | 2 | 4 |
+| Loop Over Items batch = 1 | 2 | 1 | 3 |
+
+**[Inspect the recorded traces and recipe](https://blucca.github.io/guides/n8n-retry-duplicates/)** · **[Run all three cases](examples/retry-isolation/)**
+
+Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
+
 ## Try a failure, then its fix
 
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.0 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.1 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -44,7 +58,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.0/n8n-check-0.1.0.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.1/n8n-check-0.1.1.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
