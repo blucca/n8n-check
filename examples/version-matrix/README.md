@@ -21,6 +21,19 @@ The author of [n8n #39395](https://github.com/n8n-io/n8n/issues/39395) supplied 
 
 The [workflow and exact-body case](../propfind-body/) use the author's HTTP Request 4.5 parameters and complete 698-character diagnostic XML. The fixture replaces connection information with synthetic values and redirects the URL to a local capture server. This compares the actual released engines with the same export and expected body.
 
+### Observed on October 7, 2026
+
+| Same export and expected XML | n8n 2.38.4 | n8n 2.41.7 |
+|---|---|---|
+| Engine execution | Success | Success |
+| PROPFIND requests | 1 | 1 |
+| Captured body | Empty (`null`) | All 698 characters |
+| Contract | **5/6 · exit 1** | **6/6 · exit 0** |
+
+[Actual GitHub matrix run](https://github.com/blucca/n8n-check/actions/runs/37524798259) · [Versioned JSON record, requests and assertions](observed-results.json)
+
+Both jobs used n8n-check 0.1.4, the same file hashes, and loopback-only networking. The record also includes a separate n8n **2.37.9** smoke check: the object-valued JSON request case passes 6/6 with two complete requests and outputs. This checks the selected runtime path; each project's own nodes and contracts supply its upgrade coverage.
+
 To run the recorded comparison in your fork:
 
 1. Fork n8n-check and enable Actions.

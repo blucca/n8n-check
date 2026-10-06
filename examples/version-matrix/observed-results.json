@@ -1,0 +1,307 @@
+{
+  "recordedAt": "2026-10-06T20:17:00Z",
+  "sourceCommit": "77e496f65105d5633374a65f63da990ab76ff4de",
+  "runUrl": "https://github.com/blucca/n8n-check/actions/runs/37524798259",
+  "sourceIssue": "https://github.com/n8n-io/n8n/issues/39395",
+  "inputs": {
+    "examples/propfind-body/workflow.json": "f365021255ae250b287848de1bb14c47ed2a244127957268044643ab956156e8",
+    "examples/propfind-body/case.json": "e37304adb5eacfad5ca773a77510505a8c3c89f1be451854d3b61e63a7029add"
+  },
+  "runs": [
+    {
+      "name": "Issue 39395 - PROPFIND transmits its XML body",
+      "startedAt": "2026-10-06T20:14:31.865Z",
+      "n8nVersion": "2.38.4",
+      "runnerVersion": "0.1.4",
+      "nodeVersion": "v26.7.0",
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "HTTP Request",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "HTTP Request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "received": true
+            }
+          ],
+          "actual": [
+            {
+              "received": true
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request bodies",
+          "passed": false,
+          "expected": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ],
+          "actual": [
+            null
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "HTTP Request",
+          "method": "PROPFIND",
+          "path": "/dav",
+          "body": null,
+          "matched": true,
+          "status": 200,
+          "response": {
+            "received": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Issue 39395 - PROPFIND transmits its XML body",
+      "startedAt": "2026-10-06T20:14:26.062Z",
+      "n8nVersion": "2.41.7",
+      "runnerVersion": "0.1.4",
+      "nodeVersion": "v26.7.0",
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "passed",
+      "exitCode": 0,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "HTTP Request",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "HTTP Request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "received": true
+            }
+          ],
+          "actual": [
+            {
+              "received": true
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request bodies",
+          "passed": true,
+          "expected": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ],
+          "actual": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "HTTP Request",
+          "method": "PROPFIND",
+          "path": "/dav",
+          "body": "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>",
+          "matched": true,
+          "status": 200,
+          "response": {
+            "received": true
+          }
+        }
+      ]
+    }
+  ],
+  "additionalRuntimeSmoke": {
+    "name": "Two render requests preserve object options",
+    "startedAt": "2026-10-06T20:12:16.116Z",
+    "n8nVersion": "2.37.9",
+    "runnerVersion": "0.1.4",
+    "nodeVersion": "v26.5.1",
+    "network": {
+      "mode": "loopback-only",
+      "enforced": true,
+      "interfaces": [
+        "lo"
+      ]
+    },
+    "status": "passed",
+    "exitCode": 0,
+    "checks": [
+      {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Render",
+          "executionFound": true
+        }
+      },
+      {
+        "name": "Render: output 0",
+        "passed": true,
+        "expected": [
+          {
+            "id": "render-42"
+          },
+          {
+            "id": "render-43"
+          }
+        ],
+        "actual": [
+          {
+            "id": "render-42"
+          },
+          {
+            "id": "render-43"
+          }
+        ]
+      },
+      {
+        "name": "mock: all requests match routes",
+        "passed": true,
+        "actual": []
+      },
+      {
+        "name": "mock: request limits and server",
+        "passed": true,
+        "actual": []
+      },
+      {
+        "name": "Render: POST /renders request count",
+        "passed": true,
+        "expected": 2,
+        "actual": 2
+      },
+      {
+        "name": "Render: POST /renders request bodies",
+        "passed": true,
+        "expected": [
+          {
+            "shortId": 42,
+            "renderOptions": {
+              "color": "#112233",
+              "fontSize": 31
+            }
+          },
+          {
+            "shortId": 43,
+            "renderOptions": {
+              "color": "#aabbcc",
+              "fontSize": 47
+            }
+          }
+        ],
+        "actual": [
+          {
+            "shortId": 42,
+            "renderOptions": {
+              "color": "#112233",
+              "fontSize": 31
+            }
+          },
+          {
+            "shortId": 43,
+            "renderOptions": {
+              "color": "#aabbcc",
+              "fontSize": 47
+            }
+          }
+        ]
+      }
+    ],
+    "requests": [
+      {
+        "node": "Render",
+        "method": "POST",
+        "path": "/renders",
+        "body": {
+          "shortId": 42,
+          "renderOptions": {
+            "color": "#112233",
+            "fontSize": 31
+          }
+        },
+        "matched": true,
+        "status": 200,
+        "response": {
+          "id": "render-42"
+        }
+      },
+      {
+        "node": "Render",
+        "method": "POST",
+        "path": "/renders",
+        "body": {
+          "shortId": 43,
+          "renderOptions": {
+            "color": "#aabbcc",
+            "fontSize": 47
+          }
+        },
+        "matched": true,
+        "status": 200,
+        "response": {
+          "id": "render-43"
+        }
+      }
+    ]
+  }
+}

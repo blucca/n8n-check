@@ -20,12 +20,12 @@ The real n8n engine executes the HTTP node. This is an **HTTP transmission contr
 
 ## Run the upgrade check
 
-This example lives on **`main`**. Clone the current repository to get these files; the released v0.1.2 runner can execute them.
+**[Compare the unchanged export on n8n 2.38.4 and 2.41.7](../version-matrix/)** using the v0.1.4 Action. The measured older engine omits the body; 2.41.7 preserves all 698 characters. The commands below run the default 2.41.7 image.
 
 With Git and Docker:
 
 ```sh
-git clone --branch main https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.4 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
