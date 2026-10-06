@@ -1,0 +1,96 @@
+{
+  "name": "PropFind Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "manual-trigger",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "PROPFIND",
+        "url": "=https://{{$json.nextcloudInstance}}/remote.php/dav/files/{{$json.userId}}/{{$json.webDavPath}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "OCS-APIRequest",
+              "value": "true"
+            },
+            {
+              "name": "Depth",
+              "value": "1"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{$json.auth}}"
+            },
+            {
+              "name": "x-requested-with",
+              "value": "XMLHttpRequest"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/xml",
+        "body": "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "propfind-request",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  nextcloudInstance: \"nextcloud.instance\", // just domain, no protocol\n  userId: \"user_id\",\n  auth: \"Basic app_password\",\n  webDavPath: \"webdav_path\",\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "fixture-input",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

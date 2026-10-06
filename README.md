@@ -36,6 +36,8 @@ One HTTP request failed, and n8n retried **both** input items. We ran the same t
 
 Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
 
+**[Verify a real Nextcloud PROPFIND upgrade](examples/propfind-body/):** a user-reported workflow now sends all 698 characters of its XML body on n8n 2.41.7. Keep the supplied exact-body case beside your export; an omitted-body control turns the check red.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
@@ -132,11 +134,15 @@ The GitHub release package works independently of npm registry availability. Doc
 
 For your own export, replace **all three node-name fields** below: `input.node` with your input boundary, `mocks[].node` with your HTTP Request node, and `assertions[].node` with the node whose output you want to check. Names match the labels in the n8n editor exactly. The literal `Fixture` and `Render` names match the included example.
 
-Save this as `case.json` and run it against the included fixed workflow, or substitute your own workflow and names:
+Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-n8n-check examples/object-body/fixed.json case.json --allow-network --out results/first-case
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.2/examples/object-body/fixed.json \
+  --output first-case.workflow.json
+n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```
+
+From a repository checkout, you can use `examples/object-body/fixed.json` as the workflow path. For your own export, substitute its path and node names.
 
 ```json
 {

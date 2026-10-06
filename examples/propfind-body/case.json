@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "name": "Issue 39395 - PROPFIND transmits its XML body",
+  "input": {
+    "node": "Code in JavaScript",
+    "items": [
+      {
+        "nextcloudInstance": "example.invalid",
+        "userId": "user_id",
+        "auth": "Basic synthetic-placeholder",
+        "webDavPath": "fixture"
+      }
+    ]
+  },
+  "mocks": [
+    {
+      "node": "HTTP Request",
+      "url": "/dav",
+      "routes": [
+        {
+          "method": "PROPFIND",
+          "path": "/dav",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "received": true
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "HTTP Request",
+      "equals": [
+        {
+          "received": true
+        }
+      ]
+    }
+  ]
+}

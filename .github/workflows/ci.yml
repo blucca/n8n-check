@@ -88,6 +88,26 @@ jobs:
               assert.equal(report.requests.length, 0);
             }
           '
+      - name: PROPFIND preserves raw XML and detects a missing body
+        run: |
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+            examples/propfind-body/workflow.json examples/propfind-body/case.json \
+            --out temp/ci/propfind
+          set +e
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+            examples/propfind-body/no-body-control.json examples/propfind-body/case.json \
+            --out temp/ci/propfind-no-body
+          code=$?
+          set -e
+          test "$code" = 1
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const report = JSON.parse(readFileSync("temp/ci/propfind-no-body/report.json"));
+            assert.equal(report.checks[0].passed, true);
+            assert.equal(report.checks.filter(c => !c.passed).length, 1);
+            assert.deepEqual(report.checks.find(c => c.name.endsWith("request bodies")).actual, [null]);
+          '
       - uses: actions/upload-artifact@v4
         if: always()
         with:

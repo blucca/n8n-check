@@ -1,0 +1,307 @@
+{
+  "description": "Actual n8n 2.41.7 executions of the public reproduction from n8n issue 39395, using local HTTP capture and synthetic fixture inputs. The original export was independently rerun, then both published exports were checked in loopback-only namespaces.",
+  "sourceIssue": "https://github.com/n8n-io/n8n/issues/39395",
+  "upstreamFix": "https://github.com/n8n-io/n8n/pull/24151",
+  "caseSha256": "e37304adb5eacfad5ca773a77510505a8c3c89f1be451854d3b61e63a7029add",
+  "scope": "Exact PROPFIND method, request count, raw XML body and declared mock response. Live Nextcloud authentication, XML parsing and property lookup are separate integration checks.",
+  "runs": [
+    {
+      "description": "Original issue export, independent run",
+      "workflow": "original issue export",
+      "workflowSha256": "e3c4cdacb788a24fa32a20eba16ec0bb9c11f52386805bc6e962a4a76581333d",
+      "runnerVersion": "0.1.2",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "startedAt": "2026-10-06T12:16:15.159Z",
+      "durationMs": 9355,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "passed",
+      "exitCode": 0,
+      "preparation": {
+        "inputNode": "Code in JavaScript",
+        "changes": [
+          {
+            "node": "Code in JavaScript",
+            "change": "replace with fixture JSON items"
+          },
+          {
+            "node": "HTTP Request",
+            "change": "route URL to local mock; remove credential references; authentication=none"
+          }
+        ],
+        "omittedNodes": [
+          "When clicking ‘Execute workflow’"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "HTTP Request",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "HTTP Request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "received": true
+            }
+          ],
+          "actual": [
+            {
+              "received": true
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request bodies",
+          "passed": true,
+          "expected": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ],
+          "actual": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "HTTP Request",
+          "method": "PROPFIND",
+          "path": "/dav",
+          "body": "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>",
+          "matched": true,
+          "status": 200,
+          "response": {
+            "received": true
+          }
+        }
+      ],
+      "relationToPublishedExport": "HTTP parameters, node names, types, versions and connections match workflow.json; instance metadata and node IDs were cleaned for publication."
+    },
+    {
+      "description": "Published metadata-cleaned export",
+      "workflow": "workflow.json",
+      "workflowSha256": "f365021255ae250b287848de1bb14c47ed2a244127957268044643ab956156e8",
+      "runnerVersion": "0.1.2",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "startedAt": "2026-10-06T12:19:46.611Z",
+      "durationMs": 10565,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "passed",
+      "exitCode": 0,
+      "preparation": {
+        "inputNode": "Code in JavaScript",
+        "changes": [
+          {
+            "node": "Code in JavaScript",
+            "change": "replace with fixture JSON items"
+          },
+          {
+            "node": "HTTP Request",
+            "change": "route URL to local mock; remove credential references; authentication=none"
+          }
+        ],
+        "omittedNodes": [
+          "When clicking ‘Execute workflow’"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "HTTP Request",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "HTTP Request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "received": true
+            }
+          ],
+          "actual": [
+            {
+              "received": true
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request bodies",
+          "passed": true,
+          "expected": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ],
+          "actual": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "HTTP Request",
+          "method": "PROPFIND",
+          "path": "/dav",
+          "body": "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>",
+          "matched": true,
+          "status": 200,
+          "response": {
+            "received": true
+          }
+        }
+      ]
+    },
+    {
+      "description": "Intentional negative control: sendBody=false",
+      "workflow": "no-body-control.json",
+      "workflowSha256": "250f9dc350fbfd9bf35efe72ec24bbf1dd90a407b61c673e9cfbc88df7cc94bb",
+      "runnerVersion": "0.1.2",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "startedAt": "2026-10-06T12:19:46.611Z",
+      "durationMs": 10625,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "preparation": {
+        "inputNode": "Code in JavaScript",
+        "changes": [
+          {
+            "node": "Code in JavaScript",
+            "change": "replace with fixture JSON items"
+          },
+          {
+            "node": "HTTP Request",
+            "change": "route URL to local mock; remove credential references; authentication=none"
+          }
+        ],
+        "omittedNodes": [
+          "When clicking ‘Execute workflow’"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "HTTP Request",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "HTTP Request: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "received": true
+            }
+          ],
+          "actual": [
+            {
+              "received": true
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "HTTP Request: PROPFIND /dav request bodies",
+          "passed": false,
+          "expected": [
+            "<?xml version=\"1.0\"?>\n<invalid>\n<d:propfind xmlns:d=\"DAV:\" xmlns:oc=\"http://owncloud.org/ns\" xmlns:nc=\"http://nextcloud.org/ns\">\n    <d:prop>\n        <d:creationdate />\n        <nc:upload_time />\n        <d:getlastmodified />\n        <d:getetag />\n        <d:getcontenttype />\n        <d:resourcetype />\n        <d:quota-used-bytes />\n        <d:quota-available-bytes />\n        <d:displayname />\n        <nc:has-preview />\n        <oc:id />\n        <oc:fileid />\n        <oc:permissions />\n        <oc:size />\n        <oc:favorite />\n        <oc:tags />\n        <oc:comments-unread />\n        <oc:owner-id />\n        <oc:owner-display-name />\n        <oc:share-types />\n    </d:prop>\n</d:propfind>"
+          ],
+          "actual": [
+            null
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "HTTP Request",
+          "method": "PROPFIND",
+          "path": "/dav",
+          "body": null,
+          "matched": true,
+          "status": 200,
+          "response": {
+            "received": true
+          }
+        }
+      ]
+    }
+  ]
+}
