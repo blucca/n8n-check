@@ -4,7 +4,17 @@
 
 Give it a workflow export, fixture inputs and HTTP mock responses. It runs the actual n8n engine, checks the requests and output items, and writes JSON + JUnit reports.
 
-## Try it in your browser
+## Build a check for your own workflow
+
+**[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a case and GitHub Actions file.
+
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.3** CLI or Action.
+
+For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
+
+<a id="try-it-in-your-browser"></a>
+
+## Run the example in GitHub Actions
 
 **The workflow finishes successfully. Eight useful rows disappear. Your regression check turns red.**
 
@@ -132,6 +142,8 @@ The GitHub release package works independently of npm registry availability. Doc
 
 ## Your first case
 
+The [local case builder](https://blucca.github.io/n8n-check/) handles node selection and exported pins. The format below also works as a hand-written case.
+
 For your own export, replace **all three node-name fields** below: `input.node` with your input boundary, `mocks[].node` with your HTTP Request node, and `assertions[].node` with the node whose output you want to check. Names match the labels in the n8n editor exactly. The literal `Fixture` and `Render` names match the included example.
 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
@@ -219,6 +231,26 @@ n8n-check workflow.json case.json --out results --allow-network --json
 Each `results/run-*` directory retains the prepared workflow, real n8n execution JSON when emitted, command logs and isolated SQLite state. Use a distinct `--out` directory per concurrent case; rerunning the same directory replaces its summary reports and retains previous run directories.
 
 The [one-file GitHub Actions integration](#add-a-check-to-github-actions) brings the runner into your workflow repository. Our [own CI](.github/workflows/ci.yml) exercises the action with passing, regression, and setup-error cases alongside all three retry designs.
+
+## Draft a case from the repository checkout
+
+The `init` command is available on **main**. The currently released v0.1.3 CLI provides case execution; this authoring command will ship with the next CLI release.
+
+```sh
+git clone https://github.com/blucca/n8n-check.git
+cd n8n-check
+node bin/n8n-check.mjs init /path/to/workflow.json \
+  --input "Retrieved rows" --assert "Build context" \
+  --out /path/to/case.draft.json
+```
+
+This reads the export locally and writes a new file. Node.js 24+ is sufficient for drafting; install n8n when you are ready to execute the case. `--input` and `--assert` can be omitted to use suggested nodes. An existing output file is preserved and yields exit 2.
+
+- Standard pins (`[{"json": {...}}]`) prefill JSON input and branch-0 output. Binary pins and other pin shapes prompt for explicit JSON items.
+- Missing input/expected items are saved as `null`. HTTP drafts keep response status/body and request count for you to specify; dynamic paths use `/TODO` until authored.
+- The draft includes one exact-output assertion. Add further assertions using the case format above. Choose a downstream node so the assertion observes executed behavior.
+- Preparation feedback covers the same slice rules as the runner: incoming dependencies, loop boundaries, and credentialed nodes.
+- `init` exit 0 means a draft was written; its console summary lists fields and slice issues to resolve. Run the completed case for pass/fail results.
 
 ## Development
 

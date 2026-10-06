@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f2eb">
+  <title>n8n case builder — Turn a workflow export into a regression check</title>
+  <meta name="description" content="Build your first n8n regression case locally in your browser. Import an export, use pinned JSON as fixtures, inspect the slice, and download a case and GitHub Actions file.">
+  <link rel="canonical" href="https://blucca.github.io/n8n-check/">
+  <meta property="og:title" content="Your workflow. Your first regression check.">
+  <meta property="og:description" content="A local-first case builder for n8n. Turn exported pins into reviewable fixture inputs and expected outputs, then run the actual engine in CI.">
+  <meta property="og:url" content="https://blucca.github.io/n8n-check/">
+  <link rel="stylesheet" href="web/style.css">
+  <script type="module" src="web/app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to builder</a>
+<header class="wrap"><a class="brand" href="https://blucca.github.io/">blucca<span>.</span></a><nav aria-label="Main"><a href="https://github.com/blucca/n8n-check">Source &amp; CLI ↗</a><a href="https://blucca.github.io/n8n-release-checks/">$650 implementation ↗</a></nav></header>
+<main id="main" class="wrap">
+  <section class="hero">
+    <div><p class="eyebrow">n8n-check / local case builder</p><h1>Your workflow.<br>Your first <em>regression check.</em></h1><p class="deck">Turn a workflow export into fixture inputs, expected outputs, and a repeatable check of the actual n8n engine.</p></div>
+    <aside class="flow-card"><span class="eyebrow">From export to a release check</span><ol><li><b>01</b><span>Choose your test boundary<small>Import JSON. Pick the nodes.</small></span></li><li><b>02</b><span>Define what should stay true<small>Review inputs and expected items.</small></span></li><li><b>03</b><span>Run it with real n8n<small>Download a case and CI file.</small></span></li></ol><p class="local-dot">File contents stay in this browser tab.</p></aside>
+  </section>
+
+  <section class="panel import-panel" aria-labelledby="import-title">
+    <div><p class="eyebrow">01 / Bring your workflow</p><h2 id="import-title">Start with an export.</h2><p>In n8n, pin the input and expected-output nodes after a known-good manual run, then export the workflow. You can also enter fixture JSON below.</p></div>
+    <div class="import-actions"><label class="button file-button">Choose workflow JSON<input id="file" type="file" accept=".json,application/json"></label><button id="example" class="secondary">Try the nine-row example</button><p class="hint">Local file read · JSON fixtures · free &amp; MIT</p></div>
+    <details class="paste"><summary>Or paste an exported workflow</summary><label for="source">Workflow JSON</label><textarea id="source" rows="6" spellcheck="false" placeholder='{"nodes": [...], "connections": {...}, "pinData": {...}}'></textarea><button id="load-paste" class="secondary">Load pasted JSON</button></details>
+    <p id="import-status" role="status" aria-live="polite"></p>
+  </section>
+
+  <div id="builder" hidden>
+    <div class="workspace-heading"><div><p class="eyebrow">02 / Author the contract</p><h2 id="workflow-name"></h2></div><span id="node-count" class="chip"></span></div>
+    <div class="workspace">
+      <section class="panel editor" aria-label="Case editor">
+        <label for="case-name">Case name</label><input id="case-name" type="text" autocomplete="off">
+        <div class="two-col selectors"><div><label for="input-node">Fixture boundary</label><select id="input-node"></select><p class="hint">This node is replaced by the input items below. Its downstream nodes execute.</p></div><div><label for="assert-node">Output to preserve</label><select id="assert-node"></select><p class="hint">Choose a downstream node whose JSON items should match your expectation.</p></div></div>
+        <div class="two-col"><div><label for="input-items">Input items <span id="input-origin" class="origin"></span></label><textarea id="input-items" rows="12" spellcheck="false"></textarea><p class="hint">JSON object array, e.g. [{"id": 42}]. At least one item.</p></div><div><label for="expected-items">Expected output <span id="expected-origin" class="origin"></span></label><textarea id="expected-items" rows="12" spellcheck="false"></textarea><div class="branch"><label for="output">Output branch</label><input id="output" type="number" min="0" step="1" value="0"></div><p class="hint">Exact JSON items in run order. An empty array checks for zero items. Pins prefill branch 0.</p></div></div>
+        <div class="snapshot-note">Pinned data supplies a starting snapshot. Review it against the behavior you want to preserve. Every kept downstream node executes during the runtime check.</div>
+        <details id="mock-section"><summary>HTTP mock contracts <span id="mock-count"></span></summary><p>For each HTTP Request node, supply the mock response status/body, local route, and exact expected request count. Add <code>expect.bodies</code> to check outgoing payloads. Sequential responses exercise retries. <code>routes[].path</code> matches the final path plus query string (for example <code>/items?id=42</code>); n8n’s exported query-parameter settings still apply.</p><label for="mocks">Mocks JSON</label><textarea id="mocks" rows="15" spellcheck="false"></textarea><a href="https://github.com/blucca/n8n-check#your-first-case" target="_blank" rel="noopener">Read the HTTP contract format ↗</a></details>
+      </section>
+      <aside class="panel readiness" aria-label="Case preparation result">
+        <p class="eyebrow">Preparation check</p><h2 id="readiness-title"></h2><p id="readiness-detail"></p><ul id="issues" aria-live="polite"></ul>
+        <div class="slice"><h3>Selected execution slice</h3><p id="slice-nodes"></p><details id="omitted-section"><summary id="omitted-title"></summary><p id="omitted-nodes"></p></details></div>
+        <p class="hint">This page prepares files. Execution and pass/fail results come from the real n8n engine in your CI or local runtime.</p>
+        <div class="downloads"><button id="download-case" class="button">Download case</button><button id="download-workflow" class="secondary">Download workflow.json</button><button id="download-ci" class="secondary">Download CI file</button></div>
+        <p class="hint">Downloads include the values shown here. Use synthetic fixtures when committing to a shared repository. The workflow download preserves your original export.</p>
+        <details><summary>Preview case JSON</summary><pre id="preview"></pre></details>
+      </aside>
+    </div>
+    <section class="panel run-panel" aria-labelledby="run-title"><div><p class="eyebrow">03 / Run the actual engine</p><h2 id="run-title">Keep the check beside the workflow.</h2><ol><li>Place the downloaded <code>workflow.json</code> and completed <code>case.json</code> at the root of a GitHub repository.</li><li>Save the CI file as <code>.github/workflows/n8n-check.yml</code>.</li><li>Commit the files. Open <strong>Actions → n8n release check</strong> for the check summary and JSON/JUnit artifacts.</li></ol><p>The Action uses n8n <strong>2.41.7</strong> in a loopback-only Docker runtime on Linux. GitHub Actions usage follows your account’s plan.</p><p id="example-detail" hidden>The sample adds synthetic pinned snapshots to our <a href="https://github.com/blucca/n8n-check/tree/main/examples/silent-filter">silent-filter workflow</a>. Reference execution: the fixed export preserves eight useful rows; the broken export loses them while n8n completes successfully. Try the same downloaded case with both exports.</p></div><div><h3>Prefer your local runtime?</h3><p>With the <a href="https://github.com/blucca/n8n-check#install-the-cli-from-github">n8n-check CLI and n8n installed</a>:</p><pre>n8n-check workflow.json case.json \
+  --allow-network --out results</pre><p class="hint">The local command selects host networking for a trusted export. The <a href="https://github.com/blucca/n8n-check#try-a-failure-then-its-fix">Docker route</a> provides a pinned runtime with loopback-only networking.</p><p class="hint">Case builder scope: JSON item fixtures, one assertion node/branch, and HTTP mocks. Self-contained slices with credential-free downstream nodes use the existing runner contract.</p></div></section>
+  </div>
+
+  <section class="service"><div><p class="eyebrow">From a first case to a client-ready release</p><h2>Want the scenarios designed<br>and the pack delivered?</h2><p>A $650 fixed-scope pilot covers one workflow or slice, up to 25 nodes, two mocked HTTP integrations, and eight agreed scenarios, with JSON/JUnit reports and a handoff guide.</p></div><a class="button" href="https://blucca.github.io/n8n-release-checks/">Explore the $650 pilot ↗</a></section>
+  <noscript><p>This local case builder uses JavaScript. <a href="https://github.com/blucca/n8n-check#your-first-case">Use the documented JSON case format.</a></p></noscript>
+</main>
+<footer class="wrap"><span>Built by <a href="https://blucca.github.io/">blucca</a> · AI-operated software practice</span><a href="https://github.com/blucca/n8n-check">MIT source ↗</a><details><summary>Local data &amp; hosting</summary><p>Workflow contents are processed in this tab’s memory. File data is cleared on reload. The example loads public JSON from this site; your workflow stays local. Hosting requests are handled by GitHub Pages under <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a>.</p></details></footer>
+</body>
+</html>

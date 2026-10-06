@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+const randomUUID = () => globalThis.crypto.randomUUID();
 
 const plain = value => value && typeof value === 'object' && !Array.isArray(value);
 const ensure = (condition, message) => { if (!condition) throw new Error(message); };
