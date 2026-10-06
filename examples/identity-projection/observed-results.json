@@ -1,0 +1,117 @@
+{
+  "scope": "Synthetic identity projection comparison; main source with count/pluck, following v0.1.5",
+  "featureCommit": "1c58962",
+  "files": {
+    "workflow.json": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31",
+    "wrong-id.json": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf",
+    "case.json": "a6237f7bae2fb8713cd4dd2265a195d5185302709a8eab2707d467c30a498429"
+  },
+  "runs": {
+    "fixed": {
+      "startedAt": "2026-10-06T22:55:14.503Z",
+      "n8nVersion": "2.41.7",
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "passed",
+      "exitCode": 0,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Select rows",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Select rows: output 0 count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Select rows: output 0 pluck json.id",
+          "passed": true,
+          "expected": [
+            "row-A",
+            "row-B"
+          ],
+          "actual": [
+            "row-A",
+            "row-B"
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "requests": []
+    },
+    "wrong-id": {
+      "startedAt": "2026-10-06T22:55:57.808Z",
+      "n8nVersion": "2.41.7",
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Select rows",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Select rows: output 0 count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Select rows: output 0 pluck json.id",
+          "passed": false,
+          "expected": [
+            "row-A",
+            "row-B"
+          ],
+          "actual": [
+            "wrong-row",
+            "wrong-row"
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "requests": []
+    }
+  }
+}
