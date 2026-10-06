@@ -12,17 +12,52 @@ jobs:
         with:
           node-version: '24'
       - run: npm test
-      - name: Build pinned n8n runtime
-        run: docker build -t n8n-check .
       - name: Fixed workflow passes
+        id: fixed
+        uses: ./
+        with:
+          workflow: examples/object-body/fixed.json
+          case: examples/object-body/case.json
+          out: temp/ci/fixed
+      - name: Known JSON regression fails the Action
+        id: broken
+        continue-on-error: true
+        uses: ./
+        with:
+          workflow: examples/object-body/broken.json
+          case: examples/object-body/case.json
+          out: temp/ci/broken
+      - name: Missing fixture fails setup
+        id: setup
+        continue-on-error: true
+        uses: ./
+        with:
+          workflow: examples/object-body/fixed.json
+          case: missing-case.json
+          out: temp/ci/setup
+      - name: Verify actual success, regression and setup outcomes
+        if: always()
+        env:
+          FIXED_OUTCOME: ${{ steps.fixed.outcome }}
+          BROKEN_OUTCOME: ${{ steps.broken.outcome }}
+          SETUP_OUTCOME: ${{ steps.setup.outcome }}
         run: |
-          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/fixed.json examples/object-body/case.json --out temp/ci/fixed
-      - name: Known JSON regression exits 1
-        run: |
-          set +e
-          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/broken.json examples/object-body/case.json --out temp/ci/broken
-          code=$?
-          test "$code" -eq 1
+          test "$FIXED_OUTCOME" = success
+          test "$BROKEN_OUTCOME" = failure
+          test "$SETUP_OUTCOME" = failure
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const fixed = JSON.parse(readFileSync("temp/ci/fixed/report.json"));
+            const broken = JSON.parse(readFileSync("temp/ci/broken/report.json"));
+            assert.equal(fixed.exitCode, 0);
+            assert.equal(broken.exitCode, 1);
+            assert.equal(fixed.runnerVersion, "0.1.2");
+            assert.equal(fixed.requests.length, 2);
+            assert.equal(broken.requests.length, 0);
+          '
+      - name: Build runtime for comparison cases
+        run: docker build -t n8n-check .
       - name: Compare direct, HTTP batching, and per-item loop retry
         run: |
           for mode in direct http-batching loop; do

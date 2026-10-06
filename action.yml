@@ -1,0 +1,38 @@
+name: n8n-check
+description: Run a real n8n workflow against fixture inputs and local HTTP mocks. Fail on regressions and show the results in your job summary.
+author: blucca
+branding:
+  icon: check-circle
+  color: orange
+inputs:
+  workflow:
+    description: Path to the n8n workflow export, relative to the checked-out repository.
+    required: true
+  case:
+    description: Path to the n8n-check JSON case, relative to the checked-out repository.
+    required: true
+  out:
+    description: Report directory inside the checked-out repository. Use a different path for each case.
+    default: .n8n-check
+outputs:
+  report:
+    description: Absolute host path to report.json, when the runner produced it.
+    value: ${{ steps.check.outputs.report }}
+  junit:
+    description: Absolute host path to junit.xml, when the runner produced it.
+    value: ${{ steps.check.outputs.junit }}
+  exit-code:
+    description: Runner exit code (0 passed, 1 regression, 2 setup error).
+    value: ${{ steps.check.outputs.exit-code }}
+runs:
+  using: composite
+  steps:
+    - name: Execute n8n fixture
+      id: check
+      shell: bash
+      env:
+        ACTION_ROOT: ${{ github.action_path }}
+        CHECK_WORKFLOW: ${{ inputs.workflow }}
+        CHECK_CASE: ${{ inputs.case }}
+        CHECK_OUT: ${{ inputs.out }}
+      run: node "$ACTION_ROOT/src/action.mjs"

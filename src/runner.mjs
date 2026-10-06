@@ -5,6 +5,7 @@ import { randomBytes } from 'node:crypto';
 import { validateCase, prepareWorkflow } from './workflow.mjs';
 import { startMock } from './mock.mjs';
 import { executionFrom, executionChecks, junit } from './report.mjs';
+import { version } from './version.mjs';
 
 export async function checkNetwork(allowNetwork) {
   if (allowNetwork) return { mode: 'host-network', enforced: false };
@@ -62,7 +63,7 @@ export async function command(binary, args, env, timeoutMs = 120000) {
 export async function runCase(options) {
   const start = Date.now();
   const out = resolve(options.out ?? '.n8n-check');
-  const report = { schemaVersion: 1, runnerVersion: '0.1.0', name: 'n8n-check', startedAt: new Date().toISOString(), nodeVersion: process.version, status: 'error', checks: [], artifacts: out };
+  const report = { schemaVersion: 1, runnerVersion: version, name: 'n8n-check', startedAt: new Date().toISOString(), nodeVersion: process.version, status: 'error', checks: [], artifacts: out };
   let mock;
   await mkdir(out, { recursive: true });
   try {

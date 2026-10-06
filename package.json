@@ -1,6 +1,6 @@
 {
   "name": "n8n-check",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Run n8n workflow regression checks with fixtures, local HTTP mocks and JUnit reports.",
   "type": "module",
   "bin": { "n8n-check": "bin/n8n-check.mjs" },

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util';
 import { runCase } from '../src/runner.mjs';
+import { version } from '../src/version.mjs';
 
-const help = `n8n-check 0.1.0 — real n8n executions, fixture inputs, local HTTP mocks
+const help = `n8n-check ${version} — real n8n executions, fixture inputs, local HTTP mocks
 
 Usage:
   n8n-check <workflow.json> <case.json> [--out directory] [--n8n binary]
@@ -25,7 +26,7 @@ try {
     json: { type: 'boolean' }, help: { type: 'boolean', short: 'h' }, version: { type: 'boolean' },
   } });
   if (values.help) console.log(help);
-  else if (values.version) console.log('0.1.0');
+  else if (values.version) console.log(version);
   else {
     if (positionals.length !== 2) throw new Error('Supply workflow.json and case.json. Run n8n-check --help for usage.');
     const report = await runCase({ workflowFile: positionals[0], caseFile: positionals[1], out: values.out, n8n: values.n8n, allowNetwork: values['allow-network'] });

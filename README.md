@@ -20,12 +20,54 @@ We ran the same two inputs with a single transient 503 through three workflow sh
 
 Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
 
+## Add a check to GitHub Actions
+
+**One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
+
+Commit your workflow export and a [case file](#your-first-case), then add `.github/workflows/n8n-check.yml`:
+
+```yaml
+name: n8n release check
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: blucca/n8n-check@v0.1.2
+        with:
+          workflow: workflows/render.json
+          case: tests/render.case.json
+          out: results/render
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: n8n-check-results
+          path: |
+            results/render/report.json
+            results/render/junit.xml
+```
+
+Replace `workflow` and `case` with paths in your repository. The action builds the pinned **n8n 2.41.7** runtime, mounts those two JSON files read-only, runs with **loopback-only networking**, and writes a **job summary with each check, failed expectations, and the HTTP request sequence**. Exit 1 fails the step for a regression; exit 2 identifies setup errors. A failed step still leaves its JSON/JUnit for the `if: always()` upload.
+
+- Supported runner: Linux with Docker and Node.js 20+, including GitHub-hosted `ubuntu-latest`. The n8n runtime inside Docker uses its own Node version. GitHub Actions usage follows your account's plan.
+- Paths are relative to the checked-out repository. Choose a separate output directory for each case. The action exposes `report`, `junit`, and `exit-code` outputs.
+- The container sees the two input files and the writable report directory. Prepare a self-contained JSON workflow slice and synthetic fixtures; workflow code executes inside that container. Source inline values and assertion differences appear in reports and job summaries.
+- `pull_request` runs checks; selecting this job as a **required status check** in your repository rules enables merge gating.
+
+[See the action source](action.yml) · [Runnable consumer example](https://github.com/blucca/flowdelta/tree/main/examples/ci-checks)
+
 ## Try a failure, then its fix
 
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.1 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.2 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -58,7 +100,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.1/n8n-check-0.1.1.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.2/n8n-check-0.1.2.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -154,7 +196,7 @@ n8n-check workflow.json case.json --out results --allow-network --json
 
 Each `results/run-*` directory retains the prepared workflow, real n8n execution JSON when emitted, command logs and isolated SQLite state. Use a distinct `--out` directory per concurrent case; rerunning the same directory replaces its summary reports and retains previous run directories.
 
-A complete [GitHub Actions example](.github/workflows/ci.yml) builds the pinned Docker image and runs the fixed, broken and retry workflows. Upload JSON/JUnit as CI artifacts and let exit codes gate the release.
+The [one-file GitHub Actions integration](#add-a-check-to-github-actions) brings the runner into your workflow repository. Our [own CI](.github/workflows/ci.yml) exercises the action with passing, regression, and setup-error cases alongside all three retry designs.
 
 ## Development
 
