@@ -4,6 +4,8 @@ const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
 let source, inspection, plan, originalText, isExample = false;
 const editors = ['input-items', 'expected-items', 'mocks'];
+let expectationDrafts = {}, previousMode = 'exact';
+const nineRowDetail = $('example-detail').innerHTML;
 const boundary = () => $('stop-after').checked ? { stopAfter: $('assert-node').value } : {};
 
 function importStatus(message, error = false) {
@@ -23,13 +25,44 @@ function editorValue(id, name) {
   try { return JSON.parse($(id).value); }
   catch { throw new Error(`${name}: enter valid JSON. Arrays use square brackets and property names use double quotes.`); }
 }
+function assertionOptions() {
+  const assertionMode = $('assertion-mode').value;
+  const count = $('expected-count').value;
+  return {
+    assertionMode,
+    ...(assertionMode === 'exact' ? { expectedItems: editorValue('expected-items', 'Expected output') } : {}),
+    ...(assertionMode === 'pluck' ? { pluck: $('pluck-path').value, expectedValues: editorValue('expected-items', 'Expected field values') } : {}),
+    ...(assertionMode !== 'exact' ? { expectedCount: count === '' ? null : Number(count) } : {}),
+  };
+}
+function showAssertionMode() {
+  const mode = $('assertion-mode').value;
+  $('pluck-control').hidden = mode !== 'pluck';
+  $('count-control').hidden = mode === 'exact';
+  $('expected-editor').hidden = mode === 'count';
+  $('assertion-help').textContent = {
+    exact: 'Compare every JSON field in execution order.',
+    pluck: 'Preserve business IDs or another stable field while timestamps and other metadata change.',
+    count: 'Check output volume. Use a selected field check when row identity matters.',
+  }[mode];
+  $('expected-help').textContent = mode === 'exact' ? 'Exact JSON items in run order. An empty array checks for zero items. Pins prefill branch 0.' : mode === 'pluck' ? 'An array of field values, e.g. ["row-A", "row-B"]. Order and duplicates are checked. Pins prefill branch 0.' : 'Zero checks for an empty output branch. Pins prefill branch 0.';
+}
+function seedExpectation() {
+  const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, output: Number($('output').value), assertionMode: $('assertion-mode').value, pluck: $('pluck-path').value, ...boundary() });
+  const assertion = next.spec.assertions[0];
+  $('expected-items').value = pretty(assertion.equals ?? null);
+  $('expected-count').value = assertion.count ?? '';
+  const pending = $('assertion-mode').value === 'count' ? assertion.count == null : assertion.equals == null;
+  $('expected-origin').textContent = pending ? 'Enter the expected values' : 'Prefilled from exported pins';
+  showAssertionMode();
+}
 function seedEditors() {
   const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, output: Number($('output').value), name: $('case-name').value, ...boundary() });
   $('input-items').value = pretty(next.spec.input.items);
-  $('expected-items').value = pretty(next.spec.assertions[0].equals);
+  expectationDrafts = {};
+  seedExpectation();
   $('mocks').value = pretty(next.spec.mocks);
   $('input-origin').textContent = next.spec.input.items === null ? 'Enter your fixture JSON' : 'Prefilled from exported pins';
-  $('expected-origin').textContent = next.spec.assertions[0].equals === null ? 'Enter the expected JSON items' : 'Prefilled from exported pins';
   $('mock-section').open = next.summary.httpNodes.length > 0;
   update();
 }
@@ -44,7 +77,7 @@ function update() {
     if ($('output').value === '' || !Number.isInteger(output) || output < 0) throw new Error('Output branch: enter a whole number starting at 0.');
     plan = draftCase(source, {
       inputNode: $('input-node').value, assertNode: $('assert-node').value, output,
-      inputItems: editorValue('input-items', 'Input items'), expectedItems: editorValue('expected-items', 'Expected output'),
+      inputItems: editorValue('input-items', 'Input items'), ...assertionOptions(),
       mocks: editorValue('mocks', 'Mocks'), name: $('case-name').value, ...boundary(),
     });
     $('readiness-title').textContent = plan.ready ? 'Ready for a runtime check.' : 'Finish the case draft.';
@@ -86,6 +119,8 @@ function load(text, label, example = false) {
   $('case-name').value = `${workflow.name || 'Workflow'} check`;
   $('output').value = '0';
   $('stop-after').checked = false;
+  $('assertion-mode').value = previousMode = 'exact';
+  $('pluck-path').value = 'json.id';
   $('builder').hidden = false;
   $('example-detail').hidden = !isExample;
   seedEditors();
@@ -114,9 +149,28 @@ $('example').addEventListener('click', async () => {
     const [workflow, spec] = await Promise.all([get('examples/silent-filter/fixed.json'), get('examples/silent-filter/case.json')]);
     workflow.pinData = { [spec.input.node]: spec.input.items.map(json => ({ json })), ...Object.fromEntries(spec.assertions.map(assertion => [assertion.node, assertion.equals.map(json => ({ json }))])) };
     load(pretty(workflow), 'Synthetic nine-row example', true);
+    $('example-detail').innerHTML = nineRowDetail;
     $('builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (error) { importStatus(error.message, true); }
   finally { $('example').disabled = false; }
+});
+$('identity-example').addEventListener('click', async () => {
+  $('identity-example').disabled = true;
+  try {
+    const get = async path => { const response = await fetch(path); if (!response.ok) throw new Error(`Example file returned HTTP ${response.status}`); return response.json(); };
+    const [workflow, spec] = await Promise.all([get('examples/identity-projection/workflow.json'), get('examples/identity-projection/case.json')]);
+    workflow.pinData = {
+      [spec.input.node]: spec.input.items.map(json => ({ json })),
+      'Select rows': spec.assertions[0].equals.map(id => ({ json: { ...spec.input.items.find(item => item.id === id), processedAt: '2026-10-07T00:00:00.000Z' } })),
+    };
+    load(pretty(workflow), 'Synthetic stable-ID example');
+    $('assertion-mode').value = previousMode = 'pluck';
+    seedExpectation(); update();
+    $('example-detail').hidden = false;
+    $('example-detail').textContent = 'This sample uses illustrative pinned snapshots. Each real run creates fresh timestamps. The selected-field contract preserves row-A and row-B in order. Try examples/identity-projection/wrong-id.json with the same case: it returns two rows with wrong IDs, and the identity check fails.';
+    $('builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (error) { importStatus(error.message, true); }
+  finally { $('identity-example').disabled = false; }
 });
 $('input-node').addEventListener('change', () => {
   const next = draftCase(source, { inputNode: $('input-node').value });
@@ -127,8 +181,8 @@ $('input-node').addEventListener('change', () => {
 $('assert-node').addEventListener('change', () => {
   $('output').value = '0';
   const next = draftCase(source, { inputNode: $('input-node').value, assertNode: $('assert-node').value, ...boundary() });
-  $('expected-items').value = pretty(next.spec.assertions[0].equals);
-  $('expected-origin').textContent = next.spec.assertions[0].equals === null ? 'Enter the expected JSON items' : 'Prefilled from exported pins';
+  expectationDrafts = {};
+  seedExpectation();
   refreshMocks(next);
   update();
 });
@@ -146,10 +200,28 @@ function refreshMocks(next) {
   $('mock-section').open = next.summary.httpNodes.length > 0;
 }
 $('output').addEventListener('input', () => {
-  $('expected-items').value = 'null';
-  $('expected-origin').textContent = 'Enter expected items for this branch';
+  expectationDrafts = {};
+  seedExpectation();
   update();
 });
+$('assertion-mode').addEventListener('change', () => {
+  expectationDrafts[previousMode] = { values: $('expected-items').value, count: $('expected-count').value, origin: $('expected-origin').textContent };
+  const mode = $('assertion-mode').value;
+  if (expectationDrafts[mode]) {
+    const saved = expectationDrafts[mode];
+    $('expected-items').value = saved.values;
+    $('expected-count').value = saved.count;
+    $('expected-origin').textContent = saved.origin;
+    showAssertionMode();
+  } else seedExpectation();
+  previousMode = mode;
+  update();
+});
+$('pluck-path').addEventListener('input', () => {
+  seedExpectation();
+  update();
+});
+$('expected-count').addEventListener('input', update);
 for (const id of [...editors, 'case-name']) $(id).addEventListener('input', () => {
   if (id === 'input-items') $('input-origin').textContent = 'Edited fixture';
   if (id === 'expected-items') $('expected-origin').textContent = 'Edited expectation';
@@ -169,7 +241,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.5
+      - uses: blucca/n8n-check@v0.1.6
         with:
           n8n-version: '${$('runtime-version').value}'
           workflow: workflow.json

@@ -110,3 +110,56 @@ test('init writes a first draft without a runtime and protects existing files', 
   assert.match(first.stdout, /Stop after: Mapped/);
   const second = run(); assert.equal(second.status, 2); assert.match(second.stderr, /File already exists/);
 });
+
+
+test('projection and count modes seed JSON-only pins and preserve authored expectations', () => {
+  const workflow = copy(); const before = structuredClone(workflow);
+  const projected = draftCase(workflow, { assertionMode: 'pluck' });
+  assert.equal(projected.ready, true);
+  assert.deepEqual(projected.spec.assertions, [{ node: 'Mapped', count: 1, pluck: 'json.id', equals: [42] }]);
+  const count = draftCase(workflow, { assertionMode: 'count' });
+  assert.equal(count.ready, true);
+  assert.deepEqual(count.spec.assertions, [{ node: 'Mapped', count: 1 }]);
+  const explicit = draftCase(workflow, { assertionMode: 'pluck', pluck: 'json.accepted', expectedValues: [false], expectedCount: 1 });
+  assert.equal(explicit.ready, true);
+  assert.deepEqual(explicit.spec.assertions[0].equals, [false]);
+  assert.equal(draftCase(workflow, { assertionMode: 'count', output: 1, expectedCount: 0 }).ready, true);
+  assert.equal(draftCase(workflow, { assertionMode: 'pluck', output: 1, expectedCount: 0, expectedValues: [] }).ready, true);
+  assert.deepEqual(workflow, before);
+});
+
+test('projection follows own-property nested paths and keeps missing values pending', () => {
+  const workflow = copy();
+  workflow.pinData.Mapped = [{ json: { refs: [{ id: null }] } }, { json: { refs: [{ id: 'B' }] } }];
+  const result = draftCase(workflow, { assertionMode: 'pluck', pluck: 'json.refs.0.id' });
+  assert.equal(result.ready, true);
+  assert.deepEqual(result.spec.assertions[0].equals, [null, 'B']);
+  for (const pluck of ['json.refs.0.absent', 'json.refs.0.id.child', 'json.toString']) {
+    const missing = draftCase(workflow, { assertionMode: 'pluck', pluck });
+    assert.equal(missing.ready, false);
+    assert.equal(missing.spec.assertions[0].equals, null);
+    assert.ok(missing.issues.some(issue => issue.code === 'projection_missing'));
+  }
+  workflow.pinData.Mapped = [];
+  assert.deepEqual(draftCase(workflow, { assertionMode: 'pluck' }).spec.assertions[0], { node: 'Mapped', count: 0, pluck: 'json.id', equals: [] });
+});
+
+test('pending snapshots, invalid projection contracts and explicit null stay actionable', () => {
+  const workflow = copy(); delete workflow.pinData.Mapped;
+  const pending = draftCase(workflow, { assertionMode: 'pluck' });
+  assert.equal(pending.ready, false);
+  assert.equal(pending.spec.assertions[0].equals, null);
+  assert.equal(pending.spec.assertions[0].count, null);
+  assert.deepEqual(pending.issues.map(issue => issue.code), ['count_required', 'values_required']);
+  assert.equal(draftCase(workflow, { assertionMode: 'count', expectedCount: 2 }).ready, true);
+  for (const options of [
+    { assertionMode: 'pluck', output: 1 },
+    { assertionMode: 'pluck', expectedValues: null, expectedCount: null },
+    { assertionMode: 'pluck', expectedValues: {} },
+    ...['', 'json..id', null, 2].map(pluck => ({ assertionMode: 'pluck', pluck })),
+    ...[-1, 1.5, '2', null].map(expectedCount => ({ assertionMode: 'count', expectedCount })),
+    { assertionMode: 'unknown' },
+  ]) assert.equal(draftCase(source, options).ready, false, JSON.stringify(options));
+  workflow.pinData.Mapped = [{ json: { id: 42 }, binary: {} }];
+  assert.equal(draftCase(workflow, { assertionMode: 'count' }).spec.assertions[0].count, null);
+});

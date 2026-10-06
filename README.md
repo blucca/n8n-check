@@ -8,7 +8,7 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a case and GitHub Actions file.
 
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.5** CLI or Action.
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.6** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
 
@@ -75,7 +75,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.5
+      - uses: blucca/n8n-check@v0.1.6
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -103,7 +103,7 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 Set `n8n-version` to an exact official image release:
 
 ```yaml
-      - uses: blucca/n8n-check@v0.1.5
+      - uses: blucca/n8n-check@v0.1.6
         with:
           n8n-version: '2.38.4'
           workflow: workflows/render.json
@@ -120,7 +120,7 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.5 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.6 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -153,7 +153,7 @@ Both example inputs use an object for `styling`. The broken expression converts 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.5/blucca-n8n-check-0.1.5.tgz
+npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.6/blucca-n8n-check-0.1.6.tgz
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -174,7 +174,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.5/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.6/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```
@@ -214,11 +214,11 @@ From a repository checkout, you can use `examples/object-body/fixed.json` as the
 - **`responses`** are returned in order **per route**. The final response repeats. Use e.g. 503 → 200 for retry or `PENDING` → `COMPLETED` for polling. Response `headers` is an optional string-valued object.
 - **`expect.count`** is required and exact. Optional **`expect.bodies`** checks the parsed JSON request bodies, in arrival order. The array length matches the expected count. Text bodies are compared as strings; empty bodies become `null`.
 - **`assertions[].equals`** checks the exact JSON items at a named node, across all its executions in run order. **`output`** selects an output branch; default `0`. Array order and item count matter. For loops, choose the terminal output node when you want final items.
-- **`assertions[].count`** (main / next release) optionally checks the exact number of items using the same node, output and run selection. It can be used alone or alongside `equals`.
-- **`assertions[].pluck`** (main / next release) optionally projects a field from each n8n item before comparing `equals`, e.g. `"pluck": "json.id"` with `"equals": ["row-A", "row-B"]`. Paths are dot-separated own-property names; numeric segments address array entries. Every segment must exist; missing fields fail with zero-based `missingItems` indexes in JSON/JUnit diagnostics. Use full `equals` for keys containing literal dots. Projection preserves order and duplicates, and requires `equals`.
+- **`assertions[].count`** (v0.1.6+) optionally checks the exact number of items using the same node, output and run selection. It can be used alone or alongside `equals`.
+- **`assertions[].pluck`** (v0.1.6+) optionally projects a field from each n8n item before comparing `equals`, e.g. `"pluck": "json.id"` with `"equals": ["row-A", "row-B"]`. Paths are dot-separated own-property names; numeric segments address array entries. Every segment must exist; missing fields fail with zero-based `missingItems` indexes in JSON/JUnit diagnostics. Use full `equals` for keys containing literal dots. Projection preserves order and duplicates, and requires `equals`.
 - **`timeoutMs`** defaults to 60,000 for workflow execution, configurable from 1,000 to 600,000. Each setup command has a 120-second cap. **`maxRequests`** defaults to 100, configurable up to 10,000. Incoming mock bodies have a 1 MiB limit; CLI output has a 16 MiB limit.
 
-Count and projection are available on `main` for the next release. To run the example from a current source checkout:
+Count and projection are available from **v0.1.6**. To run the bundled example from a source checkout:
 
 ```sh
 node bin/n8n-check.mjs examples/identity-projection/workflow.json \

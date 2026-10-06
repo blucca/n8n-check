@@ -81,7 +81,43 @@ export function draftCase(raw, options = {}) {
     return null;
   };
   const inputItems = itemsFor('inputItems', inputNode, 'input.items');
-  const expectedItems = itemsFor('expectedItems', assertNode, 'assertions[0].equals', output === 0);
+  const assertionMode = options.assertionMode ?? 'exact';
+  const assertion = { node: assertNode, ...(output ? { output } : {}) };
+  if (assertionMode === 'exact') {
+    assertion.equals = itemsFor('expectedItems', assertNode, 'assertions[0].equals', output === 0);
+  } else if (['pluck', 'count'].includes(assertionMode)) {
+    const pins = source.pinData?.[assertNode];
+    const usablePins = output === 0 && Array.isArray(pins) && pins.every(item => plain(item) && plain(item.json) && !has(item, 'binary'));
+    assertion.count = options.expectedCount !== undefined ? copy(options.expectedCount) : usablePins ? pins.length : null;
+    if (!Number.isInteger(assertion.count) || assertion.count < 0) issue('count_required', 'assertions[0].count', 'Enter the expected item count as a whole number starting at 0.');
+    if (assertionMode === 'pluck') {
+      assertion.pluck = options.pluck === undefined ? 'json.id' : options.pluck;
+      const validPath = typeof assertion.pluck === 'string' && assertion.pluck.split('.').every(part => part.length > 0);
+      if (!validPath) issue('pluck_required', 'assertions[0].pluck', 'Enter a dot-separated path from the n8n item, such as json.id.');
+      assertion.equals = options.expectedValues !== undefined ? copy(options.expectedValues) : null;
+      if (options.expectedValues === undefined && usablePins && validPath) {
+        const missingItems = [];
+        const values = pins.map((item, index) => {
+          let value = item;
+          for (const key of assertion.pluck.split('.')) {
+            if (value === null || typeof value !== 'object' || !has(value, key)) {
+              missingItems.push(index);
+              return undefined;
+            }
+            value = value[key];
+          }
+          return copy(value);
+        });
+        if (missingItems.length) issue('projection_missing', 'assertions[0].equals', `The selected field is missing in pinned items at zero-based indexes ${missingItems.join(', ')}. Choose a present field or enter expected values.`);
+        else assertion.equals = values;
+      }
+      if (!Array.isArray(assertion.equals)) issue('values_required', 'assertions[0].equals', 'Enter an array of expected field values in run order, such as ["row-A", "row-B"].');
+      else if (Number.isInteger(assertion.count) && assertion.count >= 0 && assertion.count !== assertion.equals.length) issue('count_mismatch', 'assertions[0].count', 'Match the item count to the number of expected field values.');
+    }
+  } else {
+    issue('assertion_mode', 'assertions[0]', 'Choose exact, pluck, or count assertion mode.');
+    assertion.equals = null;
+  }
   if (inputNode === assertNode && inputNode) issue('assert_downstream', 'assertions[0].node', 'Choose a downstream assertion node to check executed behavior. The input node is replaced with your fixture.');
   if (!assertNode) issue('assert_required', 'assertions[0].node', 'Choose a downstream node whose output this case should preserve.');
 
@@ -107,7 +143,7 @@ export function draftCase(raw, options = {}) {
     return { node: node.name, url: path, routes: [{ method, path, responses: [{ status: null, json: null }], expect: { count: null } }] };
   });
   const boundary = options.stopAfter === undefined ? {} : { stopAfter: options.stopAfter };
-  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} check`, input: { node: inputNode, items: inputItems }, ...boundary, mocks, assertions: [{ node: assertNode, ...(output ? { output } : {}), equals: expectedItems }] };
+  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} check`, input: { node: inputNode, items: inputItems }, ...boundary, mocks, assertions: [assertion] };
   // Valid placeholders exist only in this structural probe; the saved draft retains pending fields.
   const probe = {
     version: 1, name: 'Draft structure check', input: { node: inputNode, items: [] }, ...boundary,

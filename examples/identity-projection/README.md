@@ -6,7 +6,7 @@ A three-row fixture contains two eligible records and one distractor. The Code n
 { "node": "Select rows", "count": 2, "pluck": "json.id", "equals": ["row-A", "row-B"] }
 ```
 
-**Availability: current `main` source; planned for the next release.** The published v0.1.5 package predates `count` and `pluck`.
+**Available in v0.1.6+.** The [local case builder](https://blucca.github.io/n8n-check/) offers **Selected field + item count**: choose `json.id`, review the expected IDs, and download the case and CI file.
 
 ## Run
 
