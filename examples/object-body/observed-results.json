@@ -1,0 +1,449 @@
+{
+  "description": "Actual n8n CLI executions in a Linux loopback-only network namespace. HTTP responses use synthetic local contracts.",
+  "cases": [
+    {
+      "name": "Two render requests preserve object options",
+      "startedAt": "2026-10-06T07:11:12.163Z",
+      "runnerVersion": "0.1.0",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "status": "failed",
+      "exitCode": 1,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": false,
+          "actual": {
+            "cliExitCode": 1,
+            "lastNode": "Render",
+            "message": "The value in the \"JSON Body\" field is not valid JSON",
+            "description": "Unexpected token 'o', ...\"ptions\": [object Obj\"... is not valid JSON",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Render: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "id": "render-42"
+            },
+            {
+              "id": "render-43"
+            }
+          ],
+          "actual": []
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Render: POST /renders request count",
+          "passed": false,
+          "expected": 2,
+          "actual": 0
+        },
+        {
+          "name": "Render: POST /renders request bodies",
+          "passed": false,
+          "expected": [
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            },
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            }
+          ],
+          "actual": []
+        }
+      ],
+      "requests": [],
+      "source": {
+        "workflow": "broken.json",
+        "case": "case.json",
+        "workflowSha256": "df776b7483357a89f969c27a4dfc0643d181be046a14298e91b9def3054cf04a",
+        "caseSha256": "feefda461df6928027dcc9a3932a1879a1b326e97ef414200b3a7863ebbdd6c1"
+      }
+    },
+    {
+      "name": "Two render requests preserve object options",
+      "startedAt": "2026-10-06T07:09:16.575Z",
+      "runnerVersion": "0.1.0",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "status": "passed",
+      "exitCode": 0,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Render",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Render: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "id": "render-42"
+            },
+            {
+              "id": "render-43"
+            }
+          ],
+          "actual": [
+            {
+              "id": "render-42"
+            },
+            {
+              "id": "render-43"
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Render: POST /renders request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Render: POST /renders request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            },
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            }
+          ],
+          "actual": [
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            },
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders",
+          "body": {
+            "shortId": 42,
+            "renderOptions": {
+              "color": "#112233",
+              "fontSize": 31
+            }
+          },
+          "matched": true,
+          "status": 200,
+          "response": {
+            "id": "render-42"
+          }
+        },
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders",
+          "body": {
+            "shortId": 43,
+            "renderOptions": {
+              "color": "#aabbcc",
+              "fontSize": 47
+            }
+          },
+          "matched": true,
+          "status": 200,
+          "response": {
+            "id": "render-43"
+          }
+        }
+      ],
+      "source": {
+        "workflow": "fixed.json",
+        "case": "case.json",
+        "workflowSha256": "fc1aeb17520ebd6e19e70e37c98742271f6bd323d2f4b8c93dddaffa8ea55574",
+        "caseSha256": "feefda461df6928027dcc9a3932a1879a1b326e97ef414200b3a7863ebbdd6c1"
+      }
+    },
+    {
+      "name": "HTTP retry preserves both item payloads",
+      "startedAt": "2026-10-06T07:12:19.810Z",
+      "runnerVersion": "0.1.0",
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.10.0",
+      "status": "passed",
+      "exitCode": 0,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Render",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Render: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "id": "render-42"
+            },
+            {
+              "id": "render-43"
+            }
+          ],
+          "actual": [
+            {
+              "id": "render-42"
+            },
+            {
+              "id": "render-43"
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "Render: POST /renders/42 request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Render: POST /renders/42 request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            },
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            }
+          ],
+          "actual": [
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            },
+            {
+              "shortId": 42,
+              "renderOptions": {
+                "color": "#112233",
+                "fontSize": 31
+              }
+            }
+          ]
+        },
+        {
+          "name": "Render: POST /renders/43 request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Render: POST /renders/43 request bodies",
+          "passed": true,
+          "expected": [
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            },
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            }
+          ],
+          "actual": [
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            },
+            {
+              "shortId": 43,
+              "renderOptions": {
+                "color": "#aabbcc",
+                "fontSize": 47
+              }
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders/42",
+          "body": {
+            "shortId": 42,
+            "renderOptions": {
+              "color": "#112233",
+              "fontSize": 31
+            }
+          },
+          "matched": true,
+          "status": 503,
+          "response": {
+            "error": "temporary fixture failure"
+          }
+        },
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders/43",
+          "body": {
+            "shortId": 43,
+            "renderOptions": {
+              "color": "#aabbcc",
+              "fontSize": 47
+            }
+          },
+          "matched": true,
+          "status": 200,
+          "response": {
+            "id": "render-43"
+          }
+        },
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders/42",
+          "body": {
+            "shortId": 42,
+            "renderOptions": {
+              "color": "#112233",
+              "fontSize": 31
+            }
+          },
+          "matched": true,
+          "status": 200,
+          "response": {
+            "id": "render-42"
+          }
+        },
+        {
+          "node": "Render",
+          "method": "POST",
+          "path": "/renders/43",
+          "body": {
+            "shortId": 43,
+            "renderOptions": {
+              "color": "#aabbcc",
+              "fontSize": 47
+            }
+          },
+          "matched": true,
+          "status": 200,
+          "response": {
+            "id": "render-43"
+          }
+        }
+      ],
+      "source": {
+        "workflow": "retry.json",
+        "case": "retry-case.json",
+        "workflowSha256": "9dbcef22892070ddb5613e98cee117d3c0db68024bbe30901011658e359baf75",
+        "caseSha256": "a86491f50cee02886c8da17477efba03b4245b661f0bd2fde6a07458fa2cdafc"
+      }
+    }
+  ]
+}

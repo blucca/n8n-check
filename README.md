@@ -58,7 +58,13 @@ The GitHub release package works independently of npm registry availability. Doc
 
 ## Your first case
 
-Export a workflow, choose an input boundary by node name, and put this in `case.json`:
+For your own export, replace **all three node-name fields** below: `input.node` with your input boundary, `mocks[].node` with your HTTP Request node, and `assertions[].node` with the node whose output you want to check. Names match the labels in the n8n editor exactly. The literal `Fixture` and `Render` names match the included example.
+
+Save this as `case.json` and run it against the included fixed workflow, or substitute your own workflow and names:
+
+```sh
+n8n-check examples/object-body/fixed.json case.json --allow-network --out results/first-case
+```
 
 ```json
 {
@@ -102,7 +108,7 @@ docker run --rm --network none -v "$PWD:/work" n8n-check \
   --out /work/results/retry
 ```
 
-In the retry example, the first item receives 503 and the second receives 200. n8n 2.41.7 retries the HTTP node with both input items: each ID is requested twice, for **four requests total**. The case asserts those counts and both final outputs. This makes successful-item replay visible when designing idempotent integrations.
+In the retry example, the first item receives 503 and the second receives 200. n8n 2.41.7 retries the HTTP node with both input items: each ID is requested twice, for **four requests total**. The case asserts those counts and both final outputs. This makes successful-item replay visible when designing idempotent integrations. [Recorded local results](examples/object-body/observed-results.json) include the actual requests and checks for all three examples.
 
 ## Execution boundary
 
