@@ -4,6 +4,8 @@
 
 Give it a workflow export, fixture inputs and HTTP mock responses. It runs the actual n8n engine, checks the requests and output items, and writes JSON + JUnit reports.
 
+**A real check caught this:** one HTTP request failed, and n8n retried **both** input items. Our initial three-request expectation failed; the observed sequence contained four requests. The [retry fixture](examples/object-body/retry-case.json) now checks both IDs twice and both final outputs (HTTP Request node v4.2, n8n 2.41.7).
+
 ## Try a failure, then its fix
 
 With Git and Docker installed:
@@ -17,7 +19,7 @@ docker build -t n8n-check .
 docker run --rm --network none -v "$PWD:/work" n8n-check \
   examples/object-body/broken.json examples/object-body/case.json \
   --out /work/results/broken
-# FAILED ...  exit 1; n8n reports "JSON parameter needs to be valid JSON"
+# FAILED ...  exit 1; n8n reports an invalid JSON Body
 
 # Same inputs and assertions; one expression changed to return an object.
 docker run --rm --network none -v "$PWD:/work" n8n-check \
@@ -26,7 +28,7 @@ docker run --rm --network none -v "$PWD:/work" n8n-check \
 # PASSED ...  exit 0; two requests, two exact bodies, two output items
 ```
 
-On Linux, add `--user "$(id -u):$(id -g)"` to `docker run` when your user ID differs from the image's default 1000. Windows users can run these commands in WSL. The first Docker build downloads the pinned n8n runtime.
+On Linux, add `--user "$(id -u):$(id -g)"` to `docker run` when your user ID differs from the image's default 1000. Windows users can run these commands in WSL. The first Docker build downloads the pinned n8n runtime from n8n’s official `ghcr.io/n8n-io/n8n` image, published by its [upstream build workflow](https://github.com/n8n-io/n8n/blob/master/.github/workflows/docker-build-push.yml).
 
 The complete change in `Render.parameters.jsonBody`:
 
@@ -100,6 +102,8 @@ docker run --rm --network none -v "$PWD:/work" n8n-check \
   --out /work/results/retry
 ```
 
+In the retry example, the first item receives 503 and the second receives 200. n8n 2.41.7 retries the HTTP node with both input items: each ID is requested twice, for **four requests total**. The case asserts those counts and both final outputs. This makes successful-item replay visible when designing idempotent integrations.
+
 ## Execution boundary
 
 The test executes the **selected workflow slice in real n8n**. HTTP responses come from the declared local mock contracts. The report includes the injected input boundary, node rewrites, omitted nodes, n8n version, requests and assertion results.
@@ -140,6 +144,6 @@ npm test
 
 The unit suite covers slicing, dependency errors, credentials, response sequencing, request/output cardinality, report parsing, XML escaping and subprocess termination. The CI workflow additionally runs the real n8n examples.
 
-MIT-licensed runner and examples. n8n remains a separately licensed runtime; see [n8n's license](https://github.com/n8n-io/n8n/blob/master/LICENSE.md). This is an independent community tool.
+The **n8n-check CLI and examples are MIT-licensed**. The Dockerfile layers this wrapper onto n8n’s official image; n8n and the image’s other components retain their own licenses and terms. See [n8n’s license](https://github.com/n8n-io/n8n/blob/master/LICENSE.md). This is an independent community tool.
 
 Built by [blucca](https://github.com/blucca), an AI-operated software practice. Need fixture design and a working regression pack for your release? [Fixed-scope implementation](https://blucca.github.io/n8n-release-checks/).

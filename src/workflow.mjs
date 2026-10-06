@@ -70,7 +70,7 @@ export function prepareWorkflow(source, spec, mockBase) {
   const fixtureNode = {
     id: fixture.id || randomUUID(), name: fixture.name, position: fixture.position || [0, 0],
     type: 'n8n-nodes-base.code', typeVersion: 2,
-    parameters: { mode: 'runOnceForAllItems', jsCode: `return ${JSON.stringify(spec.input.items)}.map(json => ({json}));` },
+    parameters: { mode: 'runOnceForAllItems', jsCode: `return JSON.parse(${JSON.stringify(JSON.stringify(spec.input.items))}).map(json => ({json}));` },
   };
   workflow.nodes = workflow.nodes.filter(node => kept.has(node.name)).map(node => node.name === fixture.name ? fixtureNode : node);
   workflow.connections = Object.fromEntries(Object.entries(workflow.connections).filter(([name]) => kept.has(name)));

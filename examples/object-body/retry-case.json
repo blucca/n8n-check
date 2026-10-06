@@ -23,11 +23,11 @@
   "mocks": [
     {
       "node": "Render",
-      "url": "/renders",
+      "url": "/renders/{{ $json.shortId }}",
       "routes": [
         {
           "method": "POST",
-          "path": "/renders",
+          "path": "/renders/42",
           "responses": [
             {
               "status": 503,
@@ -40,16 +40,10 @@
               "json": {
                 "id": "render-42"
               }
-            },
-            {
-              "status": 200,
-              "json": {
-                "id": "render-43"
-              }
             }
           ],
           "expect": {
-            "count": 3,
+            "count": 2,
             "bodies": [
               {
                 "shortId": 42,
@@ -63,6 +57,30 @@
                 "renderOptions": {
                   "color": "#112233",
                   "fontSize": 31
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/renders/43",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "id": "render-43"
+              }
+            }
+          ],
+          "expect": {
+            "count": 2,
+            "bodies": [
+              {
+                "shortId": 43,
+                "renderOptions": {
+                  "color": "#aabbcc",
+                  "fontSize": 47
                 }
               },
               {

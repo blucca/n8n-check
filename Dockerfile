@@ -1,4 +1,4 @@
-FROM docker.n8n.io/n8nio/n8n:2.41.7
+FROM ghcr.io/n8n-io/n8n:2.41.7
 USER root
 COPY --chown=node:node bin /opt/n8n-check/bin
 COPY --chown=node:node src /opt/n8n-check/src
