@@ -104,7 +104,7 @@ export function draftCase(raw, options = {}) {
     if (path === '/TODO') issue('mock_path_required', `mocks[${index}].url`, `"${node.name}": set the local URL expression and concrete route paths for your fixture IDs.`);
     return { node: node.name, url: path, routes: [{ method, path, responses: [{ status: null, json: null }], expect: { count: null } }] };
   });
-  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} regression`, input: { node: inputNode, items: inputItems }, mocks, assertions: [{ node: assertNode, ...(output ? { output } : {}), equals: expectedItems }] };
+  const spec = { version: 1, name: options.name ?? `${source.name || 'Workflow'} check`, input: { node: inputNode, items: inputItems }, mocks, assertions: [{ node: assertNode, ...(output ? { output } : {}), equals: expectedItems }] };
   // Valid placeholders exist only in this structural probe; the saved draft retains pending fields.
   const probe = {
     version: 1, name: 'Draft structure check', input: { node: inputNode, items: [] },

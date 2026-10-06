@@ -82,7 +82,7 @@ function load(text, label, example = false) {
   optionsFor($('input-node'), nodes, checked.suggestedInputNode);
   const initial = draftCase(source, { inputNode: checked.suggestedInputNode });
   optionsFor($('assert-node'), nodes.filter(node => initial.summary.keptNodes.includes(node.name) && node.name !== checked.suggestedInputNode), initial.summary.assertNode);
-  $('case-name').value = `${workflow.name || 'Workflow'} regression`;
+  $('case-name').value = `${workflow.name || 'Workflow'} check`;
   $('output').value = '0';
   $('builder').hidden = false;
   $('example-detail').hidden = !isExample;
