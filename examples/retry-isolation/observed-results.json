@@ -1,0 +1,155 @@
+{
+  "description": "Actual n8n CLI executions with synthetic HTTP contracts: item 42 returns 503 then 200; item 43 always returns 200. Counts record HTTP requests.",
+  "runtime": {
+    "n8nVersion": "2.41.7",
+    "nodeVersion": "v26.10.0",
+    "runnerVersion": "0.1.0",
+    "httpRequestNodeVersion": 4.2,
+    "loopOverItemsNodeVersion": 3
+  },
+  "network": {
+    "mode": "loopback-only",
+    "enforced": true,
+    "interfaces": [
+      "lo"
+    ]
+  },
+  "cases": [
+    {
+      "workflow": "direct.json",
+      "case": "direct-case.json",
+      "workflowSha256": "e0b344c350ca93e0a91b0868a9cb658ec46e66ee9a4170791596c82defc21cf7",
+      "caseSha256": "09c18a6ea9bda6c92b7194e652fe3be0e34aceb70851fc27b259a5e4d40dcbe1",
+      "startedAt": "2026-10-06T08:37:06.352Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checks": {
+        "passed": 8,
+        "total": 8
+      },
+      "requestCounts": {
+        "42": 2,
+        "43": 2
+      },
+      "requestSequence": [
+        {
+          "path": "/renders/42",
+          "status": 503
+        },
+        {
+          "path": "/renders/43",
+          "status": 200
+        },
+        {
+          "path": "/renders/42",
+          "status": 200
+        },
+        {
+          "path": "/renders/43",
+          "status": 200
+        }
+      ],
+      "allRequestBodiesMatch": true,
+      "doneOutput": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    },
+    {
+      "workflow": "http-batching.json",
+      "case": "http-batching-case.json",
+      "workflowSha256": "0762d67780cd4c99f35e3456a4d10500220f95331cbad71b6445675df5f11add",
+      "caseSha256": "05650c60b43a47a83e87435793dc737e5be6cc0aedb93b501a0eda4b8ea40249",
+      "startedAt": "2026-10-06T08:37:05.168Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checks": {
+        "passed": 8,
+        "total": 8
+      },
+      "requestCounts": {
+        "42": 2,
+        "43": 2
+      },
+      "requestSequence": [
+        {
+          "path": "/renders/42",
+          "status": 503
+        },
+        {
+          "path": "/renders/43",
+          "status": 200
+        },
+        {
+          "path": "/renders/42",
+          "status": 200
+        },
+        {
+          "path": "/renders/43",
+          "status": 200
+        }
+      ],
+      "allRequestBodiesMatch": true,
+      "doneOutput": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    },
+    {
+      "workflow": "loop.json",
+      "case": "loop-case.json",
+      "workflowSha256": "d5ef57918d131f6ebcd167cd9f654e0ee1dfed64673a1dcfd216b655b48ccac7",
+      "caseSha256": "d99aa830e78ae61c84272dc854c71fa74b1c692d9de068c9af05d0a7d037250f",
+      "startedAt": "2026-10-06T08:37:04.062Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checks": {
+        "passed": 9,
+        "total": 9
+      },
+      "requestCounts": {
+        "42": 2,
+        "43": 1
+      },
+      "requestSequence": [
+        {
+          "path": "/renders/42",
+          "status": 503
+        },
+        {
+          "path": "/renders/42",
+          "status": 200
+        },
+        {
+          "path": "/renders/43",
+          "status": 200
+        }
+      ],
+      "allRequestBodiesMatch": true,
+      "doneOutput": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ],
+      "loopDoneOutput": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    }
+  ]
+}

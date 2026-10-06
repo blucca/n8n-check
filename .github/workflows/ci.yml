@@ -23,9 +23,13 @@ jobs:
           docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/broken.json examples/object-body/case.json --out temp/ci/broken
           code=$?
           test "$code" -eq 1
-      - name: HTTP retry preserves request payloads
+      - name: Compare direct, HTTP batching, and per-item loop retry
         run: |
-          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/retry.json examples/object-body/retry-case.json --out temp/ci/retry
+          for mode in direct http-batching loop; do
+            docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+              "examples/retry-isolation/$mode.json" "examples/retry-isolation/$mode-case.json" \
+              --out "temp/ci/retry-$mode" || exit "$?"
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:

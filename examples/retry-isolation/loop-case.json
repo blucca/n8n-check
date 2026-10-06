@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "name": "Loop batch size 1 with HTTP retry",
+  "input": {
+    "node": "Fixture",
+    "items": [
+      {
+        "shortId": 42,
+        "styling": {
+          "color": "#112233",
+          "fontSize": 31
+        }
+      },
+      {
+        "shortId": 43,
+        "styling": {
+          "color": "#aabbcc",
+          "fontSize": 47
+        }
+      }
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Render",
+      "url": "/renders/{{ $json.shortId }}",
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/renders/42",
+          "responses": [
+            {
+              "status": 503,
+              "json": {
+                "error": "temporary fixture failure"
+              }
+            },
+            {
+              "status": 200,
+              "json": {
+                "id": "render-42"
+              }
+            }
+          ],
+          "expect": {
+            "count": 2,
+            "bodies": [
+              {
+                "shortId": 42,
+                "renderOptions": {
+                  "color": "#112233",
+                  "fontSize": 31
+                }
+              },
+              {
+                "shortId": 42,
+                "renderOptions": {
+                  "color": "#112233",
+                  "fontSize": 31
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/renders/43",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "id": "render-43"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              {
+                "shortId": 43,
+                "renderOptions": {
+                  "color": "#aabbcc",
+                  "fontSize": 47
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Done",
+      "equals": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    },
+    {
+      "node": "Loop Over Items",
+      "output": 0,
+      "equals": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    }
+  ]
+}
