@@ -1,0 +1,273 @@
+{
+  "description": "Synthetic retrieval regression; same fixture and exact output assertions for both workflow versions. Recorded by blucca in a loopback-only Linux network namespace.",
+  "caseSha256": "2457e77b96dd0ebef55ff38cad44251710363cb97d1e4b413a677fa0a3c0cf2e",
+  "runs": [
+    {
+      "workflow": "broken.json",
+      "workflowSha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7",
+      "runnerVersion": "0.1.2",
+      "n8nVersion": "2.41.7",
+      "startedAt": "2026-10-06T10:48:52.503Z",
+      "durationMs": 9159,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Confidence Gate",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Confidence Gate: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "id": "policy-01",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-02",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-03",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-04",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-05",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-06",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-07",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-08",
+              "score": 0.9,
+              "source": "current-index"
+            }
+          ],
+          "actual": []
+        },
+        {
+          "name": "Build context: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "count": 8,
+              "ids": [
+                "policy-01",
+                "policy-02",
+                "policy-03",
+                "policy-04",
+                "policy-05",
+                "policy-06",
+                "policy-07",
+                "policy-08"
+              ]
+            }
+          ],
+          "actual": []
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "requests": []
+    },
+    {
+      "workflow": "fixed.json",
+      "workflowSha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844",
+      "runnerVersion": "0.1.2",
+      "n8nVersion": "2.41.7",
+      "startedAt": "2026-10-06T10:49:01.779Z",
+      "durationMs": 8976,
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "status": "passed",
+      "exitCode": 0,
+      "checks": [
+        {
+          "name": "n8n execution succeeds",
+          "passed": true,
+          "actual": {
+            "cliExitCode": 0,
+            "lastNode": "Build context",
+            "executionFound": true
+          }
+        },
+        {
+          "name": "Confidence Gate: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "id": "policy-01",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-02",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-03",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-04",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-05",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-06",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-07",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-08",
+              "score": 0.9,
+              "source": "current-index"
+            }
+          ],
+          "actual": [
+            {
+              "id": "policy-01",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-02",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-03",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-04",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-05",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-06",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-07",
+              "score": 0.9,
+              "source": "current-index"
+            },
+            {
+              "id": "policy-08",
+              "score": 0.9,
+              "source": "current-index"
+            }
+          ]
+        },
+        {
+          "name": "Build context: output 0",
+          "passed": true,
+          "expected": [
+            {
+              "count": 8,
+              "ids": [
+                "policy-01",
+                "policy-02",
+                "policy-03",
+                "policy-04",
+                "policy-05",
+                "policy-06",
+                "policy-07",
+                "policy-08"
+              ]
+            }
+          ],
+          "actual": [
+            {
+              "count": 8,
+              "ids": [
+                "policy-01",
+                "policy-02",
+                "policy-03",
+                "policy-04",
+                "policy-05",
+                "policy-06",
+                "policy-07",
+                "policy-08"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mock: all requests match routes",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "name": "mock: request limits and server",
+          "passed": true,
+          "actual": []
+        }
+      ],
+      "requests": []
+    }
+  ]
+}

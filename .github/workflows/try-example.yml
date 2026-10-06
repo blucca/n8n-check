@@ -1,0 +1,35 @@
+name: Try a silent data-loss regression
+on:
+  workflow_dispatch:
+    inputs:
+      workflow:
+        description: 'fixed keeps 8 relevant rows; broken silently drops them'
+        type: choice
+        required: true
+        default: fixed
+        options:
+          - fixed
+          - broken
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check the intermediate rows and final context
+        uses: blucca/n8n-check@1a9439e7b0d448fa22d530bca4cc8497f1838369 # v0.1.2
+        with:
+          workflow: examples/silent-filter/${{ inputs.workflow }}.json
+          case: examples/silent-filter/case.json
+          out: results/silent-filter
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: silent-filter-results
+          path: |
+            results/silent-filter/report.json
+            results/silent-filter/junit.xml

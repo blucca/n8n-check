@@ -65,6 +65,29 @@ jobs:
               "examples/retry-isolation/$mode.json" "examples/retry-isolation/$mode-case.json" \
               --out "temp/ci/retry-$mode" || exit "$?"
           done
+      - name: Successful execution still catches a silent filter regression
+        run: |
+          for mode in broken fixed; do
+            set +e
+            docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check \
+              "examples/silent-filter/$mode.json" examples/silent-filter/case.json \
+              --out "temp/ci/silent-$mode"
+            code=$?
+            set -e
+            if [ "$mode" = broken ]; then test "$code" = 1; else test "$code" = 0; fi
+          done
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            for (const mode of ["broken", "fixed"]) {
+              const report = JSON.parse(readFileSync(`temp/ci/silent-${mode}/report.json`));
+              assert.equal(report.checks[0].passed, true);
+              assert.equal(report.checks[1].actual.length, mode === "broken" ? 0 : 8);
+              assert.equal(report.checks[1].passed, mode === "fixed");
+              assert.equal(report.checks[2].passed, mode === "fixed");
+              assert.equal(report.requests.length, 0);
+            }
+          '
       - uses: actions/upload-artifact@v4
         if: always()
         with:

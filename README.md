@@ -4,11 +4,27 @@
 
 Give it a workflow export, fixture inputs and HTTP mock responses. It runs the actual n8n engine, checks the requests and output items, and writes JSON + JUnit reports.
 
-**A real check caught this:** one HTTP request failed, and n8n retried **both** input items. Our initial three-request expectation failed; the observed sequence contained four requests. The [retry fixture](examples/object-body/retry-case.json) now checks both IDs twice and both final outputs (HTTP Request node v4.2, n8n 2.41.7).
+## Try it in your browser
 
-## Which retry boundary protects the successful item?
+**The workflow finishes successfully. Eight useful rows disappear. Your regression check turns red.**
 
-We ran the same two inputs with a single transient 503 through three workflow shapes:
+1. [Fork this repository](https://github.com/blucca/n8n-check/fork).
+2. In your fork, open **Actions** and enable workflows if GitHub prompts you.
+3. Select **Try a silent data-loss regression → Run workflow**. Choose `fixed` for a passing check, then `broken` to catch the obsolete filter.
+4. Open either run for the check summary. Download `silent-filter-results` for JSON + JUnit.
+
+GitHub supplies the workflow, fixtures and runtime. Every input is synthetic; every node runs locally inside the isolated runtime. GitHub Actions usage follows your account’s plan.
+
+| Same nine input rows | n8n execution | Relevant rows after the gate | Regression check |
+|---|---|---|---|
+| Obsolete source filter | Success | 0 | **FAIL** |
+| Fixed filter | Success | 8, with the low-score distractor excluded | **PASS** |
+
+This synthetic retrieval example checks **exact intermediate items and the final context**, so a successful execution with missing business data gets caught. [Workflow pair, case and recorded results](examples/silent-filter/) · [Demo Action source](.github/workflows/try-example.yml)
+
+### Catch duplicate side effects too
+
+One HTTP request failed, and n8n retried **both** input items. We ran the same two inputs with a single transient 503 through three workflow shapes (HTTP Request v4.2, n8n 2.41.7):
 
 | Shape | Requests for 42 | Requests for 43 | Total |
 |---|---:|---:|---:|

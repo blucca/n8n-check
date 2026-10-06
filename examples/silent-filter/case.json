@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "name": "Keep the eight relevant retrieval rows",
+  "input": {
+    "node": "Retrieved rows",
+    "items": [
+      {
+        "id": "policy-01",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-02",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-03",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-04",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-05",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-06",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-07",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-08",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "distractor-09",
+        "score": 0.2,
+        "source": "current-index"
+      }
+    ]
+  },
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Confidence Gate",
+      "equals": [
+        {
+          "id": "policy-01",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-02",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-03",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-04",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-05",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-06",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-07",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-08",
+          "score": 0.9,
+          "source": "current-index"
+        }
+      ]
+    },
+    {
+      "node": "Build context",
+      "equals": [
+        {
+          "count": 8,
+          "ids": [
+            "policy-01",
+            "policy-02",
+            "policy-03",
+            "policy-04",
+            "policy-05",
+            "policy-06",
+            "policy-07",
+            "policy-08"
+          ]
+        }
+      ]
+    }
+  ]
+}
