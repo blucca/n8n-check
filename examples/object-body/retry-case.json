@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "name": "HTTP retry preserves both item payloads",
+  "input": {
+    "node": "Fixture",
+    "items": [
+      {
+        "shortId": 42,
+        "styling": {
+          "color": "#112233",
+          "fontSize": 31
+        }
+      },
+      {
+        "shortId": 43,
+        "styling": {
+          "color": "#aabbcc",
+          "fontSize": 47
+        }
+      }
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Render",
+      "url": "/renders",
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/renders",
+          "responses": [
+            {
+              "status": 503,
+              "json": {
+                "error": "temporary fixture failure"
+              }
+            },
+            {
+              "status": 200,
+              "json": {
+                "id": "render-42"
+              }
+            },
+            {
+              "status": 200,
+              "json": {
+                "id": "render-43"
+              }
+            }
+          ],
+          "expect": {
+            "count": 3,
+            "bodies": [
+              {
+                "shortId": 42,
+                "renderOptions": {
+                  "color": "#112233",
+                  "fontSize": 31
+                }
+              },
+              {
+                "shortId": 42,
+                "renderOptions": {
+                  "color": "#112233",
+                  "fontSize": 31
+                }
+              },
+              {
+                "shortId": 43,
+                "renderOptions": {
+                  "color": "#aabbcc",
+                  "fontSize": 47
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Render",
+      "equals": [
+        {
+          "id": "render-42"
+        },
+        {
+          "id": "render-43"
+        }
+      ]
+    }
+  ]
+}

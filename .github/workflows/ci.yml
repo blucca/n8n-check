@@ -1,0 +1,35 @@
+name: Real n8n regression checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - name: Build pinned n8n runtime
+        run: docker build -t n8n-check .
+      - name: Fixed workflow passes
+        run: |
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/fixed.json examples/object-body/case.json --out temp/ci/fixed
+      - name: Known JSON regression exits 1
+        run: |
+          set +e
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/broken.json examples/object-body/case.json --out temp/ci/broken
+          code=$?
+          test "$code" -eq 1
+      - name: HTTP retry preserves request payloads
+        run: |
+          docker run --rm --network none --user "$(id -u):$(id -g)" -v "$PWD:/work" n8n-check examples/object-body/retry.json examples/object-body/retry-case.json --out temp/ci/retry
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: n8n-check-reports
+          path: |
+            temp/ci/**/report.json
+            temp/ci/**/junit.xml
