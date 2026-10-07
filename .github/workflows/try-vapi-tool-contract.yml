@@ -30,7 +30,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Check both tool identities, backend requests, and response envelope
-        uses: blucca/n8n-check@v0.1.6
+        uses: blucca/n8n-check@v0.1.7
         with:
           workflow: examples/vapi-tool-contract/${{ inputs.workflow }}.json
           case: examples/vapi-tool-contract/${{ inputs.scenario }}.case.json

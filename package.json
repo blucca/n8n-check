@@ -1,6 +1,6 @@
 {
   "name": "@blucca/n8n-check",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Run n8n workflow regression checks with fixtures, local HTTP mocks and JUnit reports.",
   "type": "module",
   "bin": {

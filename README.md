@@ -10,7 +10,7 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **Have Docker? Download → unzip → `sh run.sh`.** The pack includes your workflow, editable case, and a pinned runner script. The first run downloads n8n and verifies the v0.1.6 runner against its SHA-256; subsequent runs reuse the local cache. Execution uses a loopback-only container with read-only input mounts, and writes `results/report.json` and `results/junit.xml`. Requires Docker with Linux containers and a shell on Linux, macOS, or WSL2. Your workflow and fixture files stay local.
 
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.6** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.7** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
 
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.6
+      - uses: blucca/n8n-check@v0.1.7
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -107,7 +107,7 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 Set `n8n-version` to an exact official image release:
 
 ```yaml
-      - uses: blucca/n8n-check@v0.1.6
+      - uses: blucca/n8n-check@v0.1.7
         with:
           n8n-version: '2.38.4'
           workflow: workflows/render.json
@@ -124,7 +124,7 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.6 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.7 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -152,12 +152,12 @@ The complete change in `Render.parameters.jsonBody`:
 
 Both example inputs use an object for `styling`. The broken expression converts that object to `[object Object]`; the fixed expression preserves the object. The workflow export remains unchanged on disk.
 
-## Install the CLI from GitHub
+## Install the CLI from npm
 
 Node.js 24+ and an installed n8n CLI are required for this route. The runner has zero npm dependencies; n8n is installed separately under its own license.
 
 ```sh
-npm install --global https://github.com/blucca/n8n-check/releases/download/v0.1.6/blucca-n8n-check-0.1.6.tgz
+npm install --global @blucca/n8n-check
 n8n-check --help
 
 # Trusted local development, using your existing n8n installation:
@@ -167,7 +167,7 @@ n8n-check workflow.json case.json --allow-network --out results
 n8n-check workflow.json case.json --n8n /path/to/n8n --allow-network
 ```
 
-The GitHub release package works independently of npm registry availability. Docker is the simplest route to a pinned runtime and loopback-only networking. Default runtime: **n8n 2.41.7**; local CLI installation: Node.js **24+**. The [version matrix](examples/version-matrix/) also exercises 2.38.4, and the JSON request/output case passes on 2.37.9. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
+The official package is [@blucca/n8n-check on npm](https://www.npmjs.com/package/@blucca/n8n-check). For a reproducible CLI install, use `npm install --global @blucca/n8n-check@0.1.7`. A standalone `.tgz` is also available in the [GitHub release](https://github.com/blucca/n8n-check/releases/tag/v0.1.7). Docker is the simplest route to a pinned runtime and loopback-only networking. Default runtime: **n8n 2.41.7**; local CLI installation: Node.js **24+**. The [version matrix](examples/version-matrix/) also exercises 2.38.4, and the JSON request/output case passes on 2.37.9. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
 
 ## Your first case
 
@@ -178,7 +178,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.6/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.7/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```

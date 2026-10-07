@@ -244,7 +244,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.6
+      - uses: blucca/n8n-check@v0.1.7
         with:
           n8n-version: '${$('runtime-version').value}'
           workflow: workflow.json
