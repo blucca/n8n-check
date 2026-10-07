@@ -1,0 +1,143 @@
+{
+  "name": "Vapi tool-call contract \u2014 synthetic order lookup \u2014 wrong ID control",
+  "nodes": [
+    {
+      "id": "vapi-webhook",
+      "name": "Vapi webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vapi-tool-contract",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "split-tool-calls",
+      "name": "Split tool calls",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const message = $input.first().json.body.message;\nif (message.type !== 'tool-calls' || !Array.isArray(message.toolCallList) || !message.toolCallList.length) throw new Error('Expected a non-empty tool-calls message');\nconst seen = new Set();\nreturn message.toolCallList.map(call => {\n  if (typeof call.id !== 'string' || !call.id || seen.has(call.id)) throw new Error('Each tool call needs a unique ID');\n  seen.add(call.id);\n  if (call.function?.name !== 'lookupOrders' || typeof call.function.arguments?.customerId !== 'string' || !/^[a-zA-Z0-9-]+$/.test(call.function.arguments.customerId)) throw new Error('Expected lookupOrders with a customerId');\n  return {json: {toolCallId: call.id, customerId: call.function.arguments.customerId}, pairedItem: {item: 0}};\n});"
+      }
+    },
+    {
+      "id": "lookup-orders",
+      "name": "Lookup orders",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://orders.example.invalid/lookup/{{ $json.customerId }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {customerId: $json.customerId, toolCallId: $json.toolCallId} }}",
+        "options": {
+          "timeout": 5000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "build-vapi-response",
+      "name": "Build Vapi response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const results = $input.all().map((item, index) => {\n  const { toolCallId } = $('Split tool calls').itemMatching(index).json;\n  if (item.json.statusCode === 503) return {toolCallId, error: 'Order service temporarily unavailable. Please try again later.'};\n  if (item.json.statusCode !== 200) return {toolCallId, error: 'Order lookup failed.'};\n  if (!Array.isArray(item.json.body?.orders)) return {toolCallId, error: 'Order service returned an invalid response.'};\n  return {toolCallId, result: JSON.stringify({orders: item.json.body.orders})};\n});\nresults[1].toolCallId = results[0].toolCallId;\nreturn [{json: {results}}];"
+      }
+    },
+    {
+      "id": "respond-to-vapi",
+      "name": "Respond to Vapi",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Vapi webhook": {
+      "main": [
+        [
+          {
+            "node": "Split tool calls",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split tool calls": {
+      "main": [
+        [
+          {
+            "node": "Lookup orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lookup orders": {
+      "main": [
+        [
+          {
+            "node": "Build Vapi response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Vapi response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Vapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

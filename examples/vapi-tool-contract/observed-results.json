@@ -1,0 +1,221 @@
+{
+  "n8nVersion": "2.41.7",
+  "runnerVersion": "0.1.6",
+  "networkMode": "host-network",
+  "boundary": "Fixture at Vapi webhook; real Split tool calls, Lookup orders HTTP Request and Build Vapi response; stop before Respond to Vapi. Local synthetic HTTP mocks.",
+  "runs": [
+    {
+      "scenario": "success",
+      "workflow": "workflow.json",
+      "case": "success.case.json",
+      "startedAt": "2026-10-07T01:44:22.166Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checksPassed": 8,
+      "checksTotal": 8,
+      "failedChecks": [],
+      "requests": [
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-A",
+          "body": {
+            "customerId": "customer-A",
+            "toolCallId": "call-order-A"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-B",
+          "body": {
+            "customerId": "customer-B",
+            "toolCallId": "call-order-B"
+          },
+          "status": 200
+        }
+      ],
+      "actualResponse": {
+        "results": [
+          {
+            "toolCallId": "call-order-A",
+            "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+          },
+          {
+            "toolCallId": "call-order-B",
+            "result": "{\"orders\":[{\"id\":\"order-B-202\",\"status\":\"processing\"}]}"
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "backend-503",
+      "workflow": "workflow.json",
+      "case": "backend-503.case.json",
+      "startedAt": "2026-10-07T01:44:47.031Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checksPassed": 8,
+      "checksTotal": 8,
+      "failedChecks": [],
+      "requests": [
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-A",
+          "body": {
+            "customerId": "customer-A",
+            "toolCallId": "call-order-A"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-B",
+          "body": {
+            "customerId": "customer-B",
+            "toolCallId": "call-order-B"
+          },
+          "status": 503
+        }
+      ],
+      "actualResponse": {
+        "results": [
+          {
+            "toolCallId": "call-order-A",
+            "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+          },
+          {
+            "toolCallId": "call-order-B",
+            "error": "Order service temporarily unavailable. Please try again later."
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "empty-orders",
+      "workflow": "workflow.json",
+      "case": "empty-orders.case.json",
+      "startedAt": "2026-10-07T01:44:29.107Z",
+      "status": "passed",
+      "exitCode": 0,
+      "checksPassed": 8,
+      "checksTotal": 8,
+      "failedChecks": [],
+      "requests": [
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-A",
+          "body": {
+            "customerId": "customer-A",
+            "toolCallId": "call-order-A"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-B",
+          "body": {
+            "customerId": "customer-B",
+            "toolCallId": "call-order-B"
+          },
+          "status": 200
+        }
+      ],
+      "actualResponse": {
+        "results": [
+          {
+            "toolCallId": "call-order-A",
+            "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+          },
+          {
+            "toolCallId": "call-order-B",
+            "result": "{\"orders\":[]}"
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "wrong-id",
+      "workflow": "wrong-id.json",
+      "case": "success.case.json",
+      "startedAt": "2026-10-07T01:44:56.484Z",
+      "status": "failed",
+      "exitCode": 1,
+      "checksPassed": 7,
+      "checksTotal": 8,
+      "failedChecks": [
+        {
+          "name": "Build Vapi response: output 0",
+          "passed": false,
+          "expected": [
+            {
+              "results": [
+                {
+                  "toolCallId": "call-order-A",
+                  "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+                },
+                {
+                  "toolCallId": "call-order-B",
+                  "result": "{\"orders\":[{\"id\":\"order-B-202\",\"status\":\"processing\"}]}"
+                }
+              ]
+            }
+          ],
+          "actual": [
+            {
+              "results": [
+                {
+                  "toolCallId": "call-order-A",
+                  "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+                },
+                {
+                  "toolCallId": "call-order-A",
+                  "result": "{\"orders\":[{\"id\":\"order-B-202\",\"status\":\"processing\"}]}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-A",
+          "body": {
+            "customerId": "customer-A",
+            "toolCallId": "call-order-A"
+          },
+          "status": 200
+        },
+        {
+          "node": "Lookup orders",
+          "method": "POST",
+          "path": "/lookup/customer-B",
+          "body": {
+            "customerId": "customer-B",
+            "toolCallId": "call-order-B"
+          },
+          "status": 200
+        }
+      ],
+      "actualResponse": {
+        "results": [
+          {
+            "toolCallId": "call-order-A",
+            "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+          },
+          {
+            "toolCallId": "call-order-A",
+            "result": "{\"orders\":[{\"id\":\"order-B-202\",\"status\":\"processing\"}]}"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "name": "Vapi tool contract: empty-orders",
+  "input": {
+    "node": "Vapi webhook",
+    "items": [
+      {
+        "body": {
+          "message": {
+            "type": "tool-calls",
+            "toolCallList": [
+              {
+                "id": "call-order-A",
+                "type": "function",
+                "function": {
+                  "name": "lookupOrders",
+                  "arguments": {
+                    "customerId": "customer-A"
+                  }
+                }
+              },
+              {
+                "id": "call-order-B",
+                "type": "function",
+                "function": {
+                  "name": "lookupOrders",
+                  "arguments": {
+                    "customerId": "customer-B"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "stopAfter": "Build Vapi response",
+  "mocks": [
+    {
+      "node": "Lookup orders",
+      "url": "/lookup/{{ $json.customerId }}",
+      "routes": [
+        {
+          "method": "POST",
+          "path": "/lookup/customer-A",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "orders": [
+                  {
+                    "id": "order-A-101",
+                    "status": "shipped"
+                  }
+                ]
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              {
+                "customerId": "customer-A",
+                "toolCallId": "call-order-A"
+              }
+            ]
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/lookup/customer-B",
+          "responses": [
+            {
+              "status": 200,
+              "json": {
+                "orders": []
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              {
+                "customerId": "customer-B",
+                "toolCallId": "call-order-B"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Build Vapi response",
+      "equals": [
+        {
+          "results": [
+            {
+              "toolCallId": "call-order-A",
+              "result": "{\"orders\":[{\"id\":\"order-A-101\",\"status\":\"shipped\"}]}"
+            },
+            {
+              "toolCallId": "call-order-B",
+              "result": "{\"orders\":[]}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
