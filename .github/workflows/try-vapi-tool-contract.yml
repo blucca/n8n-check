@@ -1,0 +1,44 @@
+name: Try a Vapi tool-call contract
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'Backend responses for two independent tool calls'
+        type: choice
+        required: true
+        default: success
+        options:
+          - success
+          - backend-503
+          - empty-orders
+      workflow:
+        description: 'workflow preserves toolCallIds; wrong-id mislabels the second result'
+        type: choice
+        required: true
+        default: workflow
+        options:
+          - workflow
+          - wrong-id
+permissions:
+  contents: read
+jobs:
+  tool-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Check both tool identities, backend requests, and response envelope
+        uses: blucca/n8n-check@v0.1.6
+        with:
+          workflow: examples/vapi-tool-contract/${{ inputs.workflow }}.json
+          case: examples/vapi-tool-contract/${{ inputs.scenario }}.case.json
+          out: results/vapi-tool-contract
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: vapi-tool-contract-results
+          path: |
+            results/vapi-tool-contract/report.json
+            results/vapi-tool-contract/junit.xml

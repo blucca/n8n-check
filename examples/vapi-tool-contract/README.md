@@ -21,6 +21,15 @@ This synthetic backend check looks up customer orders through a real n8n HTTP Re
 - Response construction follows n8n item pairing back to each split tool call. Each route checks exactly one request and its exact customer/`toolCallId` body.
 - Success uses `JSON.stringify` for a single-line `result`. HTTP 503 maps to `error`, preserving the sibling success. Empty order data stays an explicit successful result.
 
+## Run from your browser
+
+1. [Fork n8n-check](https://github.com/blucca/n8n-check/fork), then enable **Actions** in your fork.
+2. Open **Try a Vapi tool-call contract → Run workflow**.
+3. Choose `backend-503` with `workflow` to check a successful result beside an explicit tool error. Choose `success` with `wrong-id` to see the regression turn the job red.
+4. Read the check summary; download `vapi-tool-contract-results` for JSON/JUnit.
+
+This Action runs the selected case with the released **v0.1.6** runner and **n8n 2.41.7**, using loopback-only Docker networking and synthetic data. GitHub Actions usage follows your account plan. [Action source](../../.github/workflows/try-vapi-tool-contract.yml).
+
 ## Run with real n8n
 
 From the repository root, with Node.js 24+ and n8n installed:

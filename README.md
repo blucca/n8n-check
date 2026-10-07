@@ -56,6 +56,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Replay invoice-history checks against real Data Tables](examples/morsof-invoice-history/):** seven batch cases from Morsof’s invoice follow-up template, plus a second execution that preserves stored IDs and preparation timestamps. Includes a version-pinned Data Table CLI adapter.
 
+**[Check a Vapi tool-call response before a client demo](examples/vapi-tool-contract/):** two tool calls, two distinct result IDs. Run successful, empty, and backend-503 responses through the real n8n engine; the same contract catches a mislabelled tool result. Includes a fork-and-run Action with synthetic API responses.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
