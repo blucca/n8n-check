@@ -53,6 +53,8 @@ The bundled source and fixtures use synthetic values. The local command enables 
 
 Recorded execution: **n8n 2.41.7, n8n-check 0.1.6**, three passing cases, each with eight checks and two HTTP requests. The wrong-ID control retains successful execution and both correct backend requests while failing the output assertion. [`observed-results.json`](observed-results.json) contains compact check results, mock traces, and the actual emitted envelopes.
 
+**[Completed GitHub Actions run](https://github.com/blucca/n8n-check/actions/runs/37558788945):** `backend-503`, 8/8 checks, two HTTP requests, loopback-only networking. The result preserves customer A’s order and returns customer B’s tool error.
+
 ## Verified Vapi contract and scope
 
 Official references, read 2026-10-07:

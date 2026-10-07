@@ -217,5 +217,18 @@
         ]
       }
     }
-  ]
+  ],
+  "ci": {
+    "url": "https://github.com/blucca/n8n-check/actions/runs/37558788945",
+    "sourceCommit": "fe78330",
+    "scenario": "backend-503",
+    "workflow": "workflow.json",
+    "n8nVersion": "2.41.7",
+    "runnerVersion": "0.1.6",
+    "networkMode": "loopback-only",
+    "checksPassed": 8,
+    "checksTotal": 8,
+    "requests": 2,
+    "exitCode": 0
+  }
 }
