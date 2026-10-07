@@ -1,0 +1,344 @@
+{
+  "version": 1,
+  "kind": "http-data-table-acceptance",
+  "description": "Send these requests in order to the activated n8n production webhook using its Header Auth credential. Run against a dedicated demo instance with the seeded orders and an initially empty callbacks table.",
+  "tables": {
+    "orders": "blucca_vapi_demo_orders",
+    "callbacks": "blucca_vapi_demo_callbacks"
+  },
+  "preconditions": {
+    "orders": "demo-orders.json",
+    "callbackRowCount": 0
+  },
+  "responseContract": {
+    "bodyKeys": [
+      "results"
+    ],
+    "oneResponsePerToolCall": true,
+    "matchBy": "toolCallId",
+    "responseOrder": "any",
+    "successField": "result",
+    "errorField": "error",
+    "valueType": "single-line string",
+    "exactlyOneValueField": true,
+    "resultEncoding": "JSON string",
+    "expectedResultKeys": "resultJson keys plus captureResultFields/equalResultFields keys; exact set",
+    "captureType": "non-empty string",
+    "rowIdComparison": "String(row.id)",
+    "callbackRowMatch": "exact values for listed columns; n8n-managed id and timestamps are additional metadata"
+  },
+  "scenarios": [
+    {
+      "name": "two-orders",
+      "request": "two-orders.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "status-A",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1001",
+            "fulfillmentStatus": "shipped",
+            "carrier": "Demo Parcel",
+            "trackingNumber": "DEMO-1001",
+            "estimatedDelivery": "2026-10-12"
+          }
+        },
+        {
+          "toolCallId": "status-B",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1002",
+            "fulfillmentStatus": "processing",
+            "carrier": "",
+            "trackingNumber": "",
+            "estimatedDelivery": ""
+          }
+        }
+      ],
+      "callbackRowCount": 0
+    },
+    {
+      "name": "mixed-results",
+      "request": "mixed-results.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "mixed-A",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1001",
+            "fulfillmentStatus": "shipped",
+            "carrier": "Demo Parcel",
+            "trackingNumber": "DEMO-1001",
+            "estimatedDelivery": "2026-10-12"
+          }
+        },
+        {
+          "toolCallId": "unsupported",
+          "error": "Unsupported tool. Use getOrderStatus or requestCallback."
+        },
+        {
+          "toolCallId": "mixed-B",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1002",
+            "fulfillmentStatus": "processing",
+            "carrier": "",
+            "trackingNumber": "",
+            "estimatedDelivery": ""
+          }
+        }
+      ],
+      "callbackRowCount": 0
+    },
+    {
+      "name": "invalid-arguments",
+      "request": "invalid-arguments.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "missing-email",
+          "error": "Provide a valid orderId and email."
+        },
+        {
+          "toolCallId": "broken-json",
+          "error": "Provide a valid orderId and email."
+        },
+        {
+          "toolCallId": "bad-callback",
+          "error": "Provide a valid phone number and a reason of 1–500 characters."
+        },
+        {
+          "toolCallId": "valid-sibling",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1002",
+            "fulfillmentStatus": "processing",
+            "carrier": "",
+            "trackingNumber": "",
+            "estimatedDelivery": ""
+          }
+        }
+      ],
+      "callbackRowCount": 0
+    },
+    {
+      "name": "unmatched-details",
+      "request": "unmatched-details.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "wrong-email-status",
+          "resultJson": {
+            "status": "order_not_found",
+            "message": "No order matched those details. Please check the order number and email."
+          }
+        },
+        {
+          "toolCallId": "wrong-email-callback",
+          "resultJson": {
+            "status": "order_not_found",
+            "message": "No order matched those details. Please check the order number and email."
+          }
+        },
+        {
+          "toolCallId": "unknown-order",
+          "resultJson": {
+            "status": "order_not_found",
+            "message": "No order matched those details. Please check the order number and email."
+          }
+        }
+      ],
+      "callbackRowCount": 0
+    },
+    {
+      "name": "missing-call-id",
+      "request": "missing-call-id.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "missing-call",
+          "error": "Callback requests require a Vapi call ID."
+        },
+        {
+          "toolCallId": "valid-status",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1001",
+            "fulfillmentStatus": "shipped",
+            "carrier": "Demo Parcel",
+            "trackingNumber": "DEMO-1001",
+            "estimatedDelivery": "2026-10-12"
+          }
+        }
+      ],
+      "callbackRowCount": 0
+    },
+    {
+      "name": "callback-create",
+      "request": "callback-create.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "callback-status",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1001",
+            "fulfillmentStatus": "shipped",
+            "carrier": "Demo Parcel",
+            "trackingNumber": "DEMO-1001",
+            "estimatedDelivery": "2026-10-12"
+          }
+        },
+        {
+          "toolCallId": "callback-A",
+          "resultJson": {
+            "status": "callback_requested",
+            "orderId": "ORD-1001",
+            "message": "Your callback request has been recorded for the support team."
+          },
+          "captureResultFields": {
+            "requestId": "callbackA"
+          }
+        }
+      ],
+      "callbackRowCount": 1,
+      "expectedCallbackRows": [
+        {
+          "columns": {
+            "requestKey": "[\"demo-call-callback-A\",\"callback-A\"]",
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please explain the delivery options.",
+            "status": "pending"
+          },
+          "idEqualsCapture": "callbackA"
+        }
+      ]
+    },
+    {
+      "name": "callback-replay",
+      "request": "callback-create.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "callback-status",
+          "resultJson": {
+            "status": "found",
+            "orderId": "ORD-1001",
+            "fulfillmentStatus": "shipped",
+            "carrier": "Demo Parcel",
+            "trackingNumber": "DEMO-1001",
+            "estimatedDelivery": "2026-10-12"
+          }
+        },
+        {
+          "toolCallId": "callback-A",
+          "resultJson": {
+            "status": "callback_requested",
+            "orderId": "ORD-1001",
+            "message": "Your callback request has been recorded for the support team."
+          },
+          "equalResultFields": {
+            "requestId": "callbackA"
+          }
+        }
+      ],
+      "callbackRowCount": 1,
+      "expectedCallbackRows": [
+        {
+          "columns": {
+            "requestKey": "[\"demo-call-callback-A\",\"callback-A\"]",
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please explain the delivery options.",
+            "status": "pending"
+          },
+          "idEqualsCapture": "callbackA"
+        }
+      ]
+    },
+    {
+      "name": "callback-conflict",
+      "request": "callback-conflict.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "callback-A",
+          "error": "This tool call already recorded a different callback request."
+        }
+      ],
+      "callbackRowCount": 1,
+      "expectedCallbackRows": [
+        {
+          "columns": {
+            "requestKey": "[\"demo-call-callback-A\",\"callback-A\"]",
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please explain the delivery options.",
+            "status": "pending"
+          },
+          "idEqualsCapture": "callbackA"
+        }
+      ]
+    },
+    {
+      "name": "callback-other-call",
+      "request": "callback-other-call.request.json",
+      "httpStatus": 200,
+      "expectedResults": [
+        {
+          "toolCallId": "callback-A",
+          "resultJson": {
+            "status": "callback_requested",
+            "orderId": "ORD-1002",
+            "message": "Your callback request has been recorded for the support team."
+          },
+          "captureResultFields": {
+            "requestId": "callbackB"
+          }
+        }
+      ],
+      "callbackRowCount": 2,
+      "distinctCaptures": [
+        [
+          "callbackA",
+          "callbackB"
+        ]
+      ],
+      "expectedCallbackRows": [
+        {
+          "columns": {
+            "requestKey": "[\"demo-call-callback-A\",\"callback-A\"]",
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please explain the delivery options.",
+            "status": "pending"
+          },
+          "idEqualsCapture": "callbackA"
+        },
+        {
+          "columns": {
+            "requestKey": "[\"demo-call-callback-B\",\"callback-A\"]",
+            "orderId": "ORD-1002",
+            "email": "jamie@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please confirm when my order will ship.",
+            "status": "pending"
+          },
+          "idEqualsCapture": "callbackB"
+        }
+      ]
+    }
+  ],
+  "additionalLiveChecks": [
+    "Production webhook accepts the configured X-Vapi-Secret header.",
+    "Requests with a missing or incorrect auth value receive the n8n authentication rejection and leave callback rows unchanged.",
+    "Manual setup run again preserves the two demo-order identities."
+  ]
+}

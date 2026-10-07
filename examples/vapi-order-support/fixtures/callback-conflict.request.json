@@ -1,0 +1,24 @@
+{
+  "message": {
+    "type": "tool-calls",
+    "toolCallList": [
+      {
+        "id": "callback-A",
+        "type": "function",
+        "function": {
+          "name": "requestCallback",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Change this already recorded request."
+          }
+        }
+      }
+    ],
+    "call": {
+      "id": "demo-call-callback-A",
+      "type": "webCall"
+    }
+  }
+}

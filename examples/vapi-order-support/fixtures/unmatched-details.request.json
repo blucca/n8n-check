@@ -1,0 +1,46 @@
+{
+  "message": {
+    "type": "tool-calls",
+    "toolCallList": [
+      {
+        "id": "wrong-email-status",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "jamie@example.com"
+          }
+        }
+      },
+      {
+        "id": "wrong-email-callback",
+        "type": "function",
+        "function": {
+          "name": "requestCallback",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "jamie@example.com",
+            "phone": "+1 202 555 0142",
+            "reason": "Please explain the delivery options."
+          }
+        }
+      },
+      {
+        "id": "unknown-order",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-9999",
+            "email": "alex@example.com"
+          }
+        }
+      }
+    ],
+    "call": {
+      "id": "demo-call-unmatched",
+      "type": "webCall"
+    }
+  }
+}

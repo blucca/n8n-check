@@ -1,0 +1,72 @@
+[
+  {
+    "type": "function",
+    "async": false,
+    "function": {
+      "name": "getOrderStatus",
+      "description": "Find an order using its order number and the email used at checkout. Read the returned fulfillment status and tracking details. Ask the caller to check both details when status is order_not_found.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "Exact order number supplied by the caller, for example ORD-1001."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address used for this order at checkout."
+          }
+        },
+        "required": [
+          "orderId",
+          "email"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "server": {
+      "url": "https://YOUR_N8N_HOST/webhook/vapi-order-support",
+      "credentialId": "YOUR_VAPI_CUSTOM_CREDENTIAL_ID"
+    }
+  },
+  {
+    "type": "function",
+    "async": false,
+    "function": {
+      "name": "requestCallback",
+      "description": "Record a human callback request after checking the order number and checkout email. Say that the support team has received the request after status callback_requested. A support team member handles the callback from the n8n queue.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "Exact order number supplied by the caller."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address used for this order at checkout."
+          },
+          "phone": {
+            "type": "string",
+            "description": "Caller-confirmed callback number, including country code, for example +1 202 555 0142."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Short caller-provided reason for the callback, 1–500 characters."
+          }
+        },
+        "required": [
+          "orderId",
+          "email",
+          "phone",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "server": {
+      "url": "https://YOUR_N8N_HOST/webhook/vapi-order-support",
+      "credentialId": "YOUR_VAPI_CUSTOM_CREDENTIAL_ID"
+    }
+  }
+]

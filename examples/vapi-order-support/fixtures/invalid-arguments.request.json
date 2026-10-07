@@ -1,0 +1,53 @@
+{
+  "message": {
+    "type": "tool-calls",
+    "toolCallList": [
+      {
+        "id": "missing-email",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1001"
+          }
+        }
+      },
+      {
+        "id": "broken-json",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": "{"
+        }
+      },
+      {
+        "id": "bad-callback",
+        "type": "function",
+        "function": {
+          "name": "requestCallback",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "alex@example.com",
+            "phone": "",
+            "reason": ""
+          }
+        }
+      },
+      {
+        "id": "valid-sibling",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1002",
+            "email": "jamie@example.com"
+          }
+        }
+      }
+    ],
+    "call": {
+      "id": "demo-call-invalid",
+      "type": "webCall"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "message": {
+    "type": "tool-calls",
+    "toolCallList": [
+      {
+        "id": "status-A",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "alex@example.com"
+          }
+        }
+      },
+      {
+        "id": "status-B",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1002",
+            "email": "jamie@example.com"
+          }
+        }
+      }
+    ],
+    "call": {
+      "id": "demo-call-orders",
+      "type": "webCall"
+    }
+  }
+}

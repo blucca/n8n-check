@@ -1,0 +1,110 @@
+{
+  "runtime": "n8n 2.41.7",
+  "execution": "fresh database, native Data Tables, production webhook HTTP",
+  "passed": 12,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "fresh-import-and-seed",
+      "passed": true,
+      "orders": 2
+    },
+    {
+      "name": "missing-auth",
+      "passed": true,
+      "httpStatus": 403
+    },
+    {
+      "name": "wrong-auth",
+      "passed": true,
+      "httpStatus": 403
+    },
+    {
+      "name": "two-orders",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 2,
+      "callbackRows": 0
+    },
+    {
+      "name": "mixed-results",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 3,
+      "callbackRows": 0
+    },
+    {
+      "name": "invalid-arguments",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 4,
+      "callbackRows": 0
+    },
+    {
+      "name": "unmatched-details",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 3,
+      "callbackRows": 0
+    },
+    {
+      "name": "missing-call-id",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 2,
+      "callbackRows": 0
+    },
+    {
+      "name": "callback-create",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 2,
+      "callbackRows": 1
+    },
+    {
+      "name": "callback-replay",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 2,
+      "callbackRows": 1
+    },
+    {
+      "name": "callback-conflict",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 1,
+      "callbackRows": 1
+    },
+    {
+      "name": "callback-other-call",
+      "passed": true,
+      "httpStatus": 200,
+      "toolResults": 1,
+      "callbackRows": 2
+    }
+  ],
+  "callbacks": [
+    {
+      "id": 1,
+      "requestKey": "[\"demo-call-callback-A\",\"callback-A\"]",
+      "orderId": "ORD-1001",
+      "email": "alex@example.com",
+      "phone": "+1 202 555 0142",
+      "reason": "Please explain the delivery options.",
+      "status": "pending",
+      "createdAt": "2026-10-07 14:20:11.839",
+      "updatedAt": "2026-10-07 14:20:11.839"
+    },
+    {
+      "id": 2,
+      "requestKey": "[\"demo-call-callback-B\",\"callback-A\"]",
+      "orderId": "ORD-1002",
+      "email": "jamie@example.com",
+      "phone": "+1 202 555 0142",
+      "reason": "Please confirm when my order will ship.",
+      "status": "pending",
+      "createdAt": "2026-10-07 14:20:12.401",
+      "updatedAt": "2026-10-07 14:20:12.401"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "orderId": "ORD-1001",
+    "email": "alex@example.com",
+    "status": "shipped",
+    "carrier": "Demo Parcel",
+    "trackingNumber": "DEMO-1001",
+    "estimatedDelivery": "2026-10-12"
+  },
+  {
+    "orderId": "ORD-1002",
+    "email": "jamie@example.com",
+    "status": "processing",
+    "carrier": "",
+    "trackingNumber": "",
+    "estimatedDelivery": ""
+  }
+]

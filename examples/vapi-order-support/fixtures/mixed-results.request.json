@@ -1,0 +1,44 @@
+{
+  "message": {
+    "type": "tool-calls",
+    "toolCallList": [
+      {
+        "id": "mixed-A",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "alex@example.com"
+          }
+        }
+      },
+      {
+        "id": "unsupported",
+        "type": "function",
+        "function": {
+          "name": "cancelOrder",
+          "arguments": {
+            "orderId": "ORD-1001",
+            "email": "alex@example.com"
+          }
+        }
+      },
+      {
+        "id": "mixed-B",
+        "type": "function",
+        "function": {
+          "name": "getOrderStatus",
+          "arguments": {
+            "orderId": "ORD-1002",
+            "email": "jamie@example.com"
+          }
+        }
+      }
+    ],
+    "call": {
+      "id": "demo-call-mixed",
+      "type": "webCall"
+    }
+  }
+}
