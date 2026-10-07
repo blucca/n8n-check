@@ -1,4 +1,5 @@
 import { inspectWorkflow, draftCase } from '../src/case-draft.mjs';
+import { buildLocalBundle } from '../src/local-bundle.mjs';
 
 const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
@@ -91,7 +92,8 @@ function update() {
     $('preview').textContent = pretty(plan.spec);
     $('download-case').textContent = plan.ready ? 'Download case.json' : 'Download draft JSON';
     $('download-case').disabled = false;
-    $('download-ci').disabled = !plan.ready;
+    $('download-ci').disabled = $('download-bundle').disabled = !plan.ready;
+    $('bundle-status').textContent = '';
     document.querySelector('.readiness').classList.toggle('ready', plan.ready);
     document.querySelector('.readiness').classList.toggle('pending', !plan.ready);
   } catch (error) {
@@ -100,7 +102,8 @@ function update() {
     $('readiness-detail').textContent = 'Fix the field below to refresh the draft.';
     showIssues([{ message: error.message }]);
     $('preview').textContent = '';
-    $('download-case').disabled = $('download-ci').disabled = true;
+    $('download-case').disabled = $('download-ci').disabled = $('download-bundle').disabled = true;
+    $('bundle-status').textContent = '';
     document.querySelector('.readiness').classList.remove('ready');
     document.querySelector('.readiness').classList.add('pending');
   }
@@ -127,7 +130,7 @@ function load(text, label, example = false) {
   importStatus(`${label} loaded locally. Choose the boundary and review the expected items.`);
 }
 function download(name, contents, type = 'application/json') {
-  const url = URL.createObjectURL(new Blob([contents.endsWith('\n') ? contents : contents + '\n'], { type }));
+  const url = URL.createObjectURL(new Blob([typeof contents === 'string' && !contents.endsWith('\n') ? contents + '\n' : contents], { type }));
   const link = document.createElement('a'); link.href = url; link.download = name;
   document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
@@ -255,3 +258,12 @@ jobs:
             results/check/report.json
             results/check/junit.xml
 `, 'text/yaml'); });
+
+$('download-bundle').addEventListener('click', () => {
+  if (!plan?.ready || !$('runtime-version').reportValidity()) return;
+  try {
+    const zip = buildLocalBundle({ workflow: source, caseFile: plan.spec, n8nVersion: $('runtime-version').value });
+    download('n8n-check-local.zip', zip, 'application/zip');
+    $('bundle-status').textContent = 'Unzip the pack, open a terminal in its folder, and run sh run.sh. Results appear in results/report.json and results/junit.xml.';
+  } catch (error) { $('bundle-status').textContent = error.message; }
+});

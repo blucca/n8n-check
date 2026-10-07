@@ -12,6 +12,39 @@ jobs:
         with:
           node-version: '24'
       - run: npm test
+      - name: Downloaded local pack passes and catches wrong IDs
+        run: |
+          mkdir -p temp/ci/local-pack
+          node --input-type=module -e '
+            import { readFileSync, writeFileSync } from "node:fs";
+            import { buildLocalBundle } from "./src/local-bundle.mjs";
+            const read = file => JSON.parse(readFileSync(file));
+            writeFileSync("temp/ci/local-pack.zip", buildLocalBundle({
+              workflow: read("examples/identity-projection/workflow.json"),
+              caseFile: read("examples/identity-projection/case.json")
+            }));
+          '
+          unzip -q temp/ci/local-pack.zip -d temp/ci/local-pack
+          sh temp/ci/local-pack/run.sh
+          cp -R temp/ci/local-pack/results temp/ci/local-pack-passed
+          cp examples/identity-projection/wrong-id.json temp/ci/local-pack/workflow.json
+          set +e
+          sh temp/ci/local-pack/run.sh
+          code=$?
+          set -e
+          test "$code" = 1
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const passed = JSON.parse(readFileSync("temp/ci/local-pack-passed/report.json"));
+            const failed = JSON.parse(readFileSync("temp/ci/local-pack/results/report.json"));
+            assert.equal(passed.exitCode, 0);
+            assert.equal(failed.exitCode, 1);
+            assert.equal(passed.runnerVersion, "0.1.6");
+            assert.equal(passed.network.mode, "loopback-only");
+            assert.equal(failed.checks.filter(check => !check.passed).length, 1);
+            assert.equal(failed.checks[0].passed, true);
+          '
       - name: Fixed workflow passes
         id: fixed
         uses: ./
