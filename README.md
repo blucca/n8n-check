@@ -4,61 +4,13 @@
 
 Give it a workflow export, fixture inputs and HTTP mock responses. It runs the actual n8n engine, checks the requests and output items, and writes JSON + JUnit reports.
 
-## Build a check for your own workflow
+**[GitHub Marketplace](https://github.com/marketplace/actions/n8n-check)** · **[npm](https://www.npmjs.com/package/@blucca/n8n-check)** · MIT
 
-**[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a **local run pack** or GitHub Actions file.
-
-**Have Docker? Download → unzip → `sh run.sh`.** The pack includes your workflow, editable case, and a pinned runner script. The first run downloads n8n and verifies the v0.1.6 runner against its SHA-256; subsequent runs reuse the local cache. Execution uses a loopback-only container with read-only input mounts, and writes `results/report.json` and `results/junit.xml`. Requires Docker with Linux containers and a shell on Linux, macOS, or WSL2. Your workflow and fixture files stay local.
-
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.7** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
-
-For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
-
-**Working between Google Sheets, Slack, or other credentialed integrations?** Choose the input boundary and output, then enable **Run through selected output**. The optional `stopAfter` case field cuts the selected node's outgoing connections while preserving independently reachable branches. Your full export stays unchanged. [Try the two-invoice transformation example](examples/stop-after/).
-
-<a id="try-it-in-your-browser"></a>
-
-## Run the example in GitHub Actions
-
-**The workflow finishes successfully. Eight useful rows disappear. Your regression check turns red.**
-
-1. [Fork this repository](https://github.com/blucca/n8n-check/fork).
-2. In your fork, open **Actions** and enable workflows if GitHub prompts you.
-3. Select **Try a silent data-loss regression → Run workflow**. Choose `fixed` for a passing check, then `broken` to catch the obsolete filter.
-4. Open either run for the check summary. Download `silent-filter-results` for JSON + JUnit.
-
-GitHub supplies the workflow, fixtures and runtime. Every input is synthetic; every node runs locally inside the isolated runtime. GitHub Actions usage follows your account’s plan.
-
-| Same nine input rows | n8n execution | Relevant rows after the gate | Regression check |
-|---|---|---|---|
-| Obsolete source filter | Success | 0 | **FAIL** |
-| Fixed filter | Success | 8, with the low-score distractor excluded | **PASS** |
-
-This synthetic retrieval example checks **exact intermediate items and the final context**, so a successful execution with missing business data gets caught. [Workflow pair, case and recorded results](examples/silent-filter/) · [Demo Action source](.github/workflows/try-example.yml)
-
-### Catch duplicate side effects too
-
-One HTTP request failed, and n8n retried **both** input items. We ran the same two inputs with a single transient 503 through three workflow shapes (HTTP Request v4.2, n8n 2.41.7):
-
-| Shape | Requests for 42 | Requests for 43 | Total |
-|---|---:|---:|---:|
-| Direct HTTP retry | 2 | 2 | 4 |
-| HTTP internal batching = 1 | 2 | 2 | 4 |
-| Loop Over Items batch = 1 | 2 | 1 | 3 |
-
-**[Inspect the recorded traces and recipe](https://blucca.github.io/guides/n8n-retry-duplicates/)** · **[Run all three cases](examples/retry-isolation/)**
-
-Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
-
-**[Compare n8n versions before upgrading](examples/version-matrix/):** run the same workflow and contract on your deployed and candidate releases. The real Nextcloud PROPFIND reproduction exercises an engine-level difference: preserving the complete XML request body.
-
-**[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
-
-**[Preserve every Article in a real Miniflux batch](examples/agregado-enrichment/):** Agregado’s original workflow sends one Enrichment request for two Articles. A one-item loop preserves the batch, mixed Bridge content, and a transient retry. The pack downloads pinned source exports and checks complete request bodies.
-
-**[Replay invoice-history checks against real Data Tables](examples/morsof-invoice-history/):** seven batch cases from Morsof’s invoice follow-up template, plus a second execution that preserves stored IDs and preparation timestamps. Includes a version-pinned Data Table CLI adapter.
-
-**[Check a Vapi tool-call response before a client demo](examples/vapi-tool-contract/):** two tool calls, two distinct result IDs. Run successful, empty, and backend-503 responses through the real n8n engine; the same contract catches a mislabelled tool result. Includes a fork-and-run Action with synthetic API responses.
+| Start here | What you need | What you get |
+|---|---|---|
+| [Add a check to CI](#add-a-check-to-github-actions) | Workflow export + case JSON | A pass/fail job, request trace, JSON + JUnit |
+| [Build your first case](https://blucca.github.io/n8n-check/) | Your n8n export | A local Docker run pack and CI file |
+| [Try a known regression](#try-it-in-your-browser) | A GitHub account | An eight-row data-loss failure, then its fix |
 
 ## Add a check to GitHub Actions
 
@@ -118,6 +70,62 @@ Set `n8n-version` to an exact official image release:
 The default remains **2.41.7**. Every report records the actual runtime version. The same case can run in a two-version matrix with independent results: **[copy the upgrade workflow](examples/version-matrix/upgrade-check.yml)** or **[inspect the measured PROPFIND comparison](examples/version-matrix/)**. Select both the deployed release and the proposed upgrade; an exact contract makes changed request or output behavior visible in either one. Available versions follow n8n's official image registry; node availability and CLI behavior follow the selected release.
 
 For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-check:2.38.4 .` and run that tag. The CLI's `--n8n /path/to/n8n` continues to select an installed runtime.
+
+## Build a check for your own workflow
+
+**[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a **local run pack** or GitHub Actions file.
+
+**Have Docker? Download → unzip → `sh run.sh`.** The pack includes your workflow, editable case, and a pinned runner script. The first run downloads n8n and verifies the v0.1.6 runner against its SHA-256; subsequent runs reuse the local cache. Execution uses a loopback-only container with read-only input mounts, and writes `results/report.json` and `results/junit.xml`. Requires Docker with Linux containers and a shell on Linux, macOS, or WSL2. Your workflow and fixture files stay local.
+
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.7** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
+
+For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
+
+**Working between Google Sheets, Slack, or other credentialed integrations?** Choose the input boundary and output, then enable **Run through selected output**. The optional `stopAfter` case field cuts the selected node's outgoing connections while preserving independently reachable branches. Your full export stays unchanged. [Try the two-invoice transformation example](examples/stop-after/).
+
+<a id="try-it-in-your-browser"></a>
+
+## Run the example in GitHub Actions
+
+**The workflow finishes successfully. Eight useful rows disappear. Your regression check turns red.**
+
+1. [Fork this repository](https://github.com/blucca/n8n-check/fork).
+2. In your fork, open **Actions** and enable workflows if GitHub prompts you.
+3. Select **Try a silent data-loss regression → Run workflow**. Choose `fixed` for a passing check, then `broken` to catch the obsolete filter.
+4. Open either run for the check summary. Download `silent-filter-results` for JSON + JUnit.
+
+GitHub supplies the workflow, fixtures and runtime. Every input is synthetic; every node runs locally inside the isolated runtime. GitHub Actions usage follows your account’s plan.
+
+| Same nine input rows | n8n execution | Relevant rows after the gate | Regression check |
+|---|---|---|---|
+| Obsolete source filter | Success | 0 | **FAIL** |
+| Fixed filter | Success | 8, with the low-score distractor excluded | **PASS** |
+
+This synthetic retrieval example checks **exact intermediate items and the final context**, so a successful execution with missing business data gets caught. [Workflow pair, case and recorded results](examples/silent-filter/) · [Demo Action source](.github/workflows/try-example.yml)
+
+### Catch duplicate side effects too
+
+One HTTP request failed, and n8n retried **both** input items. We ran the same two inputs with a single transient 503 through three workflow shapes (HTTP Request v4.2, n8n 2.41.7):
+
+| Shape | Requests for 42 | Requests for 43 | Total |
+|---|---:|---:|---:|
+| Direct HTTP retry | 2 | 2 | 4 |
+| HTTP internal batching = 1 | 2 | 2 | 4 |
+| Loop Over Items batch = 1 | 2 | 1 | 3 |
+
+**[Inspect the recorded traces and recipe](https://blucca.github.io/guides/n8n-retry-duplicates/)** · **[Run all three cases](examples/retry-isolation/)**
+
+Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
+
+**[Compare n8n versions before upgrading](examples/version-matrix/):** run the same workflow and contract on your deployed and candidate releases. The real Nextcloud PROPFIND reproduction exercises an engine-level difference: preserving the complete XML request body.
+
+**[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
+
+**[Preserve every Article in a real Miniflux batch](examples/agregado-enrichment/):** Agregado’s original workflow sends one Enrichment request for two Articles. A one-item loop preserves the batch, mixed Bridge content, and a transient retry. The pack downloads pinned source exports and checks complete request bodies.
+
+**[Replay invoice-history checks against real Data Tables](examples/morsof-invoice-history/):** seven batch cases from Morsof’s invoice follow-up template, plus a second execution that preserves stored IDs and preparation timestamps. Includes a version-pinned Data Table CLI adapter.
+
+**[Check a Vapi tool-call response before a client demo](examples/vapi-tool-contract/):** two tool calls, two distinct result IDs. Run successful, empty, and backend-503 responses through the real n8n engine; the same contract catches a mislabelled tool result. Includes a fork-and-run Action with synthetic API responses.
 
 ## Try a failure, then its fix
 
