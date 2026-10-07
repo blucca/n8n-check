@@ -5,3 +5,6 @@
 .stop-boundary{margin:-6px 0 24px;padding:12px 14px;border:1px solid var(--line);border-radius:3px}.stop-boundary label{display:flex;gap:9px;align-items:center;margin:0}.stop-boundary input{width:16px;height:16px;margin:0;flex-shrink:0}.stop-boundary .hint{margin-top:7px}
 
 .assertion-controls{margin:0 0 22px;padding:14px;background:#eff3e8;border-radius:3px}.assertion-controls>div{margin-top:14px}#expected-count{width:120px;padding:9px;border:1px solid #c4cbbd;border-radius:3px}
+
+.demo-panel{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin-bottom:24px}.demo-panel img{display:block;width:100%;height:auto;border:1px solid var(--line)}.demo-panel p{font-size:14px}.demo-panel .eyebrow{font-size:10px}.demo-panel pre{margin-bottom:10px}.demo-panel .hint{font-size:12px}.demo-panel h2{font-size:27px;line-height:1.2;margin:10px 0}.demo-panel .button{display:inline-block;text-decoration:none}
+@media(max-width:750px){.demo-panel{grid-template-columns:1fr;gap:20px}.demo-panel h2{font-size:25px}}

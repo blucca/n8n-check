@@ -1,5 +1,9 @@
 # Keep row identities stable as metadata changes
 
+**[Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip)** — extract, run `sh fixed/run.sh`, then `sh wrong-id/run.sh`. The same case passes for the original and fails for the changed IDs. Each folder saves its own reports. Docker + a shell; [complete instructions](LOCAL-DEMO.md).
+
+![Recorded n8n 2.41.7 comparison: both exports succeed and return two rows. Original IDs row-A and row-B pass 5/5 checks; duplicate wrong-row IDs fail the identity check, 4/5 and exit 1.](https://blucca.github.io/assets/portfolio/n8n-check-identity-projection.png)
+
 A three-row fixture contains two eligible records and one distractor. The Code node filters by score and adds a fresh `processedAt` timestamp. The contract checks two ordered IDs; timestamps can change between runs.
 
 ```json
@@ -37,3 +41,13 @@ Real n8n 2.41.7, loopback-only network, synthetic data:
 [Observed checks and source hashes](observed-results.json) record the comparison. The negative control preserves the item count and changes both IDs. This catches a same-size replacement while allowing timestamp metadata to vary.
 
 Projection uses an own-property dotted path from each n8n item. Missing fields produce failure diagnostics. Order and duplicates remain significant. Select full-object `equals` when every output field belongs in the acceptance contract.
+
+## Rebuild the downloadable demo
+
+From the repository root, with Python 3 and Node.js:
+
+```sh
+python examples/identity-projection/build-demo.py path/to/identity-demo.zip
+```
+
+This packages both original exports with the existing local-run script, identical cases, the recorded results and the MIT license. Each workflow executes in its own folder with separate reports.
