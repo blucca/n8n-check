@@ -1,0 +1,29 @@
+{
+  "name": "a failed second deal write preserves the first request and stops the audit node",
+  "input": { "json": { "body": { "since": "2026-09-01", "region": "us-west" } } },
+  "mocks": [
+    { "node": "Fetch Invoices", "respond": { "status": 200, "bodyFileName": "mocks/invoices-single-page.json" } },
+    { "node": "Update Deal", "respond": [
+      { "status": 200, "body": { "portalId": 1234, "isDeleted": false } },
+      { "status": 500, "body": { "status": "error", "message": "synthetic backend failure" } }
+    ] }
+  ],
+  "expect": {
+    "status": "error",
+    "nodes": {
+      "Build Deal Update": { "count": 2, "pluck": { "path": "json.invoiceId", "equals": ["inv-1001", "inv-1002"] } },
+      "Audit Log": { "executed": false }
+    },
+    "requests": [
+      { "node": "Update Deal", "count": 2, "calls": [
+        { "method": "PUT", "url": "https://api.hubapi.com/deals/v1/deal/9001", "body": { "properties": [
+          { "name": "dealstage", "value": "closedwon" }, { "name": "amount", "value": "1250.00" }
+        ] } },
+        { "method": "PUT", "url": "https://api.hubapi.com/deals/v1/deal/9002", "body": { "properties": [
+          { "name": "dealstage", "value": "closedwon" }, { "name": "amount", "value": "480.00" }
+        ] } }
+      ] },
+      { "node": "Alert Billing Channel", "count": 0 }
+    ]
+  }
+}

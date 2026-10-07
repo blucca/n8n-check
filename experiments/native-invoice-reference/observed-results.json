@@ -1,0 +1,1282 @@
+{
+  "source": {
+    "repository": "jamesshannon/n8n-workflow-testing",
+    "commit": "2298c0aefd72de1d5fbb235cd16d64543fafd16a",
+    "directory": "workflow-testing/docs/reference/invoice-deal-sync"
+  },
+  "observedAt": "2026-10-07",
+  "runtime": {
+    "n8n": "2.41.7",
+    "n8n-core": "2.41.5",
+    "mode": "evaluation",
+    "network": "loopback-only Linux namespace",
+    "pinnedNodes": [
+      "Invoice Sync Webhook",
+      "Audit Log"
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario": "original-1",
+      "case": "syncs eligible invoices to their HubSpot deals",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "No Invoices executed",
+          "passed": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "Fetch Invoices request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Fetch Invoices declared calls",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Fetch Invoices call 1 method",
+          "passed": true,
+          "expected": "GET",
+          "actual": "GET"
+        },
+        {
+          "name": "Fetch Invoices call 1 url",
+          "passed": true,
+          "expected": "https://billing.example.com/api/v2/invoices",
+          "actual": "https://billing.example.com/api/v2/invoices"
+        },
+        {
+          "name": "Fetch Invoices call 1 query",
+          "passed": true,
+          "expected": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "actual": {
+            "since": "2026-09-01",
+            "status": "paid"
+          }
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal declared calls",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal call 1 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 1 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9001",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9001"
+        },
+        {
+          "name": "Update Deal call 1 body",
+          "passed": true,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Deal call 2 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 2 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9002",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9002"
+        },
+        {
+          "name": "Update Deal call 2 body",
+          "passed": true,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9002",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "original-2",
+      "case": "follows pagination and drops each kind of ineligible invoice",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "Collect Invoices item count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Collect Invoices assertion has items",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Collect Invoices item 1",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Filter Eligible item count",
+          "passed": true,
+          "expected": 3,
+          "actual": 3
+        },
+        {
+          "name": "Filter Eligible pluck json.id",
+          "passed": true,
+          "expected": [
+            "inv-1001",
+            "inv-1002",
+            "inv-1006"
+          ],
+          "actual": [
+            "inv-1001",
+            "inv-1002",
+            "inv-1006"
+          ]
+        },
+        {
+          "name": "Fetch Invoices request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Fetch Invoices declared calls",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Fetch Invoices call 1 query",
+          "passed": true,
+          "expected": {
+            "since": "2026-09-01"
+          },
+          "actual": {
+            "since": "2026-09-01",
+            "status": "paid"
+          }
+        },
+        {
+          "name": "Fetch Invoices call 2 query",
+          "passed": true,
+          "expected": {
+            "since": "2026-09-01",
+            "cursor": "cur_2"
+          },
+          "actual": {
+            "since": "2026-09-01",
+            "status": "paid",
+            "cursor": "cur_2"
+          }
+        },
+        {
+          "name": "Lookup Company requests pluck url",
+          "passed": true,
+          "expected": [
+            "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+            "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+            "https://api.hubapi.com/companies/v2/domains/hooli.com/companies"
+          ],
+          "actual": [
+            "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+            "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+            "https://api.hubapi.com/companies/v2/domains/hooli.com/companies"
+          ]
+        },
+        {
+          "name": "Update Deal requests pluck url",
+          "passed": true,
+          "expected": [
+            "https://api.hubapi.com/deals/v1/deal/9001",
+            "https://api.hubapi.com/deals/v1/deal/9002",
+            "https://api.hubapi.com/deals/v1/deal/9006"
+          ],
+          "actual": [
+            "https://api.hubapi.com/deals/v1/deal/9001",
+            "https://api.hubapi.com/deals/v1/deal/9002",
+            "https://api.hubapi.com/deals/v1/deal/9006"
+          ]
+        },
+        {
+          "name": "Update Deal assertion has calls",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Update Deal call 1 expression",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Update Deal call 2 expression",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Update Deal call 3 expression",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid",
+            "cursor": "cur_2"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/hooli.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9002",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9006",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "990.00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "original-3",
+      "case": "invoice with no matching HubSpot company is skipped",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "Match Company item count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Match Company pluck json.id",
+          "passed": true,
+          "expected": [
+            "inv-1001"
+          ],
+          "actual": [
+            "inv-1001"
+          ]
+        },
+        {
+          "name": "Lookup Company request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Update Deal declared calls",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Update Deal call 1 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9001",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9001"
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/piedpiper.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "original-4",
+      "case": "empty API result takes the early-exit branch",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "No Invoices executed",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Split Invoices executed",
+          "passed": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "Lookup Company request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        }
+      ]
+    },
+    {
+      "scenario": "original-5",
+      "case": "a 500 from billing is retried and then succeeds",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "Fetch Invoices request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Alert Billing Channel request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9002",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "original-6",
+      "case": "billing down after all retries alerts the channel and writes nothing",
+      "executionStatus": "success",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "Collect Invoices executed",
+          "passed": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "Fetch Invoices request count",
+          "passed": true,
+          "expected": 3,
+          "actual": 3
+        },
+        {
+          "name": "Alert Billing Channel request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Alert Billing Channel declared calls",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Alert Billing Channel call 1 method",
+          "passed": true,
+          "expected": "POST",
+          "actual": "POST"
+        },
+        {
+          "name": "Alert Billing Channel call 1 url",
+          "passed": true,
+          "expected": "https://slack.com/api/chat.postMessage",
+          "actual": "https://slack.com/api/chat.postMessage"
+        },
+        {
+          "name": "Alert Billing Channel call 1 body",
+          "passed": true,
+          "expected": {
+            "channel": "#billing-alerts"
+          },
+          "actual": {
+            "channel": "#billing-alerts",
+            "text": "Invoice sync failed: Request failed with status code 500\n_Automated with this <http://localhost:5678/workflow/native-reference?utm_source=n8n-internal&utm_medium=powered_by&utm_campaign=n8n-nodes-base.slack_15b13349fa86d5658247a13e363f8aebaecf7786cf939e58cb4e60ee2053c35f|n8n workflow>_"
+          }
+        },
+        {
+          "name": "Alert Billing Channel call 1 expression",
+          "passed": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Alert Billing Channel",
+          "method": "POST",
+          "url": "https://slack.com/api/chat.postMessage",
+          "query": {},
+          "body": {
+            "channel": "#billing-alerts",
+            "text": "Invoice sync failed: Request failed with status code 500\n_Automated with this <http://localhost:5678/workflow/native-reference?utm_source=n8n-internal&utm_medium=powered_by&utm_campaign=n8n-nodes-base.slack_15b13349fa86d5658247a13e363f8aebaecf7786cf939e58cb4e60ee2053c35f|n8n workflow>_"
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "deal-write-failure",
+      "case": "a failed second deal write preserves the first request and stops the audit node",
+      "executionStatus": "error",
+      "passed": true,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "error",
+          "actual": "error"
+        },
+        {
+          "name": "Build Deal Update item count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Build Deal Update pluck json.invoiceId",
+          "passed": true,
+          "expected": [
+            "inv-1001",
+            "inv-1002"
+          ],
+          "actual": [
+            "inv-1001",
+            "inv-1002"
+          ]
+        },
+        {
+          "name": "Audit Log executed",
+          "passed": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal declared calls",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal call 1 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 1 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9001",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9001"
+        },
+        {
+          "name": "Update Deal call 1 body",
+          "passed": true,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Deal call 2 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 2 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9002",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9002"
+        },
+        {
+          "name": "Update Deal call 2 body",
+          "passed": true,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Alert Billing Channel request count",
+          "passed": true,
+          "expected": 0,
+          "actual": 0
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9002",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "wrong-amount",
+      "case": "syncs eligible invoices to their HubSpot deals",
+      "executionStatus": "success",
+      "passed": false,
+      "checks": [
+        {
+          "name": "workflow status",
+          "passed": true,
+          "expected": "success",
+          "actual": "success"
+        },
+        {
+          "name": "No Invoices executed",
+          "passed": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "name": "Fetch Invoices request count",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Fetch Invoices declared calls",
+          "passed": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "name": "Fetch Invoices call 1 method",
+          "passed": true,
+          "expected": "GET",
+          "actual": "GET"
+        },
+        {
+          "name": "Fetch Invoices call 1 url",
+          "passed": true,
+          "expected": "https://billing.example.com/api/v2/invoices",
+          "actual": "https://billing.example.com/api/v2/invoices"
+        },
+        {
+          "name": "Fetch Invoices call 1 query",
+          "passed": true,
+          "expected": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "actual": {
+            "since": "2026-09-01",
+            "status": "paid"
+          }
+        },
+        {
+          "name": "Update Deal request count",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal declared calls",
+          "passed": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "name": "Update Deal call 1 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 1 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9001",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9001"
+        },
+        {
+          "name": "Update Deal call 1 body",
+          "passed": false,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "1250.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "NaN"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Deal call 2 method",
+          "passed": true,
+          "expected": "PUT",
+          "actual": "PUT"
+        },
+        {
+          "name": "Update Deal call 2 url",
+          "passed": true,
+          "expected": "https://api.hubapi.com/deals/v1/deal/9002",
+          "actual": "https://api.hubapi.com/deals/v1/deal/9002"
+        },
+        {
+          "name": "Update Deal call 2 body",
+          "passed": false,
+          "expected": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "480.00"
+              }
+            ]
+          },
+          "actual": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "NaN"
+              }
+            ]
+          }
+        }
+      ],
+      "requests": [
+        {
+          "node": "Fetch Invoices",
+          "method": "GET",
+          "url": "https://billing.example.com/api/v2/invoices",
+          "query": {
+            "since": "2026-09-01",
+            "status": "paid"
+          },
+          "body": null
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/acme.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Lookup Company",
+          "method": "POST",
+          "url": "https://api.hubapi.com/companies/v2/domains/globex.com/companies",
+          "query": {},
+          "body": {
+            "requestOptions": {},
+            "limit": 1
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9001",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "NaN"
+              }
+            ]
+          }
+        },
+        {
+          "node": "Update Deal",
+          "method": "PUT",
+          "url": "https://api.hubapi.com/deals/v1/deal/9002",
+          "query": {},
+          "body": {
+            "properties": [
+              {
+                "name": "dealstage",
+                "value": "closedwon"
+              },
+              {
+                "name": "amount",
+                "value": "NaN"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

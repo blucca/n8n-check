@@ -319,6 +319,10 @@ This reads the export locally and writes a new file. Node.js 24+ is sufficient f
 - Preparation feedback covers the same slice rules as the runner: incoming dependencies, loop boundaries, and credentialed nodes.
 - `init` exit 0 means a draft was written; its console summary lists fields and slice issues to resolve. Run the completed case for pass/fail results.
 
+## Native-node experiment
+
+[Run the Invoice → HubSpot reference](experiments/native-invoice-reference/): six authored cases and two controls, with the original HubSpot and Slack nodes, original URLs, and n8n's existing HTTP interception hook. This separate adapter pins n8n 2.41.7; the released CLI and Action keep their current case format and runtime.
+
 ## Development
 
 ```sh

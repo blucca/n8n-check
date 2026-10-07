@@ -1,0 +1,59 @@
+name: Try the native invoice reference
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run six original cases
+        run: sh experiments/native-invoice-reference/run.sh
+      - name: Check a partial deal write
+        run: sh experiments/native-invoice-reference/run.sh deal-failure
+      - name: Catch the amount-field regression
+        run: |
+          set +e
+          sh experiments/native-invoice-reference/run.sh negative
+          code=$?
+          set -e
+          test "$code" = 1
+      - name: Verify contracts and write summary
+        run: |
+          node <<'JS'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const root = 'experiments/native-invoice-reference/results';
+          const read = p => JSON.parse(fs.readFileSync(`${root}/${p}`));
+          const original = Array.from({length:6}, (_,i) => read(`all/${i+1}/checks.json`));
+          const partial = read('deal-failure/checks.json');
+          const negative = read('negative/checks.json');
+          assert(original.every(r => r.passed));
+          assert.equal(original.flatMap(r => r.checks).length, 57);
+          assert(partial.passed);
+          assert.equal(read('deal-failure/run.json').status, 'error');
+          assert.equal(negative.passed, false);
+          assert.equal(negative.checks.filter(c => !c.passed).length, 2);
+          assert.equal(read('negative/run.json').status, 'success');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            '# Native Invoice → HubSpot reference\n\n' +
+            '| Mode | Engine | Contract |\n|---|---|---|\n' +
+            '| Six original cases | success | 57/57 |\n' +
+            '| Second deal write returns 500 | error | 13/13 |\n' +
+            '| Misspelled amount field | success | 13/15, expected exit 1 |\n\n' +
+            'Original native nodes and URLs. Synthetic evaluation credentials. Webhook/Postgres pins. n8n 2.41.7; loopback-only Docker execution.\n');
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-invoice-reference-results
+          path: |
+            experiments/native-invoice-reference/results/**/checks.json
+            experiments/native-invoice-reference/results/**/requests.json
+            experiments/native-invoice-reference/results/**/run.json
+            experiments/native-invoice-reference/results/**/case.json
+            experiments/native-invoice-reference/results/**/metadata.json
+            experiments/native-invoice-reference/.source/source.json
+          include-hidden-files: true
