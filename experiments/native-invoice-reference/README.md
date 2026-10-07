@@ -21,6 +21,8 @@ The first command downloads the official n8n image and nine public reference fil
 
 **Run in your browser:** fork this repository, enable Actions, and run **Try the native invoice reference**. It runs all three modes and uploads the results. [Workflow source](../../.github/workflows/try-native-invoice-reference.yml).
 
+**[Completed GitHub Actions run](https://github.com/blucca/n8n-check/actions/runs/37590485838):** the official Docker image passed all six original cases, the expected-error case, and the negative-control exit check. JSON artifacts are attached to the run.
+
 ## Observed results
 
 The table records actual local executions on 2026-10-07. [Full assertions and request captures](observed-results.json) are readable without running the pack.
