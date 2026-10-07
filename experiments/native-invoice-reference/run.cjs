@@ -17,7 +17,7 @@ const {NodeTypes} = req('./dist/node-types');
 const {getBase} = req('./dist/workflow-execute-additional-data');
 const {EvalMockedCredentialsHelper} = req('./dist/modules/instance-ai/eval/eval-mocked-credentials-helper');
 const {withExpressionIsolate} = req('./dist/utils');
-const yaml = req('js-yaml');
+const yaml = req('yaml');
 const {assertReference} = require('./assert-reference.cjs');
 
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -26,7 +26,7 @@ const save = (dir, name, data) => fs.writeFileSync(path.join(dir,name), JSON.str
 Execute.prototype.run = async function() {
   const specFile = path.resolve(process.env.NATIVE_SPEC);
   const sourceDir = path.dirname(specFile);
-  const spec = yaml.load(fs.readFileSync(specFile,'utf8'));
+  const spec = yaml.parse(fs.readFileSync(specFile,'utf8'));
   const input = JSON.parse(fs.readFileSync(process.env.NATIVE_WORKFLOW || path.join(sourceDir,'invoice-deal-sync.workflow.json'),'utf8'));
   const indexes = process.env.NATIVE_CASE === 'all' ? spec.cases.map((_,i)=>i) : [Number(process.env.NATIVE_CASE || 0)];
   const cases = process.env.NATIVE_EXTRA_CASE ? [JSON.parse(fs.readFileSync(process.env.NATIVE_EXTRA_CASE,'utf8'))] : indexes.map(i=>spec.cases[i]);
