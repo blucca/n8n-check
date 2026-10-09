@@ -4,6 +4,8 @@
 
 `getOrderStatus` checks an order number and checkout email, then returns fulfillment and tracking details. `requestCallback` checks the same pair and records the caller's number and reason for a human support team. Each tool call keeps its own ID; a batch can contain successful results and individual errors in one HTTP 200 response.
 
+[Open the free n8n gallery template](https://n8n.io/workflows/20638-handle-order-status-calls-and-callback-requests-with-vapi-and-data-tables/). **Gallery demo email:** both order rows use `user@example.com`. This repository export and its recorded HTTP fixtures use `alex@example.com` and `jamie@example.com`, as listed below. Match calls to the emails in your Data Table; import the source export below when replaying the supplied fixtures.
+
 ## What you get
 
 - [`workflow.json`](workflow.json): an importable workflow with a Manual setup branch, native Data Tables, a Header Auth webhook, per-tool routing, and a single response envelope.
