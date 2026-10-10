@@ -29,7 +29,7 @@ Both folders have the same `case.json`. Each keeps its own JSON/JUnit reports:
 - `wrong-id/results/report.json` and `wrong-id/results/junit.xml`
 
 Docker supplies Node and n8n. The first run downloads the official n8n 2.41.7
-image and the SHA256-verified n8n-check 0.1.6 runner. The other folder reuses the
+image and the pinned n8n-check 0.1.6 runner. The other folder reuses the
 Docker image/layers and downloads its own small runner archive. Workflow execution
 uses loopback-only networking. All fixture inputs are synthetic. The `README.md`
 in each folder explains the runtime, files, and local setup.

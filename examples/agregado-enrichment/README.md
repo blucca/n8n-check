@@ -50,7 +50,7 @@ for scenario in ordinary mixed retry; do
 done
 ```
 
-`prepare.mjs` downloads the original and patched exports at immutable Git commits, checks their SHA-256 hashes, and writes three case files. Generated files and JSON/JUnit reports stay under `temp/agregado-enrichment/`. Windows users can run the shell commands in WSL.
+`prepare.mjs` downloads and parses the original and patched exports at immutable Git commits, then writes three case files. Generated files and JSON/JUnit reports stay under `temp/agregado-enrichment/`. Windows users can run the shell commands in WSL.
 
 For a local n8n installation, put its executable on `PATH` and point `--n8n` to the **absolute path** of `examples/agregado-enrichment/n8n-synthetic`. Run in a loopback-only Linux network namespace, or explicitly select `--allow-network` for trusted local development.
 

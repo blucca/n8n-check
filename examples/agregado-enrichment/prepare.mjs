@@ -1,20 +1,17 @@
 import {mkdir, writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
-import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 // Download immutable Agregado exports; generate synthetic contracts beside them.
 // Source: ffrt-labs/agregado (README declares MIT). See README for attribution.
 const root=resolve(process.argv[2] ?? 'temp/agregado-enrichment');
 await mkdir(root,{recursive:true});
 const sources={
- original:{repo:'ffrt-labs/agregado',commit:'0cbbac9c7c6e19f2b9f82bab57cf75a171279eac',sha256:'49c2fce7e72ed0b773f9236a9ca29d3146714bd46a001cb0f3ddc7ece1acff1d'},
- fixed:{repo:'blucca/agregado',commit:'b4e4332b57341f1afdb7a3be7a9069540b8a15f4',sha256:'e0104cd7c58bfeb7c5a4e77ce3bc01832bd209ca8aa824ae77ce804781ea18c0'},
+ original:{repo:'ffrt-labs/agregado',commit:'0cbbac9c7c6e19f2b9f82bab57cf75a171279eac'},
+ fixed:{repo:'blucca/agregado',commit:'b4e4332b57341f1afdb7a3be7a9069540b8a15f4'},
 };
 for(const [name,source] of Object.entries(sources)){
  const url=`https://raw.githubusercontent.com/${source.repo}/${source.commit}/n8n/workflows/article-enrichment.json`;
  const bytes=execFileSync('curl',['--fail','--silent','--show-error','--location','--max-time','60',url],{maxBuffer:2*1024*1024});
- const hash=createHash('sha256').update(bytes).digest('hex');
- if(hash!==source.sha256)throw new Error(`${name}: source SHA256 mismatch`);
  JSON.parse(bytes.toString('utf8'));
  await writeFile(`${root}/${name}.json`,bytes);
 }

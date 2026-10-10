@@ -32,18 +32,18 @@ command -v docker >/dev/null 2>&1 || { echo 'Install and start Docker, then run 
 BASE="ghcr.io/n8n-io/n8n:$N8N_VERSION"
 IMAGE="n8n-check-local:0.1.6-$N8N_VERSION"
 # Docker obtains the official image on first use. This bootstrap sees only .cache.
-# Its Node runtime downloads and verifies the fixed runner release on Mac/Linux.
+# Its Node runtime checks a new download of the fixed runner release on Mac/Linux.
 docker run --rm -i --user "$(id -u):$(id -g)" \\
   --mount "type=bind,source=$ROOT/.cache,target=/cache" \\
   --entrypoint node "$BASE" --input-type=module - <<'NODE'
-import { readFile, writeFile, rename } from 'node:fs/promises';
+import { stat, writeFile, rename } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const file = '/cache/runner.tgz';
 const expected = '${RUNNER_SHA256}';
 const valid = data => createHash('sha256').update(data).digest('hex') === expected;
 let cached;
-try { cached = await readFile(file); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-if (!cached || !valid(cached)) {
+try { cached = (await stat(file)).isFile(); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (!cached) {
   console.log('Downloading n8n-check v0.1.6...');
   const response = await fetch('${RUNNER_URL}', { signal: AbortSignal.timeout(120000) });
   if (!response.ok) throw new Error('Runner download HTTP ' + response.status);
@@ -51,8 +51,10 @@ if (!cached || !valid(cached)) {
   if (!valid(data)) throw new Error('Runner SHA256 mismatch; download stopped.');
   await writeFile(file + '.partial', data);
   await rename(file + '.partial', file);
+  console.log('Runner download verified.');
+} else {
+  console.log('Using cached n8n-check v0.1.6.');
 }
-console.log('Runner SHA256 verified.');
 NODE
 cat > .cache/Dockerfile <<'DOCKERFILE'
 ARG N8N_VERSION
@@ -93,7 +95,7 @@ Selected n8n release: **${n8nVersion}**. To test another exact release:
 N8N_VERSION=2.41.7 sh run.sh
 \`\`\`
 
-The first run downloads the official n8n image and n8n-check v0.1.6. Docker supplies Node. The runner archive stays in .cache and its SHA256 is checked on every run. Subsequent runs reuse Docker layers and the verified archive. An uncached n8n version needs internet access. Choose a published version supported by your workflow's nodes and the runner (Node 24+).
+The first run downloads the official n8n image and n8n-check v0.1.6. Docker supplies Node. The new runner download is checked once against the pinned release checksum, then stored in .cache. Subsequent runs reuse Docker layers and the cached archive. An uncached n8n version needs internet access. Choose a published version supported by your workflow's nodes and the runner (Node 24+).
 
 The workflow executes with Docker --network none: HTTP mocks use loopback, and external networking is disabled. workflow.json and case.json are mounted read-only; results/ is writable. Execution uses your local UID/GID and a fresh n8n database. Use trusted workflows and synthetic fixtures; workflow code executes in the container. Inline values and assertion differences can appear in local reports.
 

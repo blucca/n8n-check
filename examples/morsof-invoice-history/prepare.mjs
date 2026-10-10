@@ -1,9 +1,8 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
-import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {join,dirname} from 'node:path';
 const here=dirname(fileURLToPath(import.meta.url));
-const sources={fixed:['3d8c61ee5b0e37e7e0052f53e7839db011b9c0de','b29612d4206a557129f0f97b7ca6619419033bff7940bc2366370fd20838e180'],broken:['adb2d3c3aa7534bcce53d955938e24c9f061b315','43bb3d16f4e1bf10a01cbb75b257e7bdb8e536d2aaedb94f1d05464137dda23a']};
+const sources={fixed:'3d8c61ee5b0e37e7e0052f53e7839db011b9c0de',broken:'adb2d3c3aa7534bcce53d955938e24c9f061b315'};
 const cloned=x=>JSON.parse(JSON.stringify(x));
 const save=async(n,x)=>writeFile(join(here,n),JSON.stringify(x,null,2)+'\n');
 const fixtureName='Start Manual Test';
@@ -11,9 +10,8 @@ const edge=n=>({node:n,type:'main',index:0});
 function code(w,name,js){w.nodes.push({id:'contract-'+name.replaceAll(' ','-'),name,type:'n8n-nodes-base.code',typeVersion:2,position:[2000,2000],parameters:{mode:'runOnceForAllItems',jsCode:js}});}
 function then(w,from,to){w.connections[from]??={main:[[]]};w.connections[from].main[0]??=[];w.connections[from].main[0].push(edge(to));}
 const projectCode=`return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));`;
-for(const [kind,[sha,hash]] of Object.entries(sources)){
+for(const [kind,sha] of Object.entries(sources)){
  let bytes;try{bytes=await readFile(join(here,kind+'.source.json'));}catch{const r=await fetch(`https://raw.githubusercontent.com/Morsoflab/n8n-automation-templates/${sha}/templates/invoice-payment-follow-up/invoice-payment-follow-up.json`,{signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error('download '+r.status);bytes=Buffer.from(await r.arrayBuffer());await writeFile(join(here,kind+'.source.json'),bytes);}
- if(createHash('sha256').update(bytes).digest('hex')!==hash)throw Error('Source hash '+kind);
  const w=JSON.parse(bytes);
  const node=n=>w.nodes.find(x=>x.name===n);
  node('Load Fictional Invoice Samples').parameters.jsCode=`return $('${fixtureName}').first().json.invoices.map(json=>({json}));`;

@@ -6,7 +6,7 @@ Executable coverage for the seven batch-history cases in [Morsof issue #7](https
 
 - Current workflow: `3d8c61ee5b0e37e7e0052f53e7839db011b9c0de`.
 - Historical first version: `adb2d3c3aa7534bcce53d955938e24c9f061b315`.
-- `prepare.mjs` downloads those exports and verifies their SHA-256 hashes.
+- `prepare.mjs` downloads and parses those exports at the listed Git commits.
 - Runtime: n8n **2.41.7**, n8n-check **0.1.3**, Node **26.10.0** in the recorded run; Linux loopback-only networking.
 
 | Case | Current result | Persisted history rows |
