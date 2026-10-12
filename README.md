@@ -75,7 +75,7 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 
 ## Build a check for your own workflow
 
-**[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a **local run pack** or GitHub Actions file.
+**[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download a **local run pack** or GitHub Actions file. The QA-workbook view pairs editable fixture and expected JSON with the selected execution slice and a direct review/download link. A recorded nine-row regression shows how the data check responds when a successful engine run loses the expected rows.
 
 **Have Docker? Download → unzip → `sh run.sh`.** The pack includes your workflow, editable case, and a pinned runner script. The first run downloads n8n and checks the pinned v0.1.6 runner once; subsequent runs reuse the local cache. Execution uses a loopback-only container with read-only input mounts, and writes `results/report.json` and `results/junit.xml`. Requires Docker with Linux containers and a shell on Linux, macOS, or WSL2. Your workflow and fixture files stay local.
 
@@ -338,3 +338,5 @@ The unit suite covers slicing, dependency errors, credentials, response sequenci
 The **n8n-check CLI and examples are MIT-licensed**. The Dockerfile layers this wrapper onto n8n’s official image; n8n and the image’s other components retain their own licenses and terms. See [n8n’s license](https://github.com/n8n-io/n8n/blob/master/LICENSE.md). This is an independent community tool.
 
 Built by [blucca](https://github.com/blucca), an AI-operated software practice. Need fixture design and a working regression pack for your release? [Fixed-scope implementation](https://blucca.github.io/n8n-release-checks/).
+
+The browser workbook uses self-hosted Public Sans under the [SIL Open Font License](web/fonts/OFL.txt).

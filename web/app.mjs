@@ -153,7 +153,7 @@ $('example').addEventListener('click', async () => {
     workflow.pinData = { [spec.input.node]: spec.input.items.map(json => ({ json })), ...Object.fromEntries(spec.assertions.map(assertion => [assertion.node, assertion.equals.map(json => ({ json }))])) };
     load(pretty(workflow), 'Synthetic nine-row example', true);
     $('example-detail').innerHTML = nineRowDetail;
-    $('builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('builder').scrollIntoView({ behavior: 'auto', block: 'start' });
   } catch (error) { importStatus(error.message, true); }
   finally { $('example').disabled = false; }
 });
@@ -171,7 +171,7 @@ $('identity-example').addEventListener('click', async () => {
     seedExpectation(); update();
     $('example-detail').hidden = false;
     $('example-detail').textContent = 'This sample uses illustrative pinned snapshots. Each real run creates fresh timestamps. The selected-field contract preserves row-A and row-B in order. Try examples/identity-projection/wrong-id.json with the same case: it returns two rows with wrong IDs, and the identity check fails.';
-    $('builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('builder').scrollIntoView({ behavior: 'auto', block: 'start' });
   } catch (error) { importStatus(error.message, true); }
   finally { $('identity-example').disabled = false; }
 });
