@@ -2,6 +2,8 @@
 
 Three **development seed families** for evaluating workflow repairs on additional inputs and execution sequences. The repair author knows these development references. A separate [prospective paired pilot](PILOT-PROTOCOL.md) freezes natural-model repair prompts, equal invocation budgets and model-hidden final inputs before generation.
 
+**Pilot completed; expansion stopped.** [The 18-generation result](PILOT-RESULTS.md) never reached a passing original-input repair in either core family. Eight answers failed the patch interface; valid-code baseline failures also remained. All reference controls passed. Full prompts, answers and case observations are retained.
+
 ## What the seeds measure
 
 | Family | Visible trigger / candidate | Added contract | Provenance |
