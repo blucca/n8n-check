@@ -1,0 +1,49 @@
+name: Gemma paired repair pilot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TMPDIR: ${{ github.workspace }}/temp
+      PYTHONPYCACHEPREFIX: ${{ github.workspace }}/temp/python-cache
+      PIP_CACHE_DIR: ${{ github.workspace }}/temp/pip-cache
+      npm_config_cache: ${{ github.workspace }}/temp/npm-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned runtimes and download the public model
+        run: |
+          mkdir -p temp
+          python -m pip install --disable-pip-version-check litert-lm-api==0.18.0
+          npm install --prefix temp/n8n --no-audit --no-fund --package-lock=false n8n@2.41.7
+          curl -fL --retry 1 --connect-timeout 30 --max-time 540 \
+            https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/b3ca0d2f076785a8f4b2219ddbd2bdb99954eae1/gemma-4-E2B-it.litertlm \
+            -o temp/gemma-4-E2B-it.litertlm
+      - name: Run frozen pairs in a loopback-only namespace
+        run: |
+          python experiments/heldout-repair/run-pilot.py --self-check
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          export PATH="$PWD/temp/n8n/node_modules/.bin:$PATH"
+          unshare --user --map-root-user --net sh -c \
+            'ip link set lo up && exec python experiments/heldout-repair/run-pilot.py temp/gemma-4-E2B-it.litertlm experiments/heldout-repair/pilot-spec.json temp/paired-pilot'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemma-paired-pilot
+          path: |
+            temp/paired-pilot/**/*.json
+            temp/paired-pilot/**/*.log
+          if-no-files-found: warn
+          retention-days: 14

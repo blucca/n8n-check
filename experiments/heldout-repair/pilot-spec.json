@@ -1,0 +1,2612 @@
+{
+  "protocol": "paired-pilot-v1",
+  "frozenAt": "2026-10-17T22:54:05.615Z",
+  "stage": "prospective model pilot on development-derived task families",
+  "model": {
+    "repository": "litert-community/gemma-4-E2B-it-litert-lm",
+    "revision": "b3ca0d2f076785a8f4b2219ddbd2bdb99954eae1",
+    "runtime": "litert-lm-api==0.18.0",
+    "backend": "CPU",
+    "maxContextTokens": 8192
+  },
+  "budget": {
+    "seeds": [
+      17701,
+      17702
+    ],
+    "sharedInitialCallsPerPair": 1,
+    "revisionCallsPerArm": 1,
+    "revisionSeedOffset": 100000,
+    "maxOutputTokens": 1536,
+    "thinking": false,
+    "temperature": 0.7,
+    "topP": 0.95,
+    "topK": 40,
+    "feedbackExecutionsPerArm": 2,
+    "feedbackCharacterLimit": 6000
+  },
+  "exclusions": [
+    "All 22 authored development-seed invocations",
+    "Access-probe answer and post-hoc hyphen-collision witness",
+    "Any delimiter-collision test; this pilot grades scope/version only"
+  ],
+  "tasks": [
+    {
+      "id": "invoice",
+      "role": "repair",
+      "provenance": "Morsoflab MIT source at 3d8c61ee5b0e37e7e0052f53e7839db011b9c0de plus researcher-added same-batch conflict policy",
+      "prompt": "You are maintaining an n8n 2.41.7 workflow. Review the designated node against the complete requirements below. Return the smallest complete replacement allowed by the output schema, or retain a correct implementation. Only the specified node field can change; the remaining graph is fixed. Return one JSON object and no prose. Use valid JSON escaping for code strings.\nTASK: Invoice reminder batch policy (a new, explicitly requested policy on a source-derived workflow).\nThe upstream node already normalizes each invoice into item.json with invoiceId, reminderStage, customerId, email, currency, totalAmount, paidAmount, outstandingAmount, dueDate, outputPath, classification, actionReason and draft. This Code node runs once for all items using $input.all().\nRequirements: preserve one outcome and the exact customer/amount identity for every input. Among items whose outputPath is ready_for_review, members with the same invoiceId and reminderStage belong to one group. If any members disagree on customerId, email, currency, totalAmount, paidAmount, outstandingAmount or dueDate, EVERY member of that group must go to manual review and none may be stored as prepared. Identical duplicates remain eligible and downstream code stores one row and emits one ready_for_review outcome plus already_prepared outcomes for duplicates. Unrelated groups must still complete. Preserve non-ready items unchanged. Comparison is within this batch; cross-execution history reconciliation is handled elsewhere.\nFor a conflicting item set outputPath='manual_review', classification='requiring_manual_review', reminderStage='', draft=null and an explanatory actionReason, preserving its other identity fields. For each eligible nonconflicting item retain historyKey=trim(invoiceId)+'::'+trim(reminderStage) because the fixed downstream nodes use that key. Return n8n items {json:...,pairedItem:{item:originalIndex}} when constructing a new item.\nThe fixed downstream graph loads history, routes by outputPath, groups eligible items by historyKey, stores the first member of an identical group, then reattaches a per-input result. Do not edit or replace that graph.\nCurrent designated jsCode:\nreturn $input.all().map((item, index) => {\n  const value = item.json ?? {};\n  if (value.outputPath !== 'ready_for_review') return item;\n  const historyKey = String(value.invoiceId ?? '').trim() + '::' + String(value.reminderStage ?? '').trim();\n  return { json: { ...value, historyKey }, pairedItem: { item: index } };\n});\nReported raw input (the upstream normalization described above runs before your node):\n[{\"invoiceId\":\"INV-VISIBLE-A\",\"customer\":{\"id\":\"C-INV-VISIBLE-A\",\"name\":\"Fictional INV-VISIBLE-A\",\"email\":\"inv-visible-a@fixture.example\",\"phone\":\"\"},\"currency\":\"EUR\",\"totalAmount\":100,\"paidAmount\":0,\"outstandingAmount\":100,\"dueDate\":\"2030-06-22\",\"paymentStatus\":\"unpaid\",\"disputed\":false,\"updatedAt\":\"2030-06-19T10:00:00.000Z\"},{\"invoiceId\":\"INV-VISIBLE-B\",\"customer\":{\"id\":\"C-INV-VISIBLE-B\",\"name\":\"Fictional INV-VISIBLE-B\",\"email\":\"inv-visible-b@fixture.example\",\"phone\":\"\"},\"currency\":\"EUR\",\"totalAmount\":85,\"paidAmount\":0,\"outstandingAmount\":85,\"dueDate\":\"2030-06-20\",\"paymentStatus\":\"unpaid\",\"disputed\":false,\"updatedAt\":\"2030-06-19T10:00:00.000Z\"}]\nOutput schema: {\"jsCode\":\"complete replacement JavaScript for Group Batch Reminder Keys\"}.",
+      "workflow": {
+        "name": "Prepare Invoice Payment Follow-ups for Review",
+        "nodes": [
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [
+              -900,
+              0
+            ],
+            "id": "0b6b2380-d664-49e1-9016-f02cc94eb308",
+            "name": "Start Manual Test"
+          },
+          {
+            "parameters": {
+              "resource": "table",
+              "operation": "create",
+              "tableName": "invoice_reminder_history",
+              "columns": {
+                "column": [
+                  {
+                    "name": "invoice_id",
+                    "type": "string"
+                  },
+                  {
+                    "name": "reminder_stage",
+                    "type": "string"
+                  },
+                  {
+                    "name": "classification",
+                    "type": "string"
+                  },
+                  {
+                    "name": "customer_id",
+                    "type": "string"
+                  },
+                  {
+                    "name": "recipient_email",
+                    "type": "string"
+                  },
+                  {
+                    "name": "recipient_phone",
+                    "type": "string"
+                  },
+                  {
+                    "name": "currency",
+                    "type": "string"
+                  },
+                  {
+                    "name": "outstanding_amount",
+                    "type": "number"
+                  },
+                  {
+                    "name": "due_date",
+                    "type": "date"
+                  },
+                  {
+                    "name": "review_status",
+                    "type": "string"
+                  },
+                  {
+                    "name": "draft_subject",
+                    "type": "string"
+                  },
+                  {
+                    "name": "prepared_at",
+                    "type": "date"
+                  },
+                  {
+                    "name": "source_updated_at",
+                    "type": "date"
+                  }
+                ]
+              },
+              "options": {
+                "createIfNotExists": true
+              }
+            },
+            "type": "n8n-nodes-base.dataTable",
+            "typeVersion": 1.1,
+            "position": [
+              -680,
+              0
+            ],
+            "id": "e4409b54-b999-4460-9457-df85a45aef39",
+            "name": "Create or Reuse Reminder History",
+            "retryOnFail": true,
+            "maxTries": 3,
+            "waitBetweenTries": 1000,
+            "onError": "continueErrorOutput"
+          },
+          {
+            "parameters": {
+              "resource": "row",
+              "operation": "get",
+              "dataTableId": {
+                "__rl": true,
+                "mode": "name",
+                "value": "invoice_reminder_history"
+              },
+              "returnAll": true
+            },
+            "type": "n8n-nodes-base.dataTable",
+            "typeVersion": 1.1,
+            "position": [
+              -570,
+              160
+            ],
+            "id": "0a0232f5-e5eb-43a9-bb8d-17a0c86d8a51",
+            "name": "Load Reminder History",
+            "alwaysOutputData": true,
+            "retryOnFail": true,
+            "maxTries": 3,
+            "waitBetweenTries": 1000,
+            "onError": "continueErrorOutput"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $('Start Manual Test').first().json.invoices.map(json=>({json}));"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              -460,
+              0
+            ],
+            "id": "f45302f4-e38f-4407-a571-7fb63874be76",
+            "name": "Load Fictional Invoice Samples"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForEachItem",
+              "jsCode": "const UPCOMING_DAYS_BEFORE_DUE = 3;\nconst OVERDUE_STAGES = [\n  { stage: 'overdue_3_days', minimumDaysOverdue: 3 },\n  { stage: 'overdue_7_days', minimumDaysOverdue: 7 },\n  { stage: 'overdue_14_days', minimumDaysOverdue: 14 },\n];\nconst AMOUNT_TOLERANCE = 0.01; // Reconciliation only; never used to decide whether an amount is positive.\nconst configuration = $('Validate Workflow Configuration').first().json;\n\nconst raw = $json ?? {};\nconst fullText = value => String(value ?? '').trim().replace(/\\s+/g, ' ');\nconst limitedText = (value, max) => fullText(value).slice(0, max);\nconst parseDateOnly = value => {\n  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return null;\n  const date = new Date(value + 'T00:00:00.000Z');\n  return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : date;\n};\nconst parseTimestamp = value => {\n  const match = /^(\\d{4}-\\d{2}-\\d{2})T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d{1,9})?(?:Z|[+-](?:[01]\\d|2[0-3]):[0-5]\\d)$/.exec(value);\n  if (!match || !parseDateOnly(match[1])) return null;\n  const date = new Date(value);\n  return Number.isNaN(date.getTime()) ? null : date.toISOString();\n};\n\nconst invoiceIdInput = fullText(raw.invoiceId);\nconst invoiceId = invoiceIdInput.length <= 200 ? invoiceIdInput : '';\nconst customerId = limitedText(raw.customer?.id, 200);\nconst customerName = limitedText(raw.customer?.name, 200);\nconst emailInput = String(raw.customer?.email ?? '').trim().toLowerCase();\nconst emailParts = emailInput.split('@');\nconst emailLocal = emailParts[0] ?? '';\nconst emailDomain = emailParts[1] ?? '';\nconst emailValid = emailInput === '' || (\n  emailInput.length <= 254 &&\n  emailParts.length === 2 &&\n  emailLocal.length >= 1 && emailLocal.length <= 64 &&\n  !/\\s/.test(emailInput) &&\n  !emailLocal.startsWith('.') && !emailLocal.endsWith('.') && !emailLocal.includes('..') &&\n  /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+$/.test(emailLocal) &&\n  emailDomain.includes('.') && emailDomain.length <= 189 && !emailDomain.includes('..') &&\n  emailDomain.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label))\n);\nconst email = emailValid ? emailInput : '';\nconst phoneInput = String(raw.customer?.phone ?? '').trim();\nconst phonePrefixValid = phoneInput.startsWith('+')\n  ? !phoneInput.slice(1).includes('+')\n  : phoneInput.startsWith('00') && !phoneInput.includes('+');\nconst phoneCharactersValid = !/[a-z]/i.test(phoneInput) && /^[+\\d\\s()-]*$/.test(phoneInput);\nconst subscriberDigits = phoneInput.startsWith('+')\n  ? phoneInput.slice(1).replace(/[\\s()-]/g, '')\n  : phoneInput.startsWith('00') ? phoneInput.slice(2).replace(/[\\s()-]/g, '') : '';\nconst phoneValid = phoneInput === '' || (\n  phonePrefixValid && phoneCharactersValid && /^[1-9]\\d{3,14}$/.test(subscriberDigits)\n);\nconst phone = phoneInput !== '' && phoneValid ? '+' + subscriberDigits : '';\nconst currencyInput = fullText(raw.currency).toUpperCase();\nconst currency = currencyInput.length <= 16 ? currencyInput : '';\nconst paymentStatus = limitedText(raw.paymentStatus, 40).toLowerCase().replace(/[ -]+/g, '_');\nconst disputed = typeof raw.disputed === 'boolean' ? raw.disputed : null;\nconst totalAmount = typeof raw.totalAmount === 'number' && Number.isFinite(raw.totalAmount) ? raw.totalAmount : null;\nconst paidAmount = typeof raw.paidAmount === 'number' && Number.isFinite(raw.paidAmount) ? raw.paidAmount : null;\nconst outstandingAmount = typeof raw.outstandingAmount === 'number' && Number.isFinite(raw.outstandingAmount) ? raw.outstandingAmount : null;\nconst dueDate = limitedText(raw.dueDate, 40);\nconst preparedAt = new Date().toISOString();\nconst errors = [];\nconst reviewReasons = [];\n\nconst updatedAtPresent = Object.prototype.hasOwnProperty.call(raw, 'updatedAt');\nlet sourceUpdatedAt = null;\nif (updatedAtPresent) {\n  if (typeof raw.updatedAt !== 'string' || raw.updatedAt.trim() === '') errors.push('updated_at_invalid');\n  else {\n    sourceUpdatedAt = parseTimestamp(raw.updatedAt.trim());\n    if (!sourceUpdatedAt) errors.push('updated_at_invalid');\n  }\n}\n\nconst normalizedContext = {\n  scope: 'invoice',\n  invoiceId,\n  customerId,\n  customerName,\n  email,\n  phone,\n  currency,\n  totalAmount,\n  paidAmount,\n  outstandingAmount,\n  dueDate,\n  paymentStatus,\n  disputed,\n  sourceUpdatedAt,\n  businessTimeZone: configuration.businessTimeZone,\n  preparedAt,\n};\n\nif (!invoiceIdInput) errors.push('invoice_id_missing');\nelse if (invoiceIdInput.length > 200) errors.push('invoice_id_too_long');\nif (!customerId || !customerName) errors.push('customer_identity_missing');\nif (!/^[A-Z]{3}$/.test(currencyInput)) errors.push('currency_invalid');\nif (totalAmount === null) errors.push('total_amount_invalid');\nelse if (totalAmount <= 0) errors.push('total_amount_not_positive');\nif (paidAmount === null) errors.push('paid_amount_invalid');\nelse if (paidAmount < 0) errors.push('paid_amount_negative');\nif (outstandingAmount === null) errors.push('outstanding_amount_invalid');\nelse if (outstandingAmount < 0) errors.push('outstanding_amount_negative');\nif (disputed === null) errors.push('disputed_invalid');\nconst due = parseDateOnly(dueDate);\nif (!due) errors.push('due_date_invalid');\nif (!['unpaid', 'paid', 'partially_paid'].includes(paymentStatus)) errors.push('payment_status_invalid');\n\nlet classification = 'invalid';\nlet reminderStage = '';\nlet outputPath = 'invalid_record';\nlet actionReason = errors.join(',');\n\nif (errors.length === 0) {\n  const inconsistentAmount = Math.abs(totalAmount - paidAmount - outstandingAmount) > AMOUNT_TOLERANCE;\n  const paidConflict = paymentStatus === 'paid' && outstandingAmount > 0;\n  const unpaidConflict = paymentStatus === 'unpaid' && (paidAmount > 0 || outstandingAmount === 0);\n  const partialByAmount = paidAmount > 0 && outstandingAmount > 0;\n\n  if (inconsistentAmount) reviewReasons.push('amounts_inconsistent');\n  if (paidConflict || unpaidConflict) reviewReasons.push('payment_state_conflict');\n  if (emailInput && !emailValid) reviewReasons.push('customer_email_invalid');\n  if (phoneInput && !phoneValid) reviewReasons.push('customer_phone_invalid');\n  if (!emailInput && !phoneInput) reviewReasons.push('customer_contact_missing');\n\n  if (disputed) {\n    classification = 'disputed';\n    reviewReasons.push('invoice_disputed');\n  } else if (paymentStatus === 'partially_paid' || partialByAmount) {\n    classification = 'partially_paid';\n    reviewReasons.push('partial_payment');\n  } else if (reviewReasons.length > 0) {\n    classification = 'requiring_manual_review';\n  } else if (paymentStatus === 'paid' && outstandingAmount === 0) {\n    classification = 'paid';\n    outputPath = 'no_action_required';\n    actionReason = 'invoice_paid';\n  } else {\n    const evaluation = parseDateOnly(configuration.evaluationDate);\n    const daysUntilDue = Math.round((due.getTime() - evaluation.getTime()) / 86400000);\n\n    if (daysUntilDue > 0) {\n      classification = 'upcoming';\n      if (daysUntilDue <= UPCOMING_DAYS_BEFORE_DUE) reminderStage = 'upcoming_' + UPCOMING_DAYS_BEFORE_DUE + '_days';\n      else actionReason = 'outside_upcoming_interval';\n    } else if (daysUntilDue === 0) {\n      classification = 'due';\n      reminderStage = 'due_today';\n    } else {\n      classification = 'overdue';\n      const daysOverdue = Math.abs(daysUntilDue);\n      reminderStage = [...OVERDUE_STAGES].reverse().find(stage => daysOverdue >= stage.minimumDaysOverdue)?.stage ?? '';\n      if (!reminderStage) actionReason = 'before_first_overdue_interval';\n    }\n\n    if (reminderStage) {\n      outputPath = 'ready_for_review';\n      actionReason = 'reminder_stage_eligible';\n    } else outputPath = 'no_action_required';\n  }\n\n  if (reviewReasons.length > 0) {\n    outputPath = 'manual_review';\n    actionReason = [...new Set(reviewReasons)].join(',');\n    reminderStage = '';\n  }\n}\n\nconst draft = reminderStage ? {\n  reminderStage,\n  recipient: { customerId, customerName, email, phone },\n  subject: 'Payment reminder review: invoice ' + invoiceId,\n  title: 'Review ' + reminderStage + ' for ' + invoiceId,\n  messageVariables: { invoiceId, customerName, currency, totalAmount, paidAmount, outstandingAmount, dueDate },\n  invoice: { invoiceId, currency, totalAmount, paidAmount, outstandingAmount, dueDate, paymentStatus, disputed },\n  reviewStatus: 'pending_manual_approval',\n} : null;\n\nreturn { json: { ...normalizedContext, classification, reminderStage, outputPath, actionReason, draft } };"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              -160,
+              0
+            ],
+            "id": "db9c938c-c806-4b07-966d-d33508642716",
+            "name": "Validate Normalize and Classify"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map((item, index) => {\n  const value = item.json ?? {};\n  if (value.outputPath !== 'ready_for_review') return item;\n  const historyKey = String(value.invoiceId ?? '').trim() + '::' + String(value.reminderStage ?? '').trim();\n  return { json: { ...value, historyKey }, pairedItem: { item: index } };\n});"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              -120,
+              220
+            ],
+            "id": "5a29fa58-1cab-4b3a-ab02-ad5a253c069a",
+            "name": "Group Batch Reminder Keys"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const historyByKey = new Map();\n\nfor (const item of $('Load Reminder History').all()) {\n  const row = item.json ?? {};\n  const invoiceId = String(row.invoice_id ?? '').trim();\n  const reminderStage = String(row.reminder_stage ?? '').trim();\n  if (!invoiceId || !reminderStage || row.id === undefined || row.id === null) continue;\n\n  const key = `${invoiceId}::${reminderStage}`;\n  const current = historyByKey.get(key);\n  if (!current || String(row.prepared_at ?? '') > String(current.prepared_at ?? '')) historyByKey.set(key, row);\n}\n\nreturn $input.all().map((item, index) => {\n  const invoice = item.json;\n  if (invoice.outputPath !== 'ready_for_review') return item;\n\n  const key = `${invoice.invoiceId}::${invoice.reminderStage}`;\n  const history = historyByKey.get(key);\n  if (!history) return item;\n\n  return {\n    json: {\n      ...invoice,\n      outputPath: 'already_prepared',\n      actionReason: 'reminder_stage_already_prepared',\n      reviewStatus: 'already_prepared',\n      historyRecordId: history.id,\n      previousPreparedAt: history.prepared_at ?? null,\n    },\n    pairedItem: { item: index },\n  };\n});"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              60,
+              220
+            ],
+            "id": "6d4044dc-2a11-4507-99ad-57eb15eac5e9",
+            "name": "Check Reminder History"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c291a95d-34ab-429b-bd22-c34ae71ec148",
+                    "leftValue": "={{ $json.outputPath }}",
+                    "rightValue": "invalid_record",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              80,
+              0
+            ],
+            "id": "171fbcd3-58a3-4581-896e-91028e046738",
+            "name": "Invalid Record?"
+          },
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              300,
+              -260
+            ],
+            "id": "1693861c-5a09-4204-a4fb-2d64692cec6f",
+            "name": "Invalid Record"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc1d76c5-d7fc-4da9-a184-2a8661c82e51",
+                    "leftValue": "={{ $json.outputPath }}",
+                    "rightValue": "manual_review",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              300,
+              0
+            ],
+            "id": "4528b935-afc8-43bd-adad-ef67c8a455b9",
+            "name": "Manual Review Required?"
+          },
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              520,
+              -100
+            ],
+            "id": "3ad0b945-b735-47fa-943c-ad1ab61640bf",
+            "name": "Manual Review"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "270b7e66-c95c-48df-9638-12d345c44928",
+                    "leftValue": "={{ $json.outputPath }}",
+                    "rightValue": "no_action_required",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              520,
+              100
+            ],
+            "id": "05344535-fd52-4707-9704-89138d33a459",
+            "name": "No Action Required?"
+          },
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              740,
+              260
+            ],
+            "id": "2c461f59-c1fd-48ba-a7bb-abd2f1fc8c2e",
+            "name": "No Action Required"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d30ae96a-19df-43d0-ad39-052d82579eb3",
+                    "leftValue": "={{ $json.outputPath }}",
+                    "rightValue": "already_prepared",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              1180,
+              20
+            ],
+            "id": "1f250253-1d89-4582-817b-e950096f34ac",
+            "name": "Already Prepared?"
+          },
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              1400,
+              -120
+            ],
+            "id": "258126f1-5967-4302-bf6d-5c31f42dbed0",
+            "name": "Already Prepared"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const groups = new Map();\nfor (const item of $input.all()) {\n  const value = item.json ?? {};\n  const historyKey = String(value.historyKey ?? '').trim();\n  if (!groups.has(historyKey)) groups.set(historyKey, []);\n  groups.get(historyKey).push(value);\n}\n\nconst output = [];\nfor (const [historyKey, members] of groups) {\n  const invalid = members.some(value => {\n    const draft = value.draft;\n    return !value.invoiceId || !value.reminderStage || !historyKey || !draft || typeof draft !== 'object' || !draft.recipient || !draft.subject || !draft.title || !draft.messageVariables || !draft.invoice || value.outputPath !== 'ready_for_review';\n  });\n  if (invalid) {\n    for (const value of members) output.push({ json: { ...value, scope: 'invoice', outputPath: 'workflow_failure', reviewStatus: 'manual_review', failedOperation: 'output_preparation', actionReason: 'ready_output_invalid', draft: null, deliveryEnabled: false } });\n    continue;\n  }\n  output.push({ json: { ...members[0], historyKey, batchMembers: members, outputPath: 'ready_for_review', reviewStatus: 'pending_manual_approval', deliveryEnabled: false } });\n}\nreturn output;"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              1400,
+              100
+            ],
+            "id": "81bba75c-96dc-46ab-84ae-2fcf9fb3ddae",
+            "name": "Prepare Ready Output"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "afe930d8-cb18-450e-8b24-d15e145cc577",
+                    "leftValue": "={{ $json.outputPath }}",
+                    "rightValue": "ready_for_review",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              1620,
+              100
+            ],
+            "id": "83bf175f-e493-4aae-8383-a6635fec0a5f",
+            "name": "Ready Output Valid?"
+          },
+          {
+            "parameters": {
+              "resource": "row",
+              "operation": "insert",
+              "dataTableId": {
+                "__rl": true,
+                "mode": "name",
+                "value": "invoice_reminder_history"
+              },
+              "columns": {
+                "mappingMode": "defineBelow",
+                "value": {
+                  "invoice_id": "={{ $json.invoiceId }}",
+                  "reminder_stage": "={{ $json.reminderStage }}",
+                  "classification": "={{ $json.classification }}",
+                  "customer_id": "={{ $json.customerId }}",
+                  "recipient_email": "={{ $json.email }}",
+                  "recipient_phone": "={{ $json.phone }}",
+                  "currency": "={{ $json.currency }}",
+                  "outstanding_amount": "={{ $json.outstandingAmount }}",
+                  "due_date": "={{ $json.dueDate }}",
+                  "review_status": "pending_manual_approval",
+                  "draft_subject": "={{ $json.draft.subject }}",
+                  "prepared_at": "={{ $json.preparedAt }}",
+                  "source_updated_at": "={{ $json.sourceUpdatedAt }}"
+                }
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.dataTable",
+            "typeVersion": 1.1,
+            "position": [
+              1840,
+              100
+            ],
+            "id": "16aef9d9-0d33-4124-895a-f629809bc1a9",
+            "name": "Store Reminder Preparation",
+            "onError": "continueErrorOutput"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const preparedByKey = new Map(\n  $('Prepare Ready Output').all()\n    .map(item => item.json)\n    .filter(value => value.outputPath === 'ready_for_review')\n    .map(value => [value.historyKey, value]),\n);\n\nreturn $input.all().flatMap(item => {\n  const row = item.json ?? {};\n  const key = String(row.invoice_id ?? '').trim() + '::' + String(row.reminder_stage ?? '').trim();\n  const prepared = preparedByKey.get(key);\n  if (!prepared || row.id === undefined || row.id === null) {\n    const members = prepared?.batchMembers ?? [{}];\n    return members.map(value => ({ json: { ...value, scope: 'invoice', outputPath: 'workflow_failure', reviewStatus: 'manual_review', failedOperation: 'history_confirmation', actionReason: 'history_confirmation_failed', draft: null, deliveryEnabled: false } }));\n  }\n  return prepared.batchMembers.map((value, index) => ({\n    json: index === 0\n      ? { ...value, historyKey: key, historyRecordId: row.id, outputPath: 'ready_for_review', reviewStatus: 'pending_manual_approval', deliveryEnabled: false }\n      : { ...value, historyKey: key, historyRecordId: row.id, previousPreparedAt: row.prepared_at ?? prepared.preparedAt, outputPath: 'already_prepared', actionReason: 'duplicate_in_execution', reviewStatus: 'already_prepared', deliveryEnabled: false },\n  }));\n});"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2060,
+              100
+            ],
+            "id": "e38fffe0-9b08-4daf-bda0-967675f7af3f",
+            "name": "Ready for Review"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForEachItem",
+              "jsCode": "return { json: { scope: 'workflow', outputPath: 'workflow_failure', reviewStatus: 'manual_review', failedOperation: 'history_table_create', actionReason: 'history_table_create_failed', draft: null, deliveryEnabled: false } };"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              1400,
+              400
+            ],
+            "id": "c57a04b6-514d-476b-85ac-d219d05fd65e",
+            "name": "Format History Setup Failure"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForEachItem",
+              "jsCode": "return { json: { scope: 'workflow', outputPath: 'workflow_failure', reviewStatus: 'manual_review', failedOperation: 'history_load', actionReason: 'history_load_failed', draft: null, deliveryEnabled: false } };"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              1620,
+              400
+            ],
+            "id": "ad7fba5b-7772-42dc-bac8-cd3dc0b8ac15",
+            "name": "Format History Load Failure"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const preparedByKey = new Map(\n  $('Prepare Ready Output').all()\n    .map(item => item.json)\n    .filter(value => value.outputPath === 'ready_for_review')\n    .map(value => [value.historyKey, value]),\n);\nconst handled = new Set();\nconst output = [];\nfor (const item of $input.all()) {\n  const value = item.json ?? {};\n  const key = String(value.historyKey ?? '').trim()\n    || (String(value.invoiceId ?? value.invoice_id ?? '').trim() + '::' + String(value.reminderStage ?? value.reminder_stage ?? '').trim());\n  if (handled.has(key)) continue;\n  handled.add(key);\n  const prepared = preparedByKey.get(key);\n  const members = prepared?.batchMembers ?? [value];\n  for (const member of members) output.push({ json: { ...member, scope: 'invoice', outputPath: 'workflow_failure', reviewStatus: 'manual_review', failedOperation: 'history_insert', actionReason: 'history_insert_failed', draft: null, deliveryEnabled: false } });\n}\nreturn output;"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              1840,
+              400
+            ],
+            "id": "74cff20e-fb48-4a63-a0b0-1de20e0e7651",
+            "name": "Format History Insert Failure"
+          },
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              2060,
+              400
+            ],
+            "id": "23f15a7c-e2d6-4609-a730-dc53b8dd91d0",
+            "name": "Workflow Failure"
+          },
+          {
+            "parameters": {
+              "content": "# Prepare invoice follow-ups for human review\n\nThis credential-free workflow validates fictional invoice records, normalizes customer and finance fields, classifies payment state, and prepares reminder drafts without contacting anyone. Paid or out-of-window records require no action. Missing, disputed, partial, conflicting, or invalid records follow separate review paths.\n\nEligible reminders are checked against an append-only Data Table history using the invoice ID and reminder stage. A matching stage is returned as already prepared; a new stage is stored with its draft metadata for audit. n8n Data Tables do not provide database-level uniqueness, so concurrent executions can still race.\n\n### How it works\n\nA Manual Trigger loads safe sample invoices. Validation assigns one of five output paths. Eligible drafts use configurable upcoming and overdue intervals, then pass through exact-match replay protection before storage. Delivery remains disabled.\n\n### Setup\n\nImport the workflow and keep it inactive. Review the constants in **Validate Normalize and Classify**, run the documented tests, and replace the sample node only after mapping your own fields. Add a delivery channel after **Ready for Review** only when a human approval gate, credentials, retention rules, and failure monitoring are in place.",
+              "height": 320,
+              "width": 900,
+              "color": 1
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+              -980,
+              -700
+            ],
+            "id": "7879db85-b984-4d15-bc1b-bde246f40ce4",
+            "name": "Workflow Overview"
+          },
+          {
+            "parameters": {
+              "content": "## Prepare safe input\n\nCreate the local history table and load fictional records from a Manual Trigger.",
+              "height": 500,
+              "width": 760,
+              "color": 7
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+              -980,
+              -180
+            ],
+            "id": "ef8b5886-c252-4d0e-bbec-a30b75250a7f",
+            "name": "Input Section"
+          },
+          {
+            "parameters": {
+              "content": "## Validate and route\n\nNormalize each invoice independently, classify its state, and expose invalid, manual-review, and no-action paths.",
+              "height": 700,
+              "width": 900,
+              "color": 7
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+              -200,
+              -340
+            ],
+            "id": "39ce4d27-d5c5-475f-a43f-661d9727f119",
+            "name": "Classification Section"
+          },
+          {
+            "parameters": {
+              "content": "## Prevent repeated drafts\n\nCheck the exact invoice and stage before preparing a new history row.",
+              "height": 500,
+              "width": 620,
+              "color": 7
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+              720,
+              -180
+            ],
+            "id": "8c3fa43d-5363-4dd1-953d-3bb6b49e9866",
+            "name": "Replay Protection Section"
+          },
+          {
+            "parameters": {
+              "content": "## Prepare, store, and return review output\n\nValidate each final draft before insertion. Successful writes return review output; storage errors return a safe workflow-failure item.",
+              "height": 900,
+              "width": 1000,
+              "color": 7
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+              1360,
+              -250
+            ],
+            "id": "1fd2786a-e326-4819-8c58-99616b834adb",
+            "name": "Review Output Section"
+          },
+          {
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const BUSINESS_TIME_ZONE = 'UTC';\nconst EVALUATION_DATE = '2030-06-20'; // Optional YYYY-MM-DD test override; blank uses the configured business time zone.\n\nconst parseDateOnly = value => {\n  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return null;\n  const date = new Date(value + 'T00:00:00.000Z');\n  return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : date;\n};\nconst businessDate = timeZone => {\n  const parts = new Intl.DateTimeFormat('en-US', {\n    timeZone,\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit',\n  }).formatToParts(new Date());\n  const part = type => parts.find(value => value.type === type)?.value;\n  return part('year') + '-' + part('month') + '-' + part('day');\n};\nconst failure = actionReason => [{ json: {\n  scope: 'workflow',\n  configurationValid: false,\n  outputPath: 'workflow_failure',\n  reviewStatus: 'manual_review',\n  failedOperation: 'business_date_configuration',\n  actionReason,\n  draft: null,\n  deliveryEnabled: false,\n} }];\n\nlet currentBusinessDate;\ntry {\n  currentBusinessDate = businessDate(BUSINESS_TIME_ZONE);\n} catch {\n  return failure('business_time_zone_invalid');\n}\n\nconst configuredDate = String(EVALUATION_DATE ?? '').trim();\nif (configuredDate && !parseDateOnly(configuredDate)) return failure('evaluation_date_invalid');\n\nreturn [{ json: {\n  scope: 'workflow',\n  configurationValid: true,\n  businessTimeZone: BUSINESS_TIME_ZONE,\n  evaluationDate: configuredDate || currentBusinessDate,\n} }];"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              -900,
+              180
+            ],
+            "id": "14c6796b-f1de-4c43-986f-837829668854",
+            "name": "Validate Workflow Configuration"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "97abced9-465e-4c26-8276-e9baaf85dd03",
+                    "leftValue": "={{ $json.configurationValid }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              -680,
+              180
+            ],
+            "id": "31c78382-26e0-4a44-b662-c87e54c7cd58",
+            "name": "Configuration Valid?"
+          },
+          {
+            "id": "contract-Contract-Ready-for-Review",
+            "name": "Contract Ready for Review",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));"
+            }
+          },
+          {
+            "id": "contract-Contract-Already-Prepared",
+            "name": "Contract Already Prepared",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));"
+            }
+          },
+          {
+            "id": "contract-Contract-No-Action-Required",
+            "name": "Contract No Action Required",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));"
+            }
+          },
+          {
+            "id": "contract-Contract-Manual-Review",
+            "name": "Contract Manual Review",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));"
+            }
+          },
+          {
+            "id": "contract-Contract-Invalid-Record",
+            "name": "Contract Invalid Record",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:v})=>({json:{invoiceId:v.invoiceId,customerId:v.customerId,email:v.email,classification:v.classification,stage:v.reminderStage,outputPath:v.outputPath,actionReason:v.actionReason,historyRecordId:v.historyRecordId??null,draftCustomerId:v.draft?.recipient?.customerId??null,draftInvoiceId:v.draft?.invoice?.invoiceId??null}}));"
+            }
+          },
+          {
+            "id": "contract-Contract-Writes",
+            "name": "Contract Writes",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return $input.all().map(({json:r})=>({json:{invoiceId:r.invoice_id,stage:r.reminder_stage,customerId:r.customer_id,email:r.recipient_email,amount:r.outstanding_amount,id:r.id}}));"
+            }
+          },
+          {
+            "id": "contract-Fixture-History-Rows",
+            "name": "Fixture History Rows",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "const rows=$('Start Manual Test').first().json.history??[];return rows.length?rows.map(json=>({json})):[{json:{emptyHistory:true}}];"
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "empty-history",
+                    "leftValue": "={{ $json.emptyHistory === true }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              80,
+              0
+            ],
+            "id": "fixture-history-empty",
+            "name": "Fixture Empty History?"
+          },
+          {
+            "parameters": {
+              "resource": "row",
+              "operation": "insert",
+              "dataTableId": {
+                "__rl": true,
+                "mode": "name",
+                "value": "invoice_reminder_history"
+              },
+              "columns": {
+                "mappingMode": "defineBelow",
+                "value": {
+                  "invoice_id": "={{ $json.invoice_id }}",
+                  "reminder_stage": "={{ $json.reminder_stage }}",
+                  "classification": "={{ $json.classification }}",
+                  "customer_id": "={{ $json.customer_id }}",
+                  "recipient_email": "={{ $json.recipient_email }}",
+                  "recipient_phone": "={{ $json.recipient_phone }}",
+                  "currency": "={{ $json.currency }}",
+                  "outstanding_amount": "={{ $json.outstanding_amount }}",
+                  "due_date": "={{ $json.due_date }}",
+                  "review_status": "={{ $json.review_status }}",
+                  "draft_subject": "={{ $json.draft_subject }}",
+                  "prepared_at": "={{ $json.prepared_at }}",
+                  "source_updated_at": "={{ $json.source_updated_at }}"
+                }
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.dataTable",
+            "typeVersion": 1.1,
+            "position": [
+              1840,
+              100
+            ],
+            "id": "fixture-seed-history",
+            "name": "Fixture Seed History"
+          },
+          {
+            "id": "contract-Fixture-Seed-Complete",
+            "name": "Fixture Seed Complete",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              2000,
+              2000
+            ],
+            "parameters": {
+              "mode": "runOnceForAllItems",
+              "jsCode": "return [{json:{}}];"
+            }
+          }
+        ],
+        "connections": {
+          "Start Manual Test": {
+            "main": [
+              [
+                {
+                  "node": "Validate Workflow Configuration",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Create or Reuse Reminder History": {
+            "main": [
+              [
+                {
+                  "node": "Fixture History Rows",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Format History Setup Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Load Reminder History": {
+            "main": [
+              [
+                {
+                  "node": "Load Fictional Invoice Samples",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Format History Load Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Load Fictional Invoice Samples": {
+            "main": [
+              [
+                {
+                  "node": "Validate Normalize and Classify",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Validate Normalize and Classify": {
+            "main": [
+              [
+                {
+                  "node": "Group Batch Reminder Keys",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Check Reminder History": {
+            "main": [
+              [
+                {
+                  "node": "Invalid Record?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Invalid Record?": {
+            "main": [
+              [
+                {
+                  "node": "Invalid Record",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Manual Review Required?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Manual Review Required?": {
+            "main": [
+              [
+                {
+                  "node": "Manual Review",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "No Action Required?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "No Action Required?": {
+            "main": [
+              [
+                {
+                  "node": "No Action Required",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Already Prepared?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Already Prepared?": {
+            "main": [
+              [
+                {
+                  "node": "Already Prepared",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Prepare Ready Output",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Store Reminder Preparation": {
+            "main": [
+              [
+                {
+                  "node": "Ready for Review",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Contract Writes",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Format History Insert Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Prepare Ready Output": {
+            "main": [
+              [
+                {
+                  "node": "Ready Output Valid?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Ready Output Valid?": {
+            "main": [
+              [
+                {
+                  "node": "Store Reminder Preparation",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Workflow Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Format History Setup Failure": {
+            "main": [
+              [
+                {
+                  "node": "Workflow Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Format History Load Failure": {
+            "main": [
+              [
+                {
+                  "node": "Workflow Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Format History Insert Failure": {
+            "main": [
+              [
+                {
+                  "node": "Workflow Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Group Batch Reminder Keys": {
+            "main": [
+              [
+                {
+                  "node": "Check Reminder History",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Validate Workflow Configuration": {
+            "main": [
+              [
+                {
+                  "node": "Configuration Valid?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Configuration Valid?": {
+            "main": [
+              [
+                {
+                  "node": "Create or Reuse Reminder History",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Workflow Failure",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Ready for Review": {
+            "main": [
+              [
+                {
+                  "node": "Contract Ready for Review",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Already Prepared": {
+            "main": [
+              [
+                {
+                  "node": "Contract Already Prepared",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "No Action Required": {
+            "main": [
+              [
+                {
+                  "node": "Contract No Action Required",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Manual Review": {
+            "main": [
+              [
+                {
+                  "node": "Contract Manual Review",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Invalid Record": {
+            "main": [
+              [
+                {
+                  "node": "Contract Invalid Record",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Fixture History Rows": {
+            "main": [
+              [
+                {
+                  "node": "Fixture Empty History?",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Fixture Empty History?": {
+            "main": [
+              [
+                {
+                  "node": "Load Reminder History",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Fixture Seed History",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Fixture Seed History": {
+            "main": [
+              [
+                {
+                  "node": "Fixture Seed Complete",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Fixture Seed Complete": {
+            "main": [
+              [
+                {
+                  "node": "Load Reminder History",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "active": false,
+        "settings": {
+          "executionOrder": "v1"
+        }
+      },
+      "reference": {
+        "jsCode": "const items = $input.all();\nconst signatures = new Map();\nfor (const {json: v} of items) {\n  if (v.outputPath !== 'ready_for_review') continue;\n  const key = JSON.stringify([v.invoiceId, v.reminderStage]);\n  const signature = JSON.stringify([v.customerId, v.email, v.currency, v.totalAmount, v.paidAmount, v.outstandingAmount, v.dueDate]);\n  if (!signatures.has(key)) signatures.set(key, new Set());\n  signatures.get(key).add(signature);\n}\nreturn items.map((item, index) => {\n  const v = item.json;\n  if (v.outputPath !== 'ready_for_review') return item;\n  const key = JSON.stringify([v.invoiceId, v.reminderStage]);\n  if (signatures.get(key).size > 1) return {json: {...v, classification: 'requiring_manual_review', reminderStage: '', outputPath: 'manual_review', actionReason: 'conflicting_invoice_payload', draft: null}, pairedItem: {item: index}};\n  return {json: {...v, historyKey: v.invoiceId.trim() + '::' + v.reminderStage.trim()}, pairedItem: {item: index}};\n});"
+      },
+      "feedback": {
+        "original": [
+          {
+            "name": "reported-two-invoice-input",
+            "invoices": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customer": {
+                  "id": "C-INV-VISIBLE-A",
+                  "name": "Fictional INV-VISIBLE-A",
+                  "email": "inv-visible-a@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 100,
+                "paidAmount": 0,
+                "outstandingAmount": 100,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customer": {
+                  "id": "C-INV-VISIBLE-B",
+                  "name": "Fictional INV-VISIBLE-B",
+                  "email": "inv-visible-b@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 85,
+                "paidAmount": 0,
+                "outstandingAmount": 85,
+                "dueDate": "2030-06-20",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              }
+            ],
+            "expectedOutputs": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "email": "inv-visible-a@fixture.example",
+                "outstandingAmount": 100,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "email": "inv-visible-b@fixture.example",
+                "outstandingAmount": 85,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              }
+            ],
+            "expectedRows": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "outstandingAmount": 100,
+                "stage": "upcoming_3_days"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "outstandingAmount": 85,
+                "stage": "due_today"
+              }
+            ]
+          },
+          {
+            "name": "reported-input-repeat",
+            "invoices": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customer": {
+                  "id": "C-INV-VISIBLE-A",
+                  "name": "Fictional INV-VISIBLE-A",
+                  "email": "inv-visible-a@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 100,
+                "paidAmount": 0,
+                "outstandingAmount": 100,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customer": {
+                  "id": "C-INV-VISIBLE-B",
+                  "name": "Fictional INV-VISIBLE-B",
+                  "email": "inv-visible-b@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 85,
+                "paidAmount": 0,
+                "outstandingAmount": 85,
+                "dueDate": "2030-06-20",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              }
+            ],
+            "expectedOutputs": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "email": "inv-visible-a@fixture.example",
+                "outstandingAmount": 100,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "email": "inv-visible-b@fixture.example",
+                "outstandingAmount": 85,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              }
+            ],
+            "expectedRows": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "outstandingAmount": 100,
+                "stage": "upcoming_3_days"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "outstandingAmount": 85,
+                "stage": "due_today"
+              }
+            ]
+          }
+        ],
+        "contract": [
+          {
+            "name": "reported-two-invoice-input",
+            "invoices": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customer": {
+                  "id": "C-INV-VISIBLE-A",
+                  "name": "Fictional INV-VISIBLE-A",
+                  "email": "inv-visible-a@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 100,
+                "paidAmount": 0,
+                "outstandingAmount": 100,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customer": {
+                  "id": "C-INV-VISIBLE-B",
+                  "name": "Fictional INV-VISIBLE-B",
+                  "email": "inv-visible-b@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 85,
+                "paidAmount": 0,
+                "outstandingAmount": 85,
+                "dueDate": "2030-06-20",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              }
+            ],
+            "expectedOutputs": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "email": "inv-visible-a@fixture.example",
+                "outstandingAmount": 100,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "email": "inv-visible-b@fixture.example",
+                "outstandingAmount": 85,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              }
+            ],
+            "expectedRows": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "outstandingAmount": 100,
+                "stage": "upcoming_3_days"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "outstandingAmount": 85,
+                "stage": "due_today"
+              }
+            ]
+          },
+          {
+            "name": "same-batch-contract-probe",
+            "invoices": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customer": {
+                  "id": "C-INV-VISIBLE-A",
+                  "name": "Fictional INV-VISIBLE-A",
+                  "email": "inv-visible-a@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 100,
+                "paidAmount": 0,
+                "outstandingAmount": 100,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-C",
+                "customer": {
+                  "id": "C-INV-VISIBLE-C",
+                  "name": "Fictional INV-VISIBLE-C",
+                  "email": "inv-visible-c@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 130,
+                "paidAmount": 0,
+                "outstandingAmount": 130,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customer": {
+                  "id": "C-INV-VISIBLE-B",
+                  "name": "Fictional INV-VISIBLE-B",
+                  "email": "inv-visible-b@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 85,
+                "paidAmount": 0,
+                "outstandingAmount": 85,
+                "dueDate": "2030-06-20",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customer": {
+                  "id": "C-OTHER-VISIBLE",
+                  "name": "Fictional INV-VISIBLE-A",
+                  "email": "other@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 100,
+                "paidAmount": 0,
+                "outstandingAmount": 100,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              },
+              {
+                "invoiceId": "INV-VISIBLE-C",
+                "customer": {
+                  "id": "C-INV-VISIBLE-C",
+                  "name": "Fictional INV-VISIBLE-C",
+                  "email": "inv-visible-c@fixture.example",
+                  "phone": ""
+                },
+                "currency": "EUR",
+                "totalAmount": 171,
+                "paidAmount": 0,
+                "outstandingAmount": 171,
+                "dueDate": "2030-06-22",
+                "paymentStatus": "unpaid",
+                "disputed": false,
+                "updatedAt": "2030-06-19T10:00:00.000Z"
+              }
+            ],
+            "expectedOutputs": [
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-INV-VISIBLE-A",
+                "email": "inv-visible-a@fixture.example",
+                "outstandingAmount": 100,
+                "outcome": "review",
+                "draftNull": true
+              },
+              {
+                "invoiceId": "INV-VISIBLE-C",
+                "customerId": "C-INV-VISIBLE-C",
+                "email": "inv-visible-c@fixture.example",
+                "outstandingAmount": 130,
+                "outcome": "review",
+                "draftNull": true
+              },
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "email": "inv-visible-b@fixture.example",
+                "outstandingAmount": 85,
+                "outcome": "ready_for_review",
+                "draftNull": false
+              },
+              {
+                "invoiceId": "INV-VISIBLE-A",
+                "customerId": "C-OTHER-VISIBLE",
+                "email": "other@fixture.example",
+                "outstandingAmount": 100,
+                "outcome": "review",
+                "draftNull": true
+              },
+              {
+                "invoiceId": "INV-VISIBLE-C",
+                "customerId": "C-INV-VISIBLE-C",
+                "email": "inv-visible-c@fixture.example",
+                "outstandingAmount": 171,
+                "outcome": "review",
+                "draftNull": true
+              }
+            ],
+            "expectedRows": [
+              {
+                "invoiceId": "INV-VISIBLE-B",
+                "customerId": "C-INV-VISIBLE-B",
+                "outstandingAmount": 85,
+                "stage": "due_today"
+              }
+            ]
+          }
+        ]
+      },
+      "hidden": [
+        {
+          "name": "held-identical-duplicate",
+          "invoices": [
+            {
+              "invoiceId": "INV-HELD-892",
+              "customer": {
+                "id": "C-INV-HELD-892",
+                "name": "Fictional INV-HELD-892",
+                "email": "inv-held-892@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 62,
+              "paidAmount": 0,
+              "outstandingAmount": 62,
+              "dueDate": "2030-06-20",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            }
+          ],
+          "expectedOutputs": [
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "email": "inv-held-892@fixture.example",
+              "outstandingAmount": 62,
+              "outcome": "ready_for_review",
+              "draftNull": false
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "ready_for_review",
+              "draftNull": false
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "already_prepared",
+              "draftNull": false
+            }
+          ],
+          "expectedRows": [
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "outstandingAmount": 62,
+              "stage": "due_today"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "outstandingAmount": 237,
+              "stage": "upcoming_3_days"
+            }
+          ]
+        },
+        {
+          "name": "held-nonadjacent-customer-conflict",
+          "invoices": [
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-892",
+              "customer": {
+                "id": "C-INV-HELD-892",
+                "name": "Fictional INV-HELD-892",
+                "email": "inv-held-892@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 62,
+              "paidAmount": 0,
+              "outstandingAmount": 62,
+              "dueDate": "2030-06-20",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-HELD-OTHER",
+                "name": "Fictional INV-HELD-617",
+                "email": "held-other@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            }
+          ],
+          "expectedOutputs": [
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "review",
+              "draftNull": true
+            },
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "email": "inv-held-892@fixture.example",
+              "outstandingAmount": 62,
+              "outcome": "ready_for_review",
+              "draftNull": false
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-HELD-OTHER",
+              "email": "held-other@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "review",
+              "draftNull": true
+            }
+          ],
+          "expectedRows": [
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "outstandingAmount": 62,
+              "stage": "due_today"
+            }
+          ]
+        },
+        {
+          "name": "held-third-member-amount-conflict-and-paid",
+          "invoices": [
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-PAID",
+              "customer": {
+                "id": "C-INV-HELD-PAID",
+                "name": "Fictional INV-HELD-PAID",
+                "email": "inv-held-paid@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 91,
+              "paidAmount": 91,
+              "outstandingAmount": 0,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "paid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 237,
+              "paidAmount": 0,
+              "outstandingAmount": 237,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-892",
+              "customer": {
+                "id": "C-INV-HELD-892",
+                "name": "Fictional INV-HELD-892",
+                "email": "inv-held-892@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 62,
+              "paidAmount": 0,
+              "outstandingAmount": 62,
+              "dueDate": "2030-06-20",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customer": {
+                "id": "C-INV-HELD-617",
+                "name": "Fictional INV-HELD-617",
+                "email": "inv-held-617@fixture.example",
+                "phone": ""
+              },
+              "currency": "EUR",
+              "totalAmount": 286,
+              "paidAmount": 0,
+              "outstandingAmount": 286,
+              "dueDate": "2030-06-22",
+              "paymentStatus": "unpaid",
+              "disputed": false,
+              "updatedAt": "2030-06-19T10:00:00.000Z"
+            }
+          ],
+          "expectedOutputs": [
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "review",
+              "draftNull": true
+            },
+            {
+              "invoiceId": "INV-HELD-PAID",
+              "customerId": "C-INV-HELD-PAID",
+              "email": "inv-held-paid@fixture.example",
+              "outstandingAmount": 0,
+              "outcome": "no_action_required",
+              "draftNull": true
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 237,
+              "outcome": "review",
+              "draftNull": true
+            },
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "email": "inv-held-892@fixture.example",
+              "outstandingAmount": 62,
+              "outcome": "ready_for_review",
+              "draftNull": false
+            },
+            {
+              "invoiceId": "INV-HELD-617",
+              "customerId": "C-INV-HELD-617",
+              "email": "inv-held-617@fixture.example",
+              "outstandingAmount": 286,
+              "outcome": "review",
+              "draftNull": true
+            }
+          ],
+          "expectedRows": [
+            {
+              "invoiceId": "INV-HELD-892",
+              "customerId": "C-INV-HELD-892",
+              "outstandingAmount": 62,
+              "stage": "due_today"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retry",
+      "role": "repair",
+      "provenance": "Researcher-authored synthetic workflow/error scenario; response-loss bug is a prior known control",
+      "prompt": "You are maintaining an n8n 2.41.7 workflow. Review the designated node against the complete requirements below. Return the smallest complete replacement allowed by the output schema, or retain a correct implementation. Only the specified node field can change; the remaining graph is fixed. Return one JSON object and no prose. Use valid JSON escaping for code strings.\nTASK: Retry-safe rendering with a durable external API.\nA fixed Loop Over Items (batchSize=1) sends each input through the Render HTTP Request node, with retryOnFail=true, maxTries=2. The service commits a render before its first 503. It returns {id,request:<stored payload>} on success. The original no-key workflow creates three rows for two logical operations after that retry.\nThe API honors the Idempotency-Key header: the first request for a key stores its body; later requests for that key return that stored result. A logical operation is the exact tuple (tenant, shortId, revision), all three fields are ASCII strings. Repeated delivery, including a new workflow execution, must reuse its key and create no extra effect. A different tenant, asset shortId, or revision must retain its own effect and response payload. Keys must be deterministic across process restarts. The body already includes tenant, shortId, revision and renderOptions from styling; keep it unchanged. Do not alter the server, loop, retry settings, inputs or graph.\nCurrent Render node:\n{\"id\":\"render\",\"name\":\"Render\",\"type\":\"n8n-nodes-base.httpRequest\",\"typeVersion\":4.2,\"position\":[220,180],\"parameters\":{\"method\":\"POST\",\"url\":\"=https://api.example.com/renders/{{ $json.shortId }}\",\"sendBody\":true,\"specifyBody\":\"json\",\"jsonBody\":\"={{ { tenant: $json.tenant, shortId: $json.shortId, revision: $json.revision, renderOptions: $json.styling } }}\",\"options\":{\"timeout\":10000}},\"retryOnFail\":true,\"maxTries\":2,\"waitBetweenTries\":1000}\nReported input:\n[{\"tenant\":\"studio-visible\",\"shortId\":\"42\",\"revision\":\"v1\",\"styling\":{\"fontSize\":31}},{\"tenant\":\"studio-visible\",\"shortId\":\"43\",\"revision\":\"v1\",\"styling\":{\"fontSize\":47}}]\nYour returned expression becomes the single Idempotency-Key header value, with sendHeaders=true. It must be a complete n8n expression, including the ={{ ... }} wrapper, evaluated separately using the current $json.\nOutput schema: {\"expression\":\"={{ JavaScript expression }}\"}.",
+      "workflow": {
+        "name": "Loop batch size 1 with HTTP retry",
+        "nodes": [
+          {
+            "id": "start",
+            "name": "Start",
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [
+              -400,
+              0
+            ],
+            "parameters": {}
+          },
+          {
+            "id": "fixture",
+            "name": "Fixture",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              -200,
+              0
+            ],
+            "parameters": {
+              "jsCode": "return [\n  {\n    \"shortId\": 42,\n    \"styling\": {\n      \"color\": \"#112233\",\n      \"fontSize\": 31\n    }\n  },\n  {\n    \"shortId\": 43,\n    \"styling\": {\n      \"color\": \"#aabbcc\",\n      \"fontSize\": 47\n    }\n  }\n].map(json => ({ json }));"
+            }
+          },
+          {
+            "id": "render",
+            "name": "Render",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+              220,
+              180
+            ],
+            "parameters": {
+              "method": "POST",
+              "url": "=https://api.example.com/renders/{{ $json.shortId }}",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={{ { tenant: $json.tenant, shortId: $json.shortId, revision: $json.revision, renderOptions: $json.styling } }}",
+              "options": {
+                "timeout": 10000
+              }
+            },
+            "retryOnFail": true,
+            "maxTries": 2,
+            "waitBetweenTries": 1000
+          },
+          {
+            "id": "done",
+            "name": "Done",
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+              220,
+              -100
+            ],
+            "parameters": {}
+          },
+          {
+            "id": "loop",
+            "name": "Loop Over Items",
+            "type": "n8n-nodes-base.splitInBatches",
+            "typeVersion": 3,
+            "position": [
+              0,
+              0
+            ],
+            "parameters": {
+              "batchSize": 1,
+              "options": {}
+            }
+          }
+        ],
+        "connections": {
+          "Start": {
+            "main": [
+              [
+                {
+                  "node": "Fixture",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Fixture": {
+            "main": [
+              [
+                {
+                  "node": "Loop Over Items",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Render": {
+            "main": [
+              [
+                {
+                  "node": "Loop Over Items",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Loop Over Items": {
+            "main": [
+              [
+                {
+                  "node": "Done",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Render",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "settings": {
+          "executionOrder": "v1"
+        }
+      },
+      "reference": {
+        "expression": "={{ JSON.stringify([$json.tenant, $json.shortId, $json.revision]) }}"
+      },
+      "feedback": {
+        "original": [
+          {
+            "name": "reported-two-operation-input",
+            "input": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 47
+                }
+              }
+            ],
+            "expectedEffects": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 47
+                }
+              }
+            ]
+          },
+          {
+            "name": "reported-input-replay",
+            "input": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 47
+                }
+              }
+            ],
+            "expectedEffects": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 47
+                }
+              }
+            ]
+          }
+        ],
+        "contract": [
+          {
+            "name": "reported-two-operation-input",
+            "input": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 47
+                }
+              }
+            ],
+            "expectedEffects": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 47
+                }
+              }
+            ]
+          },
+          {
+            "name": "scope-version-and-replay-probe",
+            "input": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v2",
+                "styling": {
+                  "fontSize": 63
+                }
+              },
+              {
+                "tenant": "studio-other",
+                "shortId": "42",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "styling": {
+                  "fontSize": 31
+                }
+              }
+            ],
+            "expectedEffects": [
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 31
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "43",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 47
+                }
+              },
+              {
+                "tenant": "studio-visible",
+                "shortId": "42",
+                "revision": "v2",
+                "renderOptions": {
+                  "fontSize": 63
+                }
+              },
+              {
+                "tenant": "studio-other",
+                "shortId": "42",
+                "revision": "v1",
+                "renderOptions": {
+                  "fontSize": 31
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "hidden": [
+        {
+          "name": "held-initial-commit-503",
+          "input": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "styling": {
+                "fontSize": 27
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "styling": {
+                "fontSize": 54
+              }
+            }
+          ],
+          "expectedEffects": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 27
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 54
+              }
+            }
+          ]
+        },
+        {
+          "name": "held-reordered-replay",
+          "input": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "styling": {
+                "fontSize": 54
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "styling": {
+                "fontSize": 27
+              }
+            }
+          ],
+          "expectedEffects": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 27
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 54
+              }
+            }
+          ]
+        },
+        {
+          "name": "held-new-revision",
+          "input": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-08",
+              "styling": {
+                "fontSize": 71
+              }
+            }
+          ],
+          "expectedEffects": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 27
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 54
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-08",
+              "renderOptions": {
+                "fontSize": 71
+              }
+            }
+          ]
+        },
+        {
+          "name": "held-new-tenant",
+          "input": [
+            {
+              "tenant": "maple-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "styling": {
+                "fontSize": 27
+              }
+            }
+          ],
+          "expectedEffects": [
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 27
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "892",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 54
+              }
+            },
+            {
+              "tenant": "cedar-project",
+              "shortId": "617",
+              "revision": "rev-08",
+              "renderOptions": {
+                "fontSize": 71
+              }
+            },
+            {
+              "tenant": "maple-project",
+              "shortId": "617",
+              "revision": "rev-07",
+              "renderOptions": {
+                "fontSize": 27
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "raw",
+      "role": "correct-implementation-retention",
+      "provenance": "Researcher-owned export derived from n8n issue 36402; initially correct native extractor",
+      "prompt": "You are maintaining an n8n 2.41.7 workflow. Review the designated node against the complete requirements below. Return the smallest complete replacement allowed by the output schema, or retain a correct implementation. Only the specified node field can change; the remaining graph is fixed. Return one JSON object and no prose. Use valid JSON escaping for code strings.\nTASK: Preserve a raw JSON response as a receipt.\nThe fixed HTTP Request node sends POST with the exact raw body {\"message\":\"hello\"}, content type application/json. Its response format is File, output binary field 'data'. Each HTTP response is one complete UTF-8 JSON object or array and may start with a UTF-8 BOM. Preserve the entire parsed JSON value under item.json.receipt: one output item per input response, including when the root value is an array. Preserve nested values and non-ASCII text. Keep the POST body and HTTP node unchanged.\nCurrent Read receipt node:\n{\"parameters\":{\"operation\":\"fromJson\",\"binaryPropertyName\":\"data\",\"destinationKey\":\"receipt\",\"options\":{\"encoding\":\"utf8\"}},\"id\":\"raw-response-node-2\",\"name\":\"Read receipt\",\"type\":\"n8n-nodes-base.extractFromFile\",\"typeVersion\":1.1,\"position\":[440,0]}\nReported response:\n{\"id\":\"visible-receipt-42\",\"status\":\"accepted\"}\nThe designated Read receipt node may remain unchanged by returning {\"keep\":true}. If you replace it, the only allowed types are n8n-nodes-base.extractFromFile or n8n-nodes-base.code; return {\"type\":\"...\",\"typeVersion\":1.1,\"parameters\":{...}} with the appropriate version. Code nodes use version 2 and may use this.helpers.getBinaryDataBuffer(index,'data'); do not assume binary.data.data is an inline base64 string. You may retain the native extractor. Output one allowed JSON object.",
+      "workflow": {
+        "name": "Raw body + File response + UTF-8 JSON extraction",
+        "nodes": [
+          {
+            "parameters": {},
+            "id": "raw-response-node-0",
+            "name": "When clicking Test workflow",
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [
+              0,
+              0
+            ]
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://postman-echo.com/post",
+              "sendBody": true,
+              "contentType": "raw",
+              "rawContentType": "application/json",
+              "body": "{\"message\": \"hello\"}",
+              "options": {
+                "response": {
+                  "response": {
+                    "responseFormat": "file",
+                    "outputPropertyName": "data"
+                  }
+                }
+              }
+            },
+            "id": "raw-response-node-1",
+            "name": "Send raw request",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.4,
+            "position": [
+              220,
+              0
+            ]
+          },
+          {
+            "parameters": {
+              "operation": "fromJson",
+              "binaryPropertyName": "data",
+              "destinationKey": "receipt",
+              "options": {
+                "encoding": "utf8"
+              }
+            },
+            "id": "raw-response-node-2",
+            "name": "Read receipt",
+            "type": "n8n-nodes-base.extractFromFile",
+            "typeVersion": 1.1,
+            "position": [
+              440,
+              0
+            ]
+          }
+        ],
+        "connections": {
+          "When clicking Test workflow": {
+            "main": [
+              [
+                {
+                  "node": "Send raw request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Send raw request": {
+            "main": [
+              [
+                {
+                  "node": "Read receipt",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "pinData": {},
+        "settings": {
+          "executionOrder": "v1"
+        }
+      },
+      "reference": {
+        "keep": true
+      },
+      "alternativeReference": {
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const out = []; for (let i = 0; i < $input.all().length; i++) { const bytes = await this.helpers.getBinaryDataBuffer(i, 'data'); out.push({json: {receipt: JSON.parse(bytes.toString('utf8').replace(/^\\uFEFF/, ''))}, pairedItem: {item: i}}); } return out;"
+        }
+      },
+      "feedback": {
+        "original": [
+          {
+            "name": "reported-json-object",
+            "value": {
+              "id": "visible-receipt-42",
+              "status": "accepted"
+            },
+            "bom": false
+          },
+          {
+            "name": "reported-response-repeat",
+            "value": {
+              "id": "visible-receipt-42",
+              "status": "accepted"
+            },
+            "bom": false
+          }
+        ],
+        "contract": [
+          {
+            "name": "reported-json-object",
+            "value": {
+              "id": "visible-receipt-42",
+              "status": "accepted"
+            },
+            "bom": false
+          },
+          {
+            "name": "root-array-and-utf8-bom",
+            "value": [
+              {
+                "id": "visible-array-11",
+                "message": "已送达"
+              },
+              {
+                "id": "visible-array-12",
+                "message": "Livré"
+              }
+            ],
+            "bom": true
+          }
+        ]
+      },
+      "hidden": [
+        {
+          "name": "held-object",
+          "value": {
+            "id": "held-receipt-617",
+            "detail": {
+              "accepted": true,
+              "labels": [
+                "fresh",
+                "verified"
+              ]
+            }
+          },
+          "bom": false
+        },
+        {
+          "name": "held-root-array",
+          "value": [
+            {
+              "id": "held-array-892",
+              "message": "受信"
+            },
+            {
+              "id": "held-array-617",
+              "nested": {
+                "cents": 23700
+              }
+            }
+          ],
+          "bom": false
+        },
+        {
+          "name": "held-bom-multibyte",
+          "value": {
+            "id": "held-bom-071",
+            "message": "已送达 · café · 🛰️"
+          },
+          "bom": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Prospective paired pilot v1
+
+Frozen before its first Gemma generation. `pilot-spec.json` contains the exact prompts, base workflows, reference patches, feedback inputs, final evaluation inputs and parameters. `freeze-pilot.mjs` records how it was built. Model requests contain only the task prompt, its own initial answer and the allocated feedback; the model has no file, network or benchmark-reading tools.
+
+## Question and unit
+
+Does execution feedback beyond the reported input help a small model satisfy an already stated workflow contract? Invoice and retry are **two repair families**. The already correct raw-response extractor is a separate **retention sentinel**. Two sampling seeds within a family are repeats, not independent source tasks. These are development-derived, deliberately specified tasks; this pilot estimates neither field prevalence nor broad benchmark performance.
+
+Each pair shares one natural initial patch. Two arms each receive one revision call: `original` sees two executions of the reported input; `contract` sees the same first input and one additional contract probe. Retry requests share a persistent service within each feedback/evaluation bundle, including the original-input replay. Invoice and raw cases use fresh per-case state. Both arms receive the complete policy from the first prompt, the same patch interface, two allocated runtime invocations and the same 6,000-character feedback cap. This is an equal n8n-invocation budget: invoice processes four versus seven input items across the two feedback runs; retry processes four versus five; raw processes two responses per arm. HTTP attempts and realized runtime are outcomes, not equalized compute. Input and feedback lengths are logged; realized token counts can differ.
+
+Each generation uses pinned Gemma 4 E2B / LiteRT 0.18.0 CPU, temperature 0.7, top-p 0.95, top-k 40, no thinking, and a 1,536-output-token cap. Initial seeds are 17701 and 17702; revision seeds add 100000 and are identical across the paired arms. Fresh conversations prevent cross-arm history. Arm order alternates by repeat. There are **18 planned generations**: six shared initial patches and twelve revisions. Every emitted answer, parse failure and runtime failure remains in the results. Only a surrounding Markdown code fence is stripped; there is no semantic answer repair or unbudgeted retry.
+
+## Evaluation and controls
+
+References are checked on the frozen contract and hidden bundles before model generation. The raw alternative Code-node parser is also checked. An infrastructure/reference failure stops execution for repair and is recorded separately from model outcomes. Invalid candidate patches count as failures, using zero of their two available runtime invocations. Each valid feedback patch receives two real n8n invocations. Final evaluation occurs only after all revisions have been saved. Initial patches and both final arms are evaluated on the same hidden cases; hidden results never enter a revision prompt.
+
+The invoice oracle checks a per-input outcome and identity plus actual persisted Data Table rows. The retry oracle checks durable effects and returned request identity across separate workflow executions against one SQLite-backed API. The raw oracle checks the unchanged request body and the whole response value. Engine success and contract success are recorded separately. Variants and individual assertions stay grouped within their family. Reference results are controls, excluded from model success denominators.
+
+All old authored seeds and the one access-probe generation are excluded. In particular, **delimiter collisions are outside this pilot**: the earlier hyphen counterexample was found after seeing the access answer. Retry evaluation here measures scope, version and replay with fresh ordinary identifiers. The invoice conflict requirement is a researcher-added policy, not an upstream defect claim.
+
+## Decision before observing results
+
+Report all initial and final outcomes, including first-reported-input pass and the stricter original-bundle pass separately; emphasize natural initial patches that pass the reported input yet fail a hidden contract. Describe patch-format/runtime errors separately. A positive or negative paired result can be useful if its mechanism is interpretable. A useful result licenses one bounded expansion into independent source tasks, not an immediate full paper. If both core families are already correct and unchanged across arms, or the outcomes contain only unusable formats with no informative repair behavior, stop expanding this paper candidate. No significance test is planned for two source families.
+
+To execute on a standard GitHub CPU runner, manually dispatch **Gemma paired repair pilot**. It installs the pinned runtime, executes sequentially in a loopback-only namespace, and uploads prompts, raw answers, per-case reports and state observations. `run-pilot.py --self-check` checks parsing and patch placement without model dependencies or n8n.

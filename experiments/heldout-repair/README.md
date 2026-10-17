@@ -1,6 +1,6 @@
 # After the reported trigger passes
 
-Three **development seed families** for evaluating workflow repairs on additional inputs and execution sequences. The repair author knows the reference; model repair trials and a sealed evaluation split are future work.
+Three **development seed families** for evaluating workflow repairs on additional inputs and execution sequences. The repair author knows these development references. A separate [prospective paired pilot](PILOT-PROTOCOL.md) freezes natural-model repair prompts, equal invocation budgets and model-hidden final inputs before generation.
 
 ## What the seeds measure
 
