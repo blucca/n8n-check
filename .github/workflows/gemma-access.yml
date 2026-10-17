@@ -1,0 +1,36 @@
+name: Gemma CPU access probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  access:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TMPDIR: ${{ github.workspace }}/temp
+      PIP_CACHE_DIR: ${{ github.workspace }}/temp/pip-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned inference runtime and download public model
+        run: |
+          mkdir -p temp
+          python -m pip install --disable-pip-version-check litert-lm-api==0.18.0
+          curl -fL --retry 1 --connect-timeout 30 --max-time 540 \
+            https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/b3ca0d2f076785a8f4b2219ddbd2bdb99954eae1/gemma-4-E2B-it.litertlm \
+            -o temp/gemma-4-E2B-it.litertlm
+      - name: Run one real coding request
+        run: python experiments/heldout-repair/model-smoke.py temp/gemma-4-E2B-it.litertlm temp/model-access/result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemma-access
+          path: temp/model-access/
+          if-no-files-found: warn
+          retention-days: 14

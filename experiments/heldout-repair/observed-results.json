@@ -1,0 +1,203 @@
+{
+  "recordedAt": "2026-10-17T22:26:01.549Z",
+  "frozenAt": "2026-10-17T22:22:24.222Z",
+  "runtime": "n8n 2.41.7",
+  "network": {
+    "mode": "loopback-only",
+    "enforced": true,
+    "interfaces": [
+      "lo"
+    ]
+  },
+  "stage": "development seeds, researcher has gold access; no model outcomes",
+  "provenance": {
+    "morsof": "MIT public workflow at 3d8c61e; author-added same-batch conflict policy",
+    "retry": "self-authored synthetic scope/version repair; response-loss alone is a prior known control",
+    "raw": "self-authored export based on public n8n issue 36402; positive and alternative-correct controls"
+  },
+  "policy": {
+    "morsof": "All contradictory same-batch invoice+stage members require review; unrelated B must still prepare. Later database conflicts are outside this seed.",
+    "retry": "A logical operation is (tenant, asset, revision). Persist each once across retry/replay, retain distinct tenants and revisions.",
+    "raw": "Preserve one response JSON value per input, including root arrays and optional UTF-8 BOM."
+  },
+  "results": [
+    {
+      "name": "invoice-visible-original",
+      "passed": false,
+      "enginePassed": false,
+      "failed": [
+        "n8n execution succeeds",
+        "Contract Ready for Review: output 0",
+        "Contract Writes: output 0"
+      ]
+    },
+    {
+      "name": "invoice-visible-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "invoice-visible-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "invoice-customer-conflict-candidate",
+      "passed": false,
+      "enginePassed": true,
+      "failed": [
+        "ambiguous members retain identities and require review",
+        "only unambiguous B persists"
+      ]
+    },
+    {
+      "name": "invoice-customer-conflict-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "invoice-amount-conflict-candidate",
+      "passed": false,
+      "enginePassed": true,
+      "failed": [
+        "ambiguous members retain identities and require review",
+        "only unambiguous B persists"
+      ]
+    },
+    {
+      "name": "invoice-amount-conflict-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-visible-original",
+      "passed": false,
+      "enginePassed": true,
+      "failed": [
+        "durable effects equal distinct logical operations"
+      ]
+    },
+    {
+      "name": "retry-visible-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-same-operation-replay-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-new-revision-candidate",
+      "passed": false,
+      "enginePassed": true,
+      "failed": [
+        "durable effects equal distinct logical operations"
+      ]
+    },
+    {
+      "name": "retry-new-tenant-candidate",
+      "passed": false,
+      "enginePassed": true,
+      "failed": [
+        "durable effects equal distinct logical operations"
+      ]
+    },
+    {
+      "name": "retry-visible-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-same-operation-replay-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-new-revision-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "retry-new-tenant-reference",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-visible-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-visible-alternative",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-top-level-array-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-top-level-array-alternative",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-bom-unicode-candidate",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    },
+    {
+      "name": "raw-bom-unicode-alternative",
+      "passed": true,
+      "enginePassed": true,
+      "failed": []
+    }
+  ],
+  "gate": {
+    "developmentSeeds": 3,
+    "newFailureFamilies": [
+      "invoice same-batch conflict (source-derived, added policy)",
+      "retry logical-key scope/version (synthetic repair)"
+    ],
+    "rawPositiveControls": 6,
+    "expectedFailures": [
+      "invoice-visible-original",
+      "retry-visible-original",
+      "invoice-customer-conflict-candidate",
+      "invoice-amount-conflict-candidate",
+      "retry-new-revision-candidate",
+      "retry-new-tenant-candidate"
+    ],
+    "unexpected": [],
+    "evidenceGatePassed": true,
+    "modelRuns": 0
+  },
+  "durableEffectCounts": {
+    "visible-original": 3,
+    "visible-candidate": 2,
+    "same-operation-replay-candidate": 2,
+    "new-revision-candidate": 2,
+    "new-tenant-candidate": 2,
+    "visible-reference": 2,
+    "same-operation-replay-reference": 2,
+    "new-revision-reference": 3,
+    "new-tenant-reference": 4
+  }
+}
