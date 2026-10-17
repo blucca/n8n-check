@@ -41,6 +41,8 @@ Both invoice conflict variants failed the candidate's review/persistence checks 
 
 The separate manually dispatched `Gemma CPU access probe` workflow makes one coding request with the public Apache-2.0 E2B LiteRT model on a standard GitHub CPU runner. It is an inference access check, excluded from the seed results and future repair evaluation. Its pinned runtime, model revision and prompt are in `model-smoke.py` and `.github/workflows/gemma-access.yml`.
 
+[The first real access run](model-access-results.json) succeeded: 3.206 seconds to load and 2.899 seconds to generate an answer. Asked for distinct keys over exact tenant/asset/revision strings, Gemma returned hyphen concatenation. A **post-hoc** JavaScript check found a collision between `(team-a, asset-7, r1)` and `(team, a-asset-7, r1)`. This counterexample was constructed after reading the answer and stays outside the prospective repair pilot. It motivates testing identities beyond ordinary examples.
+
 ## Run
 
 Requirements: Node 24+, n8n **2.41.7**, Linux `unshare` and `ip`. Runs are sequential. All generated workflows, logs and databases go beneath the supplied fresh temporary directory.

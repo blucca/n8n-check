@@ -1,0 +1,41 @@
+{
+  "purpose": "actual small-model access check; excluded from repair benchmark results",
+  "model": "litert-community/gemma-4-E2B-it-litert-lm",
+  "revision": "b3ca0d2f076785a8f4b2219ddbd2bdb99954eae1",
+  "runtime": "litert-lm-api 0.18.0",
+  "backend": "CPU",
+  "prompt": "Write only one JavaScript expression for an n8n HTTP Request Idempotency-Key. Each input has $json.tenant, $json.assetId, and $json.revision. Repeated delivery of the same operation must reuse a key. Different tenants, assets, or revisions must have distinct keys. Preserve exact string field values, including punctuation. No prose.",
+  "answer": "`$json.tenant + \"-\" + $json.assetId + \"-\" + $json.revision`",
+  "loadSeconds": 3.206,
+  "generationSeconds": 2.899,
+  "runUrl": "https://github.com/blucca/n8n-check/actions/runs/39075222172",
+  "workflowCommit": "5e08ec127477e790b1f05b0ff32683341991ad36",
+  "postHocCheck": {
+    "purpose": "Post-hoc counterexample to the access-check answer; excluded from the prospective repair pilot",
+    "observedAt": "2026-10-17T22:35:44.077Z",
+    "expression": "$json.tenant + \"-\" + $json.assetId + \"-\" + $json.revision",
+    "inputs": [
+      {
+        "tenant": "team-a",
+        "assetId": "asset-7",
+        "revision": "r1"
+      },
+      {
+        "tenant": "team",
+        "assetId": "a-asset-7",
+        "revision": "r1"
+      }
+    ],
+    "keys": [
+      "team-a-asset-7-r1",
+      "team-a-asset-7-r1"
+    ],
+    "distinctLogicalOperations": 2,
+    "distinctGeneratedKeys": 1,
+    "contractPassed": false,
+    "referenceKeys": [
+      "[\"team-a\",\"asset-7\",\"r1\"]",
+      "[\"team\",\"a-asset-7\",\"r1\"]"
+    ]
+  }
+}
