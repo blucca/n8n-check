@@ -6,6 +6,8 @@ Give it a workflow export, fixture inputs and HTTP mock responses. It runs the a
 
 **[GitHub Marketplace](https://github.com/marketplace/actions/n8n-check)** · **[npm](https://www.npmjs.com/package/@blucca/n8n-check)** · MIT
 
+Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoolsweekly.com/archives/issue-691/), 15 October 2026.
+
 | Start here | What you need | What you get |
 |---|---|---|
 | [Add a check to CI](#add-a-check-to-github-actions) | Workflow export + case JSON | A pass/fail job, request trace, JSON + JUnit |
