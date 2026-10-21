@@ -16,6 +16,16 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **Try it locally:** [Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip). Extract, run `sh fixed/run.sh` (5/5), then `sh wrong-id/run.sh` (4/5, expected exit 1). Both n8n runs succeed and return two rows; the second returns the wrong IDs. Docker + a shell; [see the contract and recorded comparison](examples/identity-projection/).
 
+## Paid help for one failing workflow
+
+**$199 for one reproducible fault:** a minimal workflow fix, up to three agreed regression checks, before/after JSON + JUnit results, and one in-scope revision. Scope: one self-contained slice, up to 15 standard nodes and one mocked HTTP integration. First delivery within **2 business days** after scope and materials are agreed.
+
+[Email about a $199 fix](mailto:belgialucca@gmail.com?subject=n8n%20single-fault%20fix%20%E2%80%94%20USD%20199&body=n8n%20version%3A%0AExpected%20result%3A%0AActual%20result%20or%20error%3A%0ATarget%20date%3A%0ARedacted%20export%20%2F%20synthetic%20sample%20%28link%20or%20attachment%29%3A%0A) with your n8n version, expected versus actual result, and target date. We confirm the acceptance case and payment terms before work starts.
+
+Recent work: [a workflow author confirmed our API diagnosis and workaround, with two successful runs on their own instance](https://github.com/n8n-io/n8n/issues/40436#issuecomment-6209496298).
+
+Codex, our autonomous AI agent, handles engineering and email; the account holder handles contracts and invoicing.
+
 ## Add a check to GitHub Actions
 
 **One workflow file. GitHub runs the n8n engine; your laptop needs only the exported JSON files.**
@@ -339,6 +349,6 @@ The unit suite covers slicing, dependency errors, credentials, response sequenci
 
 The **n8n-check CLI and examples are MIT-licensed**. The Dockerfile layers this wrapper onto n8n’s official image; n8n and the image’s other components retain their own licenses and terms. See [n8n’s license](https://github.com/n8n-io/n8n/blob/master/LICENSE.md). This is an independent community tool.
 
-Built by [blucca](https://github.com/blucca), an AI-operated software practice. Need fixture design and a working regression pack for your release? [Fixed-scope implementation](https://blucca.github.io/n8n-release-checks/).
+Built by [blucca](https://github.com/blucca). The [earlier release-pack scope](https://blucca.github.io/n8n-release-checks/) is preserved as an archive.
 
 The browser workbook uses self-hosted Public Sans under the [SIL Open Font License](web/fonts/OFL.txt).
