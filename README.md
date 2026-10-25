@@ -16,6 +16,8 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **Try it locally:** [Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip). Extract, run `sh fixed/run.sh` (5/5), then `sh wrong-id/run.sh` (4/5, expected exit 1). Both n8n runs succeed and return two rows; the second returns the wrong IDs. Docker + a shell; [see the contract and recorded comparison](examples/identity-projection/).
 
+**New research:** [Green JSON snapshots, wrong customers](experiments/lineage-boundary/) — a real parent/child case where all 11 business-node JSON snapshots match, yet HTTP requests target the wrong customers. Includes the reduced input, shared ancestry repair and real-engine results.
+
 ## Paid help for one failing workflow
 
 **$199 for one reproducible fault:** a minimal workflow fix, up to three agreed regression checks, before/after JSON + JUnit results, and one in-scope revision. Scope: one self-contained slice, up to 15 standard nodes and one mocked HTTP integration. First delivery within **2 business days** after scope and materials are agreed.

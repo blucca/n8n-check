@@ -1,0 +1,1426 @@
+{
+  "experiment": "Native child ancestry: identical JSON snapshots, wrong HTTP recipients",
+  "observed_date": "2026-10-26",
+  "snapshot_scope": "All 11 business nodes, preserving run/output/item axes; excludes inbound Webhook transport envelope.",
+  "data": "self-authored synthetic workflow and customer records",
+  "shared_original_business_json": {
+    "parent": {
+      "Orders": [
+        [
+          [
+            {
+              "order": {
+                "id": "customer-A",
+                "sequence": 0
+              }
+            },
+            {
+              "order": {
+                "id": "customer-B",
+                "sequence": 1
+              }
+            },
+            {
+              "order": {
+                "id": "customer-C",
+                "sequence": 2
+              }
+            },
+            {
+              "order": {
+                "id": "customer-D",
+                "sequence": 3
+              }
+            }
+          ]
+        ]
+      ],
+      "Call": [
+        [
+          [
+            {
+              "sku": "same-product",
+              "quantity": 1
+            },
+            {
+              "sku": "same-product",
+              "quantity": 1
+            }
+          ]
+        ]
+      ],
+      "Deliver": [
+        [
+          [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ]
+        ]
+      ]
+    },
+    "child": {
+      "Start": [
+        [
+          [
+            {
+              "order": {
+                "id": "customer-A",
+                "sequence": 0
+              }
+            },
+            {
+              "order": {
+                "id": "customer-B",
+                "sequence": 1
+              }
+            },
+            {
+              "order": {
+                "id": "customer-C",
+                "sequence": 2
+              }
+            },
+            {
+              "order": {
+                "id": "customer-D",
+                "sequence": 3
+              }
+            }
+          ]
+        ]
+      ],
+      "Left Limit": [
+        [
+          [
+            {
+              "order": {
+                "id": "customer-A",
+                "sequence": 0
+              }
+            },
+            {
+              "order": {
+                "id": "customer-B",
+                "sequence": 1
+              }
+            }
+          ]
+        ]
+      ],
+      "Left Project": [
+        [
+          [
+            {
+              "sku": "same-product",
+              "quantity": 1
+            },
+            {
+              "sku": "same-product",
+              "quantity": 1
+            }
+          ]
+        ]
+      ],
+      "Right Sort": [
+        [
+          [
+            {
+              "order": {
+                "id": "customer-D",
+                "sequence": 3
+              }
+            },
+            {
+              "order": {
+                "id": "customer-C",
+                "sequence": 2
+              }
+            },
+            {
+              "order": {
+                "id": "customer-B",
+                "sequence": 1
+              }
+            },
+            {
+              "order": {
+                "id": "customer-A",
+                "sequence": 0
+              }
+            }
+          ]
+        ]
+      ],
+      "Right Limit": [
+        [
+          [
+            {
+              "order": {
+                "id": "customer-D",
+                "sequence": 3
+              }
+            },
+            {
+              "order": {
+                "id": "customer-C",
+                "sequence": 2
+              }
+            }
+          ]
+        ]
+      ],
+      "Right Project": [
+        [
+          [
+            {
+              "sku": "same-product",
+              "quantity": 1
+            },
+            {
+              "sku": "same-product",
+              "quantity": 1
+            }
+          ]
+        ]
+      ],
+      "Select": [
+        [
+          [
+            {
+              "sku": "same-product",
+              "quantity": 1
+            },
+            {
+              "sku": "same-product",
+              "quantity": 1
+            }
+          ]
+        ]
+      ],
+      "Return": [
+        [
+          [
+            {
+              "sku": "same-product",
+              "quantity": 1
+            },
+            {
+              "sku": "same-product",
+              "quantity": 1
+            }
+          ]
+        ]
+      ]
+    }
+  },
+  "original": {
+    "status": "complete",
+    "runtime": {
+      "n8n": "2.41.7",
+      "n8n-core": "2.41.5",
+      "n8n-nodes-base": "2.41.5",
+      "n8n-workflow": "2.41.2"
+    },
+    "node": "v26.12.0",
+    "overlay": null,
+    "started_at": "2026-10-25T21:22:17.518748+00:00",
+    "completed_at": "2026-10-25T21:22:39.509551+00:00",
+    "counterexample_found": true,
+    "json_only_equal": true,
+    "reduction": {
+      "initial_items": 4,
+      "attempts": [
+        {
+          "items": 3,
+          "same_failure": true
+        },
+        {
+          "items": 2,
+          "same_failure": false
+        }
+      ],
+      "retained_items": 3
+    },
+    "all_identity_checks_passed": false,
+    "child_cpu_seconds": 18.965077,
+    "child_peak_rss_kib": 578568,
+    "cases": [
+      {
+        "case": "input1",
+        "selected_input": 1,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "input2",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-D",
+          "customer-C"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "identity_passed": false,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced3-input1",
+        "selected_input": 1,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced3-input2",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-C",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [
+          "customer-A"
+        ],
+        "identity_passed": false,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced2-input1",
+        "selected_input": 1,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced2-input2",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-B",
+          "customer-A"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": false,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "changed-input",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "new-Q",
+            "sequence": 9
+          },
+          {
+            "id": "new-M",
+            "sequence": 3
+          },
+          {
+            "id": "new-R",
+            "sequence": 7
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "new-Q",
+          "new-R"
+        ],
+        "actual_recipients": [
+          "new-Q",
+          "new-M"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [
+          "new-M"
+        ],
+        "identity_passed": false,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "new-Q",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "new-M",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "legal-fan-in",
+        "selected_input": 0,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "team-inbox"
+        ],
+        "actual_recipients": [
+          "team-inbox"
+        ],
+        "delivery_slots": [
+          0
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": false,
+        "actual_ancestor_indices": [
+          0
+        ],
+        "expected_ancestor_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "call_items": [
+          [
+            {
+              "json": {},
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "team-inbox",
+            "kind": "approved-aggregate"
+          }
+        ]
+      }
+    ]
+  },
+  "repaired": {
+    "status": "complete",
+    "runtime": {
+      "n8n": "2.41.7",
+      "n8n-core": "2.41.5",
+      "n8n-nodes-base": "2.41.5",
+      "n8n-workflow": "2.41.2"
+    },
+    "node": "v26.12.0",
+    "overlay": "overlay.cjs",
+    "started_at": "2026-10-25T21:25:50.149713+00:00",
+    "completed_at": "2026-10-25T21:26:08.704432+00:00",
+    "counterexample_found": false,
+    "json_only_equal": true,
+    "reduction": {
+      "initial_items": 4,
+      "attempts": [
+        {
+          "items": 3,
+          "same_failure": false
+        }
+      ],
+      "retained_items": 4
+    },
+    "all_identity_checks_passed": true,
+    "child_cpu_seconds": 16.003179,
+    "child_peak_rss_kib": 622188,
+    "cases": [
+      {
+        "case": "input1",
+        "selected_input": 1,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "input2",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-D",
+          "customer-C"
+        ],
+        "actual_recipients": [
+          "customer-D",
+          "customer-C"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 3
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 2
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-D",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-C",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced3-input1",
+        "selected_input": 1,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-A",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-A",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "reduced3-input2",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "customer-C",
+          "customer-B"
+        ],
+        "actual_recipients": [
+          "customer-C",
+          "customer-B"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 2
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 1
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "customer-C",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "customer-B",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "changed-input",
+        "selected_input": 2,
+        "input_orders": [
+          {
+            "id": "new-Q",
+            "sequence": 9
+          },
+          {
+            "id": "new-M",
+            "sequence": 3
+          },
+          {
+            "id": "new-R",
+            "sequence": 7
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "new-Q",
+          "new-R"
+        ],
+        "actual_recipients": [
+          "new-Q",
+          "new-R"
+        ],
+        "delivery_slots": [
+          0,
+          1
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "call_items": [
+          [
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "sku": "same-product",
+                "quantity": 1
+              },
+              "pairedItem": {
+                "item": 2
+              }
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "new-Q",
+            "sku": "same-product",
+            "quantity": 1
+          },
+          {
+            "slot": 1,
+            "recipient": "new-R",
+            "sku": "same-product",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "case": "legal-fan-in",
+        "selected_input": 0,
+        "input_orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "http_status": 200,
+        "webhook_attempt_statuses": [
+          404,
+          200
+        ],
+        "execution_statuses": {
+          "parent": "success",
+          "child": "success"
+        },
+        "expected_recipients": [
+          "team-inbox"
+        ],
+        "actual_recipients": [
+          "team-inbox"
+        ],
+        "delivery_slots": [
+          0
+        ],
+        "unexpected_recipients": [],
+        "identity_passed": true,
+        "actual_ancestor_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "expected_ancestor_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "call_items": [
+          [
+            {
+              "json": {},
+              "pairedItem": [
+                {
+                  "item": 0
+                },
+                {
+                  "item": 1
+                },
+                {
+                  "item": 3
+                },
+                {
+                  "item": 2
+                }
+              ]
+            }
+          ]
+        ],
+        "requests": [
+          {
+            "slot": 0,
+            "recipient": "team-inbox",
+            "kind": "approved-aggregate"
+          }
+        ]
+      }
+    ]
+  },
+  "engineering_runs_including_failures": [
+    {
+      "run": "baseline",
+      "status": "failed",
+      "child_cpu_seconds": 13.908322,
+      "peak_rss_kib": 583400,
+      "error": "Execution persistence timed out: DZkBZJL9o8EbCH0r"
+    },
+    {
+      "run": "baseline-confirmed",
+      "status": "failed",
+      "child_cpu_seconds": 13.599714,
+      "peak_rss_kib": 597152,
+      "error": "The independent identity control must pass"
+    },
+    {
+      "run": "recipient-membership",
+      "status": "complete",
+      "child_cpu_seconds": 13.674378,
+      "peak_rss_kib": 609816,
+      "error": null
+    },
+    {
+      "run": "reduction",
+      "status": "complete",
+      "child_cpu_seconds": 18.965077,
+      "peak_rss_kib": 578568,
+      "error": null
+    },
+    {
+      "run": "registration-diagnostic",
+      "status": "failed",
+      "child_cpu_seconds": 12.298490000000001,
+      "peak_rss_kib": 634340,
+      "error": "Webhook HTTP 404: {'code': 404, 'message': 'This webhook is not registered for POST requests. Did you mean to make a POST request?', 'stacktrace': 'ResponseError: This webhook is not registered for POST requests. Did you mean to make a POST request?\\n    at LiveWebhooks.findWebhook (/home/ima/repos/gain/temp/n8n-runtime/node_modules/n8n/src/webhooks/live-webhooks.ts:283:10)\\n    at LiveWebhooks.executeWebhook (/home/ima/repos/gain/temp/n8n-runtime/node_modules/n8n/src/webhooks/live-webhooks.ts:99:19)\\n    at WebhookRequestHandler.handleRequest (/home/ima/repos/gain/temp/n8n-runtime/node_modules/n8n/src/webhooks/webhook-request-handler.ts:66:21)\\n    at /home/ima/repos/gain/temp/n8n-runtime/node_modules/n8n/src/webhooks/webhook-request-handler.ts:302:3'}"
+    },
+    {
+      "run": "repaired",
+      "status": "complete",
+      "child_cpu_seconds": 12.77723,
+      "peak_rss_kib": 605148,
+      "error": null
+    },
+    {
+      "run": "repaired-extended",
+      "status": "complete",
+      "child_cpu_seconds": 16.003179,
+      "peak_rss_kib": 622188,
+      "error": null
+    }
+  ],
+  "total_n8n_child_cpu_seconds_including_failures": 101.22639000000001,
+  "interpretation": "The fixed input reduction preserves wrong-recipient membership down to three records. The process-local common helper repair passes all six native contracts, including changed IDs/order and legal four-ancestor fan-in."
+}
