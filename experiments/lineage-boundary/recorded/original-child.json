@@ -1,0 +1,707 @@
+{
+  "id": "4",
+  "finished": true,
+  "mode": "integrated",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-10-25T21:22:32.089Z",
+  "startedAt": "2026-10-25T21:22:32.093Z",
+  "stoppedAt": "2026-10-25T21:22:32.203Z",
+  "deletedAt": null,
+  "workflowId": "PPHarPM1kcfzHy3Y",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 6831,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "b3a67a7a-12fc-4a57-9f6f-8392c48a77b6",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Start": [
+          {
+            "startTime": 1792963352195,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "metadata": {
+              "parentExecution": {
+                "executionId": "3",
+                "workflowId": "lh1MhjCZXW9tLef7",
+                "shouldResume": true,
+                "executionContext": {
+                  "version": 1,
+                  "establishedAt": 1792963351986,
+                  "source": "webhook",
+                  "triggerNode": {
+                    "name": "Webhook",
+                    "type": "n8n-nodes-base.webhook"
+                  },
+                  "redaction": {
+                    "version": 2,
+                    "production": false,
+                    "manual": false
+                  }
+                }
+              }
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-A",
+                        "sequence": 0
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-B",
+                        "sequence": 1
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-C",
+                        "sequence": 2
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-D",
+                        "sequence": 3
+                      }
+                    },
+                    "index": 3,
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Left Limit": [
+          {
+            "startTime": 1792963352196,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-A",
+                        "sequence": 0
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-B",
+                        "sequence": 1
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Left Project": [
+          {
+            "startTime": 1792963352196,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Left Limit",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Right Sort": [
+          {
+            "startTime": 1792963352197,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-D",
+                        "sequence": 3
+                      }
+                    },
+                    "index": 3,
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-C",
+                        "sequence": 2
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-B",
+                        "sequence": 1
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-A",
+                        "sequence": 0
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Right Limit": [
+          {
+            "startTime": 1792963352197,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Right Sort",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-D",
+                        "sequence": 3
+                      }
+                    },
+                    "index": 3,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-C",
+                        "sequence": 2
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Right Project": [
+          {
+            "startTime": 1792963352198,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Right Limit",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Select": [
+          {
+            "startTime": 1792963352198,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Left Project",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              },
+              {
+                "previousNode": "Right Project",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 5,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0,
+                      "input": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1,
+                      "input": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Return": [
+          {
+            "startTime": 1792963352203,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Select",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Return"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1792963352195,
+        "source": "integrated",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        },
+        "parentExecutionId": "3"
+      }
+    },
+    "parentExecution": {
+      "executionId": "3",
+      "workflowId": "lh1MhjCZXW9tLef7",
+      "shouldResume": true,
+      "executionContext": {
+        "version": 1,
+        "establishedAt": 1792963351986,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "PPHarPM1kcfzHy3Y",
+    "name": "03b0c52a13 child input 2",
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "events": "worklfow_call",
+          "inputSource": "passthrough",
+          "returnOutput": "lastRunOnly"
+        }
+      },
+      {
+        "id": "Left Limit",
+        "name": "Left Limit",
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          200,
+          0
+        ],
+        "parameters": {
+          "maxItems": 2,
+          "keep": "firstItems"
+        }
+      },
+      {
+        "id": "Left Project",
+        "name": "Left Project",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          300,
+          0
+        ],
+        "parameters": {
+          "mode": "raw",
+          "duplicateItem": false,
+          "jsonOutput": "{\"sku\":\"same-product\",\"quantity\":1}",
+          "includeOtherFields": false,
+          "options": {}
+        }
+      },
+      {
+        "id": "Right Sort",
+        "name": "Right Sort",
+        "type": "n8n-nodes-base.sort",
+        "typeVersion": 1,
+        "position": [
+          200,
+          200
+        ],
+        "parameters": {
+          "type": "simple",
+          "sortFieldsUi": {
+            "sortField": [
+              {
+                "fieldName": "order.sequence",
+                "order": "descending"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "Right Limit",
+        "name": "Right Limit",
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          300,
+          200
+        ],
+        "parameters": {
+          "maxItems": 2,
+          "keep": "firstItems"
+        }
+      },
+      {
+        "id": "Right Project",
+        "name": "Right Project",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          400,
+          200
+        ],
+        "parameters": {
+          "mode": "raw",
+          "duplicateItem": false,
+          "jsonOutput": "{\"sku\":\"same-product\",\"quantity\":1}",
+          "includeOtherFields": false,
+          "options": {}
+        }
+      },
+      {
+        "id": "Select",
+        "name": "Select",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          600,
+          0
+        ],
+        "parameters": {
+          "mode": "chooseBranch",
+          "numberInputs": 2,
+          "chooseBranchMode": "waitForAll",
+          "output": "specifiedInput",
+          "useDataOfInput": 2
+        }
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          800,
+          0
+        ],
+        "parameters": {}
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Left Limit",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Right Sort",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Left Limit": {
+        "main": [
+          [
+            {
+              "node": "Left Project",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Right Sort": {
+        "main": [
+          [
+            {
+              "node": "Right Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Right Limit": {
+        "main": [
+          [
+            {
+              "node": "Right Project",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Left Project": {
+        "main": [
+          [
+            {
+              "node": "Select",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Right Project": {
+        "main": [
+          [
+            {
+              "node": "Select",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Select": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}

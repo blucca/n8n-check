@@ -61,6 +61,24 @@ n8n process. It does not edit the installed package or a production instance.
 
 **Two execution JSON files and Node.js. No n8n startup, uploads or package install.**
 
+Try the included [recorded original and repaired executions](recorded/) first:
+
+```sh
+node experiments/lineage-boundary/audit-executions.cjs \
+  experiments/lineage-boundary/recorded/original-parent.json \
+  experiments/lineage-boundary/recorded/original-child.json
+# Two mismatches, exit 1.
+
+node experiments/lineage-boundary/audit-executions.cjs \
+  experiments/lineage-boundary/recorded/repaired-parent.json \
+  experiments/lineage-boundary/recorded/repaired-child.json
+# Consistent ancestry, exit 0.
+```
+
+These are the actual synthetic lab exports, with resume tokens and inbound
+transport headers removed. The saved run data, workflow definitions and
+ancestry used by the audit are retained.
+
 Export the complete parent and child responses from
 `GET /api/v1/executions/<id>?includeData=true`. Use the child execution ID from
 the parent's actual `metadata.subExecution` entry. Then run:

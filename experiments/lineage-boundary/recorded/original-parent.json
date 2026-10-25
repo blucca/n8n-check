@@ -1,0 +1,384 @@
+{
+  "id": "3",
+  "finished": true,
+  "mode": "webhook",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-10-25T21:22:31.988Z",
+  "startedAt": "2026-10-25T21:22:32.076Z",
+  "stoppedAt": "2026-10-25T21:22:32.261Z",
+  "deletedAt": null,
+  "workflowId": "lh1MhjCZXW9tLef7",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 4544,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "805b7b62-89d0-4697-8712-067a2b5840b3",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Webhook": [
+          {
+            "startTime": 1792963352084,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "params": {},
+                      "query": {},
+                      "body": {
+                        "orders": [
+                          {
+                            "id": "customer-A",
+                            "sequence": 0
+                          },
+                          {
+                            "id": "customer-B",
+                            "sequence": 1
+                          },
+                          {
+                            "id": "customer-C",
+                            "sequence": 2
+                          },
+                          {
+                            "id": "customer-D",
+                            "sequence": 3
+                          }
+                        ]
+                      },
+                      "webhookUrl": "http://127.0.0.1:5692/webhook/03b0c52a13-input2",
+                      "executionMode": "production"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Orders": [
+          {
+            "startTime": 1792963352085,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Webhook",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-A",
+                        "sequence": 0
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-B",
+                        "sequence": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-C",
+                        "sequence": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-D",
+                        "sequence": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Call": [
+          {
+            "startTime": 1792963352086,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Orders",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 130,
+            "metadata": {
+              "subExecution": {
+                "executionId": "4",
+                "workflowId": "PPHarPM1kcfzHy3Y"
+              },
+              "subExecutionsCount": 1
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Deliver": [
+          {
+            "startTime": 1792963352216,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Call",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 44,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Deliver"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1792963351986,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "lh1MhjCZXW9tLef7",
+    "name": "03b0c52a13 parent input2",
+    "nodes": [
+      {
+        "id": "Webhook",
+        "name": "Webhook",
+        "webhookId": "1772fede-d06f-4c18-b3e9-e88f3e6d8c8f",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "multipleMethods": false,
+          "httpMethod": "POST",
+          "path": "03b0c52a13-input2",
+          "authentication": "none",
+          "responseMode": "lastNode",
+          "responseData": "firstEntryJson",
+          "options": {}
+        }
+      },
+      {
+        "id": "Orders",
+        "name": "Orders",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          200,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "body.orders",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "order"
+          }
+        }
+      },
+      {
+        "id": "Call",
+        "name": "Call",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          400,
+          0
+        ],
+        "parameters": {
+          "operation": "call_workflow",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "PPHarPM1kcfzHy3Y"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": null
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        }
+      },
+      {
+        "id": "Deliver",
+        "name": "Deliver",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          600,
+          0
+        ],
+        "parameters": {
+          "curlImport": "",
+          "method": "POST",
+          "url": "http://127.0.0.1:40989/input2",
+          "authentication": "none",
+          "provideSslCertificates": false,
+          "sendQuery": false,
+          "sendHeaders": false,
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ {slot: $itemIndex, recipient: $('Orders').item.json.order.id, sku: $json.sku, quantity: $json.quantity} }}",
+          "options": {},
+          "infoMessage": ""
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Orders",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders": {
+        "main": [
+          [
+            {
+              "node": "Call",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call": {
+        "main": [
+          [
+            {
+              "node": "Deliver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}
