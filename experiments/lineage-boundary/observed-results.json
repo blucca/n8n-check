@@ -1422,5 +1422,73 @@
     }
   ],
   "total_n8n_child_cpu_seconds_including_failures": 101.22639000000001,
-  "interpretation": "The fixed input reduction preserves wrong-recipient membership down to three records. The process-local common helper repair passes all six native contracts, including changed IDs/order and legal four-ancestor fan-in."
+  "interpretation": "The fixed input reduction preserves wrong-recipient membership down to three records. The process-local common helper repair passes all six native contracts, including changed IDs/order and legal four-ancestor fan-in.",
+  "saved_execution_audit": {
+    "method": "Read-only re-analysis of the saved native executions; no new engine run",
+    "results": [
+      {
+        "stack": "original",
+        "case": "input1",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "original",
+        "case": "input2",
+        "status": "mismatch",
+        "checked_items": 2,
+        "mismatches": 2
+      },
+      {
+        "stack": "original",
+        "case": "legal-fan-in",
+        "status": "mismatch",
+        "checked_items": 1,
+        "mismatches": 1
+      },
+      {
+        "stack": "repaired",
+        "case": "input1",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "repaired",
+        "case": "input2",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "repaired",
+        "case": "reduced3-input1",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "repaired",
+        "case": "reduced3-input2",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "repaired",
+        "case": "changed-input",
+        "status": "consistent",
+        "checked_items": 2,
+        "mismatches": 0
+      },
+      {
+        "stack": "repaired",
+        "case": "legal-fan-in",
+        "status": "consistent",
+        "checked_items": 1,
+        "mismatches": 0
+      }
+    ]
+  }
 }

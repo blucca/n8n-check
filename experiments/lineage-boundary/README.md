@@ -5,6 +5,9 @@ identical, both workflows succeed, and two HTTP requests go to the wrong custome
 This lab reproduces the fault, reduces its input, and verifies a process-local
 repair of the shared ancestry traversal.
 
+Related upstream investigation: [n8n #35559](https://github.com/n8n-io/n8n/issues/35559).
+This lab adds a saved-execution, wrong-recipient regression to that existing report.
+
 ## Observed result
 
 Four synthetic customers A–D have the same product and quantity. The child has
@@ -53,6 +56,50 @@ remain outside this experiment's coverage.
 
 [`overlay.cjs`](overlay.cjs) replaces this shared helper only in the disposable
 n8n process. It does not edit the installed package or a production instance.
+
+## Inspect your own saved child call
+
+**Two execution JSON files and Node.js. No n8n startup, uploads or package install.**
+
+Export the complete parent and child responses from
+`GET /api/v1/executions/<id>?includeData=true`. Use the child execution ID from
+the parent's actual `metadata.subExecution` entry. Then run:
+
+```sh
+node experiments/lineage-boundary/audit-executions.cjs \
+  parent-execution.json child-execution.json > ancestry-report.json
+```
+
+The report identifies the caller node/run and its input's source node/run/output.
+For each returned item, it compares reconstructed child ancestors with the
+pairing actually recorded on the parent. For the failing example:
+
+| Caller output item | Expected input item | Recorded input item |
+|---|---|---|
+| 0 | 3 (customer D) | 0 (customer A) |
+| 1 | 2 (customer C) | 1 (customer B) |
+
+The emitted report contains indices and node/execution identifiers, without
+copying customer JSON. Exit **0** means the inspected boundary's ancestry is
+consistent; **1** reports a mismatch; **2** reports incomplete or unsupported
+evidence, with a reason. HTTP recipient, payload and other business expectations
+remain separate acceptance contracts.
+
+This first auditor covers a successful, waiting **once-mode Execute Workflow
+1.2** call with one passthrough child trigger and complete saved provenance.
+Both directions of the recorded call edge must match. The child trigger must
+preserve the caller's input order and JSON, and the recorded terminal outputs
+must match the caller's output shape and JSON. Per-item calls, missing execution
+history, transformed trigger inputs and boundary `sourceOverwrite` need a
+separate contract and return exit 2.
+
+The auditor reuses the experimental traversal above. It is checked against the
+already-recorded native original/repaired runs, including legal many-to-one:
+
+```sh
+node experiments/lineage-boundary/check-audit.cjs \
+  "$LAB/original" "$LAB/repaired"
+```
 
 ## Reproduce
 
