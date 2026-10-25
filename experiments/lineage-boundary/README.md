@@ -119,6 +119,43 @@ node experiments/lineage-boundary/check-audit.cjs \
   "$LAB/original" "$LAB/repaired"
 ```
 
+### Using execution data alongside n8n-mcp
+
+At inspected [n8n-mcp commit fc6a6e9](https://github.com/czlonkowski/n8n-mcp/blob/fc6a6e9e2cc6f1e9762914b71314cff8422d9375/src/services/execution-processor.ts#L378-L561),
+`n8n_executions({action: "get", id, mode: "full"})` returns a merged node-output
+view. It includes all output items while combining runs and omitting the raw
+`runData`, task `source`/call metadata and saved `workflowData` this audit uses.
+Use the complete execution exports described above as the audit input.
+
+An isolated run of that upstream `processExecution` function on these saved
+synthetic records gave:
+
+| Input to the auditor | Original | Repaired |
+|---|---|---|
+| Complete API execution pair | 2 ancestry mismatches | 0 ancestry mismatches |
+| `mode: "full", includeInputData: true` pair | Incomplete evidence | Incomplete evidence |
+
+Both full-mode responses had `summary.hasMoreData: false`. This check exercises
+the processor with saved records; a live MCP server and live API retrieval were
+outside the check.
+
+For a server-side integration, the existing
+[`N8nApiClient.getExecution(id, true)`](https://github.com/czlonkowski/n8n-mcp/blob/fc6a6e9e2cc6f1e9762914b71314cff8422d9375/src/services/n8n-api-client.ts#L1212-L1222)
+returns the raw response. The useful handoff is **before** `processExecution`:
+
+```js
+// Integration sketch: use the configured client's existing read permissions.
+const parent = await client.getExecution(parentExecutionId, true);
+const child = await client.getExecution(childExecutionId, true);
+const report = auditBoundary(parent, child);
+```
+
+Take the child ID from the actual parent call edge. `auditBoundary` checks both
+directions of that edge and returns the compact index-level report. The current
+MCP `list` action with `includeData: true` also passes through API records;
+precise execution-ID reads avoid selecting another run from a list. The saved
+once-mode/trigger contract above still applies.
+
 ## Reproduce
 
 Python's standard library and an installed n8n runtime are sufficient. Use a
