@@ -1,0 +1,207 @@
+{
+  "scope": "Native n8n 2.41.7, Compression 1.1 and 1; exact Decompress-only gate from PR42358",
+  "cases": {
+    "stock": {
+      "execution_status": "success",
+      "Dynamic modern": {
+        "files": [
+          "target.json",
+          "other-b.json",
+          "other-b.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "other-b",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "other-b",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": [
+          2,
+          3
+        ]
+      },
+      "Dynamic legacy": {
+        "files": [
+          "target.json",
+          "other-b.json",
+          "other-b.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "other-b",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "other-b",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": [
+          2,
+          3
+        ]
+      },
+      "Fixed field": {
+        "files": [
+          "target.json",
+          "target.json",
+          "target.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "target",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "target",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": []
+      }
+    },
+    "pr42358": {
+      "execution_status": "success",
+      "Dynamic modern": {
+        "files": [
+          "target.json",
+          "target.json",
+          "target.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "target",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "target",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": []
+      },
+      "Dynamic legacy": {
+        "files": [
+          "target.json",
+          "other-b.json",
+          "other-b.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "other-b",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "other-b",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": [
+          2,
+          3
+        ]
+      },
+      "Fixed field": {
+        "files": [
+          "target.json",
+          "target.json",
+          "target.json",
+          "target.json"
+        ],
+        "payloads": [
+          {
+            "item": 1,
+            "file": "target",
+            "customer": "customer-1"
+          },
+          {
+            "item": 2,
+            "file": "target",
+            "customer": "customer-2"
+          },
+          {
+            "item": 3,
+            "file": "target",
+            "customer": "customer-3"
+          },
+          {
+            "item": 4,
+            "file": "target",
+            "customer": "customer-4"
+          }
+        ],
+        "mismatches": []
+      }
+    }
+  },
+  "verdict": "PASS: green wrong-file reproduced, PR gate fixes both filename+payload, legacy behavior preserved, existing fixed-field workaround passes"
+}

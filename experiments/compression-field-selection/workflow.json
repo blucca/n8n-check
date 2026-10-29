@@ -1,0 +1,138 @@
+{
+  "id": "compressSilent267",
+  "name": "Compression all-keys-present identity regression",
+  "active": false,
+  "nodes": [
+    {
+      "id": "Manual",
+      "name": "Manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "Generate inputs",
+      "name": "Generate inputs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [{\"json\": {\"item\": 1}, \"binary\": {\"data0\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtRRSsvMSVWyUsovyUgt0k1U0lFKLi0uyc9NLQIKwpi6hkq1ABe+x6gzAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-a.json.gz\"}, \"data1\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtRRSsvMSVWyUipJLEpPLVHSUUouLS7Jz00tAorBmLqGSrUAXOC43zIAAAA=\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"target.json.gz\"}, \"data2\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtRRSsvMSVWyUsovyUgt0k1S0lFKLi0uyc9NLQIKwpi6hkq1ANSTUxszAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-b.json.gz\"}}}, {\"json\": {\"item\": 2}, \"binary\": {\"data0\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtJRSsvMSVWyUipJLEpPLVHSUUouLS7Jz00tAorBmLpGSrUAdtXF5TIAAAA=\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"target.json.gz\"}, \"data1\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtJRSsvMSVWyUsovyUgt0k1S0lFKLi0uyc9NLQIKwpi6Rkq1AIA2IdAzAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-b.json.gz\"}, \"data2\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtJRSsvMSVWyUsovyUgt0k1U0lFKLi0uyc9NLQIKwpi6Rkq1AEMbtWMzAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-a.json.gz\"}}}, {\"json\": {\"item\": 3}, \"binary\": {\"data0\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtZRSsvMSVWyUsovyUgt0k1U0lFKLi0uyc9NLQIKwpi6xkq1AI+HZCUzAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-a.json.gz\"}, \"data1\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtZRSsvMSVWyUsovyUgt0k1S0lFKLi0uyc9NLQIKwpi6xkq1AEyq8JYzAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-b.json.gz\"}, \"data2\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtZRSsvMSVWyUipJLEpPLVHSUUouLS7Jz00tAorBmLrGSrUArzs+RTIAAAA=\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"target.json.gz\"}}}, {\"json\": {\"item\": 4}, \"binary\": {\"data0\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtFRSsvMSVWyUsovyUgt0k1S0lFKLi0uyc9NLQIKwpi6Jkq1AGl6tZ0zAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-b.json.gz\"}, \"data1\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtFRSsvMSVWyUipJLEpPLVHSUUouLS7Jz00tAorBmLomSrUAIr8/kTIAAAA=\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"target.json.gz\"}, \"data2\": {\"data\": \"H4sIAAAAAAAC/6tWyixJzVWyMtFRSsvMSVWyUsovyUgt0k1U0lFKLi0uyc9NLQIKwpi6Jkq1AKpXIS4zAAAA\", \"mimeType\": \"application/gzip\", \"fileExtension\": \"gz\", \"fileName\": \"other-a.json.gz\"}}}];"
+      }
+    },
+    {
+      "id": "Dynamic modern",
+      "name": "Dynamic modern",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1.1,
+      "position": [
+        450,
+        -200
+      ],
+      "parameters": {
+        "operation": "decompress",
+        "binaryPropertyName": "={{ Object.keys($binary).find(key => $binary[key].fileName === 'target.json.gz') }}",
+        "outputPrefix": "file_"
+      }
+    },
+    {
+      "id": "Dynamic legacy",
+      "name": "Dynamic legacy",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1,
+      "position": [
+        450,
+        0
+      ],
+      "parameters": {
+        "operation": "decompress",
+        "binaryPropertyName": "={{ Object.keys($binary).find(key => $binary[key].fileName === 'target.json.gz') }}",
+        "outputPrefix": "file_"
+      }
+    },
+    {
+      "id": "Normalize target",
+      "name": "Normalize target",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        450,
+        200
+      ],
+      "parameters": {
+        "jsCode": "return $input.all().map((item, index) => ({json: item.json, binary: {data: Object.values(item.binary).find(file => file.fileName === 'target.json.gz')}, pairedItem: {item: index}}));"
+      }
+    },
+    {
+      "id": "Fixed field",
+      "name": "Fixed field",
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1.1,
+      "position": [
+        700,
+        200
+      ],
+      "parameters": {
+        "operation": "decompress",
+        "binaryPropertyName": "data",
+        "outputPrefix": "file_"
+      }
+    }
+  ],
+  "connections": {
+    "Manual": {
+      "main": [
+        [
+          {
+            "node": "Generate inputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate inputs": {
+      "main": [
+        [
+          {
+            "node": "Dynamic modern",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dynamic legacy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Normalize target",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize target": {
+      "main": [
+        [
+          {
+            "node": "Fixed field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
