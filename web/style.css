@@ -59,6 +59,8 @@ p { margin: 0 0 15px; }
 .recorded-check .fail { color: var(--fail); font-weight: 700; }
 .recorded-check .result-detail { display: block; font-size: 12px; font-weight: 400; margin-top: 3px; }
 .recorded-check > p { font-size: 12px; color: var(--muted); margin: 16px 0 0; }
+.saved-paths { border-left: 3px solid var(--ink); padding-left: 16px; margin-bottom: 28px; font-size: 14px; max-width: 78ch; }
+.saved-paths p:last-child { margin-bottom: 0; }
 .panel { background: var(--paper); border: 1px solid var(--line); padding: 28px; border-radius: 5px; min-width: 0; }
 .import-panel { display: grid; grid-template-columns: 1fr 1.1fr; column-gap: 50px; background: var(--workbook); border: 0; padding: 31px 34px; border-radius: 10px; }
 .import-panel h2 { margin-bottom: 13px; }
