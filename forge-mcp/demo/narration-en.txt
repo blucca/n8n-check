@@ -1,0 +1,13 @@
+A green n8n run can still address the wrong customer. This is n8n Execution Dossier, for agency technical leads who need to review an automation change on the Jira issue where the team already works.
+
+Start with the saved evidence. If a required execution is missing, the tool returns its filename and concrete export steps. Fetch the complete execution with includeData set to true, take the child ID from the parent's saved call metadata, and attach the file.
+
+Here is the complete synthetic case, KAN-2: original and repaired parent and child exports. I call the MCP tool with this issue key. Forge reads all four attachments as the authenticated Jira user and verifies the actual parent-child call edges.
+
+The original has two mismatches. Returned item zero should trace to input three, customer D, but the parent recorded input zero, customer A. Item one should trace to input two, customer C, but recorded input one, customer B. Each finding gives the attachment ID and exact JSON pointer: the parent pairing, child terminal pairing, and expected caller input. The repaired saved call agrees for both items.
+
+Open the same issue. The tool has left a native Jira comment with the before-and-after counts, matched execution and workflow IDs, and raw-evidence locations. Reviewers can open the original attachments to check the result. The customer JSON stays in those files. HTTP acceptance remains a separate check.
+
+Run the same audit again. It returns reused and the same comment ID, with the invoking user's authorship verified. This preserves one case for these attachments and this user. Replacing an attachment gives the next case its own marker.
+
+To use it, open the public installation link, select your Jira site, and install. A site administrator enables the tool under Connected apps, then you connect this endpoint through Atlassian OAuth in your MCP client. Attach your saved executions and supply the issue key. The result is a reviewable n8n change case, delivered exactly where the team needs it.

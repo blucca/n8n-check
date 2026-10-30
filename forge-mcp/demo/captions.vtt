@@ -1,0 +1,77 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.907
+A green n8n run can still address the wrong customer.
+
+00:00:03.927 --> 00:00:13.056
+This is n8n Execution Dossier, for agency technical leads who need to review an automation change on the Jira issue where the team already works.
+
+00:00:14.000 --> 00:00:16.167
+Start with the saved evidence.
+
+00:00:16.187 --> 00:00:22.633
+If a required execution is missing, the tool returns its filename and concrete export steps.
+
+00:00:22.653 --> 00:00:30.824
+Fetch the complete execution with includeData set to true, take the child ID from the parent's saved call metadata, and attach the file.
+
+00:00:34.000 --> 00:00:40.140
+Here is the complete synthetic case, KAN-2: original and repaired parent and child exports.
+
+00:00:40.160 --> 00:00:43.194
+I call the MCP tool with this issue key.
+
+00:00:43.214 --> 00:00:50.032
+Forge reads all four attachments as the authenticated Jira user and verifies the actual parent-child call edges.
+
+00:00:55.000 --> 00:00:57.470
+The original has two mismatches.
+
+00:00:57.490 --> 00:01:15.067
+Returned item zero should trace to input three, customer D, but the parent recorded input zero, customer A. Item one should trace to input two, customer C, but recorded input one, customer B. Each finding gives the attachment ID and exact JSON pointer: the parent
+
+00:01:15.067 --> 00:01:19.010
+pairing, child terminal pairing, and expected caller input.
+
+00:01:19.030 --> 00:01:22.048
+The repaired saved call agrees for both items.
+
+00:01:31.000 --> 00:01:32.734
+Open the same issue.
+
+00:01:32.754 --> 00:01:41.381
+The tool has left a native Jira comment with the before-and-after counts, matched execution and workflow IDs, and raw-evidence locations.
+
+00:01:41.401 --> 00:01:45.296
+Reviewers can open the original attachments to check the result.
+
+00:01:45.316 --> 00:01:48.212
+The customer JSON stays in those files.
+
+00:01:48.232 --> 00:01:51.184
+HTTP acceptance remains a separate check.
+
+00:01:56.000 --> 00:01:57.985
+Run the same audit again.
+
+00:01:58.005 --> 00:02:03.857
+It returns reused and the same comment ID, with the invoking user's authorship verified.
+
+00:02:03.877 --> 00:02:07.559
+This preserves one case for these attachments and this user.
+
+00:02:07.579 --> 00:02:11.048
+Replacing an attachment gives the next case its own marker.
+
+00:02:17.000 --> 00:02:22.510
+To use it, open the public installation link, select your Jira site, and install.
+
+00:02:22.530 --> 00:02:30.554
+A site administrator enables the tool under Connected apps, then you connect this endpoint through Atlassian OAuth in your MCP client.
+
+00:02:30.574 --> 00:02:34.256
+Attach your saved executions and supply the issue key.
+
+00:02:34.276 --> 00:02:39.704
+The result is a reviewable n8n change case, delivered exactly where the team needs it.
+

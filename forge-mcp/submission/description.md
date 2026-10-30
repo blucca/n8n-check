@@ -84,3 +84,6 @@ Install the hosted app through the public link in the README. A site administrat
 https://mcp.atlassian.com/forge/df78f02a-e4d8-4536-9eca-c2907155a95b
 ```
 
+
+
+Demo: https://youtu.be/ICBeWnsio1M — public 2:45 English production demonstration, with timed captions and synthesized Joanna narration.
