@@ -54,6 +54,12 @@ Choose the installed site during OAuth. Requests read and write Jira **as the in
 
 Development installs are available to app contributors. Use Forge direct distribution for other users and sites.
 
+## Data and permissions
+
+The app reads the four saved execution attachments on the issue selected by the authenticated user. Processing runs in Forge; the app has no external datastore or external network egress. It writes a compact audit comment back to Jira. Original item JSON remains in its attachments. Your MCP client receives execution/workflow IDs, item indices, ancestry pointers and verdicts. The app emits no execution contents or account identifiers in application logs.
+
+Site administrators control installation and tool exposure. Jira visibility and comment permissions apply to every call. Remove the app through Atlassian Administration to stop future access; remove an audit comment through Jira to delete that saved report. The source is MIT-licensed. For support or a data-handling question, use the [repository issues](https://github.com/blucca/n8n-check/issues).
+
 ## Evidence scope
 
 The auditor covers completed successful executions with full saved `runData` and `workflowData`: one waiting, once-mode Execute Workflow **1.2** call and one passthrough child trigger. Export through `GET /api/v1/executions/<id>?includeData=true`, taking the actual child ID from the parent call metadata.
