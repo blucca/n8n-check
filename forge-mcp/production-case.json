@@ -1,0 +1,1060 @@
+{
+  "endpoint": "https://mcp.atlassian.com/forge/df78f02a-e4d8-4536-9eca-c2907155a95b",
+  "issueKey": "KAN-2",
+  "environment": "production",
+  "protocolRequested": "2025-06-18",
+  "status": "passed",
+  "initialize": {
+    "httpStatus": 200,
+    "contentType": "application/json",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": {
+      "jsonrpc": "str",
+      "id": "int",
+      "result": {
+        "protocolVersion": "str",
+        "capabilities": {
+          "tools": {
+            "listChanged": "bool"
+          }
+        },
+        "serverInfo": {
+          "name": "str",
+          "version": "str"
+        }
+      }
+    }
+  },
+  "protocolNegotiated": "2025-03-26",
+  "serverInfo": {
+    "name": "integrations-service",
+    "version": "1.0"
+  },
+  "initialized": {
+    "httpStatus": 202,
+    "contentType": "text/plain; charset=utf-8",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": "NoneType"
+  },
+  "toolsList": {
+    "httpStatus": 200,
+    "contentType": "application/json",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": {
+      "jsonrpc": "str",
+      "id": "int",
+      "result": {
+        "tools": {
+          "type": "array",
+          "length": 1,
+          "first": {
+            "name": "str",
+            "description": "str",
+            "inputSchema": {
+              "type": "str",
+              "required": {
+                "type": "array",
+                "length": 1,
+                "first": "str"
+              },
+              "properties": {
+                "issueKey": {
+                  "type": "str",
+                  "title": "str",
+                  "description": "str"
+                }
+              },
+              "additionalProperties": "bool"
+            },
+            "annotations": {
+              "title": "str",
+              "readOnlyHint": "bool",
+              "destructiveHint": "bool",
+              "idempotentHint": "bool",
+              "openWorldHint": "bool"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "audit-n8n-issue",
+      "description": "Audit original and repaired saved n8n parent-child execution attachments on a Jira issue. Return raw item ancestry and identity mismatches, then add a compact evidence comment to the same issue.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "issueKey"
+        ],
+        "properties": {
+          "issueKey": {
+            "type": "string",
+            "title": "Jira issue key",
+            "description": "The Jira issue with original-parent.json, original-child.json, repaired-parent.json and repaired-child.json attachments."
+          }
+        },
+        "additionalProperties": false
+      },
+      "annotations": {
+        "title": "Audit saved n8n executions",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  ],
+  "invokedTool": "audit-n8n-issue",
+  "missing": {
+    "httpStatus": 200,
+    "contentType": "application/json",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": {
+      "jsonrpc": "str",
+      "id": "int",
+      "result": {
+        "content": {
+          "type": "array",
+          "length": 1,
+          "first": {
+            "type": "str",
+            "text": "str"
+          }
+        },
+        "isError": "bool",
+        "structuredContent": {
+          "status": "str",
+          "auditVersion": "str",
+          "issue": {
+            "id": "str",
+            "key": "str"
+          },
+          "attachments": {
+            "type": "array",
+            "length": 0,
+            "first": null
+          },
+          "writebackStatus": "str",
+          "nextSteps": {
+            "type": "array",
+            "length": 3,
+            "first": "str"
+          },
+          "reason": "str"
+        }
+      }
+    },
+    "adapter": {
+      "status": "incomplete",
+      "auditVersion": "n8n-boundary-1",
+      "issue": {
+        "id": "10001",
+        "key": "KAN-2"
+      },
+      "attachments": [],
+      "writebackStatus": "not-written",
+      "nextSteps": [
+        "Export the complete original-parent execution using GET /api/v1/executions/<id>?includeData=true.",
+        "Use the child ID from the parent saved metadata.subExecution; retain runData, workflowData and both directions of the call edge.",
+        "Attach it to this issue as original-parent.json, then rerun the audit."
+      ],
+      "reason": "original-parent.json: expected one attachment; found 0."
+    }
+  },
+  "missingReceiptProcessedAt": "2026-10-30T02:52:13.976283+00:00",
+  "first": {
+    "httpStatus": 200,
+    "contentType": "application/json",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": {
+      "jsonrpc": "str",
+      "id": "int",
+      "result": {
+        "content": {
+          "type": "array",
+          "length": 1,
+          "first": {
+            "type": "str",
+            "text": "str"
+          }
+        },
+        "isError": "bool",
+        "structuredContent": {
+          "status": "str",
+          "auditVersion": "str",
+          "issue": {
+            "id": "str",
+            "key": "str"
+          },
+          "attachments": {
+            "type": "array",
+            "length": 4,
+            "first": {
+              "role": "str",
+              "name": "str",
+              "id": "str",
+              "size": "int",
+              "mimeType": "str",
+              "executionId": "str",
+              "workflowId": "str"
+            }
+          },
+          "before": {
+            "status": "str",
+            "scope": "str",
+            "parent_execution": "str",
+            "child_execution": "str",
+            "node": "str",
+            "run": "int",
+            "caller_input": {
+              "node": "str",
+              "run": "int",
+              "output": "int"
+            },
+            "checked_items": "int",
+            "mismatches": "int",
+            "findings": {
+              "type": "array",
+              "length": 2,
+              "first": {
+                "output": "int",
+                "item": "int",
+                "expected": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "observed": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "status": "str",
+                "raw": {
+                  "parentPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "childTerminalPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "callerInputs": {
+                    "type": "array",
+                    "length": 1,
+                    "first": {
+                      "attachmentId": "str",
+                      "path": "str"
+                    }
+                  }
+                }
+              }
+            },
+            "truncated": "bool",
+            "raw": {
+              "parentCall": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childParent": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childInput": {
+                "attachmentId": "str",
+                "path": "str"
+              }
+            }
+          },
+          "after": {
+            "status": "str",
+            "scope": "str",
+            "parent_execution": "str",
+            "child_execution": "str",
+            "node": "str",
+            "run": "int",
+            "caller_input": {
+              "node": "str",
+              "run": "int",
+              "output": "int"
+            },
+            "checked_items": "int",
+            "mismatches": "int",
+            "findings": {
+              "type": "array",
+              "length": 2,
+              "first": {
+                "output": "int",
+                "item": "int",
+                "expected": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "observed": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "status": "str",
+                "raw": {
+                  "parentPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "childTerminalPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "callerInputs": {
+                    "type": "array",
+                    "length": 1,
+                    "first": {
+                      "attachmentId": "str",
+                      "path": "str"
+                    }
+                  }
+                }
+              }
+            },
+            "truncated": "bool",
+            "raw": {
+              "parentCall": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childParent": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childInput": {
+                "attachmentId": "str",
+                "path": "str"
+              }
+            }
+          },
+          "commentId": "str",
+          "writebackStatus": "str",
+          "nextSteps": {
+            "type": "array",
+            "length": 0,
+            "first": null
+          },
+          "caseMarker": "str",
+          "writebackAuthorMatched": "bool"
+        }
+      }
+    },
+    "adapter": {
+      "status": "audited",
+      "auditVersion": "n8n-boundary-1",
+      "issue": {
+        "id": "10001",
+        "key": "KAN-2"
+      },
+      "attachments": [
+        {
+          "role": "original-parent",
+          "name": "original-parent.json",
+          "id": "10004",
+          "size": 9906,
+          "mimeType": "application/json",
+          "executionId": "3",
+          "workflowId": "lh1MhjCZXW9tLef7"
+        },
+        {
+          "role": "original-child",
+          "name": "original-child.json",
+          "id": "10005",
+          "size": 17836,
+          "mimeType": "application/json",
+          "executionId": "4",
+          "workflowId": "PPHarPM1kcfzHy3Y"
+        },
+        {
+          "role": "repaired-parent",
+          "name": "repaired-parent.json",
+          "id": "10006",
+          "size": 9906,
+          "mimeType": "application/json",
+          "executionId": "3",
+          "workflowId": "ChakGx9bJD2CeiZU"
+        },
+        {
+          "role": "repaired-child",
+          "name": "repaired-child.json",
+          "id": "10007",
+          "size": 17836,
+          "mimeType": "application/json",
+          "executionId": "4",
+          "workflowId": "ZfAi9YSbPA2RL5Li"
+        }
+      ],
+      "before": {
+        "status": "mismatch",
+        "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+        "parent_execution": "3",
+        "child_execution": "4",
+        "node": "Call",
+        "run": 0,
+        "caller_input": {
+          "node": "Orders",
+          "run": 0,
+          "output": 0
+        },
+        "checked_items": 2,
+        "mismatches": 2,
+        "findings": [
+          {
+            "output": 0,
+            "item": 0,
+            "expected": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 0
+              }
+            ],
+            "status": "mismatch",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10004",
+                "path": "/data/resultData/runData/Call/0/data/main/0/0/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10005",
+                "path": "/data/resultData/runData/Return/0/data/main/0/0/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10004",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/3/json"
+                }
+              ]
+            }
+          },
+          {
+            "output": 0,
+            "item": 1,
+            "expected": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 1
+              }
+            ],
+            "status": "mismatch",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10004",
+                "path": "/data/resultData/runData/Call/0/data/main/0/1/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10005",
+                "path": "/data/resultData/runData/Return/0/data/main/0/1/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10004",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/2/json"
+                }
+              ]
+            }
+          }
+        ],
+        "truncated": false,
+        "raw": {
+          "parentCall": {
+            "attachmentId": "10004",
+            "path": "/data/resultData/runData/Call/0/metadata/subExecution"
+          },
+          "childParent": {
+            "attachmentId": "10005",
+            "path": "/data/resultData/runData/Start/0/metadata/parentExecution"
+          },
+          "childInput": {
+            "attachmentId": "10005",
+            "path": "/data/resultData/runData/Start/0/data/main/0"
+          }
+        }
+      },
+      "after": {
+        "status": "consistent",
+        "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+        "parent_execution": "3",
+        "child_execution": "4",
+        "node": "Call",
+        "run": 0,
+        "caller_input": {
+          "node": "Orders",
+          "run": 0,
+          "output": 0
+        },
+        "checked_items": 2,
+        "mismatches": 0,
+        "findings": [
+          {
+            "output": 0,
+            "item": 0,
+            "expected": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "status": "consistent",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10006",
+                "path": "/data/resultData/runData/Call/0/data/main/0/0/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10007",
+                "path": "/data/resultData/runData/Return/0/data/main/0/0/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10006",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/3/json"
+                }
+              ]
+            }
+          },
+          {
+            "output": 0,
+            "item": 1,
+            "expected": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "status": "consistent",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10006",
+                "path": "/data/resultData/runData/Call/0/data/main/0/1/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10007",
+                "path": "/data/resultData/runData/Return/0/data/main/0/1/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10006",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/2/json"
+                }
+              ]
+            }
+          }
+        ],
+        "truncated": false,
+        "raw": {
+          "parentCall": {
+            "attachmentId": "10006",
+            "path": "/data/resultData/runData/Call/0/metadata/subExecution"
+          },
+          "childParent": {
+            "attachmentId": "10007",
+            "path": "/data/resultData/runData/Start/0/metadata/parentExecution"
+          },
+          "childInput": {
+            "attachmentId": "10007",
+            "path": "/data/resultData/runData/Start/0/data/main/0"
+          }
+        }
+      },
+      "commentId": "10001",
+      "writebackStatus": "created",
+      "nextSteps": [],
+      "caseMarker": "n8n-boundary-1|10001|original-parent=10004|original-child=10005|repaired-parent=10006|repaired-child=10007",
+      "writebackAuthorMatched": true
+    }
+  },
+  "second": {
+    "httpStatus": 200,
+    "contentType": "application/json",
+    "sessionHeaderPresent": false,
+    "protocolHeader": null,
+    "responseShape": {
+      "jsonrpc": "str",
+      "id": "int",
+      "result": {
+        "content": {
+          "type": "array",
+          "length": 1,
+          "first": {
+            "type": "str",
+            "text": "str"
+          }
+        },
+        "isError": "bool",
+        "structuredContent": {
+          "status": "str",
+          "auditVersion": "str",
+          "issue": {
+            "id": "str",
+            "key": "str"
+          },
+          "attachments": {
+            "type": "array",
+            "length": 4,
+            "first": {
+              "role": "str",
+              "name": "str",
+              "id": "str",
+              "size": "int",
+              "mimeType": "str",
+              "executionId": "str",
+              "workflowId": "str"
+            }
+          },
+          "before": {
+            "status": "str",
+            "scope": "str",
+            "parent_execution": "str",
+            "child_execution": "str",
+            "node": "str",
+            "run": "int",
+            "caller_input": {
+              "node": "str",
+              "run": "int",
+              "output": "int"
+            },
+            "checked_items": "int",
+            "mismatches": "int",
+            "findings": {
+              "type": "array",
+              "length": 2,
+              "first": {
+                "output": "int",
+                "item": "int",
+                "expected": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "observed": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "status": "str",
+                "raw": {
+                  "parentPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "childTerminalPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "callerInputs": {
+                    "type": "array",
+                    "length": 1,
+                    "first": {
+                      "attachmentId": "str",
+                      "path": "str"
+                    }
+                  }
+                }
+              }
+            },
+            "truncated": "bool",
+            "raw": {
+              "parentCall": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childParent": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childInput": {
+                "attachmentId": "str",
+                "path": "str"
+              }
+            }
+          },
+          "after": {
+            "status": "str",
+            "scope": "str",
+            "parent_execution": "str",
+            "child_execution": "str",
+            "node": "str",
+            "run": "int",
+            "caller_input": {
+              "node": "str",
+              "run": "int",
+              "output": "int"
+            },
+            "checked_items": "int",
+            "mismatches": "int",
+            "findings": {
+              "type": "array",
+              "length": 2,
+              "first": {
+                "output": "int",
+                "item": "int",
+                "expected": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "observed": {
+                  "type": "array",
+                  "length": 1,
+                  "first": {
+                    "input": "int",
+                    "item": "int"
+                  }
+                },
+                "status": "str",
+                "raw": {
+                  "parentPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "childTerminalPairing": {
+                    "attachmentId": "str",
+                    "path": "str"
+                  },
+                  "callerInputs": {
+                    "type": "array",
+                    "length": 1,
+                    "first": {
+                      "attachmentId": "str",
+                      "path": "str"
+                    }
+                  }
+                }
+              }
+            },
+            "truncated": "bool",
+            "raw": {
+              "parentCall": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childParent": {
+                "attachmentId": "str",
+                "path": "str"
+              },
+              "childInput": {
+                "attachmentId": "str",
+                "path": "str"
+              }
+            }
+          },
+          "commentId": "str",
+          "writebackStatus": "str",
+          "nextSteps": {
+            "type": "array",
+            "length": 0,
+            "first": null
+          },
+          "caseMarker": "str",
+          "writebackAuthorMatched": "bool"
+        }
+      }
+    },
+    "adapter": {
+      "status": "audited",
+      "auditVersion": "n8n-boundary-1",
+      "issue": {
+        "id": "10001",
+        "key": "KAN-2"
+      },
+      "attachments": [
+        {
+          "role": "original-parent",
+          "name": "original-parent.json",
+          "id": "10004",
+          "size": 9906,
+          "mimeType": "application/json",
+          "executionId": "3",
+          "workflowId": "lh1MhjCZXW9tLef7"
+        },
+        {
+          "role": "original-child",
+          "name": "original-child.json",
+          "id": "10005",
+          "size": 17836,
+          "mimeType": "application/json",
+          "executionId": "4",
+          "workflowId": "PPHarPM1kcfzHy3Y"
+        },
+        {
+          "role": "repaired-parent",
+          "name": "repaired-parent.json",
+          "id": "10006",
+          "size": 9906,
+          "mimeType": "application/json",
+          "executionId": "3",
+          "workflowId": "ChakGx9bJD2CeiZU"
+        },
+        {
+          "role": "repaired-child",
+          "name": "repaired-child.json",
+          "id": "10007",
+          "size": 17836,
+          "mimeType": "application/json",
+          "executionId": "4",
+          "workflowId": "ZfAi9YSbPA2RL5Li"
+        }
+      ],
+      "before": {
+        "status": "mismatch",
+        "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+        "parent_execution": "3",
+        "child_execution": "4",
+        "node": "Call",
+        "run": 0,
+        "caller_input": {
+          "node": "Orders",
+          "run": 0,
+          "output": 0
+        },
+        "checked_items": 2,
+        "mismatches": 2,
+        "findings": [
+          {
+            "output": 0,
+            "item": 0,
+            "expected": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 0
+              }
+            ],
+            "status": "mismatch",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10004",
+                "path": "/data/resultData/runData/Call/0/data/main/0/0/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10005",
+                "path": "/data/resultData/runData/Return/0/data/main/0/0/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10004",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/3/json"
+                }
+              ]
+            }
+          },
+          {
+            "output": 0,
+            "item": 1,
+            "expected": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 1
+              }
+            ],
+            "status": "mismatch",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10004",
+                "path": "/data/resultData/runData/Call/0/data/main/0/1/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10005",
+                "path": "/data/resultData/runData/Return/0/data/main/0/1/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10004",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/2/json"
+                }
+              ]
+            }
+          }
+        ],
+        "truncated": false,
+        "raw": {
+          "parentCall": {
+            "attachmentId": "10004",
+            "path": "/data/resultData/runData/Call/0/metadata/subExecution"
+          },
+          "childParent": {
+            "attachmentId": "10005",
+            "path": "/data/resultData/runData/Start/0/metadata/parentExecution"
+          },
+          "childInput": {
+            "attachmentId": "10005",
+            "path": "/data/resultData/runData/Start/0/data/main/0"
+          }
+        }
+      },
+      "after": {
+        "status": "consistent",
+        "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+        "parent_execution": "3",
+        "child_execution": "4",
+        "node": "Call",
+        "run": 0,
+        "caller_input": {
+          "node": "Orders",
+          "run": 0,
+          "output": 0
+        },
+        "checked_items": 2,
+        "mismatches": 0,
+        "findings": [
+          {
+            "output": 0,
+            "item": 0,
+            "expected": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 3
+              }
+            ],
+            "status": "consistent",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10006",
+                "path": "/data/resultData/runData/Call/0/data/main/0/0/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10007",
+                "path": "/data/resultData/runData/Return/0/data/main/0/0/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10006",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/3/json"
+                }
+              ]
+            }
+          },
+          {
+            "output": 0,
+            "item": 1,
+            "expected": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "observed": [
+              {
+                "input": 0,
+                "item": 2
+              }
+            ],
+            "status": "consistent",
+            "raw": {
+              "parentPairing": {
+                "attachmentId": "10006",
+                "path": "/data/resultData/runData/Call/0/data/main/0/1/pairedItem"
+              },
+              "childTerminalPairing": {
+                "attachmentId": "10007",
+                "path": "/data/resultData/runData/Return/0/data/main/0/1/pairedItem"
+              },
+              "callerInputs": [
+                {
+                  "attachmentId": "10006",
+                  "path": "/data/resultData/runData/Orders/0/data/main/0/2/json"
+                }
+              ]
+            }
+          }
+        ],
+        "truncated": false,
+        "raw": {
+          "parentCall": {
+            "attachmentId": "10006",
+            "path": "/data/resultData/runData/Call/0/metadata/subExecution"
+          },
+          "childParent": {
+            "attachmentId": "10007",
+            "path": "/data/resultData/runData/Start/0/metadata/parentExecution"
+          },
+          "childInput": {
+            "attachmentId": "10007",
+            "path": "/data/resultData/runData/Start/0/data/main/0"
+          }
+        }
+      },
+      "commentId": "10001",
+      "writebackStatus": "reused",
+      "nextSteps": [],
+      "caseMarker": "n8n-boundary-1|10001|original-parent=10004|original-child=10005|repaired-parent=10006|repaired-child=10007",
+      "writebackAuthorMatched": true
+    }
+  },
+  "commentId": "10001",
+  "sessionHeaderPresent": false
+}

@@ -13,6 +13,7 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 | [Add a check to CI](#add-a-check-to-github-actions) | Workflow export + case JSON | A pass/fail job, request trace, JSON + JUnit |
 | [Build your first case](https://blucca.github.io/n8n-check/) | Your n8n export | A local Docker run pack and CI file |
 | [Try a known regression](#try-it-in-your-browser) | A GitHub account | An eight-row data-loss failure, then its fix |
+| [Review a saved call in Jira](forge-mcp/) | Four saved parent/child exports + an MCP client | Before/after ancestry, raw pointers, a same-issue dossier |
 
 **Try it locally:** [Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip). Extract, run `sh fixed/run.sh` (5/5), then `sh wrong-id/run.sh` (4/5, expected exit 1). Both n8n runs succeed and return two rows; the second returns the wrong IDs. Docker + a shell; [see the contract and recorded comparison](examples/identity-projection/).
 

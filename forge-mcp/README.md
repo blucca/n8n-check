@@ -21,6 +21,16 @@ A serial rerun by the same user reuses its evidence comment. A replacement attac
 
 The [four synthetic saved fixtures](../experiments/lineage-boundary/recorded/) demonstrate two original ancestry mismatches and a consistent repaired call. The accompanying [native HTTP reproduction](../experiments/lineage-boundary/) records the actual wrong-customer request and its repair.
 
+## Install the hosted app
+
+[Install n8n Execution Dossier on Jira](https://developer.atlassian.com/console/install/df78f02a-e4d8-4536-9eca-c2907155a95b?signature=AYABeH34NBrtelSttm%2BeJYmDdKUAAAADAAdhd3Mta21zAEthcm46YXdzOmttczp1cy13ZXN0LTI6NzA5NTg3ODM1MjQzOmtleS83MDVlZDY3MC1mNTdjLTQxYjUtOWY5Yi1lM2YyZGNjMTQ2ZTcAuAECAQB4CxqLTo9l4lqXuFjNim1xJM%2Bp%2F3TVP9xHS2BrU5DRRucBRIpo9qEScM%2FJB%2BMA%2BB0DKwAAAH4wfAYJKoZIhvcNAQcGoG8wbQIBADBoBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDC0kwnByTaXb2MJ1ZwIBEIA7Gnq5%2FXpWnzkV%2BSKHmU01zlsEQCPPsVLduKLHWDBMoWULXNxoH0oQU1FZHqbwYmsMT1y9oIxLmu4TJzAAB2F3cy1rbXMAS2Fybjphd3M6a21zOmV1LXdlc3QtMTo3MDk1ODc4MzUyNDM6a2V5LzQ2MzBjZTZiLTAwYzMtNGRlMi04NzdiLTYyN2UyMDYwZTVjYwC4AQICAHi9bVMAkme4qVQX1fQHo6ePw3H40A7cGfz7yrmSfBWMXgHDlMeRCEAdVTy%2FDISkiIlTAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMoA8WlSmOXpLCoon8AgEQgDv1XhhKyXWaU9aLImzK2Y6DjS8D5E9aFSVU7LH4eStS%2FigaMTX6%2BTjqrOqIZSvWgr1M1%2BTlgnMISGOOmAAHYXdzLWttcwBLYXJuOmF3czprbXM6dXMtZWFzdC0xOjcwOTU4NzgzNTI0MzprZXkvNmMxMjBiYTAtNGNkNS00OTg1LWI4MmUtNDBhMDQ5NTJjYzU3ALgBAgIAeDYASx0XCjkny4iLV6vz%2BKtEGSGT6kdt0QRpkn6D%2FlVEATb2rTOdYkexivwiBSmYy0YAAAB%2BMHwGCSqGSIb3DQEHBqBvMG0CAQAwaAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAzhFEYhKRjhJudR3oICARCAO23tILBZFErQw3GXRb3lgbVWmy4J7q1oMi8TBGdx5UT6mOq7yJUt9DWm1j01PTxSCsVGEUO6nt%2BcwEoxAgAAAAAMAAAQAAAAAAAAAAAAAAAAAN7jzmvp9VZZnyxHDzL%2B0%2Bf%2F%2F%2F%2F%2FAAAAAQAAAAAAAAAAAAAAAQAAADJEJ11zHRzE1OxWgcQTYRpEoGcPRo2lfntT27X%2FWbWiNFfQ2HZ1PK7JxwlU%2FCrhHZ4hvD7nVpEysDEQxqEgDHHoVTg%3D&product=jira). A site administrator installs the app and enables its tool under **Connected apps → this app → Tools**. Then connect the MCP endpoint through Atlassian OAuth and use `{"issueKey":"YOURPROJECT-123"}`.
+
+```text
+https://mcp.atlassian.com/forge/df78f02a-e4d8-4536-9eca-c2907155a95b
+```
+
+The Forge-hosted production app is free to install. Your own Jira and MCP-client subscriptions remain under your accounts.
+
 ## Install a development build
 
 Use Node.js 24 and the [Forge setup guide](https://developer.atlassian.com/platform/forge/getting-started/). Atlassian provides a [Cloud Developer Bundle](https://go.atlassian.com/cloud-dev) for development and testing.
@@ -68,6 +78,6 @@ The adapter accepts up to **1 MiB** across the four raw files and returns up to 
 
 ## Status and source
 
-The development app has passed normal Forge deployment, installation, external MCP OAuth and a [live evidence case](native-case.json). Two real MCP calls created and then reused the same Jira comment: two original ancestry mismatches, a consistent repaired case, and a verified invoking-user author. Direct distribution and production installation are being prepared.
+The hosted production app (2.0.0) has passed installation through the public sharing link, site-admin tool enablement, and [three real external MCP calls](production-case.json). On one synthetic Jira issue: a missing export returned concrete steps without writing; attaching the four saved exports produced two original ancestry mismatches and a consistent repaired case; a serial rerun reused the same comment with verified invoking-user authorship. The earlier [development evidence case](native-case.json) is also available.
 
 MIT. [Source and n8n delivery work](https://github.com/blucca/n8n-check).
