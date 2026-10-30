@@ -4,7 +4,7 @@ A successful n8n run can still return an item attributed to the wrong customer. 
 
 The app uses native Forge functions, Jira attachments and Jira comments. It imports the existing [recorded-boundary auditor](../experiments/lineage-boundary/audit-executions.cjs) directly; item JSON stays in its original Jira attachments.
 
-[Watch the 2:45 production demonstration](https://youtu.be/ICBeWnsio1M) — missing export → two exact ancestry mismatches → repaired case → same-comment reuse. [Video, captions and transcript](demo/).
+[Watch the 2:45 production demonstration](https://youtu.be/ICBeWnsio1M) — missing export → two exact ancestry mismatches → repaired case → same-comment reuse. [Video, captions and transcript](demo/). [Codegeist entry](https://devpost.com/software/n8n-execution-dossier).
 
 ## One issue, one reproducible case
 
