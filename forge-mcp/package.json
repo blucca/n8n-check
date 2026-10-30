@@ -1,0 +1,17 @@
+{
+  "name": "@blucca/n8n-execution-dossier",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A native Forge MCP tool that audits saved n8n parent-child executions and returns an issue evidence dossier.",
+  "type": "commonjs",
+  "scripts": {
+    "check": "node check.cjs"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@forge/api": "8.4.0"
+  }
+}

@@ -1,0 +1,34 @@
+modules:
+  rovo:mcp:
+    - key: n8n-boundary-mcp
+      name: n8n Execution Dossier
+      tools:
+        - audit-n8n-issue
+  action:
+    - key: audit-n8n-issue
+      name: Audit saved n8n executions
+      function: audit-issue
+      actionVerb: CREATE
+      description: Audit original and repaired saved n8n parent-child execution attachments on a Jira issue. Return raw item ancestry and identity mismatches, then add a compact evidence comment to the same issue.
+      inputs:
+        issueKey:
+          title: Jira issue key
+          type: string
+          required: true
+          description: The Jira issue with original-parent.json, original-child.json,
+            repaired-parent.json and repaired-child.json attachments.
+  function:
+    - key: audit-issue
+      handler: index.auditIssue
+app:
+  id: ari:cloud:ecosystem::app/df78f02a-e4d8-4536-9eca-c2907155a95b
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+permissions:
+  scopes:
+    read:jira-work:
+      allowImpersonation: true
+    write:jira-work:
+      allowImpersonation: true
