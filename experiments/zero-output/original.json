@@ -1,0 +1,205 @@
+{
+  "name": "Zero output: skipped end check",
+  "nodes": [
+    {
+      "id": "Start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "parameters": {},
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "Expected",
+      "name": "Expected",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\"case\": \"normal\", \"expected_count\": 1, \"records\": [{\"id\": \"synthetic-A\"}]}",
+        "options": {}
+      },
+      "position": [
+        200,
+        0
+      ]
+    },
+    {
+      "id": "Source envelope",
+      "name": "Source envelope",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:5681/source",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {records: $json.records} }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json",
+              "fullResponse": false
+            }
+          }
+        }
+      },
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "id": "Commit mock record",
+      "name": "Commit mock record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:5681/commit",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ {case: $('Expected').first().json.case, record: $json} }}",
+        "options": {}
+      },
+      "position": [
+        1000,
+        -100
+      ]
+    },
+    {
+      "id": "Check write receipt",
+      "name": "Check write receipt",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "contract",
+              "leftValue": "={{ $json.written_count }}",
+              "rightValue": "={{ $('Expected').first().json.expected_count }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "position": [
+        1200,
+        -100
+      ]
+    },
+    {
+      "id": "Completed",
+      "name": "Completed",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ JSON.stringify({outcome: 'completed', expected_count: $('Expected').first().json.expected_count, written_count: $json.written_count, record_id: $json.record_id}) }}",
+        "options": {}
+      },
+      "position": [
+        1400,
+        -200
+      ]
+    },
+    {
+      "id": "Incomplete receipt",
+      "name": "Incomplete receipt",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "parameters": {
+        "errorType": "errorMessage",
+        "errorMessage": "incomplete: write receipt differs from expectation"
+      },
+      "position": [
+        1400,
+        -50
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Expected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expected": {
+      "main": [
+        [
+          {
+            "node": "Source envelope",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source envelope": {
+      "main": [
+        [
+          {
+            "node": "Commit mock record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commit mock record": {
+      "main": [
+        [
+          {
+            "node": "Check write receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check write receipt": {
+      "main": [
+        [
+          {
+            "node": "Completed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incomplete receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

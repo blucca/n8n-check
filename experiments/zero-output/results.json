@@ -1,0 +1,98 @@
+{
+  "n8n": "2.41.7",
+  "sink": "local mock HTTP commit ledger",
+  "cases": [
+    {
+      "case": "original-normal",
+      "expected_count": 1,
+      "source_record_count": 1,
+      "http_status": 200,
+      "execution_status": "success",
+      "end_check_ran": true,
+      "empty_check_ran": false,
+      "independent_mock_writes": 1,
+      "outcome": [
+        {
+          "outcome": "completed",
+          "expected_count": 1,
+          "written_count": 1,
+          "record_id": "synthetic-A"
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "original-legitimate-empty",
+      "expected_count": 0,
+      "source_record_count": 0,
+      "http_status": 500,
+      "execution_status": "success",
+      "end_check_ran": false,
+      "empty_check_ran": false,
+      "independent_mock_writes": 0,
+      "outcome": [],
+      "error": null
+    },
+    {
+      "case": "original-silent-loss",
+      "expected_count": 1,
+      "source_record_count": 0,
+      "http_status": 500,
+      "execution_status": "success",
+      "end_check_ran": false,
+      "empty_check_ran": false,
+      "independent_mock_writes": 0,
+      "outcome": [],
+      "error": null
+    },
+    {
+      "case": "fixed-normal",
+      "expected_count": 1,
+      "source_record_count": 1,
+      "http_status": 200,
+      "execution_status": "success",
+      "end_check_ran": true,
+      "empty_check_ran": false,
+      "independent_mock_writes": 1,
+      "outcome": [
+        {
+          "outcome": "completed",
+          "expected_count": 1,
+          "written_count": 1,
+          "record_id": "synthetic-A"
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "fixed-legitimate-empty",
+      "expected_count": 0,
+      "source_record_count": 0,
+      "http_status": 200,
+      "execution_status": "success",
+      "end_check_ran": false,
+      "empty_check_ran": true,
+      "independent_mock_writes": 0,
+      "outcome": [
+        {
+          "outcome": "legitimately_empty",
+          "expected_count": 0,
+          "written_count": 0
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "fixed-silent-loss",
+      "expected_count": 1,
+      "source_record_count": 0,
+      "http_status": 500,
+      "execution_status": "error",
+      "end_check_ran": false,
+      "empty_check_ran": true,
+      "independent_mock_writes": 0,
+      "outcome": [],
+      "error": "incomplete: expected 1 write, received zero records"
+    }
+  ]
+}
