@@ -23,4 +23,15 @@ assert.throws(() => auditBoundary(read(original, 'input2', 'parent'), read(repai
 const missing = read(original, 'input2', 'child');
 delete missing.data.resultData.runData;
 assert.throws(() => auditBoundary(read(original, 'input2', 'parent'), missing), /complete API execution exports/);
+// Matching absence is missing evidence, even when all recorded ancestry agrees.
+for (const role of ['parent', 'child']) {
+  const parent = read(repaired, 'input2', 'parent'), child = read(repaired, 'input2', 'child');
+  const execution = role === 'parent' ? parent : child;
+  const other = role === 'parent' ? child : parent;
+  const edge = role === 'parent' ? 'parentExecution' : 'subExecution';
+  delete execution.workflowId;
+  const task = Object.values(other.data.resultData.runData).flat().find(value => value.metadata?.[edge]);
+  delete task.metadata[edge].workflowId;
+  assert.throws(() => auditBoundary(parent, child), /complete API execution exports/);
+}
 console.log('Saved native control, wrong-recipient, fan-in, repaired, and missing/mixed evidence checks passed.');

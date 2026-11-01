@@ -105,7 +105,8 @@ remain separate acceptance contracts.
 
 This first auditor covers a successful, waiting **once-mode Execute Workflow
 1.2** call with one passthrough child trigger and complete saved provenance.
-Both directions of the recorded call edge must match. The child trigger must
+Both execution/workflow IDs and both directions of the recorded call edge must
+be present and match; matching missing IDs return incomplete. The child trigger must
 preserve the caller's input order and JSON, and the recorded terminal outputs
 must match the caller's output shape and JSON. Per-item calls, missing execution
 history, transformed trigger inputs and boundary `sourceOverwrite` need a

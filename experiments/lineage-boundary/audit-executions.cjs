@@ -12,6 +12,15 @@ function requireEvidence(condition, reason) {
   if (!condition) throw new Error(reason);
 }
 
+function hasId(value) {
+  return (typeof value === 'string' && value.length > 0) ||
+    (Number.isInteger(value) && value >= 0);
+}
+
+function sameId(actual, expected) {
+  return hasId(actual) && hasId(expected) && String(actual) === String(expected);
+}
+
 function pairs(value) {
   requireEvidence(value !== undefined, 'Missing pairedItem provenance');
   const entries = Array.isArray(value) ? value : [value];
@@ -33,7 +42,7 @@ function auditBoundary(parent, child) {
   const parentRuns = parent?.data?.resultData?.runData;
   const childData = child?.data;
   const childRuns = childData?.resultData?.runData;
-  requireEvidence(parent?.id && child?.id && parentRuns && childRuns,
+  requireEvidence([parent?.id, parent?.workflowId, child?.id, child?.workflowId].every(hasId) && parentRuns && childRuns,
     'Provide two complete API execution exports with IDs and saved runData');
   requireEvidence(parent.status === 'success' && child.status === 'success',
     'This check covers completed successful parent and child executions');
@@ -42,7 +51,7 @@ function auditBoundary(parent, child) {
   for (const [node, runs] of Object.entries(parentRuns)) {
     requireEvidence(Array.isArray(runs), 'Invalid parent runData');
     for (const [run, task] of runs.entries()) {
-      if (String(task.metadata?.subExecution?.executionId) === String(child.id)) {
+      if (sameId(task.metadata?.subExecution?.executionId, child.id)) {
         calls.push({ node, run, task });
       }
     }
@@ -55,7 +64,7 @@ function auditBoundary(parent, child) {
   requireEvidence((definition.parameters?.mode ?? 'once') === 'once' &&
     definition.parameters?.options?.waitForSubWorkflow !== false,
   'Use a waiting once-mode child call');
-  requireEvidence(String(task.metadata.subExecution.workflowId) === String(child.workflowId),
+  requireEvidence(sameId(task.metadata.subExecution.workflowId, child.workflowId),
     'Child workflow ID differs from the actual parent call edge');
 
   const roots = [];
@@ -74,8 +83,8 @@ function auditBoundary(parent, child) {
     trigger.parameters?.inputSource === 'passthrough' && root.task.source.length === 0,
   'Expected a passthrough Execute Workflow Trigger with complete provenance');
   const reverseEdge = root.task.metadata?.parentExecution;
-  requireEvidence(String(reverseEdge?.executionId) === String(parent.id) &&
-    String(reverseEdge?.workflowId) === String(parent.workflowId),
+  requireEvidence(sameId(reverseEdge?.executionId, parent.id) &&
+    sameId(reverseEdge?.workflowId, parent.workflowId),
   'Child parentExecution metadata differs from this parent');
 
   requireEvidence(task.source?.length === 1 && task.source[0]?.previousNode,
