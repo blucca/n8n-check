@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import { auditSample, atPointer, loadEvidence } from './server/traceglass.ts';
+const original = auditSample('original');
+assert.equal(original.audit.status, 'mismatch');
+assert.deepEqual(original.audit.findings.map(row => row.expected.map(ref => ref.item)), [[3], [2]]);
+assert.deepEqual(original.audit.findings.map(row => row.observed.map(ref => ref.item)), [[0], [1]]);
+assert.equal(auditSample('repaired').audit.status, 'consistent');
+assert.equal(auditSample('missing').audit.status, 'incomplete');
+const value = atPointer(loadEvidence('original').parent, original.raw_refs[0].parent_pair);
+assert.deepEqual(value, { item: 0 });
+assert.equal(atPointer({ 'a/b': { '~key': 7 } }, '/a~1b/~0key'), 7);
+assert.throws(() => atPointer({}, '/absent'));
+console.log('Traceglass original/repaired/missing and raw-pointer checks PASS');
