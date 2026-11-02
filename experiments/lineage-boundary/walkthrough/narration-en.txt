@@ -1,0 +1,11 @@
+Here is a previous n8n dispatch build. This is the real n8n editor, showing synthetic customer orders. I separate the parent responsibilities into Orders, Call, and Deliver, so the handoff to the child workflow and the outgoing request are easy to locate.
+
+Inside the child, the left branch takes the first orders. The right branch sorts and limits another selection. Left Project and Right Project produce identical product fields. Their business roles stay visible in the node names, even when the output JSON looks the same.
+
+The Select step returns the second input. The return data belongs to customers D and C. The important engineering detail is preserving the source input, output, run, and item across the child-to-parent boundary. Those coordinates decide which customer the parent's Deliver expression will resolve.
+
+Here is the saved failure from that build. Both workflows succeeded, and the HTTP requests returned success. The execution desk shows that the recorded pairing points at customer A, while the selected branch traces to customer D. The recipient-level check caught the wrong delivery.
+
+I repaired the provenance mapping and reran the same synthetic case. The repaired execution now agrees with its source records, and the recorded deliveries go to D and C. I keep the original and repaired exports together so the result is reproducible.
+
+For handoff, the operator can import complete saved parent and child records, inspect each returned item, and download the audit report. Source, editor exports, and before-and-after evidence are public. This walkthrough is AI narrated; the editor and saved execution views are real browser recordings.

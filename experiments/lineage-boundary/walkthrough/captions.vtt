@@ -1,0 +1,65 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.871
+Here is a previous n8n dispatch build.
+
+00:00:02.891 --> 00:00:07.211
+This is the real n8n editor, showing synthetic customer orders.
+
+00:00:07.231 --> 00:00:16.296
+I separate the parent responsibilities into Orders, Call, and Deliver, so the handoff to the child workflow and the outgoing request are easy to locate.
+
+00:00:17.080 --> 00:00:20.784
+Inside the child, the left branch takes the first orders.
+
+00:00:20.804 --> 00:00:23.781
+The right branch sorts and limits another selection.
+
+00:00:23.801 --> 00:00:27.986
+Left Project and Right Project produce identical product fields.
+
+00:00:28.006 --> 00:00:33.616
+Their business roles stay visible in the node names, even when the output JSON looks the same.
+
+00:00:34.400 --> 00:00:37.058
+The Select step returns the second input.
+
+00:00:37.078 --> 00:00:40.085
+The return data belongs to customers D and C.
+
+00:00:40.105 --> 00:00:47.722
+The important engineering detail is preserving the source input, output, run, and item across the child-to-parent boundary.
+
+00:00:47.742 --> 00:00:52.088
+Those coordinates decide which customer the parent's Deliver expression will resolve.
+
+00:00:52.880 --> 00:00:55.278
+Here is the saved failure from that build.
+
+00:00:55.298 --> 00:01:00.268
+Both workflows succeeded, and the HTTP requests returned success.
+
+00:01:00.288 --> 00:01:07.267
+The execution desk shows that the recorded pairing points at customer A, while the selected branch traces to customer D.
+
+00:01:07.287 --> 00:01:09.920
+The recipient-level check caught the wrong delivery.
+
+00:01:10.680 --> 00:01:14.652
+I repaired the provenance mapping and reran the same synthetic case.
+
+00:01:14.672 --> 00:01:20.829
+The repaired execution now agrees with its source records, and the recorded deliveries go to D and C.
+
+00:01:20.849 --> 00:01:25.128
+I keep the original and repaired exports together so the result is reproducible.
+
+00:01:25.920 --> 00:01:34.785
+For handoff, the operator can import complete saved parent and child records, inspect each returned item, and download the audit report.
+
+00:01:34.805 --> 00:01:39.274
+Source, editor exports, and before-and-after evidence are public.
+
+00:01:39.294 --> 00:01:45.024
+This walkthrough is AI narrated; the editor and saved execution views are real browser recordings.
+

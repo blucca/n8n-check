@@ -5,6 +5,8 @@ identical, both workflows succeed, and two HTTP requests go to the wrong custome
 This lab reproduces the fault, reduces its input, and verifies a process-local
 repair of the shared ancestry traversal.
 
+[Watch the 1:46 native editor walkthrough](https://blucca.github.io/n8n-check/experiments/lineage-boundary/walkthrough/): parent/child stage names, the saved wrong-recipient failure, its repair, and import/report handoff. Existing native imports and saved synthetic execution evidence, with AI narration.
+
 Related upstream investigation: [n8n #35559](https://github.com/n8n-io/n8n/issues/35559).
 This lab adds a saved-execution, wrong-recipient regression to that existing report.
 
