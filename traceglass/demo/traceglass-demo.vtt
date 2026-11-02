@@ -1,0 +1,89 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.356
+Traceglass follows the real source of saved n8n workflow output.
+
+2
+00:00:05.376 --> 00:00:15.744
+A parent and child can both finish successfully, with matching
+business JSON, while the saved parent pairing points to a different
+customer.
+
+3
+00:00:15.764 --> 00:00:18.576
+This is a recorded synthetic example.
+
+4
+00:00:18.576 --> 00:00:21.007
+Select terminal item one.
+
+5
+00:00:21.027 --> 00:00:26.582
+The cyan path traces back through child ancestry to caller input two.
+
+6
+00:00:26.602 --> 00:00:29.719
+The dashed red path records input one.
+
+7
+00:00:29.739 --> 00:00:35.688
+The inspector shows the exact saved pairedItem values and their JSON
+pointers.
+
+8
+00:00:35.688 --> 00:00:39.691
+The evidence agent sees that same selected item.
+
+9
+00:00:39.711 --> 00:00:42.425
+We ask it to compare the repair.
+
+10
+00:00:42.445 --> 00:00:46.181
+It calls the native focus and audit actions.
+
+11
+00:00:46.201 --> 00:00:50.856
+The human workbench moves to the repaired case as the agent works.
+
+12
+00:00:50.856 --> 00:00:55.110
+The repaired call has matching recorded and derived roots.
+
+13
+00:00:55.130 --> 00:01:03.198
+The agent gives a short release conclusion, with its real tool inputs
+and outputs available for inspection.
+
+14
+00:01:03.218 --> 00:01:09.528
+These actions are also shared with the native CLI and HTTP API.
+
+15
+00:01:09.528 --> 00:01:12.060
+Download a release dossier.
+
+16
+00:01:12.080 --> 00:01:18.411
+It includes the selected finding and raw evidence, without rewriting
+either export.
+
+17
+00:01:18.431 --> 00:01:25.488
+Missing child runData produces an incomplete-evidence state and a
+request for the full child export.
+
+18
+00:01:25.488 --> 00:01:32.168
+Traceglass adds a purpose-built human-agent workbench to our existing
+open-source audit.
+
+19
+00:01:32.188 --> 00:01:39.808
+The live example uses synthetic customers; private exports belong in a
+self-hosted workspace.
+
+20
+00:01:39.828 --> 00:01:42.024
+Source and setup are public.

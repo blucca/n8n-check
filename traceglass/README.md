@@ -2,7 +2,7 @@
 
 **Follow the real source.** A shared human–agent workbench for saved n8n caller identity.
 
-[Open the live workbench](https://plug-perl-cincinnati-scanning.trycloudflare.com/) · [Production setup](DEPLOY.md)
+[Open the live workbench](https://plug-perl-cincinnati-scanning.trycloudflare.com/) · [Watch the public Clips demo](https://clips.agent-native.com/share/h9rFwycHkUD2) · [Production setup](DEPLOY.md)
 
 ![Traceglass workbench](screenshot.png)
 
@@ -35,7 +35,7 @@ The UI writes semantic `selection`, `navigation` and `__url__` context. `view-sc
 
 The in-app agent uses a server-side `OPENROUTER_API_KEY` and the fixed `nvidia/nemotron-3-ultra-550b-a55b:free` model. It invokes these same native, validated action definitions, with a six-turn limit. Tool inputs and results appear below its response. Native CLI actions also work independently of the model. Use the same `AGENT_USER_EMAIL` as your local demo for shared state.
 
-Real model runs have read the native audit/raw actions and used `focus-item` plus `audit-call` to move the human workbench from original terminal item 1 to repaired terminal item 1, then return a release conclusion. The free provider has also returned a timeout and HTTP 503 during development. Native CLI and HTTP audit, raw and dossier actions stay available independently of that provider. The public production demo uses the official Nitro build and PostgreSQL shared state. The public Clips entry is being completed.
+Real model runs have read the native audit/raw actions and used `focus-item` plus `audit-call` to move the human workbench from original terminal item 1 to repaired terminal item 1, then return a release conclusion. The free provider has also returned a timeout and HTTP 503 during development. Native CLI and HTTP audit, raw and dossier actions stay available independently of that provider. The public production demo uses the official Nitro build and PostgreSQL shared state. The [102-second public Clips demonstration](https://clips.agent-native.com/share/h9rFwycHkUD2) records the real shared-workspace flow.
 
 ## Evidence contract
 
