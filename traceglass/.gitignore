@@ -1,6 +1,13 @@
-node_modules/
+node_modules
 .env
 .agent-native/
-.data/
+.data
 .output/
 .cache/
+
+.generated/
+build/
+
+data
+
+!.env.example

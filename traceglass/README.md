@@ -1,24 +1,44 @@
 # Traceglass
 
-An Agent-Native workbench for the question: **who really produced this n8n item?**
+**Follow the real source.** A shared human–agent workbench for saved n8n caller identity.
 
-Current milestone: shared, read-only action definitions and original/repaired/missing raw evidence. The visual workbench, agent screen context, and public Clips demonstration are in development.
+![Traceglass workbench](screenshot.png)
 
-The synthetic recorded case has successful executions and identical business JSON, yet a recorded caller pairing of `[0] / [1]` where the child ancestry resolves to `[3] / [2]`. The repaired pair resolves consistently.
+Successful parent and child runs can carry identical business JSON and still pair the returned items to the wrong customers. In the recorded synthetic case, child ancestry resolves to caller items **[3] / [2]**, while the parent records **[0] / [1]**. Traceglass makes the two stories visible and ties each value to its exact raw JSON pointer.
 
-## Run the current actions
+## Run
 
-From this directory, on Node 22.22+ with TypeScript stripping:
+Node 22.22+; keep the full `n8n-check` checkout.
 
 ```sh
+cd traceglass
 npm install
+cp .env.example .env
 npm run check
-npm run action -- audit-call '{"variant":"original"}'
-npm run action -- audit-call '{"variant":"repaired"}'
+npm run dev
+# http://localhost:8098
 ```
 
-Keep the full `n8n-check` checkout: these actions import the existing MIT [saved-call auditor](../experiments/lineage-boundary/audit-executions.cjs), one implementation shared with the Node CLI and other adapters. Source exports are read-only. The missing case removes `runData` from an in-memory copy of the repaired synthetic child.
+Switch original / repaired / missing-export cases, select either terminal item, inspect both raw pairedItem values, and download the release dossier. The URL preserves case and terminal selection. Each capability is one Agent-Native `defineAction`, shared by the React UI, agent, native HTTP and CLI.
 
-Scope: one completed, waiting, once-mode Execute Workflow 1.2 call, a passthrough child trigger, full runData/workflowData and reciprocal call metadata. HTTP/business acceptance stays a separate check. Hosted samples contain synthetic customers; use a self-hosted workspace for private material.
+```sh
+npm run action -- audit-call --variant original
+npm run action -- audit-call --variant repaired
+npm run action -- export-dossier --variant original --item 1
+```
 
-Built by Blucca, an AI-led software studio. Agent-Native and the pre-existing audit/raw fixtures are identified explicitly; this event's new work is the shared action/context and purpose-built inspection UI.
+## Shared agent workspace
+
+The UI writes semantic `selection`, `navigation` and `__url__` context. `view-screen` hydrates that state with the selected finding and exact raw pointers. `focus-item` writes the same selected case and terminal back to the workbench. `export-dossier` returns a real downloadable evidence file.
+
+The in-app agent uses a server-side `OPENROUTER_API_KEY` and the fixed `nvidia/nemotron-3-ultra-550b-a55b:free` model. It invokes these same native, validated action definitions, with a six-turn limit. Tool inputs and results appear below its response. Native CLI actions also work independently of the model. Use the same `AGENT_USER_EMAIL` as your local demo for shared state.
+
+Development milestone: native CLI and HTTP audit calls, raw-value reads, dossier creation and the full UI are running. A real model investigation executed the audit and raw-inspection tools; its first broad request reached the turn cap, and a second request hit the free-provider timeout. The final agent flow, production deployment, public Clips and entry are in progress.
+
+## Evidence contract
+
+One completed, waiting, once-mode Execute Workflow 1.2 call; passthrough child trigger; full runData/workflowData and reciprocal call metadata. Source exports are read-only. The missing case removes `runData` from an in-memory copy. HTTP destination and business acceptance are separate checks.
+
+This app imports the existing MIT [saved-call auditor](../experiments/lineage-boundary/audit-executions.cjs). There is one audit implementation, shared with the Node CLI and other adapters. Hosted examples use synthetic customers; run a self-hosted workspace for private material.
+
+Built by Blucca, an AI-led software studio. Agent-Native and the pre-existing audit / raw fixtures are identified explicitly. This event’s new work is the purpose-built workbench, shared action/context bridge, agent interaction and evidence dossier.

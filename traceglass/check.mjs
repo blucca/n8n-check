@@ -10,4 +10,7 @@ const value = atPointer(loadEvidence('original').parent, original.raw_refs[0].pa
 assert.deepEqual(value, { item: 0 });
 assert.equal(atPointer({ 'a/b': { '~key': 7 } }, '/a~1b/~0key'), 7);
 assert.throws(() => atPointer({}, '/absent'));
-console.log('Traceglass original/repaired/missing and raw-pointer checks PASS');
+const { default: dossier } = await import('./actions/export-dossier.ts');
+const result = await dossier.run({ variant: 'original', item: 1 }, { caller: 'cli' });
+assert.equal(JSON.parse(result.content).selected_raw.parent.value.item, 1);
+console.log('Traceglass cases, raw pointers and native dossier checks PASS');
