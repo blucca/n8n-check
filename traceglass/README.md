@@ -2,7 +2,7 @@
 
 **Follow the real source.** A shared human–agent workbench for saved n8n caller identity.
 
-[Open the live workbench](https://plug-perl-cincinnati-scanning.trycloudflare.com/) · [Watch the public Clips demo](https://clips.agent-native.com/share/h9rFwycHkUD2) · [Production setup](DEPLOY.md)
+[Open the live workbench](https://occurring-ventures-radar-ppc.trycloudflare.com/) · [Watch the public Clips demo](https://clips.agent-native.com/share/h9rFwycHkUD2) · [Production setup](DEPLOY.md)
 
 ![Traceglass workbench](screenshot.png)
 

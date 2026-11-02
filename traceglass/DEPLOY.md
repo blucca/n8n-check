@@ -25,8 +25,9 @@ human, CLI, HTTP and agent state. Keep `OPENROUTER_API_KEY` on the server.
 
 Bind Node and PostgreSQL to loopback and publish the Node port with a
 Cloudflare Tunnel. A Quick Tunnel URL follows its running tunnel process;
-save the current URL when restarting the tunnel. Existing user-owned NixOS
-hosting uses enabled user systemd services for Node, PostgreSQL and tunnel.
+save the current URL when restarting the tunnel. The live demo runs on a persistent Linux host with enabled user systemd
+services for Node, PostgreSQL and tunnel. Its shared PostgreSQL state is
+preserved across host migrations.
 
 The public demo serves synthetic samples. Host real execution exports in a
 separate authenticated private instance: set `runtime.auth.enabled` to `true`
