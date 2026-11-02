@@ -7,7 +7,7 @@
     "action": "agent-native action",
     "check": "node check.mjs",
     "dev": "agent-native dev",
-    "build": "agent-native build",
+    "build": "agent-native build && node --preserve-symlinks-main node_modules/@agent-native/core/dist/deploy/build.js",
     "start": "agent-native start",
     "typecheck": "tsc --noEmit"
   },

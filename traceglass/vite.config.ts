@@ -5,11 +5,12 @@ import { agentNative } from '@agent-native/core/vite';
 // A normal checkout needs none of these environment variables.
 export default defineConfig({
   esbuild: { jsx: 'automatic' },
-  cacheDir: process.env.TRACEGLASS_VITE_CACHE || 'node_modules/.vite',
+  cacheDir: process.env.TRACEGLASS_VITE_CACHE || 'node_modules/.vite', // guard:allow-env-credential — operator build cache path
+  build: { outDir: 'build/client' },
   server: { host: '127.0.0.1', port: 8098, strictPort: true },
   plugins: [...agentNative({
     legacySpa: true, tailwind: false, port: 8098,
-    fsAllow: process.env.TRACEGLASS_SDK_DIR ? [process.env.TRACEGLASS_SDK_DIR] : [],
-    nitro: { buildDir: process.env.TRACEGLASS_NITRO_DIR || 'node_modules/.nitro' },
+    fsAllow: process.env.TRACEGLASS_SDK_DIR ? [process.env.TRACEGLASS_SDK_DIR] : [], // guard:allow-env-credential — operator shared SDK path
+    nitro: { buildDir: process.env.TRACEGLASS_NITRO_DIR || 'node_modules/.nitro' }, // guard:allow-env-credential — operator Nitro build cache path
   })],
 });

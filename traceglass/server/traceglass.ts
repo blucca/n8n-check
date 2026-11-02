@@ -31,6 +31,7 @@ export function auditSample(variant: Variant) {
   const input = caller ? parent.data.resultData.runData[caller.node][caller.run].data.main[caller.output] : [];
   return {
     variant, audit, files, terminal_node: terminal, terminal_run: terminalRun,
+    executions: { parent: { id: parent.id, status: parent.status }, child: { id: child.id, status: child.status } },
     input_items: input.map((value: any, index: number) => ({ index, json: value.json })),
     raw_refs: (audit.findings ?? []).map((row: any) => ({
       output: row.output, item: row.item,

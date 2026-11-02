@@ -2,6 +2,8 @@
 
 **Follow the real source.** A shared human–agent workbench for saved n8n caller identity.
 
+[Open the live workbench](https://plug-perl-cincinnati-scanning.trycloudflare.com/) · [Production setup](DEPLOY.md)
+
 ![Traceglass workbench](screenshot.png)
 
 Successful parent and child runs can carry identical business JSON and still pair the returned items to the wrong customers. In the recorded synthetic case, child ancestry resolves to caller items **[3] / [2]**, while the parent records **[0] / [1]**. Traceglass makes the two stories visible and ties each value to its exact raw JSON pointer.
@@ -19,7 +21,7 @@ npm run dev
 # http://localhost:8098
 ```
 
-Switch original / repaired / missing-export cases, select either terminal item, inspect both raw pairedItem values, and download the release dossier. The URL preserves case and terminal selection. Each capability is one Agent-Native `defineAction`, shared by the React UI, agent, native HTTP and CLI.
+Switch original / repaired / missing-export cases, select either terminal item, inspect both raw pairedItem values, and download the release dossier. The URL preserves case and terminal selection. Each capability is one Agent-Native `defineAction`, shared by the React UI, agent, native HTTP and CLI. The framework MCP connector starts with authenticated setup.
 
 ```sh
 npm run action -- audit-call --variant original
@@ -33,7 +35,7 @@ The UI writes semantic `selection`, `navigation` and `__url__` context. `view-sc
 
 The in-app agent uses a server-side `OPENROUTER_API_KEY` and the fixed `nvidia/nemotron-3-ultra-550b-a55b:free` model. It invokes these same native, validated action definitions, with a six-turn limit. Tool inputs and results appear below its response. Native CLI actions also work independently of the model. Use the same `AGENT_USER_EMAIL` as your local demo for shared state.
 
-Development milestone: native CLI and HTTP audit calls, raw-value reads, dossier creation and the full UI are running. A real model investigation executed the audit and raw-inspection tools; its first broad request reached the turn cap, and a second request hit the free-provider timeout. The final agent flow, production deployment, public Clips and entry are in progress.
+Real model runs have read the native audit/raw actions and used `focus-item` plus `audit-call` to move the human workbench from original terminal item 1 to repaired terminal item 1, then return a release conclusion. The free provider has also returned a timeout and HTTP 503 during development. Native CLI and HTTP audit, raw and dossier actions stay available independently of that provider. The public production demo uses the official Nitro build and PostgreSQL shared state. The public Clips entry is being completed.
 
 ## Evidence contract
 
