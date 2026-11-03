@@ -1,0 +1,8 @@
+You are reviewing one saved n8n execution pair for business-item identity correctness. This is a closed-book task. Use only the two execution records included below. Do not use tools, local files, external sources, or commands. These are self-authored synthetic records.
+
+Task: determine whether each output item of the parent Execute Workflow node preserves the identity ancestry of the corresponding child output item. Infer each child output's caller-root set from the actual saved runData, task source, inlet/port/run/item selection, and pairedItem links. Compare that set against the pairedItem roots exposed by the parent call output. Report the two sets for each output and a pair status.
+
+Scope: successful, wait-for-completion, once-mode Execute Workflow 1.2; one passthrough child trigger; saved workflowData and runData are available. Child trigger items correspond to the caller's input items. Resolve ancestry using the saved connections/source metadata. The parent call's immediate caller input is the Orders node. Payload equality and successful status are useful observations; the requested verdict concerns lineage. If a record needed for a justified verdict is absent, choose incomplete and identify that record.
+
+Output only JSON with keys: status (consistent/mismatch/incomplete), child_roots (array of integer arrays, one per child return item), parent_roots (array of integer arrays, one per parent call output item), explanation (string), evidence_paths (array of JSON-pointer-like strings). Do not assume any prior expected answer, and do not use either record's filename as a cue.
+

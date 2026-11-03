@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-04",
+  "client": "codex-cli 0.163.0",
+  "model_route_selector": "gpt-6.1-sol",
+  "reasoning_effort": "xhigh",
+  "native_fault_families": 1,
+  "valid_model_generations": 2,
+  "actual_model_tool_calls": 0,
+  "status_correct": 2,
+  "all_root_sets_correct": 2,
+  "scope": "Two existing self-authored synthetic saved once-mode Execute Workflow 1.2 pairs, complete raw source evidence, one passthrough child trigger.",
+  "preexisting_for_swarm_weekend": true
+}

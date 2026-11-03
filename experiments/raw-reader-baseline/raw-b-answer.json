@@ -1,0 +1,19 @@
+{
+  "child_roots": [[3], [2]],
+  "evidence_paths": [
+    "/A/data/resultData/runData/Call/0/metadata/subExecution",
+    "/A/data/resultData/runData/Call/0/source",
+    "/A/data/resultData/runData/Call/0/data/main/0",
+    "/B/data/resultData/lastNodeExecuted",
+    "/B/data/resultData/runData/Return/0",
+    "/B/data/resultData/runData/Select/0",
+    "/B/workflowData/connections/Right Project/main/0/0",
+    "/B/data/resultData/runData/Right Project/0",
+    "/B/data/resultData/runData/Right Limit/0",
+    "/B/data/resultData/runData/Right Sort/0",
+    "/B/data/resultData/runData/Start/0"
+  ],
+  "explanation": "Both outputs preserve ancestry. Return items 0 and 1 link to Select items 0 and 1. Select's pairedItem.input=1 selects the second inlet, sourced from Right Project run 0, output 0. Following the saved links through Right Project, Right Limit, and Right Sort reaches Start items 3 and 2, corresponding to Orders items 3 and 2. Call exposes those same roots. Waiting for the left branch does not include its ancestry.",
+  "parent_roots": [[3], [2]],
+  "status": "consistent"
+}

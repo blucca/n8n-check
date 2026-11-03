@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "consistent",
+        "mismatch",
+        "incomplete"
+      ]
+    },
+    "child_roots": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "parent_roots": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "explanation": {
+      "type": "string"
+    },
+    "evidence_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "status",
+    "child_roots",
+    "parent_roots",
+    "explanation",
+    "evidence_paths"
+  ],
+  "additionalProperties": false
+}
