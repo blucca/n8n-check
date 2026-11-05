@@ -50,8 +50,17 @@ the actual requests by explicit item slot.
 
 ## Run the saved-data checker
 
-Run these commands from the repository root. Set `WORKSPACE="$PWD"` for local
-capture outputs, or point it at your existing workspace.
+Get the published research branch, then run from its repository root:
+
+```sh
+git clone --depth 1 --single-branch --branch research/execution-graph-20261105 \
+  https://github.com/blucca/n8n-check.git n8n-customer-check
+cd n8n-customer-check
+```
+
+This checkout includes the complete native records and all three local checkers.
+The default branch retains the earlier boundary auditor. Set `WORKSPACE="$PWD"`
+for local capture outputs, or point it at your existing workspace.
 
 **Node.js, three JSON files. Local read-only execution.**
 
