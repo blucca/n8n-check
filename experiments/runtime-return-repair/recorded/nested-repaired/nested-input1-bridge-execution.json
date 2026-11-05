@@ -1,0 +1,335 @@
+{
+  "id": "2",
+  "finished": true,
+  "mode": "integrated",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T14:17:49.390Z",
+  "startedAt": "2026-11-05T14:17:49.392Z",
+  "stoppedAt": "2026-11-05T14:17:49.450Z",
+  "deletedAt": null,
+  "workflowId": "MXMNbJG9iVlz4eoC",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 3521,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "93cd6697-d109-4e94-8f78-feb39241fb9a",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Start": [
+          {
+            "startTime": 1793888269425,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 0,
+            "metadata": {
+              "parentExecution": {
+                "executionId": "1",
+                "workflowId": "y0i8itBH5i7zPkBu",
+                "shouldResume": true,
+                "executionContext": {
+                  "version": 1,
+                  "establishedAt": 1793888269362,
+                  "source": "webhook",
+                  "triggerNode": {
+                    "name": "Webhook",
+                    "type": "n8n-nodes-base.webhook"
+                  },
+                  "redaction": {
+                    "version": 2,
+                    "production": false,
+                    "manual": false
+                  }
+                }
+              }
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-A",
+                        "sequence": 0
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-B",
+                        "sequence": 1
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-C",
+                        "sequence": 2
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "customer-D",
+                        "sequence": 3
+                      }
+                    },
+                    "index": 3,
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Call Leaf": [
+          {
+            "startTime": 1793888269425,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 25,
+            "metadata": {
+              "subExecution": {
+                "executionId": "3",
+                "workflowId": "QLnMHfkS9A64jymI"
+              },
+              "subExecutionsCount": 1
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Return": [
+          {
+            "startTime": 1793888269450,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Call Leaf",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "sku": "same-product",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Return"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793888269424,
+        "source": "integrated",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        },
+        "parentExecutionId": "1"
+      }
+    },
+    "parentExecution": {
+      "executionId": "1",
+      "workflowId": "y0i8itBH5i7zPkBu",
+      "shouldResume": true,
+      "executionContext": {
+        "version": 1,
+        "establishedAt": 1793888269362,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "MXMNbJG9iVlz4eoC",
+    "name": "546faaa633 bridge nested-input1",
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "events": "worklfow_call",
+          "inputSource": "passthrough",
+          "returnOutput": "lastRunOnly"
+        }
+      },
+      {
+        "id": "Call Leaf",
+        "name": "Call Leaf",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "operation": "call_workflow",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "QLnMHfkS9A64jymI"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": null
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        }
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          500,
+          0
+        ],
+        "parameters": {
+          "emptyGroupAnchor": false
+        }
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Call Leaf",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Leaf": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "saveDataErrorExecution": "all",
+      "saveDataSuccessExecution": "all",
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}

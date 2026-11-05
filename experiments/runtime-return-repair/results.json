@@ -1,0 +1,468 @@
+{
+  "status": "pass",
+  "base": "n8n@2.43.0",
+  "source_checks": {
+    "resolver_strict_typecheck": "pass",
+    "output_policy_projection": "pass",
+    "public_cached_source_build": "pass"
+  },
+  "once_allruns_business_json_same_axes": true,
+  "once_allruns_business_node_count": 8,
+  "cases": [
+    {
+      "name": "nested-repaired",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": true,
+        "waiting_call_node": true
+      },
+      "cases": [
+        {
+          "case": "nested-input1",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success",
+            "bridge": "success",
+            "leaf": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "parent_success": true,
+            "http_identity": true,
+            "parent_call_pair": true,
+            "full_saved_bundle": true,
+            "all_execution_statuses": true,
+            "dual_call_pair": true,
+            "dual_parent_edges": true,
+            "graph_consistent": true,
+            "graph_roots_match_input_oracle": true
+          },
+          "graph_status": "consistent"
+        },
+        {
+          "case": "nested-input2",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success",
+            "bridge": "success",
+            "leaf": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-D",
+            "customer-C"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-D",
+            "customer-C"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "parent_success": true,
+            "http_identity": true,
+            "parent_call_pair": true,
+            "full_saved_bundle": true,
+            "all_execution_statuses": true,
+            "dual_call_pair": true,
+            "dual_parent_edges": true,
+            "graph_consistent": true,
+            "graph_roots_match_input_oracle": true
+          },
+          "graph_status": "consistent"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 12.482029,
+        "memory_peak_bytes": 648982528,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    },
+    {
+      "name": "once-original",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": false,
+        "waiting_call_node": false
+      },
+      "cases": [
+        {
+          "case": "once-allruns",
+          "passed": false,
+          "execution_statuses": {
+            "parent": "success",
+            "child-0": "success"
+          },
+          "expected_recipients_by_slot": [
+            "order-C",
+            "order-B",
+            "order-B",
+            "order-A",
+            "order-B",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A"
+          ],
+          "actual_recipients_by_slot": [
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-B",
+            "order-B",
+            "order-B",
+            "order-C"
+          ],
+          "observed_count": 9,
+          "expected_count": 9,
+          "wrong_recipient_count": 8,
+          "checks": {
+            "execution_statuses": true,
+            "input_indices": true,
+            "terminal_runs": true,
+            "terminal_sources": true,
+            "terminal_json_order": true,
+            "caller_pair_indices": false,
+            "child_parent_edges": true,
+            "return_count": true,
+            "parent_return_order": true,
+            "http_delivery": false,
+            "graph_consistent": false,
+            "graph_roots_match_input_oracle": true
+          },
+          "graph_status": "mismatch"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 10.614947,
+        "memory_peak_bytes": 527904768,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    },
+    {
+      "name": "once-repaired",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": true,
+        "waiting_call_node": true
+      },
+      "cases": [
+        {
+          "case": "once-allruns",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success",
+            "child-0": "success"
+          },
+          "expected_recipients_by_slot": [
+            "order-C",
+            "order-B",
+            "order-B",
+            "order-A",
+            "order-B",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A"
+          ],
+          "actual_recipients_by_slot": [
+            "order-C",
+            "order-B",
+            "order-B",
+            "order-A",
+            "order-B",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A"
+          ],
+          "observed_count": 9,
+          "expected_count": 9,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "execution_statuses": true,
+            "input_indices": true,
+            "terminal_runs": true,
+            "terminal_sources": true,
+            "terminal_json_order": true,
+            "caller_pair_indices": true,
+            "child_parent_edges": true,
+            "return_count": true,
+            "parent_return_order": true,
+            "http_delivery": true,
+            "graph_consistent": true,
+            "graph_roots_match_input_oracle": true
+          },
+          "graph_status": "consistent"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 9.669708,
+        "memory_peak_bytes": 559124480,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    },
+    {
+      "name": "nested-nosave-original",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": false,
+        "waiting_call_node": false
+      },
+      "cases": [
+        {
+          "case": "nested-input1",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "parent_success": true,
+            "http_identity": true,
+            "parent_call_pair": true,
+            "child_success_saving_disabled": true
+          },
+          "graph_status": "saved-child-data-absent"
+        },
+        {
+          "case": "nested-input2",
+          "passed": false,
+          "execution_statuses": {
+            "parent": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-D",
+            "customer-C"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 2,
+          "checks": {
+            "parent_success": true,
+            "http_identity": false,
+            "parent_call_pair": false,
+            "child_success_saving_disabled": true
+          },
+          "graph_status": "saved-child-data-absent"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 10.751913,
+        "memory_peak_bytes": 527785984,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    },
+    {
+      "name": "nested-nosave-repaired",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": true,
+        "waiting_call_node": true
+      },
+      "cases": [
+        {
+          "case": "nested-input1",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-A",
+            "customer-B"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "parent_success": true,
+            "http_identity": true,
+            "parent_call_pair": true,
+            "child_success_saving_disabled": true
+          },
+          "graph_status": "saved-child-data-absent"
+        },
+        {
+          "case": "nested-input2",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success"
+          },
+          "expected_recipients_by_slot": [
+            "customer-D",
+            "customer-C"
+          ],
+          "actual_recipients_by_slot": [
+            "customer-D",
+            "customer-C"
+          ],
+          "observed_count": 2,
+          "expected_count": 2,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "parent_success": true,
+            "http_identity": true,
+            "parent_call_pair": true,
+            "child_success_saving_disabled": true
+          },
+          "graph_status": "saved-child-data-absent"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 10.982949,
+        "memory_peak_bytes": 531083264,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    },
+    {
+      "name": "each-repaired",
+      "status": "complete",
+      "runtime": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      },
+      "source_compiled_modules_loaded": {
+        "cli": true,
+        "waiting_call_node": true
+      },
+      "cases": [
+        {
+          "case": "each-allruns",
+          "passed": true,
+          "execution_statuses": {
+            "parent": "success",
+            "child-0": "success",
+            "child-1": "success",
+            "child-2": "success"
+          },
+          "expected_recipients_by_slot": [
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-B",
+            "order-B",
+            "order-B",
+            "order-C"
+          ],
+          "actual_recipients_by_slot": [
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-A",
+            "order-B",
+            "order-B",
+            "order-B",
+            "order-C"
+          ],
+          "observed_count": 9,
+          "expected_count": 9,
+          "wrong_recipient_count": 0,
+          "checks": {
+            "execution_statuses": true,
+            "input_indices": true,
+            "terminal_runs": true,
+            "terminal_sources": true,
+            "terminal_json_order": true,
+            "caller_pair_indices": true,
+            "child_parent_edges": true,
+            "return_count": true,
+            "parent_return_order": true,
+            "http_delivery": true,
+            "graph_consistent": true,
+            "graph_roots_match_input_oracle": true
+          },
+          "graph_status": "consistent"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 9.569559,
+        "memory_peak_bytes": 530755584,
+        "container_released": true,
+        "database_released": true,
+        "original_services_preserved": true
+      }
+    }
+  ],
+  "source_scope": "Source-built process-local runtime experiment; upstream review, merge and release are separate states."
+}

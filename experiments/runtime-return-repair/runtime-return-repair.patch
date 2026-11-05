@@ -1,0 +1,192 @@
+--- a/packages/cli/src/workflow-execute-additional-data.ts
++++ b/packages/cli/src/workflow-execute-additional-data.ts
+@@ -44,6 +44,7 @@
+ 	Workflow,
+ 	createRunExecutionData,
+ 	mergeRunsPerBranch,
++	resolveInputPairing,
+ 	collectSubWorkflowOutput,
+ 	getSubWorkflowOutputPolicy,
+ 	attachDynamicCredentialsUsage,
+@@ -544,6 +545,31 @@
+ 		return mergeRunsPerBranch(runs);
+ 	}
+ 	return WorkflowHelpers.getLastExecutedNodeData(data)?.data?.main ?? [null];
++}
++
++/** Reuse the output policy on terminal items that carry only their resolved input pairing. */
++function projectTerminalPairings(run: IRun): IRun | undefined {
++	const result = run.data.resultData;
++	const last = result.lastNodeExecuted;
++	if (!last || !result.runData[last]?.length) return undefined;
++	// Manual pin substitution has a separate source contract. Keep its existing caller fallback.
++	if (run.mode === 'manual' && result.pinData?.[last] !== undefined) return undefined;
++	const projected = result.runData[last].map((task, runIndex) => ({
++		...task,
++		data: task.data && {
++			...task.data,
++			main: task.data.main?.map((branch, output) => branch?.map((_, item) => ({
++				json: {},
++				pairedItem: resolveInputPairing(run.data, { node: last, run: runIndex, output, item }),
++			})) ?? null),
++		},
++	}));
++	return {
++		...run,
++		data: { ...run.data, resultData: {
++			...result, runData: { ...result.runData, [last]: projected },
++		} },
++	};
+ }
+ 
+ async function startExecution(
+@@ -739,11 +765,17 @@
+ 
+ 		activeExecutions.finalizeExecution(executionId, data);
+ 
++		const selectOutput = async (run: IRun) => run.data.subWorkflowOutput
++			? await collectSubWorkflowOutput(run, workflow, run.data.subWorkflowOutput)
++			: buildSubWorkflowOutput(run, workflowData.nodes, options.returnLastRunOnly ?? false);
++		const output = await selectOutput(data);
++		const projection = projectTerminalPairings(data);
++		const pairingOutput = projection ? await selectOutput(projection) : undefined;
++
+ 		return {
+ 			executionId,
+-			data: data.data.subWorkflowOutput
+-				? await collectSubWorkflowOutput(data, workflow, data.data.subWorkflowOutput)
+-				: buildSubWorkflowOutput(data, workflowData.nodes, options.returnLastRunOnly ?? false),
++			data: output,
++			pairedItems: pairingOutput?.map((branch) => branch?.map((item) => item.pairedItem) ?? null),
+ 			waitTill: data.waitTill,
+ 			// Report private-credential usage to the caller (detached runs return earlier, skipping this).
+ 			...summarizeDynamicCredentialsUsage(data.data),
+--- a/packages/nodes-base/nodes/ExecuteWorkflow/ExecuteWorkflow/ExecuteWorkflow.node.ts
++++ b/packages/nodes-base/nodes/ExecuteWorkflow/ExecuteWorkflow/ExecuteWorkflow.node.ts
+@@ -4,6 +4,7 @@
+ 	ExecuteWorkflowData,
+ 	IExecuteFunctions,
+ 	INodeExecutionData,
++	IRunExecutionData,
+ 	INodeProperties,
+ 	INodeType,
+ 	INodeTypeDescription,
+@@ -524,17 +525,27 @@
+ 					return [items];
+ 				}
+ 
+-				const workflowRunData = await this.getExecutionDataById(executionResult.executionId);
++				let workflowRunData: IRunExecutionData | undefined;
++				let runDataFetched = false;
+ 
+ 				const workflowResult = executionResult.data as INodeExecutionData[][];
+ 
+ 				const fallbackPairedItemData = generatePairedItemData(items.length);
+ 
+-				for (const output of workflowResult) {
++				for (const [outputIndex, output] of workflowResult.entries()) {
+ 					const sameLength = output.length === items.length;
+ 
+ 					for (const [itemIndex, item] of output.entries()) {
++						const resolved = executionResult.pairedItems?.[outputIndex]?.[itemIndex];
++						if (resolved !== undefined) {
++							item.pairedItem = resolved;
++							continue;
++						}
+ 						if (item.pairedItem) {
++							if (!runDataFetched) {
++								workflowRunData = await this.getExecutionDataById(executionResult.executionId);
++								runDataFetched = true;
++							}
+ 							// If the item already has a paired item, we need to follow these to the start of the child workflow
+ 							if (workflowRunData !== undefined) {
+ 								const pairedItem = findPairedItemThroughWorkflowData(
+--- a/packages/workflow/src/index.ts
++++ b/packages/workflow/src/index.ts
+@@ -145,3 +145,5 @@
+ 		req?: ClientRequest;
+ 	}
+ }
++
++export { resolveInputPairing } from './input-pairing';
+--- /dev/null
++++ b/packages/workflow/src/input-pairing.ts
+@@ -0,0 +1,67 @@
++// SPDX-License-Identifier: MIT
++// Copyright (c) 2026 Blucca
++import type { IPairedItemData, IRunExecutionData } from 'n8n-workflow';
++
++export interface InputPairingCoordinate {
++	node: string;
++	run: number;
++	output: number;
++	item: number;
++}
++
++/** Resolve one actual terminal item to the child workflow's input item indices. */
++export function resolveInputPairing(
++	runData: IRunExecutionData,
++	start: InputPairingCoordinate,
++): IPairedItemData | IPairedItemData[] | undefined {
++	const runs = runData?.resultData?.runData;
++	const active = new Set<string>();
++	const memo = new Map<string, IPairedItemData[] | undefined>();
++	const validIndex = (value: number) => Number.isInteger(value) && value >= 0;
++
++	function visit(coordinate: InputPairingCoordinate): IPairedItemData[] | undefined {
++		const { node, run, output, item } = coordinate;
++		if (!node || ![run, output, item].every(validIndex)) return undefined;
++		const key = JSON.stringify([node, run, output, item]);
++		if (memo.has(key)) return memo.get(key);
++		if (active.has(key)) return undefined;
++		const task = runs?.[node]?.[run];
++		const current = task?.data?.main?.[output]?.[item];
++		if (!task || current?.pairedItem === undefined) return undefined;
++		const entries = Array.isArray(current.pairedItem) ? current.pairedItem : [current.pairedItem];
++		if (entries.length === 0) return undefined;
++		const roots = new Map<number, IPairedItemData>();
++		active.add(key);
++		try {
++			for (const entry of entries) {
++				const pair = typeof entry === 'number' ? { item: entry } : entry;
++				if (!pair || !validIndex(pair.item)) return undefined;
++				const input = pair.input ?? 0;
++				if (!validIndex(input)) return undefined;
++				if (task.source?.length === 0 && !pair.sourceOverwrite) {
++					// The trigger's local pairing remains the input anchor, even in each mode.
++					roots.set(pair.item, { item: pair.item });
++					continue;
++				}
++				const source = pair.sourceOverwrite ?? task.source?.[input];
++				if (!source?.previousNode) return undefined;
++				const found = visit({
++					node: source.previousNode,
++					run: source.previousNodeRun ?? 0,
++					output: source.previousNodeOutput ?? 0,
++					item: pair.item,
++				});
++				if (!found) return undefined;
++				for (const root of found) roots.set(root.item, root);
++			}
++			const found = [...roots.values()];
++			memo.set(key, found);
++			return found;
++		} finally {
++			active.delete(key);
++		}
++	}
++
++	const roots = visit(start);
++	return roots?.length === 1 ? roots[0] : roots;
++}
+--- a/packages/workflow/src/interfaces.ts
++++ b/packages/workflow/src/interfaces.ts
+@@ -2379,6 +2379,8 @@
+ }
+ 
+ export interface ExecuteWorkflowData extends DynamicCredentialsUsage {
++	/** Input-domain pairing aligned with the selected terminal outputs, before execution persistence. */
++	pairedItems?: Array<Array<INodeExecutionData['pairedItem']> | null>;
+ 	executionId: string;
+ 	/** Terminal node output: items from every run concatenated per output branch, unless the caller sets `returnLastRunOnly`. */
+ 	data: Array<INodeExecutionData[] | null>;

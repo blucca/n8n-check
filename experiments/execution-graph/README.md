@@ -14,6 +14,8 @@ customer data stays on the operator's machine.
 [Check your own task](#bind-your-own-http-records-to-the-saved-task) ·
 [$650 identity audit and repair](#one-customer-route-650-audit-and-repair)
 
+[**Source-built runtime repair:**](../runtime-return-repair/) follow the actual terminal run, preserve all-runs links, and restore the right HTTP customer even with child success saving disabled.
+
 ## A native nested counterexample
 
 Official **n8n 2.43.0**, three successful executions, fictional customers A–D:

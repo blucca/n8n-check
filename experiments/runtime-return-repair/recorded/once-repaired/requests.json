@@ -1,0 +1,110 @@
+[
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 0,
+      "recipient": "order-C",
+      "returnedOrder": "order-C",
+      "lineNumber": 301,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:09.049494+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 3,
+      "recipient": "order-A",
+      "returnedOrder": "order-A",
+      "lineNumber": 105,
+      "sku": "fictional-sku-5",
+      "quantity": 5
+    },
+    "at": "2026-11-05T14:18:09.049705+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 1,
+      "recipient": "order-B",
+      "returnedOrder": "order-B",
+      "lineNumber": 202,
+      "sku": "fictional-sku-2",
+      "quantity": 2
+    },
+    "at": "2026-11-05T14:18:09.050008+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 2,
+      "recipient": "order-B",
+      "returnedOrder": "order-B",
+      "lineNumber": 203,
+      "sku": "fictional-sku-3",
+      "quantity": 3
+    },
+    "at": "2026-11-05T14:18:09.050151+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 4,
+      "recipient": "order-B",
+      "returnedOrder": "order-B",
+      "lineNumber": 201,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:09.050665+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 5,
+      "recipient": "order-A",
+      "returnedOrder": "order-A",
+      "lineNumber": 103,
+      "sku": "fictional-sku-3",
+      "quantity": 3
+    },
+    "at": "2026-11-05T14:18:09.050893+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 6,
+      "recipient": "order-A",
+      "returnedOrder": "order-A",
+      "lineNumber": 104,
+      "sku": "fictional-sku-4",
+      "quantity": 4
+    },
+    "at": "2026-11-05T14:18:09.051225+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 7,
+      "recipient": "order-A",
+      "returnedOrder": "order-A",
+      "lineNumber": 101,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:09.051443+00:00"
+  },
+  {
+    "path": "/once-allruns",
+    "body": {
+      "slot": 8,
+      "recipient": "order-A",
+      "returnedOrder": "order-A",
+      "lineNumber": 102,
+      "sku": "fictional-sku-2",
+      "quantity": 2
+    },
+    "at": "2026-11-05T14:18:10.062626+00:00"
+  }
+]

@@ -1,0 +1,608 @@
+{
+  "id": "1",
+  "finished": true,
+  "mode": "webhook",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T14:18:00.557Z",
+  "startedAt": "2026-11-05T14:18:00.586Z",
+  "stoppedAt": "2026-11-05T14:18:00.777Z",
+  "deletedAt": null,
+  "workflowId": "i409gyzI7jQmovik",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 6279,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "8f6a6910-adcd-4ca2-99c9-20468b411d44",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Webhook": [
+          {
+            "startTime": 1793888280594,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "params": {},
+                      "query": {},
+                      "body": {
+                        "orders": [
+                          {
+                            "id": "order-A",
+                            "sequence": 0,
+                            "lines": [
+                              {
+                                "number": 101,
+                                "sku": "fictional-sku-1",
+                                "quantity": 1
+                              },
+                              {
+                                "number": 102,
+                                "sku": "fictional-sku-2",
+                                "quantity": 2
+                              },
+                              {
+                                "number": 103,
+                                "sku": "fictional-sku-3",
+                                "quantity": 3
+                              },
+                              {
+                                "number": 104,
+                                "sku": "fictional-sku-4",
+                                "quantity": 4
+                              },
+                              {
+                                "number": 105,
+                                "sku": "fictional-sku-5",
+                                "quantity": 5
+                              }
+                            ]
+                          },
+                          {
+                            "id": "order-B",
+                            "sequence": 1,
+                            "lines": [
+                              {
+                                "number": 201,
+                                "sku": "fictional-sku-1",
+                                "quantity": 1
+                              },
+                              {
+                                "number": 202,
+                                "sku": "fictional-sku-2",
+                                "quantity": 2
+                              },
+                              {
+                                "number": 203,
+                                "sku": "fictional-sku-3",
+                                "quantity": 3
+                              }
+                            ]
+                          },
+                          {
+                            "id": "order-C",
+                            "sequence": 2,
+                            "lines": [
+                              {
+                                "number": 301,
+                                "sku": "fictional-sku-1",
+                                "quantity": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "webhookUrl": "http://127.0.0.1:5704/webhook/2681f5a634-once-allruns",
+                      "executionMode": "production"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Orders": [
+          {
+            "startTime": 1793888280595,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Webhook",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0,
+                        "lines": [
+                          {
+                            "number": 101,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          },
+                          {
+                            "number": 102,
+                            "sku": "fictional-sku-2",
+                            "quantity": 2
+                          },
+                          {
+                            "number": 103,
+                            "sku": "fictional-sku-3",
+                            "quantity": 3
+                          },
+                          {
+                            "number": 104,
+                            "sku": "fictional-sku-4",
+                            "quantity": 4
+                          },
+                          {
+                            "number": 105,
+                            "sku": "fictional-sku-5",
+                            "quantity": 5
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1,
+                        "lines": [
+                          {
+                            "number": 201,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          },
+                          {
+                            "number": 202,
+                            "sku": "fictional-sku-2",
+                            "quantity": 2
+                          },
+                          {
+                            "number": 203,
+                            "sku": "fictional-sku-3",
+                            "quantity": 3
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2,
+                        "lines": [
+                          {
+                            "number": 301,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          }
+                        ]
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Call Child": [
+          {
+            "startTime": 1793888280597,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Orders",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 144,
+            "metadata": {
+              "subExecution": {
+                "executionId": "2",
+                "workflowId": "FEOJ1dhWUGdOTeOU"
+              },
+              "subExecutionsCount": 1
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-C",
+                      "lineNumber": 301,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 202,
+                      "sku": "fictional-sku-2",
+                      "quantity": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 203,
+                      "sku": "fictional-sku-3",
+                      "quantity": 3
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 105,
+                      "sku": "fictional-sku-5",
+                      "quantity": 5
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 201,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 103,
+                      "sku": "fictional-sku-3",
+                      "quantity": 3
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 104,
+                      "sku": "fictional-sku-4",
+                      "quantity": 4
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 101,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 102,
+                      "sku": "fictional-sku-2",
+                      "quantity": 2
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Deliver": [
+          {
+            "startTime": 1793888280742,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Call Child",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 35,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 4
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 5
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 6
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 7
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 8
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Deliver"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793888280555,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "i409gyzI7jQmovik",
+    "name": "2681f5a634 once allRuns parent",
+    "nodes": [
+      {
+        "id": "Webhook",
+        "name": "Webhook",
+        "webhookId": "fa7b0e7c-5cd7-4523-b487-3d02e5c58736",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "multipleMethods": false,
+          "httpMethod": "POST",
+          "path": "2681f5a634-once-allruns",
+          "authentication": "none",
+          "responseMode": "lastNode",
+          "responseData": "firstEntryJson",
+          "options": {}
+        }
+      },
+      {
+        "id": "Orders",
+        "name": "Orders",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "body.orders",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "order"
+          }
+        }
+      },
+      {
+        "id": "Call Child",
+        "name": "Call Child",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          500,
+          0
+        ],
+        "parameters": {
+          "operation": "call_workflow",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "FEOJ1dhWUGdOTeOU"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": null
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        }
+      },
+      {
+        "id": "Deliver",
+        "name": "Deliver",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          750,
+          0
+        ],
+        "parameters": {
+          "curlImport": "",
+          "method": "POST",
+          "url": "http://127.0.0.1:34949/once-allruns",
+          "authentication": "none",
+          "provideSslCertificates": false,
+          "sendQuery": false,
+          "sendHeaders": false,
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ {slot: $itemIndex, recipient: $('Orders').item.json.order.id, returnedOrder: $json.orderId, lineNumber: $json.lineNumber, sku: $json.sku, quantity: $json.quantity} }}",
+          "options": {},
+          "infoMessage": ""
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Orders",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders": {
+        "main": [
+          [
+            {
+              "node": "Call Child",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Child": {
+        "main": [
+          [
+            {
+              "node": "Deliver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}

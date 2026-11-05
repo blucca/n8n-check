@@ -1,0 +1,299 @@
+[
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 2
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 2
+    },
+    "json": {
+      "orderId": "order-C",
+      "lineNumber": 301,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 1
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 1,
+      "output": 0,
+      "item": 0
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 1
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 1
+    },
+    "json": {
+      "orderId": "order-B",
+      "lineNumber": 202,
+      "sku": "fictional-sku-2",
+      "quantity": 2
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 2
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 1,
+      "output": 0,
+      "item": 1
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 1
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 1
+    },
+    "json": {
+      "orderId": "order-B",
+      "lineNumber": 203,
+      "sku": "fictional-sku-3",
+      "quantity": 3
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 3
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 2,
+      "output": 0,
+      "item": 0
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 0
+    },
+    "json": {
+      "orderId": "order-A",
+      "lineNumber": 105,
+      "sku": "fictional-sku-5",
+      "quantity": 5
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 4
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 2,
+      "output": 0,
+      "item": 1
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 1
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 1
+    },
+    "json": {
+      "orderId": "order-B",
+      "lineNumber": 201,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 5
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 3,
+      "output": 0,
+      "item": 0
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 0
+    },
+    "json": {
+      "orderId": "order-A",
+      "lineNumber": 103,
+      "sku": "fictional-sku-3",
+      "quantity": 3
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 6
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 3,
+      "output": 0,
+      "item": 1
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 0
+    },
+    "json": {
+      "orderId": "order-A",
+      "lineNumber": 104,
+      "sku": "fictional-sku-4",
+      "quantity": 4
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 7
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 4,
+      "output": 0,
+      "item": 0
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 0
+    },
+    "json": {
+      "orderId": "order-A",
+      "lineNumber": 101,
+      "sku": "fictional-sku-1",
+      "quantity": 1
+    }
+  },
+  {
+    "caller": {
+      "execution": "1",
+      "node": "Call Child",
+      "run": 0,
+      "output": 0,
+      "item": 8
+    },
+    "terminal": {
+      "execution": "2",
+      "node": "Return",
+      "run": 4,
+      "output": 0,
+      "item": 1
+    },
+    "root": {
+      "execution": "1",
+      "node": "Orders",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "root_source": "pre-creation Python oracle; actual saved graph roots are recorded separately in graph-audit.json",
+    "caller_pairedItem": {
+      "item": 0
+    },
+    "json": {
+      "orderId": "order-A",
+      "lineNumber": 102,
+      "sku": "fictional-sku-2",
+      "quantity": 2
+    }
+  }
+]

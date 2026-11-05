@@ -1,0 +1,42 @@
+[
+  {
+    "path": "/nested-input1",
+    "body": {
+      "slot": 0,
+      "recipient": "customer-A",
+      "sku": "same-product",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:18.389179+00:00"
+  },
+  {
+    "path": "/nested-input1",
+    "body": {
+      "slot": 1,
+      "recipient": "customer-B",
+      "sku": "same-product",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:18.389463+00:00"
+  },
+  {
+    "path": "/nested-input2",
+    "body": {
+      "slot": 0,
+      "recipient": "customer-A",
+      "sku": "same-product",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:19.306792+00:00"
+  },
+  {
+    "path": "/nested-input2",
+    "body": {
+      "slot": 1,
+      "recipient": "customer-B",
+      "sku": "same-product",
+      "quantity": 1
+    },
+    "at": "2026-11-05T14:18:19.306954+00:00"
+  }
+]

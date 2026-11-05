@@ -1,0 +1,1647 @@
+{
+  "id": "2",
+  "finished": true,
+  "mode": "integrated",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T14:18:08.935Z",
+  "startedAt": "2026-11-05T14:18:08.938Z",
+  "stoppedAt": "2026-11-05T14:18:09.017Z",
+  "deletedAt": null,
+  "workflowId": "rqN9ifP0YZWsHQBE",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 11557,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "71b34b96-646e-4e19-b580-7bcdde02a7cb",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Start": [
+          {
+            "startTime": 1793888288979,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "metadata": {
+              "parentExecution": {
+                "executionId": "1",
+                "workflowId": "1DxH6RjxUEHG6xuE",
+                "shouldResume": true,
+                "executionContext": {
+                  "version": 1,
+                  "establishedAt": 1793888288901,
+                  "source": "webhook",
+                  "triggerNode": {
+                    "name": "Webhook",
+                    "type": "n8n-nodes-base.webhook"
+                  },
+                  "redaction": {
+                    "version": 2,
+                    "production": false,
+                    "manual": false
+                  }
+                }
+              }
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0,
+                        "lines": [
+                          {
+                            "number": 101,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          },
+                          {
+                            "number": 102,
+                            "sku": "fictional-sku-2",
+                            "quantity": 2
+                          },
+                          {
+                            "number": 103,
+                            "sku": "fictional-sku-3",
+                            "quantity": 3
+                          },
+                          {
+                            "number": 104,
+                            "sku": "fictional-sku-4",
+                            "quantity": 4
+                          },
+                          {
+                            "number": 105,
+                            "sku": "fictional-sku-5",
+                            "quantity": 5
+                          }
+                        ]
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1,
+                        "lines": [
+                          {
+                            "number": 201,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          },
+                          {
+                            "number": 202,
+                            "sku": "fictional-sku-2",
+                            "quantity": 2
+                          },
+                          {
+                            "number": 203,
+                            "sku": "fictional-sku-3",
+                            "quantity": 3
+                          }
+                        ]
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2,
+                        "lines": [
+                          {
+                            "number": 301,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          }
+                        ]
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Lines": [
+          {
+            "startTime": 1793888288980,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 101,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 102,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 103,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 104,
+                        "sku": "fictional-sku-4",
+                        "quantity": 4
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 105,
+                        "sku": "fictional-sku-5",
+                        "quantity": 5
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 201,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 202,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 203,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Loop": [
+          {
+            "startTime": 1793888288981,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Lines",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 101,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 102,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288982,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 103,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 2,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 104,
+                        "sku": "fictional-sku-4",
+                        "quantity": 4
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 3,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288983,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 105,
+                        "sku": "fictional-sku-5",
+                        "quantity": 5
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 4,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 201,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 5,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288983,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 202,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 6,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 203,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 7,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288984,
+            "executionIndex": 10,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 8,
+                      "sourceOverwrite": {
+                        "previousNode": "Lines",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288984,
+            "executionIndex": 12,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 101,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 102,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 103,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 1
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 104,
+                        "sku": "fictional-sku-4",
+                        "quantity": 4
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 1
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 105,
+                        "sku": "fictional-sku-5",
+                        "quantity": 5
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 2
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 201,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 2
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 202,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 3
+                      },
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 203,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 3
+                      },
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 4
+                      },
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Next Batch": [
+          {
+            "startTime": 1793888288982,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 101,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 102,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288982,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 103,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 104,
+                        "sku": "fictional-sku-4",
+                        "quantity": 4
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288983,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0
+                      },
+                      "line": {
+                        "number": 105,
+                        "sku": "fictional-sku-5",
+                        "quantity": 5
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 201,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288984,
+            "executionIndex": 9,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 202,
+                        "sku": "fictional-sku-2",
+                        "quantity": 2
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1
+                      },
+                      "line": {
+                        "number": 203,
+                        "sku": "fictional-sku-3",
+                        "quantity": 3
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888288984,
+            "executionIndex": 11,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Return": [
+          {
+            "startTime": 1793888288984,
+            "executionIndex": 13,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 4
+              }
+            ],
+            "hints": [],
+            "executionTime": 25,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-C",
+                      "lineNumber": 301,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888289009,
+            "executionIndex": 14,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 3
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 202,
+                      "sku": "fictional-sku-2",
+                      "quantity": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 203,
+                      "sku": "fictional-sku-3",
+                      "quantity": 3
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888289012,
+            "executionIndex": 15,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 2
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 105,
+                      "sku": "fictional-sku-5",
+                      "quantity": 5
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-B",
+                      "lineNumber": 201,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888289013,
+            "executionIndex": 16,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 1
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 103,
+                      "sku": "fictional-sku-3",
+                      "quantity": 3
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 104,
+                      "sku": "fictional-sku-4",
+                      "quantity": 4
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888289015,
+            "executionIndex": 17,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 101,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "orderId": "order-A",
+                      "lineNumber": 102,
+                      "sku": "fictional-sku-2",
+                      "quantity": 2
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Return"
+    },
+    "executionData": {
+      "contextData": {
+        "node:Loop": {
+          "currentRunIndex": 5,
+          "maxRunIndex": 5,
+          "sourceData": {
+            "previousNode": "Lines",
+            "previousNodeOutput": 0,
+            "previousNodeRun": 0
+          },
+          "items": [],
+          "processedItems": [
+            {
+              "json": {
+                "order": {
+                  "id": "order-A",
+                  "sequence": 0
+                },
+                "line": {
+                  "number": 101,
+                  "sku": "fictional-sku-1",
+                  "quantity": 1
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-A",
+                  "sequence": 0
+                },
+                "line": {
+                  "number": 102,
+                  "sku": "fictional-sku-2",
+                  "quantity": 2
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-A",
+                  "sequence": 0
+                },
+                "line": {
+                  "number": 103,
+                  "sku": "fictional-sku-3",
+                  "quantity": 3
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 1
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-A",
+                  "sequence": 0
+                },
+                "line": {
+                  "number": 104,
+                  "sku": "fictional-sku-4",
+                  "quantity": 4
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 1
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-A",
+                  "sequence": 0
+                },
+                "line": {
+                  "number": 105,
+                  "sku": "fictional-sku-5",
+                  "quantity": 5
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 2
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-B",
+                  "sequence": 1
+                },
+                "line": {
+                  "number": 201,
+                  "sku": "fictional-sku-1",
+                  "quantity": 1
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 2
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-B",
+                  "sequence": 1
+                },
+                "line": {
+                  "number": 202,
+                  "sku": "fictional-sku-2",
+                  "quantity": 2
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 3
+                },
+                "item": 0
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-B",
+                  "sequence": 1
+                },
+                "line": {
+                  "number": 203,
+                  "sku": "fictional-sku-3",
+                  "quantity": 3
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 3
+                },
+                "item": 1
+              }
+            },
+            {
+              "json": {
+                "order": {
+                  "id": "order-C",
+                  "sequence": 2
+                },
+                "line": {
+                  "number": 301,
+                  "sku": "fictional-sku-1",
+                  "quantity": 1
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 4
+                },
+                "item": 0
+              }
+            }
+          ],
+          "noItemsLeft": true,
+          "done": true
+        }
+      },
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793888288979,
+        "source": "integrated",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        },
+        "parentExecutionId": "1"
+      }
+    },
+    "parentExecution": {
+      "executionId": "1",
+      "workflowId": "1DxH6RjxUEHG6xuE",
+      "shouldResume": true,
+      "executionContext": {
+        "version": 1,
+        "establishedAt": 1793888288901,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "rqN9ifP0YZWsHQBE",
+    "name": "d340388740 allRuns child",
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "events": "worklfow_call",
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "Lines",
+        "name": "Lines",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "order.lines",
+          "include": "allOtherFields",
+          "options": {
+            "destinationFieldName": "line"
+          }
+        }
+      },
+      {
+        "id": "Loop",
+        "name": "Loop",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          500,
+          0
+        ],
+        "parameters": {
+          "splitInBatchesNotice": "",
+          "batchSize": 2,
+          "options": {}
+        }
+      },
+      {
+        "id": "Next Batch",
+        "name": "Next Batch",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          750,
+          0
+        ],
+        "parameters": {
+          "emptyGroupAnchor": false
+        }
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          750,
+          300
+        ],
+        "parameters": {
+          "mode": "raw",
+          "duplicateItem": false,
+          "jsonOutput": "={{ {orderId: $json.order.id, lineNumber: $json.line.number, sku: $json.line.sku, quantity: $json.line.quantity} }}",
+          "includeOtherFields": false,
+          "options": {}
+        }
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Lines",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Lines": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Next Batch",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Next Batch": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}

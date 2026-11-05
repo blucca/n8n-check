@@ -1,0 +1,317 @@
+{
+  "parent": {
+    "name": "7f06509d8e each allRuns parent",
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodes": [
+      {
+        "id": "Webhook",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "7f06509d8e-each-allruns",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "23df4d43-63a8-4344-8c81-d3766a35b530"
+      },
+      {
+        "id": "Orders",
+        "name": "Orders",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "parameters": {
+          "fieldToSplitOut": "body.orders",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "order"
+          }
+        },
+        "position": [
+          250,
+          0
+        ]
+      },
+      {
+        "id": "Call Child",
+        "name": "Call Child",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "parameters": {
+          "source": "database",
+          "mode": "each",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "qUpjVAraWOhVP1QK"
+          },
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        },
+        "position": [
+          500,
+          0
+        ]
+      },
+      {
+        "id": "Deliver",
+        "name": "Deliver",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "parameters": {
+          "method": "POST",
+          "url": "http://127.0.0.1:42743/each-allruns",
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ {slot: $itemIndex, recipient: $('Orders').item.json.order.id, returnedOrder: $json.orderId, lineNumber: $json.lineNumber, sku: $json.sku, quantity: $json.quantity} }}",
+          "options": {}
+        },
+        "position": [
+          750,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Orders",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders": {
+        "main": [
+          [
+            {
+              "node": "Call Child",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Child": {
+        "main": [
+          [
+            {
+              "node": "Deliver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "child": {
+    "name": "7f06509d8e allRuns child",
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.2,
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "position": [
+          0,
+          0
+        ]
+      },
+      {
+        "id": "Lines",
+        "name": "Lines",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "parameters": {
+          "fieldToSplitOut": "order.lines",
+          "include": "allOtherFields",
+          "options": {
+            "destinationFieldName": "line"
+          }
+        },
+        "position": [
+          250,
+          0
+        ]
+      },
+      {
+        "id": "Loop",
+        "name": "Loop",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "parameters": {
+          "batchSize": 2,
+          "options": {}
+        },
+        "position": [
+          500,
+          0
+        ]
+      },
+      {
+        "id": "Next Batch",
+        "name": "Next Batch",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "parameters": {},
+        "position": [
+          750,
+          0
+        ]
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "parameters": {
+          "mode": "raw",
+          "options": {},
+          "jsonOutput": "={{ {orderId: $json.order.id, lineNumber: $json.line.number, sku: $json.line.sku, quantity: $json.line.quantity} }}"
+        },
+        "position": [
+          750,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Lines",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Lines": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Next Batch",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Next Batch": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "body": {
+    "orders": [
+      {
+        "id": "order-A",
+        "sequence": 0,
+        "lines": [
+          {
+            "number": 101,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          },
+          {
+            "number": 102,
+            "sku": "fictional-sku-2",
+            "quantity": 2
+          },
+          {
+            "number": 103,
+            "sku": "fictional-sku-3",
+            "quantity": 3
+          },
+          {
+            "number": 104,
+            "sku": "fictional-sku-4",
+            "quantity": 4
+          },
+          {
+            "number": 105,
+            "sku": "fictional-sku-5",
+            "quantity": 5
+          }
+        ]
+      },
+      {
+        "id": "order-B",
+        "sequence": 1,
+        "lines": [
+          {
+            "number": 201,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          },
+          {
+            "number": 202,
+            "sku": "fictional-sku-2",
+            "quantity": 2
+          },
+          {
+            "number": 203,
+            "sku": "fictional-sku-3",
+            "quantity": 3
+          }
+        ]
+      },
+      {
+        "id": "order-C",
+        "sequence": 2,
+        "lines": [
+          {
+            "number": 301,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          }
+        ]
+      }
+    ]
+  }
+}

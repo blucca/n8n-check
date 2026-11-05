@@ -1,0 +1,492 @@
+{
+  "id": "4",
+  "finished": true,
+  "mode": "integrated",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T14:18:36.689Z",
+  "startedAt": "2026-11-05T14:18:36.691Z",
+  "stoppedAt": "2026-11-05T14:18:36.730Z",
+  "deletedAt": null,
+  "workflowId": "qUpjVAraWOhVP1QK",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 4635,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "7b5784a3-6634-4769-9fe3-51f7c7eaad14",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Start": [
+          {
+            "startTime": 1793888316725,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 0,
+            "metadata": {
+              "parentExecution": {
+                "executionId": "1",
+                "workflowId": "GxH26a59QDUBOeyU",
+                "shouldResume": true,
+                "executionContext": {
+                  "version": 1,
+                  "establishedAt": 1793888316547,
+                  "source": "webhook",
+                  "triggerNode": {
+                    "name": "Webhook",
+                    "type": "n8n-nodes-base.webhook"
+                  },
+                  "redaction": {
+                    "version": 2,
+                    "production": false,
+                    "manual": false
+                  }
+                }
+              }
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2,
+                        "lines": [
+                          {
+                            "number": 301,
+                            "sku": "fictional-sku-1",
+                            "quantity": 1
+                          }
+                        ]
+                      }
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Lines": [
+          {
+            "startTime": 1793888316725,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Loop": [
+          {
+            "startTime": 1793888316726,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Lines",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "startTime": 1793888316726,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Next Batch",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "sourceOverwrite": {
+                        "previousNode": "Next Batch",
+                        "previousNodeOutput": 0,
+                        "previousNodeRun": 0
+                      },
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Next Batch": [
+          {
+            "startTime": 1793888316726,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-C",
+                        "sequence": 2
+                      },
+                      "line": {
+                        "number": 301,
+                        "sku": "fictional-sku-1",
+                        "quantity": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Return": [
+          {
+            "startTime": 1793888316726,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Loop",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orderId": "order-C",
+                      "lineNumber": 301,
+                      "sku": "fictional-sku-1",
+                      "quantity": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Return"
+    },
+    "executionData": {
+      "contextData": {
+        "node:Loop": {
+          "currentRunIndex": 1,
+          "maxRunIndex": 1,
+          "sourceData": {
+            "previousNode": "Lines",
+            "previousNodeOutput": 0,
+            "previousNodeRun": 0
+          },
+          "items": [],
+          "processedItems": [
+            {
+              "json": {
+                "order": {
+                  "id": "order-C",
+                  "sequence": 2
+                },
+                "line": {
+                  "number": 301,
+                  "sku": "fictional-sku-1",
+                  "quantity": 1
+                }
+              },
+              "pairedItem": {
+                "sourceOverwrite": {
+                  "previousNode": "Next Batch",
+                  "previousNodeOutput": 0,
+                  "previousNodeRun": 0
+                },
+                "item": 0
+              }
+            }
+          ],
+          "noItemsLeft": true,
+          "done": true
+        }
+      },
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793888316724,
+        "source": "integrated",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        },
+        "parentExecutionId": "1"
+      }
+    },
+    "parentExecution": {
+      "executionId": "1",
+      "workflowId": "GxH26a59QDUBOeyU",
+      "shouldResume": true,
+      "executionContext": {
+        "version": 1,
+        "establishedAt": 1793888316547,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "qUpjVAraWOhVP1QK",
+    "name": "7f06509d8e allRuns child",
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "events": "worklfow_call",
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "Lines",
+        "name": "Lines",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "order.lines",
+          "include": "allOtherFields",
+          "options": {
+            "destinationFieldName": "line"
+          }
+        }
+      },
+      {
+        "id": "Loop",
+        "name": "Loop",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          500,
+          0
+        ],
+        "parameters": {
+          "splitInBatchesNotice": "",
+          "batchSize": 2,
+          "options": {}
+        }
+      },
+      {
+        "id": "Next Batch",
+        "name": "Next Batch",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          750,
+          0
+        ],
+        "parameters": {
+          "emptyGroupAnchor": false
+        }
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          750,
+          300
+        ],
+        "parameters": {
+          "mode": "raw",
+          "duplicateItem": false,
+          "jsonOutput": "={{ {orderId: $json.order.id, lineNumber: $json.line.number, sku: $json.line.sku, quantity: $json.line.quantity} }}",
+          "includeOtherFields": false,
+          "options": {}
+        }
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Lines",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Lines": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Next Batch",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Next Batch": {
+        "main": [
+          [
+            {
+              "node": "Loop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}
