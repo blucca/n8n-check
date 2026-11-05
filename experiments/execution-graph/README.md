@@ -65,6 +65,32 @@ stored in **each returned item's metadata**. Supply all related files together.
 The adapter verifies the reverse `parentExecution` execution/workflow IDs and
 the recorded waiting flag.
 
+## Collect a complete saved bundle in one command
+
+Set `N8N_API_KEY` in your local environment for the existing instance, then:
+
+```sh
+export LAB="$WORKSPACE/temp/saved-call-new"
+node experiments/execution-graph/fetch-bundle.cjs \
+  https://your-n8n.example 123 "$LAB" &&
+node experiments/execution-graph/audit-bundle.cjs "$LAB"/execution-*.json
+```
+
+Use a fresh output directory. The GET-only collector follows the actual
+once-task and each-item child IDs recursively, requesting `includeData=true`.
+It preserves each response body verbatim and writes a complete acquisition
+manifest after collecting all referenced executions. A failed GET returns
+`incomplete`/exit 2 and leaves the partial local records for diagnosis. The
+reporter performs the separate ancestry audit.
+
+Check the acquisition contract with the included native-record API replay:
+
+```sh
+node experiments/execution-graph/check-intake.cjs \
+  "$WORKSPACE/temp/intake-check-new"
+# four GETs, exact saved bytes/IDs, consistent/9; missing child incomplete
+```
+
 ## Method and current scope
 
 Every address has five axes:
