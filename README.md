@@ -19,7 +19,7 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **New research:** [Green JSON snapshots, wrong customers](experiments/lineage-boundary/) — a real parent/child case where all 11 business-node JSON snapshots match, yet HTTP requests target the wrong customers. Includes the reduced input, shared ancestry repair and real-engine results. [Inspect your own saved parent/child execution exports locally](experiments/lineage-boundary/#inspect-your-own-saved-child-call) with the read-only boundary auditor.
 
-**Nested-call research:** [Follow the customer through every child call](experiments/execution-graph/) — n8n 2.43.0, three successful executions, 14 matching business-node snapshots, and incorrect customer delivery. The saved-data checker composes inner ancestry into the outer call and runs locally with Node.
+**Customer identity release check:** [Follow the customer from child call to HTTP](experiments/execution-graph/) — three local reports for composed ancestry, saved customer relationships and independently observed HTTP effects. The new native counterexample has 11 matching business-node JSON snapshots and correct saved recipients, yet three HTTP requests reach the wrong customer. Includes complete-key baselines, native evidence and a GET-only bundle collector. [One customer route: $650 audit and repair](experiments/execution-graph/#one-customer-route-650-audit-and-repair).
 
 ## Paid help for one failing workflow
 

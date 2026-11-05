@@ -6,6 +6,9 @@
 Standard nodes aggregate both complete roles before a waiting passthrough child.
 An independent Python oracle fixes allowed recipients before workflow creation.
 The official cached runtime uses its own SQLite DB and loopback HTTP receiver.
+The --http-first-control family keeps the full-key saved payload correct while
+only the HTTP expression takes the first customer. Receiver headers bind each
+request to its execution/run/item; output 0 is the one-response-item contract.
 API/collector/resource scaffolding adapted from run-nested.py.
 """
 import argparse
@@ -33,6 +36,7 @@ parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--image', default=DEFAULT_IMAGE)
 parser.add_argument('--port', type=int, default=5708)
 parser.add_argument('--wall-limit', type=int, default=300)
+parser.add_argument('--http-first-control', action='store_true', help='Keep saved recipient correct; compare HTTP $json with Customers.first()')
 args = parser.parse_args()
 OUT = args.output.resolve()
 OUT.mkdir(parents=True, exist_ok=False)
@@ -40,7 +44,9 @@ DATA = OUT / 'data'
 DATA.mkdir(mode=0o700)
 BASE = f'http://127.0.0.1:{args.port}'
 RUN = uuid.uuid4().hex[:10]
-CONTAINER = f'n8n-relations-402-{RUN}'
+CONTAINER = f'n8n-relations-{RUN}'
+FAMILY = 'coordinate-bound-http-first' if args.http_first_control else 'composite-key-customer-recipient'
+LABELS = ('saved-json', 'http-first') if args.http_first_control else ('full-key', 'single-key')
 KEY = None
 SERVER = None
 CGROUP = None
@@ -48,7 +54,7 @@ received = []
 owner_opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 result = {
     'status': 'preparing', 'started_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-    'family': 'composite-key-customer-recipient', 'container': CONTAINER,
+    'family': FAMILY, 'container': CONTAINER,
     'runtime': {'image': args.image, 'expected_n8n_version_from_existing_cache_receipt': '2.43.0'},
     'caps': {'cpu': 2, 'memory_bytes': 1536 * 1024**2, 'node_heap_mib': 640,
              'wall_seconds': args.wall_limit, 'startup_seconds': 150,
@@ -101,8 +107,13 @@ class Collector(http.server.BaseHTTPRequestHandler):
             self.send_error(413)
             return
         payload = json.loads(self.rfile.read(n))
-        received.append({'path': self.path, 'body': payload,
-                         'at': datetime.datetime.now(datetime.timezone.utc).isoformat()})
+        row = {'path': self.path, 'body': payload,
+               'at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
+        if args.http_first_control:
+            row['coordinate'] = {'execution': self.headers['X-Audit-Execution'],
+                'node': self.headers['X-Audit-Node'], 'run': int(self.headers['X-Audit-Run']),
+                'output': int(self.headers['X-Audit-Output']), 'item': int(self.headers['X-Audit-Item'])}
+        received.append(row)
         raw = b'{"ok":true}'
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
@@ -143,10 +154,20 @@ def make_parent(child_id, label, collector_port):
         'responseMode': 'lastNode', 'options': {}})
     webhook['webhookId'] = str(uuid.uuid4())
     condition = 'x.customer.id === $json.selectedOrder.order.customerId'
-    if label == 'full-key':
+    if args.http_first_control or label == 'full-key':
         condition += ' && x.customer.tenantId === $json.selectedOrder.order.tenantId'
     recipient = '={{ {slot: $itemIndex, subjectId: $json.selectedOrder.order.id, recipient: $json.customers.find(x => ' + condition + ').customer.email} }}'
     aggregate = {'aggregate': 'aggregateAllItemData', 'include': 'allFields', 'options': {}}
+    http_body = '={{ $json }}'
+    if label == 'http-first':
+        http_body = "={{ {slot: $json.slot, subjectId: $json.subjectId, recipient: $('Customers').first().json.customer.email} }}"
+    audit_headers = {'sendHeaders': True, 'headerParameters': {'parameters': [
+        {'name': 'X-Audit-Execution', 'value': '={{ String($execution.id) }}'},
+        {'name': 'X-Audit-Node', 'value': 'Deliver'},
+        {'name': 'X-Audit-Run', 'value': '={{ String($runIndex) }}'},
+        {'name': 'X-Audit-Output', 'value': '0'},
+        {'name': 'X-Audit-Item', 'value': '={{ String($itemIndex) }}'},
+    ]}} if args.http_first_control else {}
     return workflow(f'relations {label}', [
         webhook,
         node('Orders', 'splitOut', 1, {'fieldToSplitOut': 'body.orders', 'include': 'noOtherFields',
@@ -164,7 +185,7 @@ def make_parent(child_id, label, collector_port):
             'options': {'waitForSubWorkflow': True}}, 1200),
         node('Deliver', 'httpRequest', 4.2, {'method': 'POST',
             'url': f'http://127.0.0.1:{collector_port}/{label}', 'sendBody': True,
-            'contentType': 'json', 'specifyBody': 'json', 'jsonBody': '={{ $json }}', 'options': {}}, 1400),
+            'contentType': 'json', 'specifyBody': 'json', 'jsonBody': http_body, **audit_headers, 'options': {}}, 1400),
     ], [('Webhook', 0, 'Orders', 0), ('Webhook', 0, 'Customers', 0),
         ('Orders', 0, 'Orders Aggregate', 0), ('Customers', 0, 'Customers Aggregate', 0),
         ('Orders Aggregate', 0, 'Join Envelope', 0), ('Customers Aggregate', 0, 'Join Envelope', 1),
@@ -260,11 +281,23 @@ def run_control(collector_port, label, oracle):
                   str(reverse['workflowId']) == str(saved_parent['workflowId']) and reverse['shouldResume'] is True}
     target = [item['json'] for item in call['data']['main'][0]]
     expected = [{k: item[k] for k in ('slot', 'subjectId', 'recipient')} for item in oracle['expected']]
-    observed = sorted([r['body'] for r in received if r['path'] == '/' + label], key=lambda r: r['slot'])
+    observer_rows = [r for r in received if r['path'] == '/' + label]
+    observed = sorted([r['body'] for r in observer_rows], key=lambda r: r['slot'])
     checks['http_matches_saved_effects'] = observed == target and len(target) == len(expected)
+    if args.http_first_control:
+        checks.pop('http_matches_saved_effects')
+        checks['saved_effects_match_oracle'] = target == expected
+        coordinate_rows = sorted(observer_rows, key=lambda r: r['coordinate']['item'])
+        checks['runtime_coordinate_binding'] = [r['coordinate'] for r in coordinate_rows] == [
+            {'execution': str(saved_parent['id']), 'node': 'Deliver', 'run': 0, 'output': 0, 'item': i}
+            for i in range(len(expected))]
+        checks['saved_deliver_coordinates_exist'] = len(saved_parent['data']['resultData']['runData']['Deliver'][0]['data']['main'][0]) == len(expected)
+        checks['http_control_outcome'] = observed == (expected if label == 'saved-json' else [
+            {**r, 'recipient': oracle['customers'][0]['email']} for r in expected])
     checks['subject_and_slot'] = [(r['slot'], r['subjectId']) for r in observed] == [(r['slot'], r['subjectId']) for r in expected]
     mismatch_slots = [want['slot'] for want, got in zip(expected, observed) if want['recipient'] != got['recipient']]
-    checks['independent_recipient_outcome'] = mismatch_slots == ([] if label == 'full-key' else [2, 3])
+    predicted_mismatches = ([1, 2, 3] if label == 'http-first' else []) if args.http_first_control else ([] if label == 'full-key' else [2, 3])
+    checks['independent_recipient_outcome'] = mismatch_slots == predicted_mismatches
     row.update({'execution_statuses': {'parent': saved_parent['status'], 'child': saved_child['status']},
         'parent_execution': str(saved_parent['id']), 'child_execution': str(saved_child['id']),
         'requests': observed, 'expected_requests': expected, 'recipient_mismatch_slots': mismatch_slots,
@@ -273,8 +306,11 @@ def run_control(collector_port, label, oracle):
         'orders': {'execution': str(saved_parent['id']), 'node': 'Orders', 'run': 0, 'output': 0, 'record_path': ['order']},
         'customers': {'execution': str(saved_parent['id']), 'node': 'Customers', 'run': 0, 'output': 0, 'record_path': ['customer']},
         'effects': {'execution': str(saved_parent['id']), 'node': 'Call Delivery', 'run': 0, 'output': 0}}
+    if args.http_first_control:
+        contract['observed_effects'] = {'execution': str(saved_parent['id']), 'node': 'Deliver', 'run': 0, 'output': 0}
     save(f'{label}-contract.json', contract)
-    save(f'{label}-http-observations.json', observed)
+    save(f'{label}-http-observations.json', ([{'coordinate': r['coordinate'], 'body': r['body']} for r in observer_rows]
+        if args.http_first_control else observed))
     save(f'{label}-receipt.json', row)
     progress('case_completed', case=label, passed=row['passed'], mismatch_slots=mismatch_slots)
     return row
@@ -362,9 +398,22 @@ try:
     progress('server_ready')
     oracle = independent_oracle()
     save('oracle.json', oracle)
-    for label in ('full-key', 'single-key'):
+    for label in LABELS:
         control = run_control(collector.server_port, label, oracle)
         assert control['passed'], 'Independent relation/HTTP acceptance failed' 
+    if args.http_first_control:
+        # Compare business JSON at the same recorded axes, excluding Webhook transport.
+        business = {}
+        for label in LABELS:
+            business[label] = {}
+            for role in ('parent', 'child'):
+                execution = json.loads((OUT / f'{label}-{role}-execution.json').read_text())
+                business[label][role] = {name: [[[item['json'] for item in (items or [])]
+                    for items in task['data']['main']] for task in runs]
+                    for name, runs in execution['data']['resultData']['runData'].items() if name != 'Webhook'}
+        result['business_json_same_axes'] = business[LABELS[0]] == business[LABELS[1]]
+        result['business_node_count'] = sum(len(nodes) for nodes in business[LABELS[0]].values())
+        assert result['business_json_same_axes'] and result['business_node_count'] == 11, 'Business-node JSON counterexample contract'
     result['status'] = 'complete'
     progress('experiment_complete', passed=control['passed'])
 except Exception as error:

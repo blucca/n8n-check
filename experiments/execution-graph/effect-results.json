@@ -1,0 +1,74 @@
+{
+  "family": "coordinate-bound-http-first",
+  "evidence": "Native unmodified official runtime; fictional inputs; independent pre-workflow Python oracle; receiver bodies bound by execution/run/item headers",
+  "runtime": {
+    "node": "v26.7.0",
+    "n8n": "2.43.0",
+    "n8n-core": "2.43.0",
+    "n8n-nodes-base": "2.43.0",
+    "n8n-workflow": "2.43.0"
+  },
+  "same_business_json_at_recorded_axes": true,
+  "business_node_count": 11,
+  "native": [
+    {
+      "label": "saved-json",
+      "source_ancestry": "consistent",
+      "saved_relationship": "consistent",
+      "actual_effects": "consistent",
+      "saved_complete_key_baseline_mismatch_slots": [],
+      "actual_complete_key_baseline_mismatch_slots": [],
+      "mismatch_slots": [],
+      "checked": 4,
+      "roots_per_effect": 8
+    },
+    {
+      "label": "http-first",
+      "source_ancestry": "consistent",
+      "saved_relationship": "consistent",
+      "actual_effects": "mismatch",
+      "saved_complete_key_baseline_mismatch_slots": [],
+      "actual_complete_key_baseline_mismatch_slots": [
+        1,
+        2,
+        3
+      ],
+      "mismatch_slots": [
+        1,
+        2,
+        3
+      ],
+      "checked": 4,
+      "roots_per_effect": 8
+    }
+  ],
+  "resource_caps": {
+    "cpu": 2,
+    "memory_bytes": 1610612736,
+    "node_heap_mib": 640,
+    "wall_seconds": 300,
+    "startup_seconds": 150,
+    "fresh_database": true,
+    "overlay": false,
+    "saved_data_mutation": false
+  },
+  "resource_usage": {
+    "native_cpu_seconds": 10.818384,
+    "memory_peak_bytes": 761511936,
+    "wall_seconds": 17.075108
+  },
+  "container_released": true,
+  "database_released": true,
+  "existing_services_preserved": true,
+  "operator_uses": 0,
+  "buyer_acceptances": 0,
+  "synthetic_checks": [
+    "missing observation",
+    "duplicate observer coordinate",
+    "foreign execution coordinate",
+    "observed subject/slot mismatch",
+    "duplicate caller binding",
+    "missing child"
+  ],
+  "observer_contract": "One received request per declared saved HTTP output item, one-to-one caller binding; the receiver/log producer establishes runtime coordinates independently."
+}

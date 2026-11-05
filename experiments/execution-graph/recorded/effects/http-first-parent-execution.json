@@ -1,0 +1,1226 @@
+{
+  "id": "3",
+  "finished": true,
+  "mode": "webhook",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T02:43:22.334Z",
+  "startedAt": "2026-11-05T02:43:22.336Z",
+  "stoppedAt": "2026-11-05T02:43:22.416Z",
+  "deletedAt": null,
+  "workflowId": "uX9EWilIjC1nsuxC",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 12838,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "9cf18aae-926f-43bb-90ca-b36d563e0447",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Webhook": [
+          {
+            "startTime": 1793846602340,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "params": {},
+                      "query": {},
+                      "body": {
+                        "orders": [
+                          {
+                            "id": "order-0",
+                            "tenantId": "amber",
+                            "customerId": "c1"
+                          },
+                          {
+                            "id": "order-1",
+                            "tenantId": "amber",
+                            "customerId": "c2"
+                          },
+                          {
+                            "id": "order-2",
+                            "tenantId": "blue",
+                            "customerId": "c1"
+                          },
+                          {
+                            "id": "order-3",
+                            "tenantId": "blue",
+                            "customerId": "c2"
+                          }
+                        ],
+                        "customers": [
+                          {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          },
+                          {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          },
+                          {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          },
+                          {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        ]
+                      },
+                      "webhookUrl": "http://127.0.0.1:5710/webhook/e64953622a-relations-http-first",
+                      "executionMode": "production"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Orders": [
+          {
+            "startTime": 1793846602340,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Webhook",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-0",
+                        "tenantId": "amber",
+                        "customerId": "c1"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-1",
+                        "tenantId": "amber",
+                        "customerId": "c2"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-2",
+                        "tenantId": "blue",
+                        "customerId": "c1"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-3",
+                        "tenantId": "blue",
+                        "customerId": "c2"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Orders Aggregate": [
+          {
+            "startTime": 1793846602341,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Orders",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orders": [
+                        {
+                          "order": {
+                            "id": "order-0",
+                            "tenantId": "amber",
+                            "customerId": "c1"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-1",
+                            "tenantId": "amber",
+                            "customerId": "c2"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-2",
+                            "tenantId": "blue",
+                            "customerId": "c1"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-3",
+                            "tenantId": "blue",
+                            "customerId": "c2"
+                          }
+                        }
+                      ]
+                    },
+                    "pairedItem": [
+                      {
+                        "item": 0
+                      },
+                      {
+                        "item": 1
+                      },
+                      {
+                        "item": 2
+                      },
+                      {
+                        "item": 3
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Customers": [
+          {
+            "startTime": 1793846602341,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Webhook",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "customer": {
+                        "tenantId": "amber",
+                        "id": "c1",
+                        "email": "amber-c1@example.test"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customer": {
+                        "tenantId": "amber",
+                        "id": "c2",
+                        "email": "amber-c2@example.test"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customer": {
+                        "tenantId": "blue",
+                        "id": "c1",
+                        "email": "blue-c1@example.test"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customer": {
+                        "tenantId": "blue",
+                        "id": "c2",
+                        "email": "blue-c2@example.test"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Customers Aggregate": [
+          {
+            "startTime": 1793846602341,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Customers",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ]
+                    },
+                    "pairedItem": [
+                      {
+                        "item": 0
+                      },
+                      {
+                        "item": 1
+                      },
+                      {
+                        "item": 2
+                      },
+                      {
+                        "item": 3
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Join Envelope": [
+          {
+            "startTime": 1793846602341,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Orders Aggregate",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              },
+              {
+                "previousNode": "Customers Aggregate",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "orders": [
+                        {
+                          "order": {
+                            "id": "order-0",
+                            "tenantId": "amber",
+                            "customerId": "c1"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-1",
+                            "tenantId": "amber",
+                            "customerId": "c2"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-2",
+                            "tenantId": "blue",
+                            "customerId": "c1"
+                          }
+                        },
+                        {
+                          "order": {
+                            "id": "order-3",
+                            "tenantId": "blue",
+                            "customerId": "c2"
+                          }
+                        }
+                      ],
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ]
+                    },
+                    "binary": {},
+                    "pairedItem": [
+                      {
+                        "item": 0
+                      },
+                      {
+                        "item": 0,
+                        "input": 1
+                      },
+                      {
+                        "item": 0,
+                        "input": 1
+                      }
+                    ]
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Select Order": [
+          {
+            "startTime": 1793846602345,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Join Envelope",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ],
+                      "selectedOrder": {
+                        "order": {
+                          "id": "order-0",
+                          "tenantId": "amber",
+                          "customerId": "c1"
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ],
+                      "selectedOrder": {
+                        "order": {
+                          "id": "order-1",
+                          "tenantId": "amber",
+                          "customerId": "c2"
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ],
+                      "selectedOrder": {
+                        "order": {
+                          "id": "order-2",
+                          "tenantId": "blue",
+                          "customerId": "c1"
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "customers": [
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c1",
+                            "email": "amber-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "amber",
+                            "id": "c2",
+                            "email": "amber-c2@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c1",
+                            "email": "blue-c1@example.test"
+                          }
+                        },
+                        {
+                          "customer": {
+                            "tenantId": "blue",
+                            "id": "c2",
+                            "email": "blue-c2@example.test"
+                          }
+                        }
+                      ],
+                      "selectedOrder": {
+                        "order": {
+                          "id": "order-3",
+                          "tenantId": "blue",
+                          "customerId": "c2"
+                        }
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Prepare Recipient": [
+          {
+            "startTime": 1793846602345,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Select Order",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 3,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "slot": 0,
+                      "subjectId": "order-0",
+                      "recipient": "amber-c1@example.test"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 1,
+                      "subjectId": "order-1",
+                      "recipient": "amber-c2@example.test"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 2,
+                      "subjectId": "order-2",
+                      "recipient": "blue-c1@example.test"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 3,
+                      "subjectId": "order-3",
+                      "recipient": "blue-c2@example.test"
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Call Delivery": [
+          {
+            "startTime": 1793846602348,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "Prepare Recipient",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 44,
+            "metadata": {
+              "subExecution": {
+                "executionId": "4",
+                "workflowId": "4WiqKSVjcGNq0iRj"
+              },
+              "subExecutionsCount": 1
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "slot": 0,
+                      "subjectId": "order-0",
+                      "recipient": "amber-c1@example.test"
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 1,
+                      "subjectId": "order-1",
+                      "recipient": "amber-c2@example.test"
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 2,
+                      "subjectId": "order-2",
+                      "recipient": "blue-c1@example.test"
+                    },
+                    "index": 2,
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "slot": 3,
+                      "subjectId": "order-3",
+                      "recipient": "blue-c2@example.test"
+                    },
+                    "index": 3,
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Deliver": [
+          {
+            "startTime": 1793846602392,
+            "executionIndex": 9,
+            "source": [
+              {
+                "previousNode": "Call Delivery",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 24,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "ok": true
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Deliver"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793846602333,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "uX9EWilIjC1nsuxC",
+    "name": "e64953622a relations http-first",
+    "nodes": [
+      {
+        "id": "Webhook",
+        "name": "Webhook",
+        "webhookId": "301e981a-abf9-4c4b-8857-5f89a29af2e6",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "multipleMethods": false,
+          "httpMethod": "POST",
+          "path": "e64953622a-relations-http-first",
+          "authentication": "none",
+          "responseMode": "lastNode",
+          "responseData": "firstEntryJson",
+          "options": {}
+        }
+      },
+      {
+        "id": "Orders",
+        "name": "Orders",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          200,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "body.orders",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "order"
+          }
+        }
+      },
+      {
+        "id": "Customers",
+        "name": "Customers",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          200,
+          250
+        ],
+        "parameters": {
+          "fieldToSplitOut": "body.customers",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "customer"
+          }
+        }
+      },
+      {
+        "id": "Orders Aggregate",
+        "name": "Orders Aggregate",
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          400,
+          0
+        ],
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "orders",
+          "include": "allFields",
+          "options": {}
+        }
+      },
+      {
+        "id": "Customers Aggregate",
+        "name": "Customers Aggregate",
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          400,
+          250
+        ],
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "customers",
+          "include": "allFields",
+          "options": {}
+        }
+      },
+      {
+        "id": "Join Envelope",
+        "name": "Join Envelope",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          600,
+          0
+        ],
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineByPosition",
+          "numberInputs": 2,
+          "options": {}
+        }
+      },
+      {
+        "id": "Select Order",
+        "name": "Select Order",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          800,
+          0
+        ],
+        "parameters": {
+          "fieldToSplitOut": "orders",
+          "include": "allOtherFields",
+          "options": {
+            "destinationFieldName": "selectedOrder"
+          }
+        }
+      },
+      {
+        "id": "Prepare Recipient",
+        "name": "Prepare Recipient",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1000,
+          0
+        ],
+        "parameters": {
+          "mode": "raw",
+          "duplicateItem": false,
+          "jsonOutput": "={{ {slot: $itemIndex, subjectId: $json.selectedOrder.order.id, recipient: $json.customers.find(x => x.customer.id === $json.selectedOrder.order.customerId && x.customer.tenantId === $json.selectedOrder.order.tenantId).customer.email} }}",
+          "includeOtherFields": false,
+          "options": {}
+        }
+      },
+      {
+        "id": "Call Delivery",
+        "name": "Call Delivery",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          1200,
+          0
+        ],
+        "parameters": {
+          "operation": "call_workflow",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "4WiqKSVjcGNq0iRj"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": null
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        }
+      },
+      {
+        "id": "Deliver",
+        "name": "Deliver",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1400,
+          0
+        ],
+        "parameters": {
+          "curlImport": "",
+          "method": "POST",
+          "url": "http://127.0.0.1:45611/http-first",
+          "authentication": "none",
+          "provideSslCertificates": false,
+          "sendQuery": false,
+          "sendHeaders": true,
+          "specifyHeaders": "keypair",
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-Audit-Execution",
+                "value": "={{ String($execution.id) }}"
+              },
+              {
+                "name": "X-Audit-Node",
+                "value": "Deliver"
+              },
+              {
+                "name": "X-Audit-Run",
+                "value": "={{ String($runIndex) }}"
+              },
+              {
+                "name": "X-Audit-Output",
+                "value": "0"
+              },
+              {
+                "name": "X-Audit-Item",
+                "value": "={{ String($itemIndex) }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ {slot: $json.slot, subjectId: $json.subjectId, recipient: $('Customers').first().json.customer.email} }}",
+          "options": {},
+          "infoMessage": ""
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Orders",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Customers",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders": {
+        "main": [
+          [
+            {
+              "node": "Orders Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Customers": {
+        "main": [
+          [
+            {
+              "node": "Customers Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Join Envelope",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Customers Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Join Envelope",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Join Envelope": {
+        "main": [
+          [
+            {
+              "node": "Select Order",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select Order": {
+        "main": [
+          [
+            {
+              "node": "Prepare Recipient",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Recipient": {
+        "main": [
+          [
+            {
+              "node": "Call Delivery",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Delivery": {
+        "main": [
+          [
+            {
+              "node": "Deliver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}

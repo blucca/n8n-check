@@ -1,0 +1,403 @@
+{
+  "parent": {
+    "name": "e64953622a relations saved-json",
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodes": [
+      {
+        "id": "Webhook",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "e64953622a-relations-saved-json",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "5a2d66b9-d7ad-4db7-bc8b-a8d913067c1b"
+      },
+      {
+        "id": "Orders",
+        "name": "Orders",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "parameters": {
+          "fieldToSplitOut": "body.orders",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "order"
+          }
+        },
+        "position": [
+          200,
+          0
+        ]
+      },
+      {
+        "id": "Customers",
+        "name": "Customers",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "parameters": {
+          "fieldToSplitOut": "body.customers",
+          "include": "noOtherFields",
+          "options": {
+            "destinationFieldName": "customer"
+          }
+        },
+        "position": [
+          200,
+          250
+        ]
+      },
+      {
+        "id": "Orders Aggregate",
+        "name": "Orders Aggregate",
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "allFields",
+          "options": {},
+          "destinationFieldName": "orders"
+        },
+        "position": [
+          400,
+          0
+        ]
+      },
+      {
+        "id": "Customers Aggregate",
+        "name": "Customers Aggregate",
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "allFields",
+          "options": {},
+          "destinationFieldName": "customers"
+        },
+        "position": [
+          400,
+          250
+        ]
+      },
+      {
+        "id": "Join Envelope",
+        "name": "Join Envelope",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineByPosition",
+          "options": {}
+        },
+        "position": [
+          600,
+          0
+        ]
+      },
+      {
+        "id": "Select Order",
+        "name": "Select Order",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "parameters": {
+          "fieldToSplitOut": "orders",
+          "include": "allOtherFields",
+          "options": {
+            "destinationFieldName": "selectedOrder"
+          }
+        },
+        "position": [
+          800,
+          0
+        ]
+      },
+      {
+        "id": "Prepare Recipient",
+        "name": "Prepare Recipient",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={{ {slot: $itemIndex, subjectId: $json.selectedOrder.order.id, recipient: $json.customers.find(x => x.customer.id === $json.selectedOrder.order.customerId && x.customer.tenantId === $json.selectedOrder.order.tenantId).customer.email} }}",
+          "options": {}
+        },
+        "position": [
+          1000,
+          0
+        ]
+      },
+      {
+        "id": "Call Delivery",
+        "name": "Call Delivery",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "parameters": {
+          "source": "database",
+          "mode": "once",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "emKbY5t7CuiWHnNp"
+          },
+          "options": {
+            "waitForSubWorkflow": true
+          }
+        },
+        "position": [
+          1200,
+          0
+        ]
+      },
+      {
+        "id": "Deliver",
+        "name": "Deliver",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "parameters": {
+          "method": "POST",
+          "url": "http://127.0.0.1:45611/saved-json",
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-Audit-Execution",
+                "value": "={{ String($execution.id) }}"
+              },
+              {
+                "name": "X-Audit-Node",
+                "value": "Deliver"
+              },
+              {
+                "name": "X-Audit-Run",
+                "value": "={{ String($runIndex) }}"
+              },
+              {
+                "name": "X-Audit-Output",
+                "value": "0"
+              },
+              {
+                "name": "X-Audit-Item",
+                "value": "={{ String($itemIndex) }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "position": [
+          1400,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Orders",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Customers",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders": {
+        "main": [
+          [
+            {
+              "node": "Orders Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Customers": {
+        "main": [
+          [
+            {
+              "node": "Customers Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Orders Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Join Envelope",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Customers Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Join Envelope",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Join Envelope": {
+        "main": [
+          [
+            {
+              "node": "Select Order",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select Order": {
+        "main": [
+          [
+            {
+              "node": "Prepare Recipient",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Recipient": {
+        "main": [
+          [
+            {
+              "node": "Call Delivery",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Delivery": {
+        "main": [
+          [
+            {
+              "node": "Deliver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "child": {
+    "name": "e64953622a plain passthrough child",
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "position": [
+          0,
+          0
+        ]
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "parameters": {},
+        "position": [
+          250,
+          0
+        ]
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "body": {
+    "orders": [
+      {
+        "id": "order-0",
+        "tenantId": "amber",
+        "customerId": "c1"
+      },
+      {
+        "id": "order-1",
+        "tenantId": "amber",
+        "customerId": "c2"
+      },
+      {
+        "id": "order-2",
+        "tenantId": "blue",
+        "customerId": "c1"
+      },
+      {
+        "id": "order-3",
+        "tenantId": "blue",
+        "customerId": "c2"
+      }
+    ],
+    "customers": [
+      {
+        "tenantId": "amber",
+        "id": "c1",
+        "email": "amber-c1@example.test"
+      },
+      {
+        "tenantId": "amber",
+        "id": "c2",
+        "email": "amber-c2@example.test"
+      },
+      {
+        "tenantId": "blue",
+        "id": "c1",
+        "email": "blue-c1@example.test"
+      },
+      {
+        "tenantId": "blue",
+        "id": "c2",
+        "email": "blue-c2@example.test"
+      }
+    ]
+  }
+}

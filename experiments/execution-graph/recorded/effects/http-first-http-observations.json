@@ -1,0 +1,58 @@
+[
+  {
+    "coordinate": {
+      "execution": "3",
+      "node": "Deliver",
+      "run": 0,
+      "output": 0,
+      "item": 0
+    },
+    "body": {
+      "slot": 0,
+      "subjectId": "order-0",
+      "recipient": "amber-c1@example.test"
+    }
+  },
+  {
+    "coordinate": {
+      "execution": "3",
+      "node": "Deliver",
+      "run": 0,
+      "output": 0,
+      "item": 1
+    },
+    "body": {
+      "slot": 1,
+      "subjectId": "order-1",
+      "recipient": "amber-c1@example.test"
+    }
+  },
+  {
+    "coordinate": {
+      "execution": "3",
+      "node": "Deliver",
+      "run": 0,
+      "output": 0,
+      "item": 2
+    },
+    "body": {
+      "slot": 2,
+      "subjectId": "order-2",
+      "recipient": "amber-c1@example.test"
+    }
+  },
+  {
+    "coordinate": {
+      "execution": "3",
+      "node": "Deliver",
+      "run": 0,
+      "output": 0,
+      "item": 3
+    },
+    "body": {
+      "slot": 3,
+      "subjectId": "order-3",
+      "recipient": "amber-c1@example.test"
+    }
+  }
+]

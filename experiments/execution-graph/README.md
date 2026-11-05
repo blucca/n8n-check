@@ -1,12 +1,18 @@
-# Follow the customer through every child call
+# Follow the customer from child call to HTTP
 
-**The outer saved call passes its local ancestry check. The HTTP requests still
-go to the wrong customers.** This experiment composes the saved parent, bridge
-and leaf execution graphs to recover the correct outer customer records.
+**The saved execution graph passes. The saved recipient is correct. The HTTP
+request still reaches the wrong customer.** A native control changes only the
+HTTP expression to `Customers.first()`: all 11 business-node JSON snapshots
+match, all four executions succeed, and three of four requests are misdirected.
 
-The release check now covers two contracts: composed ancestry across child
-calls, and the customer relationship that authorizes the effect. Both run on
-complete saved records with plain Node.js; data stays on the operator's machine.
+This local release check separates **composed ancestry**, **saved customer
+relationships**, and **independently observed HTTP effects**. Plain Node.js,
+complete saved exports, an explicit business contract and receiver records;
+customer data stays on the operator's machine.
+
+[Run the HTTP counterexample](#correct-saved-recipient-wrong-http-request) ·
+[Check your own task](#bind-your-own-http-records-to-the-saved-task) ·
+[$650 identity audit and repair](#one-customer-route-650-audit-and-repair)
 
 ## A native nested counterexample
 
@@ -43,6 +49,9 @@ orders, Sort, Limit and Select rules. The independent HTTP receiver records
 the actual requests by explicit item slot.
 
 ## Run the saved-data checker
+
+Run these commands from the repository root. Set `WORKSPACE="$PWD"` for local
+capture outputs, or point it at your existing workspace.
 
 **Node.js, three JSON files. Local read-only execution.**
 
@@ -270,6 +279,134 @@ python3 -B experiments/execution-graph/run-relations.py \
 
 The native run used 15.28 CPU seconds, a 611.62 MiB memory peak and 15.05 seconds
 wall time; its dedicated runtime and database were released afterwards.
+
+## Correct saved recipient, wrong HTTP request
+
+The four-order/two-tenant control now keeps the **full-key Set lookup correct
+in both workflows**. Only the HTTP body expression changes:
+
+```js
+// Control: send the recipient carried by the correctly joined order.
+$json
+
+// Fault: preserve the order and slot, take the first customer's email.
+({slot: $json.slot, subjectId: $json.subjectId,
+  recipient: $('Customers').first().json.customer.email})
+```
+
+| HTTP expression | Composed ancestry | Saved relationship | Actual recipient errors | Effect contract |
+|---|---|---|---|---|
+| `$json` | consistent / 4 | consistent / 4 | 0 / 4 | consistent |
+| `Customers.first()` | consistent / 4 | consistent / 4 | **3 / 4** | **mismatch, slots 1/2/3** |
+
+All **11 business-node JSON snapshots**, at every run/output/item position,
+match between the cases. Each effect has all eight legitimate order/customer
+ancestors. The HTTP node saves the same `{ok:true}` responses, while the
+independent receiver observes the differing outbound bodies. These are actual
+requests from unmodified official **n8n 2.43.0**, with successful parent/child
+executions in each case. This fault belongs to the workflow's HTTP expression.
+
+The receiver records execution ID, node, run, output and item from request
+headers. The checker verifies complete unique target coverage, follows each
+saved `Deliver` output to its unique `Call Delivery` item, and checks the
+observed subject, slot and recipient against that item's authorized customer.
+It returns three separate reports: `source_ancestry`, `saved_relationship`,
+`actual_effects`. Reports contain coordinates and fixed findings; raw bodies
+stay in the local input files.
+
+```sh
+node experiments/execution-graph/effect-contract.cjs \
+  experiments/execution-graph/recorded/effects/http-first-contract.json \
+  experiments/execution-graph/recorded/effects/http-first-http-observations.json \
+  experiments/execution-graph/recorded/effects/http-first-parent-execution.json \
+  experiments/execution-graph/recorded/effects/http-first-child-execution.json
+# mismatch / exit 1: only actual_effects has three recipient mismatches
+
+node experiments/execution-graph/check-effects.cjs
+# PASS: native oracle/HTTP, same 11 JSON snapshots, complete-key baselines,
+# coordinate coverage and exact caller/customer witnesses
+```
+
+Replace `http-first` with `saved-json` for **consistent / exit 0**.
+A strong complete-key join baseline agrees: saved payloads have zero recipient
+errors in both cases; actual HTTP bodies have zero/three. The method adds an
+explicit binding between a received request, its saved task, the declared order
+and the customer-source coordinate. Synthetic missing/duplicate/foreign
+coordinates are tested separately from the native HTTP-expression fault.
+
+[Two complete fictional bundles, observer rows and contracts](recorded/effects/)
+and [measurements](effect-results.json) are included. Recreate this family:
+
+```sh
+python3 -B experiments/execution-graph/run-relations.py \
+  --output "$WORKSPACE/temp/n8n-http-effects-new" --http-first-control --wall-limit 300
+```
+
+The capture used **10.82 native CPU seconds**, a **726.23 MiB memory peak** and
+**17.08 seconds wall time**. Its dedicated container and SQLite database were
+released after collection; existing services were preserved.
+
+## Bind your own HTTP records to the saved task
+
+First [collect one complete saved bundle](#collect-a-complete-saved-bundle-in-one-command)
+and [declare your source roles and saved effects](#apply-the-relationship-contract-to-your-own-saved-task).
+Add the exact HTTP response-output block to the same contract:
+
+```json
+"observed_effects": {"execution": "123", "node": "Deliver", "run": 0, "output": 0}
+```
+
+Supply independently captured receiver or gateway records in a local JSON
+array. Each row contains the **actually received body** and its saved coordinate:
+
+```json
+[{"coordinate": {"execution": "123", "node": "Deliver", "run": 0, "output": 0, "item": 0},
+  "body": {"slot": 0, "subjectId": "order-a", "recipient": "customer-a@example.test"}}]
+```
+
+The included native collector uses these HTTP headers:
+`X-Audit-Execution = {{ String($execution.id) }}`,
+`X-Audit-Run = {{ String($runIndex) }}`,
+`X-Audit-Item = {{ String($itemIndex) }}`; node name and output `0` are explicit
+workflow constants. Existing request IDs/gateway logs can supply the same
+mapping when their execution/run/item association is established locally.
+Arrival order is irrelevant. The body comes from the receiver record.
+
+**v1 contract:** one outbound request per saved HTTP response item in the
+declared output block, and a one-to-one binding to the declared caller effect
+block. The source contract has unique order IDs and unique full customer keys.
+Complete successful waiting-child exports and all target observer rows are
+required. Response splitting, retries with multiple requests per item, detached
+calls and transformed trigger schemas need a separately agreed capture contract.
+Missing observations, duplicate coordinates and out-of-target execution IDs
+produce `incomplete` / exit 2 with a fixed reason code.
+
+```sh
+node experiments/execution-graph/effect-contract.cjs \
+  "$WORKSPACE/temp/customer-contract.json" "$WORKSPACE/temp/receiver-records.json" \
+  "$LAB"/execution-*.json
+```
+
+For a first fit check, [send the n8n version, three layer statuses/reasons,
+expected relationship and target date](mailto:belgialucca@gmail.com?subject=n8n%20HTTP%20identity%20fit%20check).
+Keep raw records and credentials local. A concrete task and its acceptance
+rules set the repair scope.
+
+## One customer route: $650 audit and repair
+
+For an agency or team releasing a multi-customer workflow: **$650 fixed scope**
+for one agreed customer/order route, up to **3 workflows / 30 standard nodes /
+2 documented systems / 5 agreed checks**, a focused fix, before/after source and
+HTTP evidence, a reproducible local handoff, and one in-scope revision.
+
+First delivery within **three business days** after scope, materials and the
+**$325 start payment** are agreed; the remaining **$325** is due when the agreed
+checks pass. Blucca's human account owner handles the agreement and payment;
+Codex delivers the engineering asynchronously. Start by sending the **version,
+workflow count, observed wrong result and target date**. The short local fit check
+sets the supported capture and exact acceptance rules before paid work starts.
+The existing [$199 single-fault slice](../../#paid-help-for-one-failing-workflow)
+retains its smaller one-workflow/mocked-system scope.
 
 ## Reproduce the native nested capture
 

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "orders": {
+    "execution": "3",
+    "node": "Orders",
+    "run": 0,
+    "output": 0,
+    "record_path": [
+      "order"
+    ]
+  },
+  "customers": {
+    "execution": "3",
+    "node": "Customers",
+    "run": 0,
+    "output": 0,
+    "record_path": [
+      "customer"
+    ]
+  },
+  "effects": {
+    "execution": "3",
+    "node": "Call Delivery",
+    "run": 0,
+    "output": 0
+  },
+  "observed_effects": {
+    "execution": "3",
+    "node": "Deliver",
+    "run": 0,
+    "output": 0
+  }
+}
