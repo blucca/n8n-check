@@ -1,0 +1,349 @@
+{
+  "ground_truth_source": "Python input enumeration and explicit v1 loop branch scheduling, before workflow creation",
+  "batch_size": 2,
+  "input_order_ids": [
+    "order-A",
+    "order-B",
+    "order-C"
+  ],
+  "expected_return_count": 9,
+  "expected_by_slot": [
+    {
+      "slot": 0,
+      "caller_input_index": 0,
+      "child_terminal": {
+        "node": "Return",
+        "run": 0,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 2,
+      "json": {
+        "orderId": "order-A",
+        "lineNumber": 105,
+        "sku": "fictional-sku-5",
+        "quantity": 5
+      }
+    },
+    {
+      "slot": 1,
+      "caller_input_index": 0,
+      "child_terminal": {
+        "node": "Return",
+        "run": 1,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 1,
+      "json": {
+        "orderId": "order-A",
+        "lineNumber": 103,
+        "sku": "fictional-sku-3",
+        "quantity": 3
+      }
+    },
+    {
+      "slot": 2,
+      "caller_input_index": 0,
+      "child_terminal": {
+        "node": "Return",
+        "run": 1,
+        "output": 0,
+        "item": 1
+      },
+      "loop_source_run": 1,
+      "json": {
+        "orderId": "order-A",
+        "lineNumber": 104,
+        "sku": "fictional-sku-4",
+        "quantity": 4
+      }
+    },
+    {
+      "slot": 3,
+      "caller_input_index": 0,
+      "child_terminal": {
+        "node": "Return",
+        "run": 2,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 0,
+      "json": {
+        "orderId": "order-A",
+        "lineNumber": 101,
+        "sku": "fictional-sku-1",
+        "quantity": 1
+      }
+    },
+    {
+      "slot": 4,
+      "caller_input_index": 0,
+      "child_terminal": {
+        "node": "Return",
+        "run": 2,
+        "output": 0,
+        "item": 1
+      },
+      "loop_source_run": 0,
+      "json": {
+        "orderId": "order-A",
+        "lineNumber": 102,
+        "sku": "fictional-sku-2",
+        "quantity": 2
+      }
+    },
+    {
+      "slot": 5,
+      "caller_input_index": 1,
+      "child_terminal": {
+        "node": "Return",
+        "run": 0,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 1,
+      "json": {
+        "orderId": "order-B",
+        "lineNumber": 203,
+        "sku": "fictional-sku-3",
+        "quantity": 3
+      }
+    },
+    {
+      "slot": 6,
+      "caller_input_index": 1,
+      "child_terminal": {
+        "node": "Return",
+        "run": 1,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 0,
+      "json": {
+        "orderId": "order-B",
+        "lineNumber": 201,
+        "sku": "fictional-sku-1",
+        "quantity": 1
+      }
+    },
+    {
+      "slot": 7,
+      "caller_input_index": 1,
+      "child_terminal": {
+        "node": "Return",
+        "run": 1,
+        "output": 0,
+        "item": 1
+      },
+      "loop_source_run": 0,
+      "json": {
+        "orderId": "order-B",
+        "lineNumber": 202,
+        "sku": "fictional-sku-2",
+        "quantity": 2
+      }
+    },
+    {
+      "slot": 8,
+      "caller_input_index": 2,
+      "child_terminal": {
+        "node": "Return",
+        "run": 0,
+        "output": 0,
+        "item": 0
+      },
+      "loop_source_run": 0,
+      "json": {
+        "orderId": "order-C",
+        "lineNumber": 301,
+        "sku": "fictional-sku-1",
+        "quantity": 1
+      }
+    }
+  ],
+  "children": [
+    {
+      "caller_input_index": 0,
+      "order_id": "order-A",
+      "input_line_count": 5,
+      "expected_terminal_run_count": 3,
+      "expected_loop_run_count": 4,
+      "expected_items": [
+        {
+          "slot": 0,
+          "caller_input_index": 0,
+          "child_terminal": {
+            "node": "Return",
+            "run": 0,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 2,
+          "json": {
+            "orderId": "order-A",
+            "lineNumber": 105,
+            "sku": "fictional-sku-5",
+            "quantity": 5
+          }
+        },
+        {
+          "slot": 1,
+          "caller_input_index": 0,
+          "child_terminal": {
+            "node": "Return",
+            "run": 1,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 1,
+          "json": {
+            "orderId": "order-A",
+            "lineNumber": 103,
+            "sku": "fictional-sku-3",
+            "quantity": 3
+          }
+        },
+        {
+          "slot": 2,
+          "caller_input_index": 0,
+          "child_terminal": {
+            "node": "Return",
+            "run": 1,
+            "output": 0,
+            "item": 1
+          },
+          "loop_source_run": 1,
+          "json": {
+            "orderId": "order-A",
+            "lineNumber": 104,
+            "sku": "fictional-sku-4",
+            "quantity": 4
+          }
+        },
+        {
+          "slot": 3,
+          "caller_input_index": 0,
+          "child_terminal": {
+            "node": "Return",
+            "run": 2,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 0,
+          "json": {
+            "orderId": "order-A",
+            "lineNumber": 101,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          }
+        },
+        {
+          "slot": 4,
+          "caller_input_index": 0,
+          "child_terminal": {
+            "node": "Return",
+            "run": 2,
+            "output": 0,
+            "item": 1
+          },
+          "loop_source_run": 0,
+          "json": {
+            "orderId": "order-A",
+            "lineNumber": 102,
+            "sku": "fictional-sku-2",
+            "quantity": 2
+          }
+        }
+      ]
+    },
+    {
+      "caller_input_index": 1,
+      "order_id": "order-B",
+      "input_line_count": 3,
+      "expected_terminal_run_count": 2,
+      "expected_loop_run_count": 3,
+      "expected_items": [
+        {
+          "slot": 5,
+          "caller_input_index": 1,
+          "child_terminal": {
+            "node": "Return",
+            "run": 0,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 1,
+          "json": {
+            "orderId": "order-B",
+            "lineNumber": 203,
+            "sku": "fictional-sku-3",
+            "quantity": 3
+          }
+        },
+        {
+          "slot": 6,
+          "caller_input_index": 1,
+          "child_terminal": {
+            "node": "Return",
+            "run": 1,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 0,
+          "json": {
+            "orderId": "order-B",
+            "lineNumber": 201,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          }
+        },
+        {
+          "slot": 7,
+          "caller_input_index": 1,
+          "child_terminal": {
+            "node": "Return",
+            "run": 1,
+            "output": 0,
+            "item": 1
+          },
+          "loop_source_run": 0,
+          "json": {
+            "orderId": "order-B",
+            "lineNumber": 202,
+            "sku": "fictional-sku-2",
+            "quantity": 2
+          }
+        }
+      ]
+    },
+    {
+      "caller_input_index": 2,
+      "order_id": "order-C",
+      "input_line_count": 1,
+      "expected_terminal_run_count": 1,
+      "expected_loop_run_count": 2,
+      "expected_items": [
+        {
+          "slot": 8,
+          "caller_input_index": 2,
+          "child_terminal": {
+            "node": "Return",
+            "run": 0,
+            "output": 0,
+            "item": 0
+          },
+          "loop_source_run": 0,
+          "json": {
+            "orderId": "order-C",
+            "lineNumber": 301,
+            "sku": "fictional-sku-1",
+            "quantity": 1
+          }
+        }
+      ]
+    }
+  ],
+  "return_policy": "Execute Workflow Trigger 1.2 default allRuns; concatenate terminal runs by executionIndex, per output branch",
+  "scheduling_rule": "Next Batch at y=0 runs depth-first before terminal Return at y=300. Return runs tail batch to head batch; within-batch order is preserved."
+}

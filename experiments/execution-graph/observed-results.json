@@ -1,0 +1,612 @@
+{
+  "family": "nested-once-passthrough-depth2",
+  "started_at": "2026-11-05T00:10:20.384071+00:00",
+  "completed_at": "2026-11-05T00:10:41.564336+00:00",
+  "runtime": {
+    "image": "docker.n8n.io/n8nio/n8n@sha256:c6a3a0461d1d3ffc16d849adf57606c2b028667ade70cce2faa2ff094734873c",
+    "expected_n8n_version_from_existing_cache_receipt": "2.43.0",
+    "actual_packages": {
+      "node": "v26.7.0",
+      "n8n": "2.43.0",
+      "n8n-core": "2.43.0",
+      "n8n-nodes-base": "2.43.0",
+      "n8n-workflow": "2.43.0"
+    }
+  },
+  "business_node_count": 14,
+  "json_only_equal": true,
+  "native_wrong_recipient_counterexample": true,
+  "native_fault_injection": false,
+  "resource_measurement": {
+    "native_cpu_seconds": 14.87081,
+    "native_peak_rss_bytes": 732508160
+  },
+  "cleanup": {
+    "container_released": true,
+    "database_released": true
+  },
+  "cases": [
+    {
+      "case": "nested-input1",
+      "oracle": {
+        "selected_input": 1,
+        "orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "rules": "input1 = first two; input2 = descending order.sequence then first two; project removes identity",
+        "expected_recipients_by_slot": [
+          "customer-A",
+          "customer-B"
+        ],
+        "expected_root_order_indices_by_slot": [
+          0,
+          1
+        ],
+        "expected_boundary_input_indices_by_slot": {
+          "Call Leaf": [
+            0,
+            1
+          ],
+          "Call Bridge": [
+            0,
+            1
+          ]
+        },
+        "ground_truth_source": "Python business-input enumeration and workflow semantics, before execution"
+      },
+      "execution_statuses": {
+        "parent": "success",
+        "bridge": "success",
+        "leaf": "success"
+      },
+      "call_edges": [
+        {
+          "parent_execution": "1",
+          "node": "Call Bridge",
+          "run": 0,
+          "child_execution": "2",
+          "child_workflow": "E1QdbuJI1bnJgTVS"
+        },
+        {
+          "parent_execution": "2",
+          "node": "Call Leaf",
+          "run": 0,
+          "child_execution": "3",
+          "child_workflow": "xBgNTA7lI2nWmn5P"
+        }
+      ],
+      "requests": [
+        {
+          "slot": 0,
+          "recipient": "customer-A",
+          "sku": "same-product",
+          "quantity": 1
+        },
+        {
+          "slot": 1,
+          "recipient": "customer-B",
+          "sku": "same-product",
+          "quantity": 1
+        }
+      ],
+      "actual_recipients_by_slot": [
+        "customer-A",
+        "customer-B"
+      ],
+      "identity_passed": true,
+      "legacy_pair_audits": {
+        "parent_bridge": {
+          "status": "consistent",
+          "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+          "parent_execution": "1",
+          "child_execution": "2",
+          "node": "Call Bridge",
+          "run": 0,
+          "caller_input": {
+            "node": "Orders",
+            "run": 0,
+            "output": 0
+          },
+          "checked_items": 2,
+          "mismatches": 0,
+          "findings": [
+            {
+              "output": 0,
+              "item": 0,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "status": "consistent"
+            },
+            {
+              "output": 0,
+              "item": 1,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "status": "consistent"
+            }
+          ],
+          "exit_code": 0
+        },
+        "bridge_leaf": {
+          "status": "consistent",
+          "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+          "parent_execution": "2",
+          "child_execution": "3",
+          "node": "Call Leaf",
+          "run": 0,
+          "caller_input": {
+            "node": "Start",
+            "run": 0,
+            "output": 0
+          },
+          "checked_items": 2,
+          "mismatches": 0,
+          "findings": [
+            {
+              "output": 0,
+              "item": 0,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "status": "consistent"
+            },
+            {
+              "output": 0,
+              "item": 1,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "status": "consistent"
+            }
+          ],
+          "exit_code": 0
+        }
+      }
+    },
+    {
+      "case": "nested-input2",
+      "oracle": {
+        "selected_input": 2,
+        "orders": [
+          {
+            "id": "customer-A",
+            "sequence": 0
+          },
+          {
+            "id": "customer-B",
+            "sequence": 1
+          },
+          {
+            "id": "customer-C",
+            "sequence": 2
+          },
+          {
+            "id": "customer-D",
+            "sequence": 3
+          }
+        ],
+        "rules": "input1 = first two; input2 = descending order.sequence then first two; project removes identity",
+        "expected_recipients_by_slot": [
+          "customer-D",
+          "customer-C"
+        ],
+        "expected_root_order_indices_by_slot": [
+          3,
+          2
+        ],
+        "expected_boundary_input_indices_by_slot": {
+          "Call Leaf": [
+            3,
+            2
+          ],
+          "Call Bridge": [
+            3,
+            2
+          ]
+        },
+        "ground_truth_source": "Python business-input enumeration and workflow semantics, before execution"
+      },
+      "execution_statuses": {
+        "parent": "success",
+        "bridge": "success",
+        "leaf": "success"
+      },
+      "call_edges": [
+        {
+          "parent_execution": "4",
+          "node": "Call Bridge",
+          "run": 0,
+          "child_execution": "5",
+          "child_workflow": "Ce8HgQLeLV1Yc0gs"
+        },
+        {
+          "parent_execution": "5",
+          "node": "Call Leaf",
+          "run": 0,
+          "child_execution": "6",
+          "child_workflow": "G4Jcv42X8w15QKiO"
+        }
+      ],
+      "requests": [
+        {
+          "slot": 0,
+          "recipient": "customer-A",
+          "sku": "same-product",
+          "quantity": 1
+        },
+        {
+          "slot": 1,
+          "recipient": "customer-B",
+          "sku": "same-product",
+          "quantity": 1
+        }
+      ],
+      "actual_recipients_by_slot": [
+        "customer-A",
+        "customer-B"
+      ],
+      "identity_passed": false,
+      "legacy_pair_audits": {
+        "parent_bridge": {
+          "status": "consistent",
+          "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+          "parent_execution": "4",
+          "child_execution": "5",
+          "node": "Call Bridge",
+          "run": 0,
+          "caller_input": {
+            "node": "Orders",
+            "run": 0,
+            "output": 0
+          },
+          "checked_items": 2,
+          "mismatches": 0,
+          "findings": [
+            {
+              "output": 0,
+              "item": 0,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "status": "consistent"
+            },
+            {
+              "output": 0,
+              "item": 1,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "status": "consistent"
+            }
+          ],
+          "exit_code": 0
+        },
+        "bridge_leaf": {
+          "status": "mismatch",
+          "scope": "Recorded ancestry at one waiting, once-mode Execute Workflow 1.2 boundary",
+          "parent_execution": "5",
+          "child_execution": "6",
+          "node": "Call Leaf",
+          "run": 0,
+          "caller_input": {
+            "node": "Start",
+            "run": 0,
+            "output": 0
+          },
+          "checked_items": 2,
+          "mismatches": 2,
+          "findings": [
+            {
+              "output": 0,
+              "item": 0,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 3
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 0
+                }
+              ],
+              "status": "mismatch"
+            },
+            {
+              "output": 0,
+              "item": 1,
+              "expected": [
+                {
+                  "input": 0,
+                  "item": 2
+                }
+              ],
+              "observed": [
+                {
+                  "input": 0,
+                  "item": 1
+                }
+              ],
+              "status": "mismatch"
+            }
+          ],
+          "exit_code": 1
+        }
+      }
+    }
+  ],
+  "each_allruns": {
+    "family": "each-allruns-loop-side-sink",
+    "started_at": "2026-11-05T00:23:40.353490+00:00",
+    "completed_at": "2026-11-05T00:23:50.886806+00:00",
+    "runtime": {
+      "image": "docker.n8n.io/n8nio/n8n@sha256:c6a3a0461d1d3ffc16d849adf57606c2b028667ade70cce2faa2ff094734873c",
+      "expected_n8n_version_from_existing_cache_receipt": "2.43.0",
+      "actual_packages": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      }
+    },
+    "native_fault_injection": false,
+    "resource_measurement": {
+      "native_cpu_seconds": 11.092273,
+      "native_peak_rss_bytes": 760123392
+    },
+    "cleanup": {
+      "container_released": true,
+      "database_released": true
+    },
+    "acceptance": {
+      "checks": {
+        "execution_statuses": true,
+        "input_indices": true,
+        "terminal_runs": true,
+        "terminal_sources": true,
+        "terminal_json_order": true,
+        "caller_pair_indices": true,
+        "child_parent_edges": true,
+        "return_count": true,
+        "parent_return_order": true,
+        "http_delivery": true
+      },
+      "actual_return_count": 9,
+      "execution_statuses": {
+        "parent": "success",
+        "child-0": "success",
+        "child-1": "success",
+        "child-2": "success"
+      },
+      "passed": true
+    },
+    "expected_by_slot": [
+      {
+        "slot": 0,
+        "caller_input_index": 0,
+        "child_terminal": {
+          "node": "Return",
+          "run": 0,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 2,
+        "json": {
+          "orderId": "order-A",
+          "lineNumber": 105,
+          "sku": "fictional-sku-5",
+          "quantity": 5
+        }
+      },
+      {
+        "slot": 1,
+        "caller_input_index": 0,
+        "child_terminal": {
+          "node": "Return",
+          "run": 1,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 1,
+        "json": {
+          "orderId": "order-A",
+          "lineNumber": 103,
+          "sku": "fictional-sku-3",
+          "quantity": 3
+        }
+      },
+      {
+        "slot": 2,
+        "caller_input_index": 0,
+        "child_terminal": {
+          "node": "Return",
+          "run": 1,
+          "output": 0,
+          "item": 1
+        },
+        "loop_source_run": 1,
+        "json": {
+          "orderId": "order-A",
+          "lineNumber": 104,
+          "sku": "fictional-sku-4",
+          "quantity": 4
+        }
+      },
+      {
+        "slot": 3,
+        "caller_input_index": 0,
+        "child_terminal": {
+          "node": "Return",
+          "run": 2,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 0,
+        "json": {
+          "orderId": "order-A",
+          "lineNumber": 101,
+          "sku": "fictional-sku-1",
+          "quantity": 1
+        }
+      },
+      {
+        "slot": 4,
+        "caller_input_index": 0,
+        "child_terminal": {
+          "node": "Return",
+          "run": 2,
+          "output": 0,
+          "item": 1
+        },
+        "loop_source_run": 0,
+        "json": {
+          "orderId": "order-A",
+          "lineNumber": 102,
+          "sku": "fictional-sku-2",
+          "quantity": 2
+        }
+      },
+      {
+        "slot": 5,
+        "caller_input_index": 1,
+        "child_terminal": {
+          "node": "Return",
+          "run": 0,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 1,
+        "json": {
+          "orderId": "order-B",
+          "lineNumber": 203,
+          "sku": "fictional-sku-3",
+          "quantity": 3
+        }
+      },
+      {
+        "slot": 6,
+        "caller_input_index": 1,
+        "child_terminal": {
+          "node": "Return",
+          "run": 1,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 0,
+        "json": {
+          "orderId": "order-B",
+          "lineNumber": 201,
+          "sku": "fictional-sku-1",
+          "quantity": 1
+        }
+      },
+      {
+        "slot": 7,
+        "caller_input_index": 1,
+        "child_terminal": {
+          "node": "Return",
+          "run": 1,
+          "output": 0,
+          "item": 1
+        },
+        "loop_source_run": 0,
+        "json": {
+          "orderId": "order-B",
+          "lineNumber": 202,
+          "sku": "fictional-sku-2",
+          "quantity": 2
+        }
+      },
+      {
+        "slot": 8,
+        "caller_input_index": 2,
+        "child_terminal": {
+          "node": "Return",
+          "run": 0,
+          "output": 0,
+          "item": 0
+        },
+        "loop_source_run": 0,
+        "json": {
+          "orderId": "order-C",
+          "lineNumber": 301,
+          "sku": "fictional-sku-1",
+          "quantity": 1
+        }
+      }
+    ]
+  }
+}

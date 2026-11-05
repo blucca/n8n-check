@@ -1,0 +1,41 @@
+{
+  "selected_input": 2,
+  "orders": [
+    {
+      "id": "customer-A",
+      "sequence": 0
+    },
+    {
+      "id": "customer-B",
+      "sequence": 1
+    },
+    {
+      "id": "customer-C",
+      "sequence": 2
+    },
+    {
+      "id": "customer-D",
+      "sequence": 3
+    }
+  ],
+  "rules": "input1 = first two; input2 = descending order.sequence then first two; project removes identity",
+  "expected_recipients_by_slot": [
+    "customer-D",
+    "customer-C"
+  ],
+  "expected_root_order_indices_by_slot": [
+    3,
+    2
+  ],
+  "expected_boundary_input_indices_by_slot": {
+    "Call Leaf": [
+      3,
+      2
+    ],
+    "Call Bridge": [
+      3,
+      2
+    ]
+  },
+  "ground_truth_source": "Python business-input enumeration and workflow semantics, before execution"
+}
