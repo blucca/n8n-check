@@ -1,0 +1,72 @@
+{
+  "family": "composite-key-customer-recipient",
+  "experiment_kind": "Native standard-node workflow relationship-policy control and counterexample",
+  "runtime": {
+    "image": "docker.n8n.io/n8nio/n8n@sha256:c6a3a0461d1d3ffc16d849adf57606c2b028667ade70cce2faa2ff094734873c",
+    "expected_n8n_version_from_existing_cache_receipt": "2.43.0",
+    "actual_packages": {
+      "node": "v26.7.0",
+      "n8n": "2.43.0",
+      "n8n-core": "2.43.0",
+      "n8n-nodes-base": "2.43.0",
+      "n8n-workflow": "2.43.0"
+    }
+  },
+  "started_at": "2026-11-05T01:32:52.396870+00:00",
+  "completed_at": "2026-11-05T01:33:07.446353+00:00",
+  "caps": {
+    "cpu": 2,
+    "memory_bytes": 1610612736,
+    "node_heap_mib": 640,
+    "wall_seconds": 300,
+    "startup_seconds": 150,
+    "fresh_database": true,
+    "overlay": false,
+    "saved_data_mutation": false
+  },
+  "resource_measurement": {
+    "native_cpu_seconds": 15.284405,
+    "native_memory_peak_bytes": 641335296,
+    "wall_seconds": 15.049483
+  },
+  "cleanup": {
+    "container_released": true,
+    "database_released": true,
+    "original_services_preserved": true
+  },
+  "cases": [
+    {
+      "label": "full-key",
+      "ancestry": "consistent",
+      "relationship": "consistent",
+      "checked": 4,
+      "mismatch_slots": [],
+      "roots_per_effect": 8,
+      "strong_complete_key_baseline_mismatch_slots": []
+    },
+    {
+      "label": "single-key",
+      "ancestry": "consistent",
+      "relationship": "mismatch",
+      "checked": 4,
+      "mismatch_slots": [
+        2,
+        3
+      ],
+      "roots_per_effect": 8,
+      "strong_complete_key_baseline_mismatch_slots": [
+        2,
+        3
+      ]
+    }
+  ],
+  "oracle": "recorded/relations/oracle.json",
+  "acceptance_scope": "Globally unique declared order.id, unique customer (tenantId,id), strict string keys, saved recipient, complete evidence of both source roles; independent oracle checks HTTP subject and slot",
+  "baseline": "Complete composite-key join identifies the same native recipient mismatch slots; source-role ancestry adds local saved-evidence witnesses",
+  "synthetic_negative_checks": [
+    "missing child incomplete",
+    "duplicate complete key incomplete",
+    "synthetic customer inlet removal mismatch",
+    "coordinate-only default report"
+  ]
+}

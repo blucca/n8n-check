@@ -1,0 +1,22 @@
+[
+  {
+    "slot": 0,
+    "subjectId": "order-0",
+    "recipient": "amber-c1@example.test"
+  },
+  {
+    "slot": 1,
+    "subjectId": "order-1",
+    "recipient": "amber-c2@example.test"
+  },
+  {
+    "slot": 2,
+    "subjectId": "order-2",
+    "recipient": "blue-c1@example.test"
+  },
+  {
+    "slot": 3,
+    "subjectId": "order-3",
+    "recipient": "blue-c2@example.test"
+  }
+]

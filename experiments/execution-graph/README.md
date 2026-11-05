@@ -4,6 +4,10 @@
 go to the wrong customers.** This experiment composes the saved parent, bridge
 and leaf execution graphs to recover the correct outer customer records.
 
+The release check now covers two contracts: composed ancestry across child
+calls, and the customer relationship that authorizes the effect. Both run on
+complete saved records with plain Node.js; data stays on the operator's machine.
+
 ## A native nested counterexample
 
 Official **n8n 2.43.0**, three successful executions, fictional customers A–D:
@@ -179,7 +183,95 @@ const roots = graph.trace(coord(parentId, 'Aggregate', 0, 0, 0), sourceCut);
 The [`recorded/batch/`](recorded/batch/) bundle includes the four complete
 synthetic executions, pre-execution oracle and workflow definitions.
 
-## Reproduce the native capture
+## Correct ancestors, wrong customer relationship
+
+A second native family uses four orders and four customers in two tenants.
+Both tenants have customers `c1` and `c2`. Standard Aggregate nodes preserve both
+complete role tables; Merge combines their envelopes; Split Out selects orders;
+Set prepares `{slot, subjectId, recipient}`; a waiting passthrough child returns
+those effects; HTTP Request sends them to an independent loopback receiver.
+
+```text
+Orders    → Aggregate orders    ┐
+                               Merge → Split orders → Set recipient → Call Delivery → HTTP
+Customers → Aggregate customers ┘                       full / single key    ↓
+                                                                        Start → Return
+```
+
+| Set lookup rule | Saved ancestry | HTTP recipient errors | Relationship contract |
+|---|---|---|---|
+| `(tenantId, customerId)` | consistent, all 8 source records | 0 / 4 | consistent |
+| `customerId` first match | consistent, all 8 source records | **2 / 4** | **mismatch, slots 2/3** |
+
+All four executions succeed on the unmodified official **n8n 2.43.0** runtime.
+The single-key workflow deliberately uses the first matching ID: the two blue
+tenant orders reach the amber customers. Their `subjectId` and request slots
+remain correct. The independent Python input oracle fixes the allowed composite
+relationships before workflow creation; the receiver records actual HTTP.
+
+A strong complete-key join baseline finds the same two recipient errors.
+The saved-data checker adds explicit order/customer source roles, complete
+ancestor sets, the matching customer coordinate, and a portable local contract.
+The earlier nested experiment measures a runtime ancestry fault; this family
+measures a workflow's business-key policy.
+
+```sh
+node experiments/execution-graph/relation-contract.cjs \
+  experiments/execution-graph/recorded/relations/single-key-contract.json \
+  experiments/execution-graph/recorded/relations/single-key-parent-execution.json \
+  experiments/execution-graph/recorded/relations/single-key-child-execution.json
+# mismatch, exit 1; RECIPIENT_MISMATCH at slots 2/3
+
+node experiments/execution-graph/check-relations.cjs
+# PASS: native HTTP/oracle, complete-key baseline, all 8 ancestors and witnesses
+```
+
+Replace `single-key` with `full-key` for **consistent / exit 0**.
+The default report emits coordinates and fixed reason codes, retaining input
+payloads locally. An effect with valid recipients also requires evidence of its
+subject order and allowed customer in the declared ancestor set. Missing child
+records or duplicate complete customer keys produce **incomplete / exit 2**.
+
+### Apply the relationship contract to your own saved task
+
+Use the collector above, then copy one included contract and set your saved
+execution IDs and source/target node coordinates. Version 1 reads these fixed
+fields:
+
+- `Orders` role: `order.id`, `order.tenantId`, `order.customerId`.
+- `Customers` role: `customer.tenantId`, `customer.id`, `customer.email`.
+- Effect record: `slot`, `subjectId`, `recipient`.
+
+Each role explicitly selects an execution, node, run and output. `record_path`
+selects its `order` or `customer` object; every item in that output is included
+in the role table and source cut. Keys are nonempty strings. `order.id` is unique
+within the declared table; customer `(tenantId,id)` has cardinality one.
+
+`subjectId` declares the acted-on order. The contract checks that declared
+order's allowed customer and saved recipient, with both source witnesses.
+Intended effect count, slot schedule and the truth of the subject declaration
+come from the operator's separate acceptance rules. This capture independently
+checks all four HTTP subject/slot pairs against its pre-execution oracle.
+
+For a first fit check, run the two commands locally on **one of your own complete
+successful waiting-child executions** and [send its status/reason, n8n version,
+node count and expected relationship](mailto:belgialucca@gmail.com?subject=Execution%20Graph%20local%20fit%20check).
+Keep raw records and API credentials on your machine. A concrete repeatable
+mismatch gives the next repair scope.
+
+[Two native bundles, contracts and HTTP observations](recorded/relations/)
+and [measurements](relation-results.json) accompany the checker. Recreate the
+family with the cached official image and the same bounded resource policy:
+
+```sh
+python3 -B experiments/execution-graph/run-relations.py \
+  --output "$WORKSPACE/temp/n8n-relations-new" --wall-limit 300
+```
+
+The native run used 15.28 CPU seconds, a 611.62 MiB memory peak and 15.05 seconds
+wall time; its dedicated runtime and database were released afterwards.
+
+## Reproduce the native nested capture
 
 Python standard library, Docker on Linux, an available cached official image:
 
