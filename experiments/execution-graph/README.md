@@ -89,6 +89,8 @@ normal each-mode call with three child executions. Those children use Loop
 Over Items v3 and trigger 1.2 allRuns, returning 5/3/1 items from 3/2/1 terminal
 runs. All nine returned items retain the correct original caller input roots.
 The normal each/allRuns bundle is in [`recorded/each-allruns/`](recorded/each-allruns/).
+The parent-batching control additionally covers three caller runs, initial and
+feedback loop source overwrites, and one legal five-record aggregate.
 
 Trigger 1.3's declared-output policy, transformed trigger schemas, detached
 calls, terminal pinData and each-mode zero-return acquisition require their own
@@ -121,6 +123,35 @@ node experiments/execution-graph/audit-bundle.cjs \
   experiments/execution-graph/recorded/each-allruns/child-2-execution.json
 # consistent, exit 0
 ```
+
+## Batch-local slots and original business records
+
+The third normal native control batches five orders as **2 / 2 / 1**. A waiting
+once-mode child executes three times. Loop's done output is aggregated into one
+group; the HTTP receiver gets all five intended order IDs.
+
+The three call boundaries are consistent. Their input coordinates are local to
+each Loop run. The source contract in [`check-batch.cjs`](check-batch.cjs) selects
+the original `Orders` output explicitly, then follows the aggregate through all
+three child calls. Its legal ancestor set is **Orders 0, 1, 2, 3, 4**.
+
+```sh
+node experiments/execution-graph/check-batch.cjs
+# consistent / 5 checked, aggregate roots Orders 0..4
+```
+
+Use this API pattern for a declared business-record grain:
+
+```js
+const { ExecutionGraph, coord, key } = require('./audit-bundle.cjs');
+const graph = new ExecutionGraph(executions);
+const sourceCut = new Set(originalRecords.map((_, i) =>
+  key(coord(parentId, 'Orders', 0, 0, i))));
+const roots = graph.trace(coord(parentId, 'Aggregate', 0, 0, 0), sourceCut);
+```
+
+The [`recorded/batch/`](recorded/batch/) bundle includes the four complete
+synthetic executions, pre-execution oracle and workflow definitions.
 
 ## Reproduce the native capture
 

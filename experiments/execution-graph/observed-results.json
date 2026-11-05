@@ -608,5 +608,149 @@
         }
       }
     ]
+  },
+  "batch": {
+    "family": "parent-batch-once-aggregate",
+    "started_at": "2026-11-05T00:34:23.329117+00:00",
+    "completed_at": "2026-11-05T00:34:32.425088+00:00",
+    "runtime": {
+      "image": "docker.n8n.io/n8nio/n8n@sha256:c6a3a0461d1d3ffc16d849adf57606c2b028667ade70cce2faa2ff094734873c",
+      "expected_n8n_version_from_existing_cache_receipt": "2.43.0",
+      "actual_packages": {
+        "node": "v26.7.0",
+        "n8n": "2.43.0",
+        "n8n-core": "2.43.0",
+        "n8n-nodes-base": "2.43.0",
+        "n8n-workflow": "2.43.0"
+      }
+    },
+    "native_fault_injection": false,
+    "resource_measurement": {
+      "native_cpu_seconds": 9.879406,
+      "native_peak_rss_bytes": 699412480
+    },
+    "cleanup": {
+      "container_released": true,
+      "database_released": true
+    },
+    "acceptance": {
+      "passed": true,
+      "checks": {
+        "execution_statuses": true,
+        "call_runs": true,
+        "child_inputs": true,
+        "child_edges": true,
+        "child_return_order": true,
+        "caller_pair_indices": true,
+        "caller_sources": true,
+        "loop_run_count": true,
+        "loop_initial_source": true,
+        "loop_done_feedback_sources": true,
+        "loop_done_order": true,
+        "aggregate_shape": true,
+        "aggregate_json": true,
+        "aggregate_pairs": true,
+        "aggregate_source": true,
+        "http_group_delivery": true
+      },
+      "execution_statuses": {
+        "parent": "success",
+        "child-0": "success",
+        "child-1": "success",
+        "child-2": "success"
+      }
+    },
+    "expected_call_runs": [
+      {
+        "call_run": 0,
+        "global_orders_indices": [
+          0,
+          1
+        ],
+        "expected_count": 2,
+        "order_ids": [
+          "order-A",
+          "order-B"
+        ]
+      },
+      {
+        "call_run": 1,
+        "global_orders_indices": [
+          2,
+          3
+        ],
+        "expected_count": 2,
+        "order_ids": [
+          "order-C",
+          "order-D"
+        ]
+      },
+      {
+        "call_run": 2,
+        "global_orders_indices": [
+          4
+        ],
+        "expected_count": 1,
+        "order_ids": [
+          "order-E"
+        ]
+      }
+    ],
+    "aggregate_expected_roots": [
+      {
+        "execution": "1",
+        "node": "Orders",
+        "run": 0,
+        "output": 0,
+        "item": 0
+      },
+      {
+        "execution": "1",
+        "node": "Orders",
+        "run": 0,
+        "output": 0,
+        "item": 1
+      },
+      {
+        "execution": "1",
+        "node": "Orders",
+        "run": 0,
+        "output": 0,
+        "item": 2
+      },
+      {
+        "execution": "1",
+        "node": "Orders",
+        "run": 0,
+        "output": 0,
+        "item": 3
+      },
+      {
+        "execution": "1",
+        "node": "Orders",
+        "run": 0,
+        "output": 0,
+        "item": 4
+      }
+    ],
+    "http_requests": [
+      {
+        "groupIds": [
+          "order-A",
+          "order-B",
+          "order-C",
+          "order-D",
+          "order-E"
+        ],
+        "groupSize": 5,
+        "sequences": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    ]
   }
 }

@@ -1,0 +1,238 @@
+{
+  "id": "2",
+  "finished": true,
+  "mode": "integrated",
+  "retryOf": null,
+  "retrySuccessId": null,
+  "status": "success",
+  "createdAt": "2026-11-05T00:34:31.758Z",
+  "startedAt": "2026-11-05T00:34:31.761Z",
+  "stoppedAt": "2026-11-05T00:34:31.794Z",
+  "deletedAt": null,
+  "workflowId": "Eki5mJaOMuVZHMWc",
+  "waitTill": null,
+  "storedAt": "db",
+  "tracingContext": null,
+  "deduplicationKey": null,
+  "jsonSizeBytes": 2351,
+  "binaryDataSizeBytes": 0,
+  "workflowVersionId": "8697818a-ee14-4011-9500-90b2cf20fc45",
+  "usedPrivateCredentials": false,
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Start": [
+          {
+            "startTime": 1793838871793,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "metadata": {
+              "parentExecution": {
+                "executionId": "1",
+                "workflowId": "c1BSJgeJj2AXA9v9",
+                "shouldResume": true,
+                "executionContext": {
+                  "version": 1,
+                  "establishedAt": 1793838871723,
+                  "source": "webhook",
+                  "triggerNode": {
+                    "name": "Webhook",
+                    "type": "n8n-nodes-base.webhook"
+                  },
+                  "redaction": {
+                    "version": 2,
+                    "production": false,
+                    "manual": false
+                  }
+                }
+              }
+            },
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0,
+                        "sku": "fictional-same-product",
+                        "quantity": 1
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1,
+                        "sku": "fictional-same-product",
+                        "quantity": 2
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Return": [
+          {
+            "startTime": 1793838871794,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-A",
+                        "sequence": 0,
+                        "sku": "fictional-same-product",
+                        "quantity": 1
+                      }
+                    },
+                    "index": 0,
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "order": {
+                        "id": "order-B",
+                        "sequence": 1,
+                        "sku": "fictional-same-product",
+                        "quantity": 2
+                      }
+                    },
+                    "index": 1,
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Return"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1793838871793,
+        "source": "integrated",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        },
+        "parentExecutionId": "1"
+      }
+    },
+    "parentExecution": {
+      "executionId": "1",
+      "workflowId": "c1BSJgeJj2AXA9v9",
+      "shouldResume": true,
+      "executionContext": {
+        "version": 1,
+        "establishedAt": 1793838871723,
+        "source": "webhook",
+        "triggerNode": {
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook"
+        },
+        "redaction": {
+          "version": 2,
+          "production": false,
+          "manual": false
+        }
+      }
+    }
+  },
+  "customData": {},
+  "workflowData": {
+    "id": "Eki5mJaOMuVZHMWc",
+    "name": "4ac3ce9c67 plain passthrough child",
+    "nodes": [
+      {
+        "id": "Start",
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "events": "worklfow_call",
+          "inputSource": "passthrough",
+          "returnOutput": "lastRunOnly"
+        }
+      },
+      {
+        "id": "Return",
+        "name": "Return",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          250,
+          0
+        ],
+        "parameters": {
+          "emptyGroupAnchor": false
+        }
+      }
+    ],
+    "connections": {
+      "Start": {
+        "main": [
+          [
+            {
+              "node": "Return",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "nodeGroups": []
+  }
+}
