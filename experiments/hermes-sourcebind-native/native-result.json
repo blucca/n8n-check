@@ -1,0 +1,97 @@
+{
+  "release": "v0.23.0",
+  "sha": "2bd378ed1b8d6bf2192cb26e0a55ff3091e6bd19",
+  "native_agent_session_id": "20261109_001837_53075b",
+  "turn_exit_reason": "blocked_by_plugin_pre_llm_call",
+  "unbound_valid_wrong_customer": {
+    "ok": true,
+    "updated_customer": "ct-91"
+  },
+  "bind": "SourceBind bound northwind-renewal",
+  "blocked_wrong_customer": {
+    "error": "SourceBind: use current customer_id nw-41"
+  },
+  "allowed_current_customer": {
+    "ok": true,
+    "updated_customer": "nw-41"
+  },
+  "blocked_wrong_job": {
+    "error": "SourceBind: wrong business job."
+  },
+  "blocked_stale_source": {
+    "error": "SourceBind: use current customer_id nw-42"
+  },
+  "allowed_refreshed_source": {
+    "ok": true,
+    "updated_customer": "nw-42"
+  },
+  "current": {
+    "binding": {
+      "scope_id": "20261109_001837_53075b",
+      "job": "northwind-renewal",
+      "source": "/workspace/gain/temp/round501/selected-source.json"
+    },
+    "source": {
+      "job": "northwind-renewal",
+      "customer_id": "nw-42"
+    },
+    "native_context": {
+      "task_id": "20261109_001837_53075b",
+      "session_id": "20261109_001837_53075b",
+      "user_task": null
+    },
+    "scope_id": "20261109_001837_53075b",
+    "last_child": null,
+    "last_rotation": null
+  },
+  "documented_later_conversation_id_present": false,
+  "native_handler_session_id_present": true,
+  "child_identity": {
+    "parent": "20261109_001837_53075b",
+    "child": "20261109_001838_8f086f"
+  },
+  "child_blocked_wrong_customer": {
+    "error": "SourceBind: use current customer_id nw-42"
+  },
+  "child_allowed_current_customer": {
+    "ok": true,
+    "updated_customer": "nw-42"
+  },
+  "child_scope": "20261109_001837_53075b",
+  "rotation": {
+    "binding": {
+      "scope_id": "20261109_001837_53075b",
+      "job": "northwind-renewal",
+      "source": "/workspace/gain/temp/round501/selected-source.json"
+    },
+    "source": {
+      "job": "northwind-renewal",
+      "customer_id": "nw-42"
+    },
+    "native_context": {
+      "task_id": "20261109_001838_10de8e",
+      "session_id": "20261109_001838_10de8e",
+      "user_task": null
+    },
+    "scope_id": "20261109_001837_53075b",
+    "last_child": {
+      "parent": "20261109_001837_53075b",
+      "child": "20261109_001838_8f086f"
+    },
+    "last_rotation": {
+      "old": "20261109_001837_53075b",
+      "new": "20261109_001838_10de8e"
+    }
+  },
+  "rotated_blocked_wrong_customer": {
+    "error": "SourceBind: use current customer_id nw-42"
+  },
+  "rotated_allowed_current_customer": {
+    "ok": true,
+    "updated_customer": "nw-42"
+  },
+  "independent_scope": "20261109_001839_6ea75f",
+  "gate": "pass: native current-source, job, delegation, rotation, independent scope",
+  "scope_contract": "Public v0.23.0 subagent_start and post_compaction map actual session IDs; no task label inference.",
+  "fixture_inference": "pre_llm_call blocks turns; compaction consumes a synthetic native prepared-summary input"
+}

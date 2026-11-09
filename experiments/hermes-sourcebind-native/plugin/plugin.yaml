@@ -1,0 +1,9 @@
+name: sourcebind-native-gate
+version: 0.0.1
+description: Offline native contract probe for explicit business-source bindings.
+author: blucca
+requires_hermes: ">=0.23.0"
+provides_tools: [sourcebind_current, sourcebind_demo_update]
+provides_hooks: [pre_tool_call, pre_llm_call, subagent_start, post_compaction]
+provides_commands: [sourcebind]
+license: MIT
