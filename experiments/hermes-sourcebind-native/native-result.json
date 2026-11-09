@@ -92,6 +92,6 @@
   },
   "independent_scope": "20261109_001839_6ea75f",
   "gate": "pass: native current-source, job, delegation, rotation, independent scope",
-  "scope_contract": "Public v0.23.0 subagent_start and post_compaction map actual session IDs; no task label inference.",
+  "scope_contract": "Public v0.23.0 subagent_start and post_compaction map actual session IDs into the stable binding scope.",
   "fixture_inference": "pre_llm_call blocks turns; compaction consumes a synthetic native prepared-summary input"
 }

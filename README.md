@@ -21,6 +21,8 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **Customer identity release check:** [Follow the customer from child call to HTTP](experiments/execution-graph/) — three local reports for composed ancestry, saved customer relationships and independently observed HTTP effects. The new native counterexample has 11 matching business-node JSON snapshots and correct saved recipients, yet three HTTP requests reach the wrong customer. Includes complete-key baselines, native evidence and a GET-only bundle collector. [One customer route: $650 audit and repair](experiments/execution-graph/#one-customer-route-650-audit-and-repair).
 
+**Hermes native execution control:** [SourceBind: bind the job to the current source](experiments/hermes-sourcebind-native/) — a real native hook blocks a valid customer ID from a different job. The fixture preserves the binding through actual delegated sessions and rotating compaction, with runnable source and recorded results.
+
 ## Paid help for one failing workflow
 
 **$199 for one reproducible fault:** a minimal workflow fix, up to three agreed regression checks, before/after JSON + JUnit results, and one in-scope revision. Scope: one self-contained slice, up to 15 standard nodes and one mocked HTTP integration. First delivery within **2 business days** after scope and materials are agreed.

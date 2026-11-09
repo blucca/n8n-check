@@ -1,4 +1,4 @@
-"""Small native gate, not a shipped policy. Fixtures use fictional customers.
+"""Offline native mechanism fixture with fictional customers.
 
 The stable scope follows explicit native subagent_start and post_compaction
 events. Ordinary new/branch sessions retain distinct scope IDs.
