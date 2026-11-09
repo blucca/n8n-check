@@ -1,0 +1,351 @@
+{
+  "sourcebind_version": "0.1.2",
+  "cashdesk_pin": "26d5fabe5f50f250e5dc72c0751adbdb3625f732",
+  "kind": "real native dispatcher interoperability checks",
+  "data": "Cash Desk bundled fictional customer CSV only",
+  "model_turns": 0,
+  "outbound_sends": 0,
+  "bank_or_invoice_imports": 0,
+  "steps": [
+    {
+      "tool": "cashdesk_import",
+      "args": {
+        "kind": "customers",
+        "path": "demo/customers.csv"
+      },
+      "result": {
+        "ok": true,
+        "quarantined": false,
+        "kind": "customers",
+        "source": "generic",
+        "file": "customers.csv",
+        "rows": 8,
+        "imported": {
+          "customers": 8
+        },
+        "skipped": 0,
+        "skipped_by_reason": {},
+        "credit_notes": 0,
+        "credit_updates": 0,
+        "warnings": [],
+        "date_order": null,
+        "errors": [],
+        "fingerprint": "06023921229b"
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C002",
+        "text": "Fictional customer dispute for the native demo: unbound wrong customer.",
+        "kind": "dispute"
+      },
+      "result": {
+        "ok": true,
+        "customer_id": "C002",
+        "classification": "dispute",
+        "held": true,
+        "paused_until": null,
+        "advice": "Customer put on hold; their drafts are held until a person releases them with /cashdesk release."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C001",
+        "text": "Fictional customer dispute for the native demo: default mode missing native job argument.",
+        "kind": "dispute"
+      },
+      "result": {
+        "error": "SourceBind blocked cashdesk_reply in scope sourcebind-cashdesk-20261109: wrong current-source arguments. Expected current {\"job\": \"sample-customer-reply\", \"customer_id\": \"C001\"}; received {\"job\": null, \"customer_id\": \"C001\"}. Read sourcebind_current and retry with its expected_args."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "sourcebind_current",
+      "args": {},
+      "result": {
+        "status": "ready",
+        "scope_id": "sourcebind-cashdesk-20261109",
+        "binding": {
+          "scope_id": "sourcebind-cashdesk-20261109",
+          "job": "sample-customer-reply",
+          "source": "/workspace/gain/temp/round503/cashdesk-native/result/current-customer.json",
+          "protected_tool": "cashdesk_reply",
+          "check_job_arg": false
+        },
+        "current": {
+          "job": "sample-customer-reply",
+          "customer_id": "C001"
+        },
+        "expected_args": {
+          "customer_id": "C001"
+        },
+        "next_step": "Call cashdesk_reply with {\"customer_id\": \"C001\"}. Add other required tool arguments from your task. Read sourcebind_current again after a source change."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C002",
+        "text": "Fictional customer dispute for the native demo: bound wrong customer.",
+        "kind": "dispute"
+      },
+      "result": {
+        "error": "SourceBind blocked cashdesk_reply in scope sourcebind-cashdesk-20261109: wrong current-source arguments. Expected current {\"customer_id\": \"C001\"}; received {\"customer_id\": \"C002\"}. Read sourcebind_current and retry with its expected_args."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C001",
+        "text": "Fictional customer dispute for the native demo: bound current customer.",
+        "kind": "dispute"
+      },
+      "result": {
+        "ok": true,
+        "customer_id": "C001",
+        "classification": "dispute",
+        "held": true,
+        "paused_until": null,
+        "advice": "Customer put on hold; their drafts are held until a person releases them with /cashdesk release."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C001",
+        "text": "Fictional customer dispute for the native demo: stale after source rollover.",
+        "kind": "dispute"
+      },
+      "result": {
+        "error": "SourceBind blocked cashdesk_reply in scope sourcebind-cashdesk-20261109: wrong current-source arguments. Expected current {\"customer_id\": \"C003\"}; received {\"customer_id\": \"C001\"}. Read sourcebind_current and retry with its expected_args."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C003",
+        "text": "Fictional customer dispute for the native demo: new current customer after rollover.",
+        "kind": "dispute"
+      },
+      "result": {
+        "ok": true,
+        "customer_id": "C003",
+        "classification": "dispute",
+        "held": true,
+        "paused_until": null,
+        "advice": "Customer put on hold; their drafts are held until a person releases them with /cashdesk release."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C003",
+        "text": "Fictional customer dispute for the native demo: broken selected source.",
+        "kind": "dispute"
+      },
+      "result": {
+        "error": "SourceBind BLOCKED\nScope: sourcebind-cashdesk-20261109\nBound job: sample-customer-reply\nProtected tool: cashdesk_reply\nSource: /workspace/gain/temp/round503/cashdesk-native/result/current-customer.json\nSelected source read failed: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\nNext: Repair the selected JSON at /workspace/gain/temp/round503/cashdesk-native/result/current-customer.json, then read sourcebind_current. Use /sourcebind clear to end this scope's binding."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "cashdesk_reply",
+      "args": {
+        "customer_id": "C003",
+        "text": "Fictional customer dispute for the native demo: source job mismatch.",
+        "kind": "dispute"
+      },
+      "result": {
+        "error": "SourceBind BLOCKED\nScope: sourcebind-cashdesk-20261109\nBound job: sample-customer-reply\nProtected tool: cashdesk_reply\nSource: /workspace/gain/temp/round503/cashdesk-native/result/current-customer.json\nCurrent job: different-job\nCurrent customer_id: C003\nSelected source job 'different-job' differs from bound job 'sample-customer-reply'.\nNext: Restore the selected source job to 'sample-customer-reply', or explicitly select the new job with /sourcebind bind <job> <source.json> [protected_tool] [id-only]."
+      },
+      "native_transport": "tool_call"
+    },
+    {
+      "tool": "sourcebind_current",
+      "args": {},
+      "result": {
+        "status": "ready",
+        "scope_id": "sourcebind-cashdesk-20261109",
+        "binding": {
+          "scope_id": "sourcebind-cashdesk-20261109",
+          "job": "sample-customer-reply",
+          "source": "/workspace/gain/temp/round503/cashdesk-native/result/current-customer.json",
+          "protected_tool": "cashdesk_reply",
+          "check_job_arg": false
+        },
+        "current": {
+          "job": "sample-customer-reply",
+          "customer_id": "C003"
+        },
+        "expected_args": {
+          "customer_id": "C003"
+        },
+        "next_step": "Call cashdesk_reply with {\"customer_id\": \"C003\"}. Add other required tool arguments from your task. Read sourcebind_current again after a source change."
+      },
+      "native_transport": "tool_call"
+    }
+  ],
+  "selected_source": {
+    "job": "sample-customer-reply",
+    "customer_id": "C001"
+  },
+  "baseline_state": {
+    "customers": [
+      {
+        "customer_id": "C001",
+        "on_hold": false,
+        "hold_reason": ""
+      },
+      {
+        "customer_id": "C002",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+      },
+      {
+        "customer_id": "C003",
+        "on_hold": false,
+        "hold_reason": ""
+      }
+    ],
+    "events": [
+      {
+        "kind": "hold",
+        "customer_id": "C002",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+        }
+      }
+    ]
+  },
+  "default_binding": "SourceBind binding set.\nSourceBind READY\nScope: sourcebind-cashdesk-20261109\nBound job: sample-customer-reply\nProtected tool: cashdesk_reply\nSource: /workspace/gain/temp/round503/cashdesk-native/result/current-customer.json\nCurrent job: sample-customer-reply\nCurrent customer_id: C001\nExpected tool args: {\"job\": \"sample-customer-reply\", \"customer_id\": \"C001\"}\nNext: Call cashdesk_reply with {\"job\": \"sample-customer-reply\", \"customer_id\": \"C001\"}. Add other required tool arguments from your task. Read sourcebind_current again after a source change.",
+  "id_only_binding": "SourceBind binding set.\nSourceBind READY\nScope: sourcebind-cashdesk-20261109\nBound job: sample-customer-reply\nProtected tool: cashdesk_reply\nSource: /workspace/gain/temp/round503/cashdesk-native/result/current-customer.json\nCurrent job: sample-customer-reply\nCurrent customer_id: C001\nExpected tool args: {\"customer_id\": \"C001\"}\nNext: Call cashdesk_reply with {\"customer_id\": \"C001\"}. Add other required tool arguments from your task. Read sourcebind_current again after a source change.",
+  "bound_state": {
+    "customers": [
+      {
+        "customer_id": "C001",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+      },
+      {
+        "customer_id": "C002",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+      },
+      {
+        "customer_id": "C003",
+        "on_hold": false,
+        "hold_reason": ""
+      }
+    ],
+    "events": [
+      {
+        "kind": "hold",
+        "customer_id": "C002",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+        }
+      },
+      {
+        "kind": "hold",
+        "customer_id": "C001",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+        }
+      }
+    ]
+  },
+  "rollover_state": {
+    "customers": [
+      {
+        "customer_id": "C001",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+      },
+      {
+        "customer_id": "C002",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+      },
+      {
+        "customer_id": "C003",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: new current customer after rollover."
+      }
+    ],
+    "events": [
+      {
+        "kind": "hold",
+        "customer_id": "C002",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+        }
+      },
+      {
+        "kind": "hold",
+        "customer_id": "C001",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+        }
+      },
+      {
+        "kind": "hold",
+        "customer_id": "C003",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: new current customer after rollover."
+        }
+      }
+    ]
+  },
+  "final_state": {
+    "customers": [
+      {
+        "customer_id": "C001",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+      },
+      {
+        "customer_id": "C002",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+      },
+      {
+        "customer_id": "C003",
+        "on_hold": true,
+        "hold_reason": "dispute raised in a reply: Fictional customer dispute for the native demo: new current customer after rollover."
+      }
+    ],
+    "events": [
+      {
+        "kind": "hold",
+        "customer_id": "C002",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: unbound wrong customer."
+        }
+      },
+      {
+        "kind": "hold",
+        "customer_id": "C001",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: bound current customer."
+        }
+      },
+      {
+        "kind": "hold",
+        "customer_id": "C003",
+        "detail": {
+          "reason": "dispute raised in a reply: Fictional customer dispute for the native demo: new current customer after rollover."
+        }
+      }
+    ]
+  },
+  "status": "passed"
+}

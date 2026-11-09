@@ -74,3 +74,19 @@ the plugin itself uses public registration, state and callback surfaces.
 MIT-licensed code. Official contracts at the tested release:
 [plugin guide](https://github.com/NousResearch/hermes-agent/blob/v0.23.0/website/docs/developer-guide/plugins/index.md)
 and [lifecycle hooks](https://github.com/NousResearch/hermes-agent/blob/v0.23.0/website/docs/user-guide/features/hooks.md).
+
+## Cash Desk native interoperability (SourceBind v0.1.2)
+
+The standalone [dispatcher check](cashdesk-id-only-native.py) loads SourceBind and
+Cash Desk `26d5fabe5f50f250e5dc72c0751adbdb3625f732` in a fresh dedicated
+`HERMES_HOME`. Install/enable both first, then run with the Hermes checkout's
+Python and `--hermes /path/to/hermes-agent --output-dir /your/workspace/temp/cashdesk-demo`.
+The [saved result](cashdesk-id-only-result.json) records eleven real stock
+`tool_call` dispatcher calls, using only Cash Desk's fictional customer CSV.
+
+A dispute assigned to a valid wrong customer really places that customer on hold.
+Default job+ID mode rejects this customer-only schema. Explicit `id-only` mode
+blocks the wrong ID, accepts the current ID, follows a source rollover, and
+blocks broken JSON and a changed source job. SQLite customer and event readbacks
+verify each effect. SourceBind uses public hooks; this standalone checker imports
+Hermes's native dispatcher. Model turns, outbound sends and bank/invoice imports: 0.
