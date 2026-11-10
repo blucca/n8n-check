@@ -25,6 +25,17 @@ test('prepares real downstream nodes, fresh identity and synthetic input', () =>
   assert.equal(source.nodes[2].parameters.url, 'https://api.example.com/renders');
 });
 
+test('preserves explicit execution order and the omitted native default', () => {
+  for (const order of [undefined, 'v0', 'v1']) {
+    const source = copy(workflow);
+    if (order === undefined) delete source.settings;
+    else source.settings.executionOrder = order;
+    const result = prepareWorkflow(source, fixture, 'http://127.0.0.1:1234').workflow;
+    assert.equal(Object.hasOwn(result.settings, 'executionOrder'), order !== undefined);
+    assert.equal(result.settings.executionOrder, order);
+  }
+});
+
 test('single-workflow CLI array exports are supported', () => {
   assert.equal(prepareWorkflow([workflow], fixture, 'http://127.0.0.1:1234').workflow.nodes.length, 3);
   assert.throws(() => prepareWorkflow([workflow, workflow], fixture, ''), /multiple workflows/);

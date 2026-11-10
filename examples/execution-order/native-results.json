@@ -1,0 +1,51 @@
+{
+  "scope": "Three-node synthetic branch scheduling control; both item outputs unchanged",
+  "n8nVersion": "2.41.7",
+  "runnerVersion": "0.1.8",
+  "cases": [
+    {
+      "name": "omitted",
+      "preparedOrder": null,
+      "upper": 3,
+      "lower": 2,
+      "observedSequence": [
+        "Lower",
+        "Upper"
+      ],
+      "items": {
+        "Upper": [
+          {
+            "id": "order-1"
+          }
+        ],
+        "Lower": [
+          {
+            "id": "order-1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "v1",
+      "preparedOrder": "v1",
+      "upper": 2,
+      "lower": 3,
+      "observedSequence": [
+        "Upper",
+        "Lower"
+      ],
+      "items": {
+        "Upper": [
+          {
+            "id": "order-1"
+          }
+        ],
+        "Lower": [
+          {
+            "id": "order-1"
+          }
+        ]
+      }
+    }
+  ]
+}

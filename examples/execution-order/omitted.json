@@ -1,0 +1,57 @@
+{
+  "name": "order control",
+  "nodes": [
+    {
+      "id": "Fixture",
+      "name": "Fixture",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "parameters": {},
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "id": "Lower",
+      "name": "Lower",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "parameters": {},
+      "position": [
+        240,
+        400
+      ]
+    },
+    {
+      "id": "Upper",
+      "name": "Upper",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "parameters": {},
+      "position": [
+        240,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Fixture": {
+      "main": [
+        [
+          {
+            "node": "Lower",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}

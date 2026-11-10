@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: blucca/n8n-check@v0.1.7
+      - uses: blucca/n8n-check@v0.1.8
         with:
           workflow: workflows/render.json
           case: tests/render.case.json
@@ -76,7 +76,7 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 Set `n8n-version` to an exact official image release:
 
 ```yaml
-      - uses: blucca/n8n-check@v0.1.7
+      - uses: blucca/n8n-check@v0.1.8
         with:
           n8n-version: '2.38.4'
           workflow: workflows/render.json
@@ -94,7 +94,7 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 
 **Have Docker? Download → unzip → `sh run.sh`.** The pack includes your workflow, editable case, and a pinned runner script. The first run downloads n8n and checks the pinned v0.1.6 runner once; subsequent runs reuse the local cache. Execution uses a loopback-only container with read-only input mounts, and writes `results/report.json` and `results/junit.xml`. Requires Docker with Linux containers and a shell on Linux, macOS, or WSL2. Your workflow and fixture files stay local.
 
-Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.7** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
+Exported JSON pins can prefill the input and expected items. The builder lists the nodes in the slice and identifies missing fixtures, HTTP mock contracts, and structural dependencies before you install a runtime. File contents stay in your browser tab; review the snapshots against the behavior you want to preserve. A completed case runs with the released **v0.1.8** CLI or Action. Select **Full JSON items** for a complete snapshot, **Selected field + item count** for stable IDs with changing timestamps, or **Item count** for output volume. Field paths start at the n8n item, such as `json.id`; expected values preserve order and duplicates.
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
 
@@ -151,7 +151,7 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 With Git and Docker installed:
 
 ```sh
-git clone --branch v0.1.7 https://github.com/blucca/n8n-check.git
+git clone --branch v0.1.8 https://github.com/blucca/n8n-check.git
 cd n8n-check
 docker build -t n8n-check .
 
@@ -194,7 +194,7 @@ n8n-check workflow.json case.json --allow-network --out results
 n8n-check workflow.json case.json --n8n /path/to/n8n --allow-network
 ```
 
-The official package is [@blucca/n8n-check on npm](https://www.npmjs.com/package/@blucca/n8n-check). For a reproducible CLI install, use `npm install --global @blucca/n8n-check@0.1.7`. A standalone `.tgz` is also available in the [GitHub release](https://github.com/blucca/n8n-check/releases/tag/v0.1.7). Docker is the simplest route to a pinned runtime and loopback-only networking. Default runtime: **n8n 2.41.7**; local CLI installation: Node.js **24+**. The [version matrix](examples/version-matrix/) also exercises 2.38.4, and the JSON request/output case passes on 2.37.9. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
+The official package is [@blucca/n8n-check on npm](https://www.npmjs.com/package/@blucca/n8n-check). For a reproducible CLI install, use `npm install --global @blucca/n8n-check@0.1.8`. A standalone `.tgz` is also available in the [GitHub release](https://github.com/blucca/n8n-check/releases/tag/v0.1.8). Docker is the simplest route to a pinned runtime and loopback-only networking. Default runtime: **n8n 2.41.7**; local CLI installation: Node.js **24+**. The [version matrix](examples/version-matrix/) also exercises 2.38.4, and the JSON request/output case passes on 2.37.9. The CLI uses the official [workflow import and execute commands](https://docs.n8n.io/hosting/cli-commands/).
 
 ## Your first case
 
@@ -205,7 +205,7 @@ For your own export, replace **all three node-name fields** below: `input.node` 
 Save the JSON below as `case.json`. If you installed the CLI globally, download the example workflow into the same directory, then run:
 
 ```sh
-curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.7/examples/object-body/fixed.json \
+curl --fail --location https://raw.githubusercontent.com/blucca/n8n-check/v0.1.8/examples/object-body/fixed.json \
   --output first-case.workflow.json
 n8n-check first-case.workflow.json case.json --allow-network --out results/first-case
 ```
@@ -290,7 +290,7 @@ For `Read invoices (Google Sheets) → Prepare notification (Code) → Notify te
 
 `stopAfter` removes all outgoing connections of one named node. Other branches reachable from the input remain in the run, including their HTTP mock and credential checks. The builder displays the resulting slice. Assertions and static references must point to kept nodes, and original incoming dependencies remain checked. Choose a node after a loop's completed output; a stopping node inside a directed cycle produces a setup error. Reports record the boundary change and omitted nodes. Date-dependent nodes continue to use the runtime's clock.
 
-Each run gets a fresh SQLite database, home directory and encryption key. Source pin data, static data, ownership and production workflow settings stay outside the test; execution order and workflow timezone are retained. Other integration nodes with credential references require a fixture boundary or HTTP mock. The fixture format accepts JSON input items; binary fixture inputs, additional workflow imports, credential imports and trigger/webhook delivery are outside v0.1's supported test surface.
+Each run gets a fresh SQLite database, home directory and encryption key. Source pin data, static data, ownership and production workflow settings stay outside the test; explicit execution order and workflow timezone are retained. An omitted `executionOrder` stays omitted, letting the installed n8n runtime apply its native scheduling default (legacy order in n8n 2.43.0). [Native branch control and recorded indices](examples/execution-order/) show how this setting affects parity. Other integration nodes with credential references require a fixture boundary or HTTP mock. The fixture format accepts JSON input items; binary fixture inputs, additional workflow imports, credential imports and trigger/webhook delivery are outside v0.1's supported test surface.
 
 ### Network and local data
 

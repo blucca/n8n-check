@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "execution order preservation",
+  "input": {
+    "node": "Fixture",
+    "items": [
+      {
+        "id": "order-1"
+      }
+    ]
+  },
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Upper",
+      "count": 1
+    },
+    {
+      "node": "Lower",
+      "count": 1
+    }
+  ],
+  "timeoutMs": 30000
+}

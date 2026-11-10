@@ -133,7 +133,7 @@ export function prepareWorkflow(source, spec, mockBase) {
     workflow: {
       id: randomUUID().replaceAll('-', '').slice(0, 16), name: `n8n-check: ${spec.name}`, active: false,
       nodes: workflow.nodes, connections: workflow.connections,
-      settings: { ...(source.settings?.timezone ? { timezone: source.settings.timezone } : {}), executionOrder: source.settings?.executionOrder || 'v1', executionTimeout: Math.ceil((spec.timeoutMs ?? 60000) / 1000), saveExecutionProgress: true },
+      settings: { ...(source.settings?.timezone ? { timezone: source.settings.timezone } : {}), ...(source.settings?.executionOrder !== undefined ? { executionOrder: source.settings.executionOrder } : {}), executionTimeout: Math.ceil((spec.timeoutMs ?? 60000) / 1000), saveExecutionProgress: true },
     },
     changes, omittedNodes: source.nodes.filter(node => !kept.has(node.name)).map(node => node.name),
   };
