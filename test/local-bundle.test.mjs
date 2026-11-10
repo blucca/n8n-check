@@ -63,6 +63,7 @@ test('portable shell pins the runner, uses isolated read-only execution and maps
   assert.ok(script.includes(RUNNER_SHA256));
   assert.ok(script.includes(RUNNER_URL));
   assert.match(script, /createHash\('sha256'\)/);
+  assert.match(script, /if \(cached\) cached = valid\(await readFile\(file\)\)/);
   assert.match(script, /--network none --user "\$\(id -u\):\$\(id -g\)"/);
   assert.match(script, /target=\/inputs\/workflow.json,readonly/);
   assert.match(script, /target=\/inputs\/case.json,readonly/);

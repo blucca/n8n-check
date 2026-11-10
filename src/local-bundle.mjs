@@ -36,13 +36,14 @@ IMAGE="n8n-check-local:0.1.8-$N8N_VERSION"
 docker run --rm -i --user "$(id -u):$(id -g)" \\
   --mount "type=bind,source=$ROOT/.cache,target=/cache" \\
   --entrypoint node "$BASE" --input-type=module - <<'NODE'
-import { stat, writeFile, rename } from 'node:fs/promises';
+import { stat, readFile, writeFile, rename } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const file = '/cache/runner.tgz';
 const expected = '${RUNNER_SHA256}';
 const valid = data => createHash('sha256').update(data).digest('hex') === expected;
 let cached;
 try { cached = (await stat(file)).isFile(); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (cached) cached = valid(await readFile(file));
 if (!cached) {
   console.log('Downloading n8n-check v0.1.8...');
   const response = await fetch('${RUNNER_URL}', { signal: AbortSignal.timeout(120000) });
