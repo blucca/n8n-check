@@ -286,6 +286,8 @@ In the retry example, the first item receives 503 and the second receives 200. n
 
 The test executes the **selected workflow slice in real n8n**. HTTP responses come from the declared local mock contracts. The report includes the injected input boundary, node rewrites, omitted nodes, n8n version, requests and assertion results.
 
+**API-generated AI-agent graphs:** the v0.1 fixture cut follows forward connections from `input.node`. An independent model or tool feeding an Agent through `ai_languageModel` or `ai_tool` stays outside that cut, and preparation reports its incoming dependency. The [synthetic preparation check](test/core.test.mjs) covers both link types with JSON alone. Test a self-contained standard-node portion with fixture input; full Agent/model/tool execution requires its own fixture and runtime harness. A standard-node result covers the inspected portion.
+
 Choose a self-contained slice. A static reference such as `$('Earlier node')`, `$node["Earlier node"]` or `$items('Earlier node')` to a node outside the slice produces a setup error with that name. Incoming connections from omitted branches also produce a setup error. Place the input boundary before a loop. Dynamic node-name references resolve during n8n execution and surface in its error output.
 
 ### Stop after a business transformation
