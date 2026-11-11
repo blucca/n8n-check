@@ -71,6 +71,20 @@ test('incoming branch dependency is surfaced', () => {
   assert.throws(() => prepareWorkflow(source, fixture, ''), /incoming main connection from "Start" to "Render"/);
 });
 
+test('independent AI dependencies are reported during slice preparation', () => {
+  // Preparation contract only: these synthetic nodes never execute or call a model.
+  const node = (name, type) => ({ id: name, name, type, typeVersion: 1, position: [0, 0], parameters: {} });
+  const spec = { version: 1, name: 'Agent graph fit', input: { node: 'Input', items: [{ id: 'synthetic-1' }] }, mocks: [], assertions: [{ node: 'Agent', count: 1 }] };
+  const base = { nodes: [node('Input', 'n8n-nodes-base.code'), node('Agent', '@n8n/n8n-nodes-langchain.agent')], connections: { Input: { main: [[{ node: 'Agent', type: 'main', index: 0 }]] } } };
+  assert.equal(prepareWorkflow(base, spec, '').workflow.nodes.length, 3);
+  for (const [type, producer] of [['ai_languageModel', 'lmChatOllama'], ['ai_tool', 'toolCalculator']]) {
+    const source = copy(base);
+    source.nodes.push(node('Dependency', `@n8n/n8n-nodes-langchain.${producer}`));
+    source.connections.Dependency = { [type]: [[{ node: 'Agent', type, index: 0 }]] };
+    assert.throws(() => prepareWorkflow(source, spec, ''), error => error.message.startsWith(`Slice needs incoming ${type} connection from "Dependency" to "Agent".`));
+  }
+});
+
 test('fixture boundary inside a loop produces a targeted error', () => {
   const source = copy(workflow); source.connections.Render = { main: [[{ node: 'Fixture', type: 'main', index: 0 }]] };
   assert.throws(() => prepareWorkflow(source, fixture, ''), /inside a loop/);
