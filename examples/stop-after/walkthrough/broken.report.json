@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "runnerVersion": "0.1.8",
+  "name": "Invoice notifications \u2014 complete synthetic export check",
+  "startedAt": "2026-11-11T17:11:27.626Z",
+  "nodeVersion": "v26.12.0",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "n8n execution succeeds",
+      "passed": true,
+      "actual": {
+        "cliExitCode": 0,
+        "lastNode": "Prepare notification",
+        "executionFound": true
+      }
+    },
+    {
+      "name": "Prepare notification: output 0",
+      "passed": false,
+      "expected": [
+        {
+          "invoiceId": "INV-42",
+          "text": "Invoice INV-42: $650.00"
+        },
+        {
+          "invoiceId": "INV-43",
+          "text": "Invoice INV-43: $120.50"
+        }
+      ],
+      "actual": [
+        {
+          "invoiceId": "INV-42",
+          "text": "Invoice INV-42: $650.00"
+        }
+      ]
+    },
+    {
+      "name": "mock: all requests match routes",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "mock: request limits and server",
+      "passed": true,
+      "actual": []
+    }
+  ],
+  "network": {
+    "mode": "host-network",
+    "enforced": false
+  },
+  "preparation": {
+    "inputNode": "Read invoices",
+    "changes": [
+      {
+        "node": "Read invoices",
+        "change": "replace with fixture JSON items"
+      },
+      {
+        "node": "Prepare notification",
+        "change": "stop this branch after the node; remove outgoing connections; retain independently reachable branches"
+      }
+    ],
+    "omittedNodes": [
+      "Start",
+      "Notify team"
+    ]
+  },
+  "requests": [],
+  "durationMs": 9904,
+  "exitCode": 1,
+  "n8nVersion": "2.41.7"
+}

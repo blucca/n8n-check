@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.414
+Pin input and result after a known-good run on your workflow.
+
+00:00:03.444 --> 00:00:06.588
+This example supplies synthetic invoice pins.
+
+00:00:06.618 --> 00:00:13.825
+Import the JSON, keep Read invoices as the fixture boundary, and
+select Prepare notification as the output.
+
+00:00:13.855 --> 00:00:15.504
+Slack remains in the slice.
+
+00:00:17.004 --> 00:00:19.520
+Enable Stop after selected output.
+
+00:00:19.550 --> 00:00:25.797
+The fixture replaces the Sheets input; the real Code node runs, and
+this branch stops before Slack.
+
+00:00:25.827 --> 00:00:28.324
+Other reachable branches stay in the run.
+
+00:00:28.354 --> 00:00:31.956
+Review the two expected items, then download the local pack.
+
+00:00:33.964 --> 00:00:35.261
+Unzip the pack.
+
+00:00:35.291 --> 00:00:37.919
+Docker users can run the included script.
+
+00:00:37.949 --> 00:00:43.520
+This replay uses its case with installed n8n and n8n-check 0.1.8.
+
+00:00:43.550 --> 00:00:45.969
+The fixed Code keeps both invoices.
+
+00:00:45.999 --> 00:00:50.458
+A deliberate one-row regression fails the output check while n8n
+succeeds.
+
+00:00:50.488 --> 00:00:53.428
+Both runs save JSON and JUnit reports.
