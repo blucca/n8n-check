@@ -38,7 +38,7 @@ For an installed runtime, use `node bin/n8n-check.mjs` with the same two files, 
 
 ## Start with your own full export
 
-In the [case builder](https://blucca.github.io/n8n-check/), import the export, choose the input and expected-output nodes, then enable **Run through selected output**. Review the selected execution slice and finish the fixture JSON. This example supplies pins for both selected nodes.
+In the [case builder](https://blucca.github.io/n8n-check/), import the export, choose the input and expected-output nodes, then enable **Stop after selected output**. Review the selected execution slice and finish the fixture JSON. This example supplies pins for both selected nodes.
 
 The equivalent draft command is:
 

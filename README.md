@@ -98,7 +98,7 @@ Exported JSON pins can prefill the input and expected items. The builder lists t
 
 For a local-first example, choose **Try the nine-row example**. Its synthetic pins create a case that passes with the fixed workflow and catches the obsolete filter in the broken workflow. The page prepares files; the n8n engine produces the execution results.
 
-**Working between Google Sheets, Slack, or other credentialed integrations?** Choose the input boundary and output, then enable **Run through selected output**. The optional `stopAfter` case field cuts the selected node's outgoing connections while preserving independently reachable branches. Your full export stays unchanged. [Try the two-invoice transformation example](examples/stop-after/).
+**Working between Google Sheets, Slack, or other credentialed integrations?** Pin the input and transformation result after a known-good run. In the builder, select those same nodes and enable **Stop after selected output**. The optional `stopAfter` case field cuts the selected node's outgoing connections while preserving independently reachable branches. Your full export stays unchanged. [Try the two-invoice transformation example](examples/stop-after/).
 
 <a id="try-it-in-your-browser"></a>
 
@@ -320,7 +320,7 @@ The [one-file GitHub Actions integration](#add-a-check-to-github-actions) brings
 
 ## Draft a case with the CLI
 
-The `init` command is available from **v0.1.4**; `--stop-after` is available from **v0.1.5**. After [installing the CLI](#install-the-cli-from-github):
+The `init` command is available from **v0.1.4**; `--stop-after` is available from **v0.1.5**. After [installing the CLI](#install-the-cli-from-npm):
 
 ```sh
 n8n-check init /path/to/workflow.json \
