@@ -1,0 +1,5 @@
+PASSED Invoice notifications — complete synthetic export check (n8n 2.41.7)
+  ✓ n8n execution succeeds
+  ✓ Prepare notification: output 0
+  ✓ mock: all requests match routes
+  ✓ mock: request limits and server

@@ -32,7 +32,7 @@
   </aside>
 
   <section class="panel import-panel" aria-labelledby="import-title">
-    <div><h2 id="import-title">Start with an export.</h2><p>In n8n, pin the input and the result you want to check after a known-good manual run, then export the workflow. Select those same nodes below, or enter fixture JSON.</p></div>
+    <div><h2 id="import-title">Start with an export.</h2><p>In n8n, pin the input and the result you want to check after a known-good manual run, then export the workflow. Select those same nodes below, or enter fixture JSON.</p><p><a href="examples/stop-after/walkthrough/">Watch the one-minute first-case walkthrough</a>.</p></div>
     <div class="import-actions"><label class="button file-button">Choose workflow JSON<input id="file" type="file" accept=".json,application/json"></label><button id="example" class="secondary">Try the nine-row example</button><button id="identity-example" class="secondary">Try stable IDs + changing timestamps</button><p class="hint">File contents stay in this browser tab. Free and MIT-licensed.</p></div>
     <details class="paste"><summary>Or paste an exported workflow</summary><label for="source">Workflow JSON</label><textarea id="source" rows="6" spellcheck="false" placeholder='{"nodes": [...], "connections": {...}, "pinData": {...}}'></textarea><button id="load-paste" class="secondary">Load pasted JSON</button></details>
     <p id="import-status" role="status" aria-live="polite"></p>

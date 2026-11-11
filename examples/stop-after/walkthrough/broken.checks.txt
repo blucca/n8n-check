@@ -1,0 +1,6 @@
+FAILED Invoice notifications — complete synthetic export check (n8n 2.41.7)
+  ✓ n8n execution succeeds
+  ✗ Prepare notification: output 0
+    {"expected":[{"invoiceId":"INV-42","text":"Invoice INV-42: $650.00"},{"invoiceId":"INV-43","text":"Invoice INV-43: $120.50"}],"actual":[{"invoiceId":"INV-42","text":"Invoice INV-42: $650.00"}]}
+  ✓ mock: all requests match routes
+  ✓ mock: request limits and server

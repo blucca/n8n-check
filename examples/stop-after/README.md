@@ -17,6 +17,8 @@ Real n8n **2.41.7**, n8n-check **0.1.5**, synthetic invoice fixtures, and loopba
 
 Both runs omit the Slack delivery node and make zero HTTP requests. [Read the versioned results, file hashes, and expected/actual items](observed-results.json).
 
+**[Watch the current first-case walkthrough](https://blucca.github.io/n8n-check/examples/stop-after/walkthrough/):** real builder import → explicit stop → local pack → native **0.1.8 / 2.41.7** reports. Its fixed/broken replay uses the same downloaded case with the installed CLI, host networking and zero HTTP requests. The original 0.1.5 results above retain their recorded scope.
+
 ## Run both shapes
 
 From an n8n-check checkout with Docker installed:

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="1" errors="0">
+  <testsuite name="Invoice notifications — complete synthetic export check" tests="4" failures="1" errors="0" time="9.904">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Prepare notification: output 0">
+      <failure message="Prepare notification: output 0">{
+  &quot;expected&quot;: [
+    {
+      &quot;invoiceId&quot;: &quot;INV-42&quot;,
+      &quot;text&quot;: &quot;Invoice INV-42: $650.00&quot;
+    },
+    {
+      &quot;invoiceId&quot;: &quot;INV-43&quot;,
+      &quot;text&quot;: &quot;Invoice INV-43: $120.50&quot;
+    }
+  ],
+  &quot;actual&quot;: [
+    {
+      &quot;invoiceId&quot;: &quot;INV-42&quot;,
+      &quot;text&quot;: &quot;Invoice INV-42: $650.00&quot;
+    }
+  ]
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+  </testsuite>
+</testsuites>
