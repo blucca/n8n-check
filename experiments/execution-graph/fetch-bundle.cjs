@@ -18,6 +18,8 @@ function id(value) {
 }
 
 function childIds(execution) {
+  if (execution.dataTooLargeToDisplay === true)
+    throw new Error(`Execution ${id(execution.id)}: API data exceeds the display-size limit; request ignoreDataSizeLimit=true`);
   const runData = execution.data?.resultData?.runData;
   if (!runData || !Array.isArray(execution.workflowData?.nodes))
     throw new Error(`Execution ${id(execution.id)}: missing complete saved API data`);
@@ -36,7 +38,8 @@ function childIds(execution) {
 }
 
 function readExecution(base, identifier, apiKey) {
-  const url = new URL(`${base.replace(/\/+$/, '')}/api/v1/executions/${encodeURIComponent(identifier)}?includeData=true`);
+  // Complete saved evidence needs the API's display-size override as well.
+  const url = new URL(`${base.replace(/\/+$/, '')}/api/v1/executions/${encodeURIComponent(identifier)}?includeData=true&ignoreDataSizeLimit=true`);
   const transport = url.protocol === 'https:' ? https : http;
   return new Promise((resolve, reject) => {
     const request = transport.get(url, { headers: { 'X-N8N-API-KEY': apiKey } }, response => {

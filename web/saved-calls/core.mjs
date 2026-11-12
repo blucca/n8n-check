@@ -49,6 +49,8 @@ class ExecutionGraph {
       const executionId = id(execution?.id);
       id(execution?.workflowId);
       evidence(!this.executions.has(executionId), `Duplicate execution ID ${executionId}; use one instance bundle`);
+      evidence(execution.dataTooLargeToDisplay !== true,
+        `Execution ${executionId}: API data exceeds the display-size limit; request ignoreDataSizeLimit=true`);
       evidence(execution.status === 'success' && execution?.data?.resultData?.runData && execution?.workflowData?.nodes,
         `Execution ${executionId}: provide complete successful API execution JSON`);
       this.executions.set(executionId, execution);
