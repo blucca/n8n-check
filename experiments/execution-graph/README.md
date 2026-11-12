@@ -96,11 +96,13 @@ the recorded waiting flag.
 Set `N8N_API_KEY` in your local environment for the existing instance, then:
 
 ```sh
-export LAB="$WORKSPACE/temp/saved-call-new"
+export LAB="$PWD/temp/saved-call-new"
 node experiments/execution-graph/fetch-bundle.cjs \
   https://your-n8n.example 123 "$LAB" &&
 node experiments/execution-graph/audit-bundle.cjs "$LAB"/execution-*.json
 ```
+
+For a standalone collector and browser report, [download the single script and follow the local command](https://blucca.github.io/n8n-check/inspect/#get-files). It needs Node.js 24+ and your local API key; a repository checkout is optional for that path. Select the resulting `execution-*.json` files in the inspector. An optionally selected `manifest.json` is kept separate as an acquisition receipt.
 
 Use a fresh output directory. The GET-only collector follows the actual
 once-task and each-item child IDs recursively, requesting `includeData=true`.
@@ -113,7 +115,7 @@ Check the acquisition contract with the included native-record API replay:
 
 ```sh
 node experiments/execution-graph/check-intake.cjs \
-  "$WORKSPACE/temp/intake-check-new"
+  "$PWD/temp/intake-check-new"
 # four GETs, exact saved bytes/IDs, consistent/9; missing child incomplete
 ```
 
