@@ -33,4 +33,10 @@ test('standalone collector follows saved once-mode IDs in the published nested b
   assert.deepEqual(collector.childIds(bridge), [String(leaf.id)]);
   assert.deepEqual(collector.childIds(leaf), []);
   assert.throws(() => collector.childIds({ id: 'missing-data' }), /missing complete saved API data/);
+  // A successful HTTP 200 can still contain display-capped, empty runData.
+  const capped = { ...parent, dataTooLargeToDisplay: true,
+    data: { resultData: { runData: {} } } };
+  const reason = `Execution ${parent.id}: API data exceeds the display-size limit; request ignoreDataSizeLimit=true`;
+  assert.throws(() => collector.childIds(capped), { message: reason });
+  assert.deepEqual(auditExecutions([capped]), { status: 'incomplete', reason });
 });
