@@ -29,15 +29,21 @@ async function main() {
   const apiKey = 'local-intake-fixture-key';
   const requests = [];
   let missingId;
+  let cappedId;
   const server = http.createServer((request, response) => {
     const url = new URL(request.url, 'http://fixture');
     const match = url.pathname.match(/^\/api\/v1\/executions\/([^/]+)$/);
     const identifier = match ? decodeURIComponent(match[1]) : undefined;
     requests.push({ method: request.method, path: request.url, id: identifier,
-      includeData: url.searchParams.get('includeData'), api_key_match: request.headers['x-n8n-api-key'] === apiKey });
+      includeData: url.searchParams.get('includeData'),
+      ignoreDataSizeLimit: url.searchParams.get('ignoreDataSizeLimit'),
+      api_key_match: request.headers['x-n8n-api-key'] === apiKey });
     const raw = identifier !== missingId && byId.get(identifier);
     response.writeHead(raw ? 200 : 404, { 'Content-Type': 'application/json' });
-    response.end(raw || '{"message":"fixture child unavailable"}');
+    // Replay the real HTTP-200 display-capped response, separately from 404.
+    response.end(raw && identifier === cappedId ? JSON.stringify({ ...JSON.parse(raw),
+      dataTooLargeToDisplay: true, data: { resultData: { runData: {} } } })
+      : raw || '{"message":"fixture child unavailable"}');
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const base = `http://127.0.0.1:${server.address().port}`;
@@ -52,8 +58,9 @@ async function main() {
     assert.deepEqual(rows.map(row => row.id), records.map(record => record.id));
     for (const row of rows) {
       assert.equal(row.method, 'GET');
-      assert.equal(row.path, `/api/v1/executions/${row.id}?includeData=true`);
+      assert.equal(row.path, `/api/v1/executions/${row.id}?includeData=true&ignoreDataSizeLimit=true`);
       assert.equal(row.includeData, 'true');
+      assert.equal(row.ignoreDataSizeLimit, 'true');
       assert.equal(row.api_key_match, true);
     }
   }
@@ -112,14 +119,32 @@ async function main() {
     assert.equal(fs.readdirSync(missingDir).length, 3);
     assert.equal((missing.stdout + missing.stderr).includes(apiKey), false);
     fs.writeFileSync(path.join(output, 'incomplete.json'), missing.stderr);
+
+    missingId = undefined;
+    cappedId = records[0].id;
+    const cappedDir = path.join(output, 'display-capped');
+    const cappedRequestCut = requests.length;
+    const capped = await fetchInto(cappedDir);
+    assert.equal(capped.code, 2);
+    const cappedFailure = JSON.parse(capped.stderr);
+    assert.deepEqual(cappedFailure, { status: 'incomplete',
+      reason: `Execution ${cappedId}: API data exceeds the display-size limit; request ignoreDataSizeLimit=true` });
+    assert.equal(requests.length - cappedRequestCut, 1);
+    assert.equal(requests.at(-1).path,
+      `/api/v1/executions/${cappedId}?includeData=true&ignoreDataSizeLimit=true`);
+    assert.equal(fs.existsSync(path.join(cappedDir, 'manifest.json')), false);
+    assert.deepEqual(fs.readdirSync(cappedDir), []);
+    fs.writeFileSync(path.join(output, 'display-capped.json'), capped.stderr);
     const report = { status: 'PASS', fixture_dir: fixtures,
       complete: { get_count: 4, execution_ids: records.map(record => record.id),
         preserved_bytes: records.map(record => record.raw.length),
         audit_status: graph.status, checked_items: graph.checked_items },
-      missing_child: { get_count: 4, execution_id: missingId, status: failure.status,
-        exit_code: missing.code, complete_manifest: false }, requests };
+      missing_child: { get_count: 4, execution_id: records.at(-1).id, status: failure.status,
+        exit_code: missing.code, complete_manifest: false },
+      display_capped: { get_count: 1, execution_id: cappedId, status: cappedFailure.status,
+        exit_code: capped.code, complete_manifest: false }, requests };
     fs.writeFileSync(path.join(output, 'check-result.json'), JSON.stringify(report, null, 2) + '\n');
-    process.stdout.write('PASS: four includeData=true GETs, exact bytes/IDs, consistent/9; missing child incomplete, complete manifest absent\n');
+    process.stdout.write('PASS: four complete-data GETs, exact bytes/IDs, consistent/9; missing child and HTTP-200 display cap incomplete, complete manifest absent\n');
   } finally { await new Promise(resolve => server.close(resolve)); }
 }
 

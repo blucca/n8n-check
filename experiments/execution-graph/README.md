@@ -85,7 +85,7 @@ nested child. Customer JSON stays in the input files; the report emits source
 coordinates and findings.
 
 For your own instance, export each complete response from
-`GET /api/v1/executions/<id>?includeData=true`. Follow the actual saved
+`GET /api/v1/executions/<id>?includeData=true&ignoreDataSizeLimit=true`. Follow the actual saved
 `metadata.subExecution` IDs recursively. For per-item calls, the child ID is
 stored in **each returned item's metadata**. Supply all related files together.
 The adapter verifies the reverse `parentExecution` execution/workflow IDs and
@@ -105,7 +105,11 @@ node experiments/execution-graph/audit-bundle.cjs "$LAB"/execution-*.json
 For a standalone collector and browser report, [download the single script and follow the local command](https://blucca.github.io/n8n-check/inspect/#get-files). It needs Node.js 24+ and your local API key; a repository checkout is optional for that path. Select the resulting `execution-*.json` files in the inspector. An optionally selected `manifest.json` is kept separate as an acquisition receipt.
 
 Use a fresh output directory. The GET-only collector follows the actual
-once-task and each-item child IDs recursively, requesting `includeData=true`.
+once-task and each-item child IDs recursively, requesting both `includeData=true`
+and `ignoreDataSizeLimit=true`. Executions above the instance's display-size
+limit otherwise arrive with `dataTooLargeToDisplay=true` and empty `runData`;
+the collector rejects that partial response. The measured n8n 2.41.7 public API
+defaults to a 100 MiB display limit.
 It preserves each response body verbatim and writes a complete acquisition
 manifest after collecting all referenced executions. A failed GET returns
 `incomplete`/exit 2 and leaves the partial local records for diagnosis. The
