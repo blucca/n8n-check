@@ -10,6 +10,8 @@ relationships**, and **independently observed HTTP effects**. Plain Node.js,
 complete saved exports, an explicit business contract and receiver records;
 customer data stays on the operator's machine.
 
+[**Inspect saved calls in your browser**](https://blucca.github.io/n8n-check/inspect/) — select your complete parent + all child API responses and download the same recorded-ancestry report, with no installation. The browser and Node >=24 CLI share [`core.mjs`](../../web/saved-calls/core.mjs). Customer-relationship and independently observed HTTP checks retain the separate contracts below.
+
 [Run the HTTP counterexample](#correct-saved-recipient-wrong-http-request) ·
 [Check your own task](#bind-your-own-http-records-to-the-saved-task) ·
 [$650 identity audit and repair](#one-customer-route-650-audit-and-repair)
@@ -64,7 +66,7 @@ This checkout includes the complete native records and all three local checkers.
 The default branch retains the earlier boundary auditor. Set `WORKSPACE="$PWD"`
 for local capture outputs, or point it at your existing workspace.
 
-**Node.js, three JSON files. Local read-only execution.**
+**Node.js >=24, three JSON files. Local read-only execution.**
 
 ```sh
 node experiments/execution-graph/audit-bundle.cjs \
