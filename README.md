@@ -12,10 +12,13 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 |---|---|---|
 | [Add a check to CI](#add-a-check-to-github-actions) | Workflow export + case JSON | A pass/fail job, request trace, JSON + JUnit |
 | [Build your first case](https://blucca.github.io/n8n-check/) | Your n8n export | A local Docker run pack and CI file |
+| [Inspect saved child calls](https://blucca.github.io/n8n-check/inspect/) | Complete parent + child execution JSON | A local, zero-install ancestry report |
 | [Try a known regression](#try-it-in-your-browser) | A GitHub account | An eight-row data-loss failure, then its fix |
 | [Review a saved call in Jira](forge-mcp/) | Four saved parent/child exports + an MCP client | Before/after ancestry, raw pointers, a same-issue dossier |
 
 **Try it locally:** [Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip). Extract, run `sh fixed/run.sh` (5/5), then `sh wrong-id/run.sh` (4/5, expected exit 1). Both n8n runs succeed and return two rows; the second returns the wrong IDs. Docker + a shell; [see the contract and recorded comparison](examples/identity-projection/).
+
+**[Open the saved call inspector](https://blucca.github.io/n8n-check/inspect/)** — select the complete parent and all referenced child execution API responses from one instance. The shared browser/Node core checks recorded ancestry and shows child-derived versus caller-recorded source coordinates. File contents stay in the tab; download the report JSON. Nested once, each and all-runs calls retain the existing successful waiting/passthrough scope. Business relationships and actual HTTP delivery use their separate contracts and observer records.
 
 **New research:** [Green JSON snapshots, wrong customers](experiments/lineage-boundary/) — a real parent/child case where all 11 business-node JSON snapshots match, yet HTTP requests target the wrong customers. Includes the reduced input, shared ancestry repair and real-engine results. [Inspect your own saved parent/child execution exports locally](experiments/lineage-boundary/#inspect-your-own-saved-child-call) with the read-only boundary auditor.
 
