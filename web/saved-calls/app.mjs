@@ -76,11 +76,19 @@ async function load(readers) {
       let execution;
       try { execution = JSON.parse(text); }
       catch { throw new Error(`${entry.name}: valid JSON is required.`); }
+      // A collector folder includes an acquisition receipt alongside the API
+      // records. Keep it out of the ancestry input; the core checks all calls.
+      const receipt = execution?.status === 'complete' &&
+        execution.parent_execution != null && Array.isArray(execution.executions) &&
+        !execution.workflowData;
       if (execution?.nodes && !execution.workflowData) throw new Error(`${entry.name}: this is a workflow export. Choose a saved execution API response with includeData=true.`);
-      return { name: entry.name, execution };
+      return { name: entry.name, execution, receipt };
     }));
-    render(auditExecutions(entries.map(entry => entry.execution)), entries.map(entry => entry.name));
-    status('Saved files inspected. File contents remain in this tab.');
+    const records = entries.filter(entry => !entry.receipt);
+    if (!records.length) throw new Error('Choose the collector\'s execution-*.json files. The manifest is an acquisition receipt.');
+    render(auditExecutions(records.map(entry => entry.execution)), records.map(entry => entry.name));
+    const receipts = entries.length - records.length;
+    status(`Saved files inspected.${receipts ? ` ${receipts} collector receipt(s) kept separate from execution data.` : ''} File contents remain in this tab.`);
   } catch (error) {
     render({ status: 'incomplete', reason: error.message }, readers.map(entry => entry.name));
     status(error.message, true);
