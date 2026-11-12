@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync } from 'node:fs';
 import { auditExecutions } from '../web/saved-calls/core.mjs';
+import collector from '../experiments/execution-graph/fetch-bundle.cjs';
 
 const bundle = selection => ['parent', 'bridge', 'leaf'].map(role => JSON.parse(readFileSync(
   new URL(`../experiments/execution-graph/recorded/nested-input${selection}-${role}-execution.json`, import.meta.url))));
@@ -24,4 +25,12 @@ test('browser/CLI JSON core retains native nested results, root slots and missin
     assert.deepEqual(auditExecutions(reordered), report);
     assert.equal(auditExecutions(executions.slice(0, 2)).status, 'incomplete');
   }
+});
+
+test('standalone collector follows saved once-mode IDs in the published nested bundle', () => {
+  const [parent, bridge, leaf] = bundle(1);
+  assert.deepEqual(collector.childIds(parent), [String(bridge.id)]);
+  assert.deepEqual(collector.childIds(bridge), [String(leaf.id)]);
+  assert.deepEqual(collector.childIds(leaf), []);
+  assert.throws(() => collector.childIds({ id: 'missing-data' }), /missing complete saved API data/);
 });

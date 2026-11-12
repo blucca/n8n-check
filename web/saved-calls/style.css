@@ -44,6 +44,7 @@
 .file-guide p, .file-guide li, .file-guide a { font-size: 14px; }
 .file-guide ol { padding-left: 20px; margin-bottom: 20px; }
 .file-guide li { padding-left: 4px; margin-bottom: 16px; }
+.collector-command { margin: 18px 0; max-width: 100%; overflow-x: auto; font-size: 12px; }
 .supported-title { margin-top: 26px; }
 .help-line { border-left: 3px solid var(--ink); padding-left: 16px; max-width: 80ch; margin-bottom: 36px; font-size: 14px; }
 .help-line p { margin: 0; }

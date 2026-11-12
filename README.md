@@ -20,6 +20,8 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **[Open the saved call inspector](https://blucca.github.io/n8n-check/inspect/)** — select the complete parent and all referenced child execution API responses from one instance. The shared browser/Node core checks recorded ancestry and shows child-derived versus caller-recorded source coordinates. File contents stay in the tab; download the report JSON. Nested once, each and all-runs calls retain the existing successful waiting/passthrough scope. Business relationships and actual HTTP delivery use their separate contracts and observer records.
 
+Have a parent execution ID? [Download the standalone GET-only collector](https://blucca.github.io/n8n-check/experiments/execution-graph/fetch-bundle.cjs). Node.js 24+, your local `N8N_API_KEY`, instance URL and a fresh output directory are sufficient; [see the command](https://blucca.github.io/n8n-check/inspect/#get-files). It saves the complete API responses locally. The inspector accepts the `execution-*.json` files and keeps an optionally selected acquisition manifest separate.
+
 **New research:** [Green JSON snapshots, wrong customers](experiments/lineage-boundary/) — a real parent/child case where all 11 business-node JSON snapshots match, yet HTTP requests target the wrong customers. Includes the reduced input, shared ancestry repair and real-engine results. [Inspect your own saved parent/child execution exports locally](experiments/lineage-boundary/#inspect-your-own-saved-child-call) with the read-only boundary auditor.
 
 ## Paid help for one failing workflow
