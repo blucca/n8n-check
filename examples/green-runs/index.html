@@ -8,7 +8,7 @@
   <meta name="description" content="Missing invoices, garbled UTF-8 or shortened IDs after a successful n8n run: three recorded examples and a free, concrete way to check your own workflow.">
   <link rel="canonical" href="https://blucca.github.io/n8n-check/examples/green-runs/">
   <meta property="og:title" content="Successful run. Wrong result.">
-  <meta property="og:description" content="Choose the output check your n8n workflow needs, then take it to Docker or CI.">
+  <meta property="og:description" content="Choose the output check your n8n workflow needs, then run it in your existing editor, Docker or CI.">
   <meta property="og:url" content="https://blucca.github.io/n8n-check/examples/green-runs/">
   <link rel="stylesheet" href="../../web/style.css">
   <style>
@@ -85,6 +85,7 @@
   <section id="run-it" class="run-recipe" aria-labelledby="run-title">
     <h2 id="run-title">Run the check before handover.</h2>
     <p>Review the builder's selected slice. <strong>Stop after selected output</strong> runs that node and cuts its outgoing connections; independently reachable branches still run.</p>
+    <p><strong>Already have n8n?</strong> For a ready single-run local JSON slice, choose <strong>Download editor test (.json)</strong>. Import it as a new workflow, then <strong>Execute workflow</strong>. Its independent final check throws on missing output or wrong IDs, including zero-item branches. <a href="https://github.com/blucca/n8n-check/tree/main/examples/editor-tests">See the five native controls and supported scope</a>.</p>
     <p>Download the local pack, unzip and run this command with Docker running:</p>
     <pre><code>sh run.sh</code></pre>
     <p>Use Docker with Linux containers and a shell on Linux, macOS or WSL2. The first run downloads the pinned <strong>v0.1.8</strong> runner and chosen n8n image. Read <code>results/report.json</code> and <code>results/junit.xml</code>.</p>

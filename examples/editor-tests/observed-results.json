@@ -1,0 +1,140 @@
+{
+  "n8n": "2.41.7",
+  "method": "Generated workflow imported into stock n8n, then executed with --rawOutput. Fixed synthetic inputs; no HTTP calls.",
+  "cases": [
+    {
+      "name": "filter-fixed",
+      "expected_pass": true,
+      "cli_exit": 0,
+      "oracle_ran": true,
+      "engine_error": null,
+      "run_order": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate",
+        "Build context",
+        "Check expected output"
+      ],
+      "oracle_output": [
+        [
+          {
+            "json": {
+              "status": "passed",
+              "checks": [
+                {
+                  "node": "Confidence Gate",
+                  "output": 0,
+                  "count": 8,
+                  "passed": true
+                },
+                {
+                  "node": "Build context",
+                  "output": 0,
+                  "count": 1,
+                  "passed": true
+                }
+              ]
+            },
+            "pairedItem": {
+              "item": 0
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "filter-empty-skipped",
+      "expected_pass": false,
+      "cli_exit": 1,
+      "oracle_ran": true,
+      "engine_error": "n8n-check: Build context: output 0 differs. Expected [{\"count\":8,\"ids\":[\"policy-01\",\"policy-02\",\"policy-03\",\"policy-04\",\"policy-05\",\"policy-06\",\"policy-07\",\"policy-08\"]}]; got [] [line 26]",
+      "run_order": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate",
+        "Check expected output"
+      ],
+      "oracle_output": null
+    },
+    {
+      "name": "empty-expected",
+      "expected_pass": true,
+      "cli_exit": 0,
+      "oracle_ran": true,
+      "engine_error": null,
+      "run_order": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate",
+        "Check expected output"
+      ],
+      "oracle_output": [
+        [
+          {
+            "json": {
+              "status": "passed",
+              "checks": [
+                {
+                  "node": "Build context",
+                  "output": 0,
+                  "count": 0,
+                  "passed": true
+                }
+              ]
+            },
+            "pairedItem": {
+              "item": 0
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "ids-fixed",
+      "expected_pass": true,
+      "cli_exit": 0,
+      "oracle_ran": true,
+      "engine_error": null,
+      "run_order": [
+        "n8n-check start",
+        "Rows",
+        "Select rows",
+        "Check expected output"
+      ],
+      "oracle_output": [
+        [
+          {
+            "json": {
+              "status": "passed",
+              "checks": [
+                {
+                  "node": "Select rows",
+                  "output": 0,
+                  "count": 2,
+                  "passed": true
+                }
+              ]
+            },
+            "pairedItem": {
+              "item": 0
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "ids-wrong",
+      "expected_pass": false,
+      "cli_exit": 1,
+      "oracle_ran": true,
+      "engine_error": "n8n-check: Select rows: output 0 json.id differs. Expected [\"row-A\",\"row-B\"]; got [\"wrong-row\",\"wrong-row\"] [line 26]",
+      "run_order": [
+        "n8n-check start",
+        "Rows",
+        "Select rows",
+        "Check expected output"
+      ],
+      "oracle_output": null
+    }
+  ]
+}

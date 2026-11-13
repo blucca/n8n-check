@@ -123,6 +123,10 @@ select { font-size: 14px; text-overflow: ellipsis; }
 .readiness { background: var(--blue); border: 0; border-top: 4px solid var(--ink); border-radius: 0 0 5px 5px; padding: 25px; scroll-margin-top: 24px; }
 .readiness h2 { font-size: 28px; }
 .readiness > p { font-size: 14px; color: var(--muted); }
+.editor-run { margin: 23px 0 26px; padding: 18px; background: var(--paper); border-left: 3px solid var(--pass); }
+.editor-run > p { font-size: 14px; }
+.editor-run > .button { width: 100%; }
+.editor-run .hint { font-size: 13px; overflow-wrap: anywhere; }
 .readiness.pending { border-top-color: var(--fail); }
 #issues { padding: 0; list-style: none; margin: 19px 0; }
 #issues:empty { display: none; }

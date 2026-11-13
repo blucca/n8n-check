@@ -1,9 +1,10 @@
 import { inspectWorkflow, draftCase } from '../src/case-draft.mjs';
 import { buildLocalBundle } from '../src/local-bundle.mjs';
+import { editorTestWorkflow } from '../src/editor-test.mjs';
 
 const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
-let source, inspection, plan, originalText, isExample = false;
+let source, inspection, plan, editorTest, originalText, isExample = false;
 const editors = ['input-items', 'expected-items', 'mocks'];
 let expectationDrafts = {}, previousMode = 'exact';
 const nineRowDetail = $('example-detail').innerHTML;
@@ -96,8 +97,20 @@ function update() {
     $('bundle-status').textContent = '';
     document.querySelector('.readiness').classList.toggle('ready', plan.ready);
     document.querySelector('.readiness').classList.toggle('pending', !plan.ready);
+    editorTest = null;
+    $('editor-test-status').textContent = 'Complete the fixture and expected output above.';
+    if (plan.ready) {
+      try {
+        editorTest = editorTestWorkflow(source, plan.spec);
+        $('editor-test-status').textContent = 'Ready to import. The test runs on your instance’s n8n version.';
+      } catch (error) { $('editor-test-status').textContent = error.message; }
+    }
+    $('download-editor-test').disabled = !editorTest;
   } catch (error) {
     plan = null;
+    editorTest = null;
+    $('download-editor-test').disabled = true;
+    $('editor-test-status').textContent = 'Fix the JSON fields above to prepare an editor test.';
     $('readiness-title').textContent = 'Check the JSON fields.';
     $('readiness-detail').textContent = 'Fix the field below to refresh the draft.';
     showIssues([{ message: error.message }]);
@@ -231,6 +244,7 @@ for (const id of [...editors, 'case-name']) $(id).addEventListener('input', () =
   update();
 });
 $('download-case').addEventListener('click', () => { if (plan) download(plan.ready ? 'case.json' : 'case.draft.json', pretty(plan.spec)); });
+$('download-editor-test').addEventListener('click', () => { if (editorTest) download('n8n-editor-test.json', pretty(editorTest)); });
 $('download-workflow').addEventListener('click', () => download('workflow.json', originalText));
 $('download-ci').addEventListener('click', () => { if (plan?.ready && $('runtime-version').reportValidity()) download('n8n-check.yml', `name: n8n release check
 on: [push, pull_request, workflow_dispatch]
