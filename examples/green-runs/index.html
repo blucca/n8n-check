@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8edaa">
+  <title>Successful n8n run, wrong result? Choose your check — n8n-check</title>
+  <meta name="description" content="Missing invoices, garbled UTF-8 or shortened IDs after a successful n8n run: three recorded examples and a free, concrete way to check your own workflow.">
+  <link rel="canonical" href="https://blucca.github.io/n8n-check/examples/green-runs/">
+  <meta property="og:title" content="Successful run. Wrong result.">
+  <meta property="og:description" content="Choose the output check your n8n workflow needs, then take it to Docker or CI.">
+  <meta property="og:url" content="https://blucca.github.io/n8n-check/examples/green-runs/">
+  <link rel="stylesheet" href="../../web/style.css">
+  <style>
+    .field-guide{max-width:1080px}.guide-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:48px 0 32px}.guide-intro h1{max-width:18ch}.guide-intro .deck{font-size:17px;max-width:48ch}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 0}.guide-proof{padding:23px 24px 20px}.guide-proof th,.guide-proof td{padding:15px 8px}.guide-proof code{font-size:13px;overflow-wrap:anywhere}.guide-proof .returned{color:var(--fail);font-weight:650}.symptoms{display:flex;flex-wrap:wrap;gap:12px 32px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:44px}.symptoms a{font-size:17px;font-weight:650;text-decoration:none}.symptoms a:hover{text-decoration:underline}.field-guide section[id]{scroll-margin-top:28px;margin:40px 0;max-width:78ch}.field-guide section[id]>p{max-width:75ch}.field-guide h2{margin-bottom:18px}.field-guide .measure{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:16px;margin:22px 0}.field-guide code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.field-guide pre{background:var(--blue);padding:18px 20px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.65;margin:20px 0}.field-guide ol{padding-left:24px;max-width:75ch}.field-guide li{padding-left:4px;margin:14px 0}.field-guide .preview-recipe{max-width:none;background:var(--paper);border:1px solid var(--line);padding:30px 34px}.preview-recipe>p,.preview-recipe>ol,.preview-recipe>pre{max-width:75ch}.field-guide .run-recipe{border-top:1px solid var(--line);padding-top:30px}.field-guide .paid-help{max-width:78ch;border-top:1px solid var(--line);padding-top:28px}.field-guide .paid-help h2{font-size:23px}.field-guide .team{font-size:13px;color:var(--muted);margin-top:20px}footer{margin-top:48px}
+    @media(max-width:900px){.guide-intro{grid-template-columns:1fr;gap:28px;padding-top:36px}.guide-intro h1{max-width:none;font-size:48px}.guide-intro .deck{max-width:64ch}.guide-proof{max-width:660px}.guide-proof th,.guide-proof td{padding:13px 8px}}
+    @media(max-width:600px){.field-guide{width:calc(100% - 36px)}.guide-intro h1{font-size:42px;letter-spacing:-1.5px}.guide-intro{padding-top:28px}.brand-note{display:none}.guide-proof{padding:18px 16px}.guide-proof table{font-size:12px}.guide-proof th,.guide-proof td{padding:12px 6px}.guide-proof code{font-size:11px}.symptoms{gap:12px 20px;margin-bottom:32px}.symptoms a{font-size:15px}.field-guide .preview-recipe{padding:24px 20px}.field-guide pre{padding:15px;font-size:13px}.actions>a{flex:1 1 190px}header nav{gap:14px}header .brand{font-size:24px}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#guide">Skip to guide</a>
+<header class="wrap field-guide"><a class="brand" href="../../">n8n-check <span class="brand-note">Field guide</span></a><nav aria-label="Main"><a href="../../">Open the builder</a></nav></header>
+<main id="guide" class="wrap field-guide">
+  <section class="guide-intro" aria-labelledby="guide-title">
+    <div>
+      <h1 id="guide-title">Successful run.<br>Wrong result.</h1>
+      <p class="deck">An invoice disappears. Customer text changes. A lead ID arrives shortened. Preserve the result before the next handover: choose volume, identity or exact values, then check the relevant output in real n8n.</p>
+      <div class="actions"><a class="button" href="../../">Build your free check</a><a class="secondary" href="../stop-after/walkthrough/invoice-run-pack.zip" download>Download invoice run pack</a></div>
+    </div>
+    <aside class="recorded-check guide-proof" aria-label="Three recorded successful n8n executions with changed data">
+      <table>
+        <caption>What green executions returned.</caption>
+        <thead><tr><th scope="col">Input</th><th scope="col">n8n run</th><th scope="col">Returned result</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Two invoices</th><td class="pass">Success</td><td class="returned">One invoice</td></tr>
+          <tr><th scope="row"><code>Küçük</code></th><td class="pass">Success</td><td class="returned"><code>K眉莽眉k</code></td></tr>
+          <tr><th scope="row"><code>website:demo,a</code></th><td class="pass">Success</td><td class="returned"><code>website:demo</code></td></tr>
+        </tbody>
+      </table>
+      <p>Recorded native runs with synthetic inputs. Versions and replay instructions below.</p>
+    </aside>
+  </section>
+
+  <nav class="symptoms" aria-label="Choose your symptom"><a href="#missing-items">Rows are missing</a><a href="#changed-text">Text is garbled</a><a href="#changed-ids">An ID changed</a><a href="#preview-null">Preview works; execution gives null</a></nav>
+
+  <section id="missing-items" aria-labelledby="missing-title">
+    <h2 id="missing-title">Missing items: check volume.</h2>
+    <p>Choose <strong>Item count</strong> for output volume. Choose <strong>Full JSON items</strong> when every invoice ID and notification text must survive. The <a href="../stop-after/walkthrough/">two-invoice walkthrough</a> uses two input fixtures and stops after <strong>Prepare notification</strong>, before Slack.</p>
+    <p>The fixed Code keeps both invoices. Adding <code>slice(0, 1)</code> leaves one. The same full-output case passes <strong>4/4 checks, exit 0</strong> for fixed and fails <strong>3/4 checks, exit 1</strong> for broken.</p>
+    <p class="measure">Reference replay: n8n-check 0.1.8, n8n 2.41.7, installed CLI with host networking and zero HTTP requests. Both engines succeed. The downloadable pack runs the same case in Docker.</p>
+    <p><a href="../stop-after/walkthrough/invoice-run-pack.zip" download>Get the complete invoice case</a> or <a href="../stop-after/walkthrough/#recorded-results">read the before/after JSON and JUnit results</a>.</p>
+  </section>
+
+  <section id="changed-text" aria-labelledby="text-title">
+    <h2 id="text-title">Changed text: check exact values.</h2>
+    <p>Choose <strong>Full JSON items</strong>. The <a href="https://github.com/blucca/n8n-check/tree/main/examples/http-utf8">complete UTF-8 case</a> includes Auto/explicit-JSON exports, six response fixtures and before/after JSON + JUnit evidence.</p>
+    <p>On <strong>n8n 2.41.7 and 2.46.6</strong>, each mode finishes successfully with six HTTP 200 responses. Auto changes the French and Turkish records; four controls stay intact. <strong>Response Format → JSON</strong> preserves all six. Keep accented customer text in your fixtures and compare the returned fields.</p>
+    <p><a href="https://github.com/blucca/n8n-check/tree/main/examples/http-utf8#run-it-in-github-without-a-local-runtime">Run the six-response check in GitHub Actions</a>, or use the example's installed-CLI commands.</p>
+  </section>
+
+  <section id="changed-ids" aria-labelledby="ids-title">
+    <h2 id="ids-title">Changed IDs: check identity.</h2>
+    <p>Choose <strong>Selected field + item count</strong> when IDs must stay stable as timestamps change. Set <code>json.id</code>, expected values <code>["row-A", "row-B"]</code>, count <code>2</code>. The <a href="https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip">ready identity demo</a> records two successful, two-item runs on <strong>n8n 2.41.7</strong>: original IDs pass; a same-size wrong-ID replacement fails.</p>
+    <h3>Check the database binding too.</h3>
+    <p>Use the <a href="https://github.com/blucca/n8n-check/tree/main/examples/postgres-parameters">native Postgres comparison</a>. Import both three-node exports into n8n, select your sandbox PostgreSQL credential and execute their real, read-only <code>SELECT</code>. Keep <strong>Postgres node typeVersion 2.7</strong> for this replay.</p>
+    <p>Recorded <strong>n8n 2.41.7 / PostgreSQL 18.6</strong> returns two rows in both modes. Scalar Query Parameters shorten <code>website:demo,a</code> to <code>website:demo</code>. A single array expression retains it:</p>
+    <pre><code>={{ [$json.client_id, $json.lead_key] }}</code></pre>
+    <p>Keep the credentialed SELECT in native n8n. For downstream n8n-check coverage, use the returned rows as fixtures at the database-output boundary and check the transformation after Postgres.</p>
+  </section>
+
+  <section id="preview-null" class="preview-recipe" aria-labelledby="preview-title">
+    <h2 id="preview-title">Preview shows a value.<br>Execution gives null.</h2>
+    <p>A <a href="https://community.n8n.io/t/328600">reported task on n8n 2.46.7</a> has error text in the expression preview, then <code>msg: null</code> from executed <strong>Edit Fields</strong>. With your connected export and finished execution, make that symptom a one-item acceptance check:</p>
+    <ol>
+      <li>Copy the actual upstream <code>start</code> JSON item from the <strong>finished execution</strong>. Import the connected export; choose <code>start</code> as <strong>Fixture boundary</strong>. Enter that item as a one-object JSON array in <strong>Input items</strong>.</li>
+      <li>Choose <strong>Edit Fields</strong> as <strong>Output to preserve</strong> and enable <strong>Stop after selected output</strong>.</li>
+      <li>Choose <strong>Selected field + item count</strong>. Set <strong>Field path</strong> to <code>json.msg</code> and <strong>Expected item count</strong> to <code>1</code>. For agreed text <code>Validation failed</code>, <strong>Expected output</strong> is an array containing one string:</li>
+    </ol>
+    <pre><code>["Validation failed"]</code></pre>
+    <ol start="4"><li>Set <strong>n8n version to run</strong> to your execution's release. The reported task uses <strong>2.46.7</strong>; the builder defaults to <strong>2.41.7</strong>.</li></ol>
+    <p>The execution supplies the input. Your required result supplies the expected text. Rerun the fixture after an expression change.</p>
+    <p><a href="../../">Open the free case builder</a>.</p>
+  </section>
+
+  <section id="run-it" class="run-recipe" aria-labelledby="run-title">
+    <h2 id="run-title">Run the check before handover.</h2>
+    <p>Review the builder's selected slice. <strong>Stop after selected output</strong> runs that node and cuts its outgoing connections; independently reachable branches still run.</p>
+    <p>Download the local pack, unzip and run this command with Docker running:</p>
+    <pre><code>sh run.sh</code></pre>
+    <p>Use Docker with Linux containers and a shell on Linux, macOS or WSL2. The first run downloads the pinned <strong>v0.1.8</strong> runner and chosen n8n image. Read <code>results/report.json</code> and <code>results/junit.xml</code>.</p>
+  </section>
+
+  <section class="paid-help" aria-labelledby="help-title">
+    <h2 id="help-title">Need one fault repaired?</h2>
+    <p><a href="https://github.com/blucca/n8n-check#paid-help-for-one-failing-workflow">$199 for one reproducible fault</a>: a minimal fix, up to three agreed regression checks, before/after JSON + JUnit and one in-scope revision. One self-contained slice, up to 15 standard nodes and one mocked HTTP integration. First delivery within two business days after scope and materials are agreed.</p>
+    <p class="team">Codex, our autonomous AI agent, handles engineering and email; the account holder handles contracts and invoicing.</p>
+  </section>
+</main>
+<footer class="wrap field-guide"><span>Built by <a href="https://blucca.github.io/">blucca</a></span><a href="https://github.com/blucca/n8n-check">MIT source</a></footer>
+</body>
+</html>
