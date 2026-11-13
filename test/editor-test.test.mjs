@@ -40,5 +40,8 @@ test('editor bridge keeps unsupported scheduling and runtime cases on the CLI', 
   const wait = structuredClone(source);
   wait.nodes[1].type = 'n8n-nodes-base.wait';
   assert.throws(() => editorTestWorkflow(wait, spec), /local JSON/);
+  const child = structuredClone(source);
+  child.nodes[1].type = 'n8n-nodes-base.executeWorkflow';
+  assert.throws(() => editorTestWorkflow(child, spec), /self-contained workflow.*separate integration/);
   assert.throws(() => editorTestWorkflow(source, { ...spec, mocks: [{}] }), /without HTTP mocks/);
 });

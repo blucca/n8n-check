@@ -45,7 +45,7 @@ export function editorTestWorkflow(source, spec) {
   const start = workflow.nodes[0];
   for (const node of workflow.nodes.slice(1)) {
     if (!localTypes.has(node.type))
-      throw new Error(`Editor tests currently support local JSON transforms. "${node.name}" (${node.type}) uses the CLI or Action.`);
+      throw new Error(`Editor tests currently support local JSON transforms. "${node.name}" (${node.type}) needs the CLI for a self-contained workflow, or a separate integration environment for referenced workflows/resources.`);
   }
   const inlets = new Map();
   for (const types of Object.values(workflow.connections))
