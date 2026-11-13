@@ -62,3 +62,12 @@ The first two contain a three-code-point U+0080–U+00FF run. The Czech and ASCI
 The fixture contract covers HTTP Request 4.2, six HTTP 200 JSON responses, their GET paths/bodies/counts, and every returned field. All data is synthetic. The source report concerns the HTTP node's automatic encoding detection; the JSON workaround is a workflow configuration change.
 
 The versioned [observed results](observed-results.json) record actual runtime versions, engine success, complete requests and output differences. The two malformed outputs match GB18030 decoding of their UTF-8 response bytes. Original bug analysis and workaround: [dami1A's report and follow-up](https://github.com/n8n-io/n8n/issues/43713).
+
+
+## Repairing files that were already saved
+
+[**Encoding-history recovery check**](recovery-provenance/) exercises a free
+browser CSV cleaner on the recorded damage and healthy UTF-8 controls. Known
+Turkish damage is restored; the measured revision also rewrites the healthy
+Chinese surname `茅` to `é`. The two CSVs and exact results make that difference
+replayable before applying recovery to historical data.

@@ -1,0 +1,34 @@
+{
+  "product": "https://fejzadenis.github.io/leadflow/studio.html",
+  "source_commit": "c8dca157ce6254612bce784d629be49a23d1c9e7",
+  "observed_at_utc": "2026-11-13T10:37:05.478Z",
+  "browser": "Chrome 154.0.8037.97",
+  "inputs": "Synthetic UTF-8 CSV, no customer data",
+  "controls": [
+    {
+      "input_name": "Demo K眉莽眉k",
+      "expected": "Demo Küçük",
+      "actual": "Demo Küçük",
+      "met_expected": true
+    },
+    {
+      "input_name": "示例 茅",
+      "expected": "示例 茅",
+      "actual": "示例 茅",
+      "met_expected": true
+    },
+    {
+      "input_name": "茅",
+      "expected": "茅",
+      "actual": "é",
+      "met_expected": false
+    }
+  ],
+  "healthy_surname_report": {
+    "repaired_cells": 1,
+    "gb18030_cells": 1,
+    "rejected_rows": 0
+  },
+  "ui_action": "Paste CSV, click Clean & build the files, download cleaned CSV and report",
+  "network_requests_after_clean": 0
+}
