@@ -31,5 +31,27 @@
       "contract": "failed",
       "exit_code": 1
     }
-  ]
+  ],
+  "native_editor_generation": {
+    "generator_version": "0.1.9",
+    "n8n_version": "2.41.7",
+    "emitted_locally": true,
+    "imported_unmodified": true,
+    "runs": [
+      {
+        "export": "examples/stop-after/fixed.json",
+        "oracle_executed": true,
+        "contract": "passed",
+        "count": 2,
+        "n8n_cli_exit": 0
+      },
+      {
+        "export": "examples/stop-after/broken.json",
+        "oracle_executed": true,
+        "contract": "failed",
+        "error": "expected 2 items, got 1",
+        "n8n_cli_exit": 1
+      }
+    ]
+  }
 }

@@ -18,22 +18,12 @@ Read the workflow export and the task's expected behavior. Pick:
 
 Keep every input item in the fixture, including a useful distractor. Request the missing expected behavior when the task leaves it open. For a transformation between external systems, stop after its output; reads and final delivery keep separate integration contracts. Independently reachable sibling branches remain in the slice.
 
-## 2. Choose the execution path
+## 2. Draft and review the case locally
 
-### A. Existing n8n editor — no CLI or Docker setup
-
-Open the [local case builder](https://blucca.github.io/n8n-check/). Import the export, select the fixture boundary and expected-output node, enable **Stop after selected output** where appropriate, and edit the fixture and expectation.
-
-Select **Full JSON items**, **Selected field + item count** (for example `json.id`), or **Item count**. Then **Download editor test (.json)** → import the separate inactive workflow into n8n → **Execute workflow**.
-
-The generated **Check expected output** branch returns `status: "passed"` or throws on a mismatch. Leave it below the tested branch: it runs last, including when zero items skip downstream nodes. Editor tests cover local JSON transforms, v1 execution order, and one incoming connection per node. Merge/loops/waits and HTTP mocks use path B for a self-contained slice. For calls by saved child workflow ID, test a self-contained child/downstream slice; the complete call graph requires its referenced-workflow setup separately. [Five native controls and their actual results](https://github.com/blucca/n8n-check/tree/main/examples/editor-tests).
-
-### B. CLI or CI — saved cases and HTTP request contracts
-
-Requires Node 24+ and an installed n8n CLI for trusted local development. Draft a case from the export's pins:
+Node 24+ runs the versioned generator. The commands in this section read/write local JSON; n8n execution happens in section 3. Draft a case from the export's pins:
 
 ```sh
-npx --yes @blucca/n8n-check@0.1.8 init workflow.json \
+npx --yes @blucca/n8n-check@0.1.9 init workflow.json \
   --input "Read invoices" --assert "Prepare notification" \
   --stop-after "Prepare notification" --out workflow.case.json
 ```
@@ -66,19 +56,39 @@ For a two-invoice task whose required ordered IDs are `INV-42`, `INV-43`, a fiel
 
 Use full-object `equals` for notification text/amounts too; the [complete invoice case](https://github.com/blucca/n8n-check/blob/main/examples/stop-after/case.json) checks both exact messages. Arrays preserve order and duplicates; object-key order is ignored.
 
-Run in your trusted local n8n test environment:
+## 3. Execute the reviewed contract
+
+### A. Your existing n8n editor — versioned local generation
 
 ```sh
-npx --yes @blucca/n8n-check@0.1.8 workflow.json workflow.case.json \
-  --n8n /absolute/path/to/n8n --allow-network \
-  --out regression-results --json
+npx --yes @blucca/n8n-check@0.1.9 editor-test workflow.json workflow.case.json \
+  --out n8n-editor-test.json
 ```
 
-`--allow-network` selects host networking for this local development path. The [Docker/Action route](https://github.com/blucca/n8n-check#your-first-case) provides network-isolated runs. The runner executes the selected slice with fresh fixture input and cleared output pins. HTTP mocks test the actual Request node's method, body and retry behavior; actual provider state/delivery use separate integration checks.
+This emits a separate inactive workflow locally using the published generator. Review its fixture, retained nodes and expected-output oracle, import it into your n8n editor, then **Execute workflow**. The original export stays unchanged.
 
-## 3. Read the result, fix, and rerun
+The generated **Check expected output** branch returns `status: "passed"` or throws on a mismatch. Leave it below the tested branch: it runs last, including when zero items skip downstream nodes. Editor tests cover local JSON transforms, v1 execution order, and one incoming connection per node. [Five native controls and their actual results](https://github.com/blucca/n8n-check/tree/main/examples/editor-tests).
 
-For **test execution** (the `init` command writes a draft and reports its readiness):
+### B. CLI or CI — network-isolated execution
+
+Merge/loops/waits and HTTP mocks use this route for a self-contained slice. Test saved-ID child calls as a self-contained child/downstream export; a complete call graph needs its referenced-workflow setup separately.
+
+Build the pinned runner image, then run from the directory containing your test export and case:
+
+```sh
+git clone --depth 1 --branch v0.1.9 https://github.com/blucca/n8n-check n8n-check-tool
+docker build -t n8n-check:0.1.9 n8n-check-tool
+docker run --rm --network none -v "$PWD:/work" n8n-check:0.1.9 \
+  workflow.json workflow.case.json --out /work/regression-results --json
+```
+
+On Linux, add `--user "$(id -u):$(id -g)"` to `docker run` if your ID differs from the image's default 1000. [GitHub Action route](https://github.com/blucca/n8n-check#add-a-check-to-github-actions).
+
+The runner executes the selected slice with fresh fixture input and cleared output pins. HTTP mocks test the actual Request node's method, body and retry behavior; actual provider state/delivery use separate integration checks.
+
+## 4. Read the result, fix, and rerun
+
+For **test execution** (`init` writes a draft; `editor-test` writes a test workflow):
 
 - Exit **0**: the contract passed.
 - Exit **1**: regression or execution failure; read `checks`, `error`, and the first expected/actual mismatch.
@@ -86,6 +96,6 @@ For **test execution** (the `init` command writes a draft and reports its readin
 
 Keep the case fixed while editing the workflow. Verify the check is active with one controlled wrong expected ID/count, then restore the approved expectation. For a known regression, rerun the original and repaired exports with the same case. [Both example n8n executions succeed while one drops an invoice](https://github.com/blucca/n8n-check/tree/main/examples/stop-after).
 
-[Author-run command check](example-results.json): runner 0.1.8 / n8n 2.41.7, fixed two-ID output passes; the one-ID regression fails, with both engine executions successful.
+[Author-run command checks](example-results.json): CLI 0.1.8 external assertions catch the one-ID regression while both engine executions succeed. Locally generated 0.1.9 editor tests pass the two-ID output and throw on the one-ID output in n8n 2.41.7.
 
 Deliver the workflow/test export, reviewed case, actual n8n version, result and first mismatch. CLI writes `report.json` and `junit.xml` under the output directory; keep the report with the case for the next edit or upgrade. State the tested boundary and the integration work remaining.

@@ -163,3 +163,26 @@ test('pending snapshots, invalid projection contracts and explicit null stay act
   workflow.pinData.Mapped = [{ json: { id: 42 }, binary: {} }];
   assert.equal(draftCase(workflow, { assertionMode: 'count' }).spec.assertions[0].count, null);
 });
+
+
+test('editor-test emits an inactive local JSON contract without a runtime', async t => {
+  const root = process.env.N8N_CHECK_TEST_TEMP || fileURLToPath(new URL('../temp/draft-tests/', import.meta.url));
+  await mkdir(root, { recursive: true });
+  const dir = await mkdtemp(join(root, 'editor-cli-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const workflow = join(dir, 'workflow.json'), caseFile = join(dir, 'case.json'), out = join(dir, 'editor.json');
+  await writeFile(workflow, JSON.stringify(source));
+  await writeFile(caseFile, JSON.stringify(draftCase(source).spec));
+  const cli = new URL('../bin/n8n-check.mjs', import.meta.url);
+  const run = (...extra) => spawnSync(process.execPath, [cli.pathname, 'editor-test', workflow, caseFile, '--out', out, ...extra], { encoding: 'utf8', env: { ...process.env, N8N_BINARY: '/runtime-intentionally-absent' } });
+  const first = run(); assert.equal(first.status, 0, first.stderr); assert.match(first.stdout, /Import this inactive workflow/);
+  const contents = await readFile(out, 'utf8'), generated = JSON.parse(contents);
+  assert.equal(generated.active, false); assert.equal(generated.pinData, undefined);
+  assert.equal(generated.settings.executionOrder, 'v1');
+  assert.match(generated.nodes.at(-1).parameters.jsCode, /node.isExecuted/);
+  assert.deepEqual(JSON.parse(await readFile(workflow, 'utf8')), source);
+  assert.equal(run().status, 2); assert.equal(await readFile(out, 'utf8'), contents);
+  const flags = run('--allow-network'); assert.equal(flags.status, 2); assert.match(flags.stderr, /only accepts --out/);
+  await writeFile(caseFile, JSON.stringify({ ...draftCase(source).spec, mocks: [{}] }));
+  assert.match(run().stderr, /without HTTP mocks/);
+});
