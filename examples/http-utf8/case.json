@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "name": "Keep UTF-8 JSON fields unchanged",
+  "input": {
+    "node": "Fixture",
+    "items": [
+      {
+        "caseId": "french"
+      },
+      {
+        "caseId": "turkish"
+      },
+      {
+        "caseId": "ascii"
+      },
+      {
+        "caseId": "czech"
+      },
+      {
+        "caseId": "guillemets-ascii"
+      },
+      {
+        "caseId": "literal-replacement"
+      }
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Read UTF-8 JSON",
+      "url": "/records/{{ $json.caseId }}",
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/records/french",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "titre": "Point d'étape",
+                "corps": "Décision : « élargir » le périmètre."
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/records/turkish",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "name": "Küçük"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/records/ascii",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "text": "Plain ASCII"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/records/czech",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "text": "Příliš"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/records/guillemets-ascii",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "text": "«C»"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/records/literal-replacement",
+          "responses": [
+            {
+              "status": 200,
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "json": {
+                "text": "Literal �"
+              }
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Read UTF-8 JSON",
+      "equals": [
+        {
+          "titre": "Point d'étape",
+          "corps": "Décision : « élargir » le périmètre."
+        },
+        {
+          "name": "Küçük"
+        },
+        {
+          "text": "Plain ASCII"
+        },
+        {
+          "text": "Příliš"
+        },
+        {
+          "text": "«C»"
+        },
+        {
+          "text": "Literal �"
+        }
+      ]
+    }
+  ],
+  "timeoutMs": 60000
+}

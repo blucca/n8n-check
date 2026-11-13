@@ -1,0 +1,101 @@
+{
+  "observedAt": "2026-11-13T12:35:06.541293+08:00",
+  "sourceIssue": "https://github.com/n8n-io/n8n/issues/43713",
+  "httpNodeTypeVersion": 4.2,
+  "responseContentType": "application/json; charset=utf-8",
+  "expected": [
+    {
+      "titre": "Point d'étape",
+      "corps": "Décision : « élargir » le périmètre."
+    },
+    {
+      "name": "Küçük"
+    },
+    {
+      "text": "Plain ASCII"
+    },
+    {
+      "text": "Příliš"
+    },
+    {
+      "text": "«C»"
+    },
+    {
+      "text": "Literal �"
+    }
+  ],
+  "runs": [
+    {
+      "mode": "autodetect",
+      "engineStatus": "success",
+      "engineSuccess": true,
+      "contractStatus": "failed",
+      "exitCode": 1,
+      "n8nVersion": "2.41.7",
+      "runnerVersion": "0.1.8",
+      "nodeVersion": "v26.12.0",
+      "durationMs": 15336,
+      "httpRequests": 6,
+      "allHttp200": true,
+      "actual": [
+        {
+          "titre": "Point d'茅tape",
+          "corps": "D茅cision : 芦聽茅largir聽禄 le p茅rim猫tre."
+        },
+        {
+          "name": "K眉莽眉k"
+        },
+        {
+          "text": "Plain ASCII"
+        },
+        {
+          "text": "Příliš"
+        },
+        {
+          "text": "«C»"
+        },
+        {
+          "text": "Literal �"
+        }
+      ],
+      "report": "reports/2.41.7/autodetect.report.json",
+      "junit": "reports/2.41.7/autodetect.junit.xml"
+    },
+    {
+      "mode": "explicit-json",
+      "engineStatus": "success",
+      "engineSuccess": true,
+      "contractStatus": "passed",
+      "exitCode": 0,
+      "n8nVersion": "2.41.7",
+      "runnerVersion": "0.1.8",
+      "nodeVersion": "v26.12.0",
+      "durationMs": 10479,
+      "httpRequests": 6,
+      "allHttp200": true,
+      "actual": [
+        {
+          "titre": "Point d'étape",
+          "corps": "Décision : « élargir » le périmètre."
+        },
+        {
+          "name": "Küçük"
+        },
+        {
+          "text": "Plain ASCII"
+        },
+        {
+          "text": "Příliš"
+        },
+        {
+          "text": "«C»"
+        },
+        {
+          "text": "Literal �"
+        }
+      ],
+      "report": "reports/2.41.7/explicit-json.report.json",
+      "junit": "reports/2.41.7/explicit-json.junit.xml"
+    }
+  ]
+}

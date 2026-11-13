@@ -1,0 +1,49 @@
+{
+  "name": "HTTP UTF-8 JSON response",
+  "nodes": [
+    {
+      "id": "fixture",
+      "name": "Fixture",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "http",
+      "name": "Read UTF-8 JSON",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.example.invalid/records",
+        "options": {
+          "timeout": 10000
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Fixture": {
+      "main": [
+        [
+          {
+            "node": "Read UTF-8 JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
