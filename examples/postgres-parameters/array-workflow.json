@@ -1,0 +1,84 @@
+{
+  "id": "pgCommaArrayDemo",
+  "name": "Postgres comma boundary: array",
+  "active": false,
+  "nodes": [
+    {
+      "id": "demo-trigger",
+      "name": "Demo Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "demo-input",
+      "name": "Demo Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{\"client_id\": \"client_demo\", \"lead_key\": \"website:demo_plain\"}, {\"client_id\": \"client_demo\", \"lead_key\": \"website:demo,a\"}].map(json => ({json}));"
+      }
+    },
+    {
+      "id": "demo-query",
+      "name": "Read Bound Values",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.7,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "resource": "database",
+        "operation": "executeQuery",
+        "query": "SELECT $1::text AS client_id, $2::text AS lead_key",
+        "options": {
+          "queryBatching": "independently",
+          "queryReplacement": "={{ [$json.client_id, $json.lead_key] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "demoPostgresComma",
+          "name": "Synthetic local PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Demo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Demo Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Demo Input": {
+      "main": [
+        [
+          {
+            "node": "Read Bound Values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

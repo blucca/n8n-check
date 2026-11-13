@@ -1,0 +1,56 @@
+{
+  "recorded_at_utc": "2026-11-13T11:18:38Z",
+  "n8n_version": "2.41.7",
+  "nodes_base_version": "2.41.5",
+  "postgres_node_type_version": 2.7,
+  "node_version": "26.12.0",
+  "postgres_version": "18.6",
+  "scope": "Synthetic two-input SELECT with two text parameters, local PostgreSQL, native n8n CLI; no real HVAC workflow or DDL.",
+  "query": "SELECT $1::text AS client_id, $2::text AS lead_key",
+  "inputs": [
+    {
+      "client_id": "client_demo",
+      "lead_key": "website:demo_plain"
+    },
+    {
+      "client_id": "client_demo",
+      "lead_key": "website:demo,a"
+    }
+  ],
+  "runs": [
+    {
+      "mode": "scalar",
+      "native_exit_code": 0,
+      "execution_status": "success",
+      "returned_count": 2,
+      "all_fields_preserved": false,
+      "output": [
+        {
+          "client_id": "client_demo",
+          "lead_key": "website:demo_plain"
+        },
+        {
+          "client_id": "client_demo",
+          "lead_key": "website:demo"
+        }
+      ]
+    },
+    {
+      "mode": "array",
+      "native_exit_code": 0,
+      "execution_status": "success",
+      "returned_count": 2,
+      "all_fields_preserved": true,
+      "output": [
+        {
+          "client_id": "client_demo",
+          "lead_key": "website:demo_plain"
+        },
+        {
+          "client_id": "client_demo",
+          "lead_key": "website:demo,a"
+        }
+      ]
+    }
+  ]
+}

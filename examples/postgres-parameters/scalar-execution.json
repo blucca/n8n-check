@@ -1,0 +1,135 @@
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Demo Trigger": [
+          {
+            "startTime": 1794568706770,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Demo Input": [
+          {
+            "startTime": 1794568706772,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Demo Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 878,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "client_id": "client_demo",
+                      "lead_key": "website:demo_plain"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "client_id": "client_demo",
+                      "lead_key": "website:demo,a"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Read Bound Values": [
+          {
+            "startTime": 1794568707650,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Demo Input",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 200,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "client_id": "client_demo",
+                      "lead_key": "website:demo_plain"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "client_id": "client_demo",
+                      "lead_key": "website:demo"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Read Bound Values"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1794568706769,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Demo Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    }
+  },
+  "mode": "cli",
+  "startedAt": "2026-11-13T11:18:26.764Z",
+  "stoppedAt": "2026-11-13T11:18:27.850Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

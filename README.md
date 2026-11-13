@@ -143,6 +143,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Keep UTF-8 JSON intact after a successful HTTP request](examples/http-utf8/):** complete Auto/JSON workflows and six field-exact fixtures for n8n #43713.
 
+**[Preserve comma-bearing PostgreSQL parameters](examples/postgres-parameters/):** two native Postgres 2.7 queries both succeed, but scalar parameters shorten an ID. A single array expression preserves both complete rows.
+
 **[Compare n8n versions before upgrading](examples/version-matrix/):** run the same workflow and contract on your deployed and candidate releases. The real Nextcloud PROPFIND reproduction exercises an engine-level difference: preserving the complete XML request body.
 
 **[Keep a raw request and read its JSON receipt](examples/raw-response/):** a real reported delivery-check failure, reproduced on 2.41.7. Receive as File → Extract JSON with explicit UTF-8; check the complete receipt and one POST.
