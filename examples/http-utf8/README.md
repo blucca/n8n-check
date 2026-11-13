@@ -10,6 +10,14 @@ Both exports receive the same local `application/json; charset=utf-8` responses.
 - [`explicit-json.json`](explicit-json.json): Response Format explicitly set to JSON.
 - [`case.json`](case.json): the same six response and expected-output contracts for either export.
 
+## Run it in GitHub without a local runtime
+
+1. Fork n8n-check and enable Actions.
+2. Open **UTF-8 JSON before and after the response-format change → Run workflow**.
+3. Inspect each version's verification step and download its JSON/JUnit artifact.
+
+The [manual workflow](../../.github/workflows/http-utf8.yml) reuses the released v0.1.8 Action. It records the expected Auto failure, then requires the explicit-JSON result and the exact six-record before/after verification to pass.
+
 ## Run the whole workflow locally
 
 From the n8n-check repository root, with Node.js 24+ and an installed n8n runtime:
@@ -48,6 +56,7 @@ The first two contain a three-code-point U+0080–U+00FF run. The Czech and ASCI
 | n8n runtime | Engine / HTTP requests | Auto contract | Explicit JSON contract |
 |---|---|---|---|
 | 2.41.7 | Both engines succeed; 6 HTTP 200 per mode | Fails on French/Turkish output | Passes all six records |
+| 2.46.6 | Both engines succeed; 6 HTTP 200 per mode | Fails on French/Turkish output | Passes all six records |
 
 
 The fixture contract covers HTTP Request 4.2, six HTTP 200 JSON responses, their GET paths/bodies/counts, and every returned field. All data is synthetic. The source report concerns the HTTP node's automatic encoding detection; the JSON workaround is a workflow configuration change.

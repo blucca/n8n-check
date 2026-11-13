@@ -96,6 +96,79 @@
       ],
       "report": "reports/2.41.7/explicit-json.report.json",
       "junit": "reports/2.41.7/explicit-json.junit.xml"
+    },
+    {
+      "mode": "autodetect",
+      "engineStatus": "success",
+      "engineSuccess": true,
+      "contractStatus": "failed",
+      "exitCode": 1,
+      "n8nVersion": "2.46.6",
+      "runnerVersion": "0.1.8",
+      "nodeVersion": "v24.21.0",
+      "durationMs": 15260,
+      "httpRequests": 6,
+      "allHttp200": true,
+      "actual": [
+        {
+          "titre": "Point d'茅tape",
+          "corps": "D茅cision : 芦聽茅largir聽禄 le p茅rim猫tre."
+        },
+        {
+          "name": "K眉莽眉k"
+        },
+        {
+          "text": "Plain ASCII"
+        },
+        {
+          "text": "Příliš"
+        },
+        {
+          "text": "«C»"
+        },
+        {
+          "text": "Literal �"
+        }
+      ],
+      "report": "reports/2.46.6/autodetect.report.json",
+      "junit": "reports/2.46.6/autodetect.junit.xml"
+    },
+    {
+      "mode": "explicit-json",
+      "engineStatus": "success",
+      "engineSuccess": true,
+      "contractStatus": "passed",
+      "exitCode": 0,
+      "n8nVersion": "2.46.6",
+      "runnerVersion": "0.1.8",
+      "nodeVersion": "v24.21.0",
+      "durationMs": 13090,
+      "httpRequests": 6,
+      "allHttp200": true,
+      "actual": [
+        {
+          "titre": "Point d'étape",
+          "corps": "Décision : « élargir » le périmètre."
+        },
+        {
+          "name": "Küçük"
+        },
+        {
+          "text": "Plain ASCII"
+        },
+        {
+          "text": "Příliš"
+        },
+        {
+          "text": "«C»"
+        },
+        {
+          "text": "Literal �"
+        }
+      ],
+      "report": "reports/2.46.6/explicit-json.report.json",
+      "junit": "reports/2.46.6/explicit-json.junit.xml"
     }
-  ]
+  ],
+  "secondVersionCompletedAt": "2026-11-13T04:46:20.096Z"
 }

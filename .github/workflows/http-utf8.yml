@@ -1,0 +1,42 @@
+name: UTF-8 JSON before and after the response-format change
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        n8n: ['2.41.7', '2.46.6']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Record the known automatic-decoding failure
+        continue-on-error: true
+        uses: blucca/n8n-check@v0.1.8
+        with:
+          n8n-version: ${{ matrix.n8n }}
+          workflow: examples/http-utf8/autodetect.json
+          case: examples/http-utf8/case.json
+          out: results/http-utf8/${{ matrix.n8n }}/autodetect
+      - name: Preserve the same JSON with the explicit response format
+        uses: blucca/n8n-check@v0.1.8
+        with:
+          n8n-version: ${{ matrix.n8n }}
+          workflow: examples/http-utf8/explicit-json.json
+          case: examples/http-utf8/case.json
+          out: results/http-utf8/${{ matrix.n8n }}/explicit-json
+      - name: Verify the exact before/after result
+        if: always()
+        run: node examples/http-utf8/verify.mjs results/http-utf8/${{ matrix.n8n }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: utf8-n8n-${{ matrix.n8n }}
+          path: |
+            results/http-utf8/${{ matrix.n8n }}/**/report.json
+            results/http-utf8/${{ matrix.n8n }}/**/junit.xml

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="16" failures="1" errors="0">
+  <testsuite name="Keep UTF-8 JSON fields unchanged" tests="16" failures="1" errors="0" time="15.260">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: output 0">
+      <failure message="Read UTF-8 JSON: output 0">{
+  &quot;expected&quot;: [
+    {
+      &quot;titre&quot;: &quot;Point d&apos;étape&quot;,
+      &quot;corps&quot;: &quot;Décision : « élargir » le périmètre.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Küçük&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Plain ASCII&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Příliš&quot;
+    },
+    {
+      &quot;text&quot;: &quot;«C»&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Literal �&quot;
+    }
+  ],
+  &quot;actual&quot;: [
+    {
+      &quot;titre&quot;: &quot;Point d&apos;茅tape&quot;,
+      &quot;corps&quot;: &quot;D茅cision : 芦聽茅largir聽禄 le p茅rim猫tre.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;K眉莽眉k&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Plain ASCII&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Příliš&quot;
+    },
+    {
+      &quot;text&quot;: &quot;«C»&quot;
+    },
+    {
+      &quot;text&quot;: &quot;Literal �&quot;
+    }
+  ]
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/french request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/french request bodies"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/turkish request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/turkish request bodies"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/ascii request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/ascii request bodies"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/czech request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/czech request bodies"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/guillemets-ascii request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/guillemets-ascii request bodies"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/literal-replacement request count"></testcase>
+    <testcase classname="n8n-check" name="Read UTF-8 JSON: GET /records/literal-replacement request bodies"></testcase>
+  </testsuite>
+</testsuites>
