@@ -65,11 +65,13 @@ The recorded local verification uses the released registry package 0.1.9 and an 
 
 ### Direct released CLI command
 
-With Node.js 24+ and your installed n8n CLI, the released package can run the same case directly in a loopback-only namespace:
+With Node.js 24+ and your installed n8n CLI, install the pinned check CLI while network access is available. Then run the case inside the loopback-only namespace:
 
 ```sh
-# Run inside a namespace with only the loopback interface enabled.
-npx --yes @blucca/n8n-check@0.1.9 fixed.workflow.json empty.case.json \
+# Before entering the network-isolated environment:
+npm install --global @blucca/n8n-check@0.1.9
+# Run inside a namespace with only the loopback interface enabled:
+n8n-check fixed.workflow.json empty.case.json \
   --n8n /path/to/n8n --out results/fixed-empty --json
 ```
 
