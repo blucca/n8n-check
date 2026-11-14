@@ -1,0 +1,50 @@
+{
+  "name": "n8n-sunset: migrated hot lead slice",
+  "active": false,
+  "nodes": [
+    {
+      "id": "fixture-scored-leads",
+      "name": "Scored leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [];"
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\nreturn items.filter(item => Number(item.json.score) >= 7);"
+      },
+      "id": "8c2d4e6f-2b1a-4d3c-8e5f-1a2b3c4d5e04",
+      "name": "Keep hot leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Scored leads": {
+      "main": [
+        [
+          {
+            "node": "Keep hot leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

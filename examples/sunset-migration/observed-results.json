@@ -1,0 +1,177 @@
+{
+  "observedOn": "2026-11-14",
+  "source": {
+    "repository": "https://github.com/larik15/n8n-sunset",
+    "commit": "6e340f578f4d1b9c95a6c1027faa33df955ae955",
+    "path": "examples/workflows/lead-enrichment.json",
+    "node": "Keep hot leads"
+  },
+  "scope": "Fixed scored-lead input through one local filter. Static target-3.0 scan; actual execution on n8n 2.41.7.",
+  "generator": "@blucca/n8n-check@0.1.9",
+  "nativeCases": [
+    {
+      "name": "legacy-baseline",
+      "n8nVersion": "2.41.7",
+      "cliExit": 0,
+      "lastNode": "Keep hot leads",
+      "outputCount": 2,
+      "output": [
+        {
+          "id": "lead-A",
+          "company": "Example Alpha",
+          "score": 8,
+          "note": "Keep this complete row"
+        },
+        {
+          "id": "lead-C",
+          "company": "Example Gamma",
+          "score": "7",
+          "note": "Boundary score as a string"
+        }
+      ],
+      "fixedContractSatisfied": true,
+      "oracleExecuted": false,
+      "oracleStatus": null,
+      "engineError": null,
+      "runOrder": [
+        "n8n-check start",
+        "Scored leads",
+        "Keep hot leads"
+      ]
+    },
+    {
+      "name": "migrated-test",
+      "n8nVersion": "2.41.7",
+      "cliExit": 0,
+      "lastNode": "Check expected output",
+      "outputCount": 2,
+      "output": [
+        {
+          "id": "lead-A",
+          "company": "Example Alpha",
+          "score": 8,
+          "note": "Keep this complete row"
+        },
+        {
+          "id": "lead-C",
+          "company": "Example Gamma",
+          "score": "7",
+          "note": "Boundary score as a string"
+        }
+      ],
+      "fixedContractSatisfied": true,
+      "oracleExecuted": true,
+      "oracleStatus": "passed",
+      "engineError": null,
+      "runOrder": [
+        "n8n-check start",
+        "Scored leads",
+        "Keep hot leads",
+        "Check expected output"
+      ]
+    },
+    {
+      "name": "controlled-bad-plain",
+      "n8nVersion": "2.41.7",
+      "cliExit": 0,
+      "lastNode": "Keep hot leads",
+      "outputCount": 1,
+      "output": [
+        {
+          "id": "lead-A",
+          "company": "Example Alpha",
+          "score": 8,
+          "note": "Keep this complete row"
+        }
+      ],
+      "fixedContractSatisfied": false,
+      "oracleExecuted": false,
+      "oracleStatus": null,
+      "engineError": null,
+      "runOrder": [
+        "n8n-check start",
+        "Scored leads",
+        "Keep hot leads"
+      ]
+    },
+    {
+      "name": "controlled-bad-test",
+      "n8nVersion": "2.41.7",
+      "cliExit": 1,
+      "lastNode": "Check expected output",
+      "outputCount": 1,
+      "output": [
+        {
+          "id": "lead-A",
+          "company": "Example Alpha",
+          "score": 8,
+          "note": "Keep this complete row"
+        }
+      ],
+      "fixedContractSatisfied": false,
+      "oracleExecuted": true,
+      "oracleStatus": null,
+      "engineError": "n8n-check: Keep hot leads: output 0 expected 2 items, got 1 [line 13]",
+      "runOrder": [
+        "n8n-check start",
+        "Scored leads",
+        "Keep hot leads",
+        "Check expected output"
+      ]
+    }
+  ],
+  "compatibilityScans": [
+    {
+      "name": "legacy",
+      "tool": "n8n-sunset",
+      "version": "0.2.0",
+      "asOf": "2026-11-14",
+      "targets": [
+        "3.0"
+      ],
+      "exitCode": 1,
+      "findings": [
+        {
+          "ruleId": "n8n3/removed-node",
+          "node": "Keep hot leads",
+          "message": "Function node is removed in n8n 3.0.",
+          "upgradeTo": "3.0"
+        }
+      ],
+      "registryVersion": "2026-10-06",
+      "warnings": [
+        "registry data from 2026-10-06 (39 days old); newer shutdowns may be missing. Update n8n-sunset."
+      ]
+    },
+    {
+      "name": "migrated",
+      "tool": "n8n-sunset",
+      "version": "0.2.0",
+      "asOf": "2026-11-14",
+      "targets": [
+        "3.0"
+      ],
+      "exitCode": 0,
+      "findings": [],
+      "registryVersion": "2026-10-06",
+      "warnings": [
+        "registry data from 2026-10-06 (39 days old); newer shutdowns may be missing. Update n8n-sunset."
+      ]
+    },
+    {
+      "name": "controlled-bad",
+      "tool": "n8n-sunset",
+      "version": "0.2.0",
+      "asOf": "2026-11-14",
+      "targets": [
+        "3.0"
+      ],
+      "exitCode": 0,
+      "findings": [],
+      "registryVersion": "2026-10-06",
+      "warnings": [
+        "registry data from 2026-10-06 (39 days old); newer shutdowns may be missing. Update n8n-sunset."
+      ]
+    }
+  ]
+}

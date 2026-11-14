@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "name": "Keep both qualifying leads, complete rows and input order",
+  "input": {
+    "node": "Scored leads",
+    "items": [
+      {
+        "id": "lead-A",
+        "company": "Example Alpha",
+        "score": 8,
+        "note": "Keep this complete row"
+      },
+      {
+        "id": "lead-B",
+        "company": "Example Beta",
+        "score": 6,
+        "note": "Below threshold"
+      },
+      {
+        "id": "lead-C",
+        "company": "Example Gamma",
+        "score": "7",
+        "note": "Boundary score as a string"
+      }
+    ]
+  },
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Keep hot leads",
+      "count": 2,
+      "equals": [
+        {
+          "id": "lead-A",
+          "company": "Example Alpha",
+          "score": 8,
+          "note": "Keep this complete row"
+        },
+        {
+          "id": "lead-C",
+          "company": "Example Gamma",
+          "score": "7",
+          "note": "Boundary score as a string"
+        }
+      ]
+    }
+  ]
+}

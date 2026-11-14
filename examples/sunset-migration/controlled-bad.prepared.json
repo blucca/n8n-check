@@ -1,0 +1,75 @@
+{
+  "id": "aaa4847e01a54d5c",
+  "name": "n8n-check: Keep both qualifying leads, complete rows and input order",
+  "active": false,
+  "nodes": [
+    {
+      "id": "8a983837-6c96-4da8-ad75-5707b82e27d3",
+      "name": "n8n-check start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "fixture-scored-leads",
+      "name": "Scored leads",
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return JSON.parse(\"[{\\\"id\\\":\\\"lead-A\\\",\\\"company\\\":\\\"Example Alpha\\\",\\\"score\\\":8,\\\"note\\\":\\\"Keep this complete row\\\"},{\\\"id\\\":\\\"lead-B\\\",\\\"company\\\":\\\"Example Beta\\\",\\\"score\\\":6,\\\"note\\\":\\\"Below threshold\\\"},{\\\"id\\\":\\\"lead-C\\\",\\\"company\\\":\\\"Example Gamma\\\",\\\"score\\\":\\\"7\\\",\\\"note\\\":\\\"Boundary score as a string\\\"}]\").map(json => ({json}));"
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\nreturn items.filter(item => Number(item.json.score) >= 7).slice(0, 1);"
+      },
+      "id": "8c2d4e6f-2b1a-4d3c-8e5f-1a2b3c4d5e04",
+      "name": "Keep hot leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Scored leads": {
+      "main": [
+        [
+          {
+            "node": "Keep hot leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n-check start": {
+      "main": [
+        [
+          {
+            "node": "Scored leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 60,
+    "saveExecutionProgress": true
+  }
+}
