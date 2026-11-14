@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "browser": "153.0.8010.12",
+  "socketOpenedBeforeProbe": true,
+  "lateConstructorHookFrames": 0,
+  "existingSocketFrames": 3,
+  "textAndBinaryMetadata": true,
+  "payloadExcluded": true,
+  "listenersRemoved": true,
+  "records": [
+    {
+      "at": "2026-11-14T11:35:16.907Z",
+      "event": "attached",
+      "socket": 1,
+      "pushRef": "synthetic-push",
+      "readyState": 1
+    },
+    {
+      "at": "2026-11-14T11:35:16.909Z",
+      "event": "frame",
+      "socket": 1,
+      "bytes": 115,
+      "type": "testWebhookReceived",
+      "workflowId": "sample-workflow",
+      "executionId": "44"
+    },
+    {
+      "at": "2026-11-14T11:35:16.911Z",
+      "event": "frame",
+      "socket": 1,
+      "bytes": 81,
+      "type": "executionStarted",
+      "executionId": "44"
+    },
+    {
+      "at": "2026-11-14T11:35:16.913Z",
+      "event": "frame",
+      "socket": 1,
+      "bytes": 8,
+      "type": "non-json"
+    }
+  ]
+}

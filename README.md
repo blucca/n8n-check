@@ -18,6 +18,8 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 **Successful run, wrong data? [Choose a check by symptom](https://blucca.github.io/n8n-check/examples/green-runs/).** Three recorded examples cover missing invoices, garbled UTF-8 and shortened IDs; a finished-input recipe helps turn a preview/runtime mismatch into your own local case.
 
+**Form execution succeeds, editor still waiting? [Observe the existing push socket](examples/editor-push/).** A Chrome/Edge Console probe records incoming frame metadata on already-open connections, without installing anything or replacing the WebSocket constructor.
+
 **Try it locally:** [Download the two-export Docker demo](https://blucca.github.io/assets/downloads/n8n-check-identity-demo.zip). Extract, run `sh fixed/run.sh` (5/5), then `sh wrong-id/run.sh` (4/5, expected exit 1). Both n8n runs succeed and return two rows; the second returns the wrong IDs. Docker + a shell; [see the contract and recorded comparison](examples/identity-projection/).
 
 **[Open the saved call inspector](https://blucca.github.io/n8n-check/inspect/)** — select the complete parent and all referenced child execution API responses from one instance. The shared browser/Node core checks recorded ancestry and shows child-derived versus caller-recorded source coordinates. File contents stay in the tab; download the report JSON. Nested once, each and all-runs calls retain the existing successful waiting/passthrough scope. Business relationships and actual HTTP delivery use their separate contracts and observer records.

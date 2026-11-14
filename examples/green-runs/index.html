@@ -41,7 +41,7 @@
     </aside>
   </section>
 
-  <nav class="symptoms" aria-label="Choose your symptom"><a href="#missing-items">Rows are missing</a><a href="#changed-text">Text is garbled</a><a href="#changed-ids">An ID changed</a><a href="#preview-null">Preview works; execution gives null</a></nav>
+  <nav class="symptoms" aria-label="Choose your symptom"><a href="#missing-items">Rows are missing</a><a href="#changed-text">Text is garbled</a><a href="#changed-ids">An ID changed</a><a href="#preview-null">Preview works; execution gives null</a><a href="#editor-waiting">Editor still waiting</a></nav>
 
   <section id="missing-items" aria-labelledby="missing-title">
     <h2 id="missing-title">Missing items: check volume.</h2>
@@ -80,6 +80,13 @@
     <ol start="4"><li>Set <strong>n8n version to run</strong> to your execution's release. The reported task uses <strong>2.46.7</strong>; the builder defaults to <strong>2.41.7</strong>.</li></ol>
     <p>The execution supplies the input. Your required result supplies the expected text. Rerun the fixture after an expression change.</p>
     <p><a href="../../">Open the free case builder</a>.</p>
+  </section>
+
+  <section id="editor-waiting" aria-labelledby="push-title">
+    <h2 id="push-title">The execution finished.<br>The editor is still waiting.</h2>
+    <p>Observe the editor's push channel. Our Chrome/Edge Console probe attaches to <strong>already-open WebSockets</strong> and records frame type, size and workflow/execution IDs. It keeps message bodies outside the report.</p>
+    <p>A constructor hook added after the editor connects observes future sockets. This probe listens on the existing ones. Its recorded browser check captures text and binary frames on a connection opened before attachment.</p>
+    <p><a href="https://github.com/blucca/n8n-check/tree/main/examples/editor-push">Open the existing-socket probe and instructions</a>. Use <code>testWebhookReceived</code> and the run's IDs to choose the next debugging step.</p>
   </section>
 
   <section id="run-it" class="run-recipe" aria-labelledby="run-title">
