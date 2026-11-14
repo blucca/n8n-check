@@ -1,0 +1,83 @@
+{
+  "id": "81f37b2752564382",
+  "name": "n8n-check: raw amounts: descending, complete order rows",
+  "active": false,
+  "nodes": [
+    {
+      "id": "86754748-f594-465b-bb30-fdc9e6f2feda",
+      "name": "n8n-check start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "orders",
+      "name": "Orders",
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return JSON.parse(\"[{\\\"id\\\":\\\"order-A\\\",\\\"orderTotal\\\":\\\"96.74\\\",\\\"customer\\\":\\\"Example Alpha\\\"},{\\\"id\\\":\\\"order-B\\\",\\\"orderTotal\\\":\\\"83.28\\\",\\\"customer\\\":\\\"Example Beta\\\"},{\\\"id\\\":\\\"order-C\\\",\\\"orderTotal\\\":\\\"452.8\\\",\\\"customer\\\":\\\"Example Gamma\\\"}]\").map(json => ({json}));"
+      }
+    },
+    {
+      "id": "sort-descending",
+      "name": "Sort orders",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "type": "simple",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "orderTotal",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Orders": {
+      "main": [
+        [
+          {
+            "node": "Sort orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n-check start": {
+      "main": [
+        [
+          {
+            "node": "Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 60,
+    "saveExecutionProgress": true
+  }
+}

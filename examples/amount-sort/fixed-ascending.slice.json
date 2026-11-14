@@ -1,0 +1,118 @@
+{
+  "name": "fixed amount sort: ascending",
+  "active": false,
+  "nodes": [
+    {
+      "id": "orders",
+      "name": "Orders",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [];"
+      }
+    },
+    {
+      "id": "numeric-key",
+      "name": "Add numeric sort key",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "amount-key",
+              "name": "_amountSortKey",
+              "value": "={{ Number($json.orderTotal) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "sort-ascending",
+      "name": "Sort orders",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "type": "simple",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "_amountSortKey",
+              "order": "ascending"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "original-orders",
+      "name": "Return original orders",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().map(item => {\n  const { _amountSortKey, ...json } = item.json;\n  return { ...item, json };\n});"
+      }
+    }
+  ],
+  "connections": {
+    "Orders": {
+      "main": [
+        [
+          {
+            "node": "Add numeric sort key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add numeric sort key": {
+      "main": [
+        [
+          {
+            "node": "Sort orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort orders": {
+      "main": [
+        [
+          {
+            "node": "Return original orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

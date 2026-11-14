@@ -16,7 +16,7 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 | [Try a known regression](#try-it-in-your-browser) | A GitHub account | An eight-row data-loss failure, then its fix |
 | [Review a saved call in Jira](forge-mcp/) | Four saved parent/child exports + an MCP client | Before/after ancestry, raw pointers, a same-issue dossier |
 
-**Successful run, wrong data? [Choose a check by symptom](https://blucca.github.io/n8n-check/examples/green-runs/).** Three recorded examples cover missing invoices, garbled UTF-8 and shortened IDs; a finished-input recipe helps turn a preview/runtime mismatch into your own local case.
+**Successful run, wrong data? [Choose a check by symptom](https://blucca.github.io/n8n-check/examples/green-runs/).** Four recorded examples cover missing invoices, garbled UTF-8, shortened IDs and wrong amount order; a finished-input recipe helps turn a preview/runtime mismatch into your own local case.
 
 **Form execution succeeds, editor still waiting? [Observe the existing push socket](examples/editor-push/).** A Chrome/Edge Console probe records incoming frame metadata on already-open connections, without installing anything or replacing the WebSocket constructor.
 

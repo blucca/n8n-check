@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f8edaa">
   <title>Successful n8n run, wrong result? Choose your check — n8n-check</title>
-  <meta name="description" content="Missing invoices, garbled UTF-8 or shortened IDs after a successful n8n run: three recorded examples and a free, concrete way to check your own workflow.">
+  <meta name="description" content="Missing invoices, garbled UTF-8, shortened IDs or wrong amount order after a successful n8n run: four recorded examples and a free, concrete way to check your own workflow.">
   <link rel="canonical" href="https://blucca.github.io/n8n-check/examples/green-runs/">
   <meta property="og:title" content="Successful run. Wrong result.">
   <meta property="og:description" content="Choose the output check your n8n workflow needs, then run it in your existing editor, Docker or CI.">
@@ -24,10 +24,10 @@
   <section class="guide-intro" aria-labelledby="guide-title">
     <div>
       <h1 id="guide-title">Successful run.<br>Wrong result.</h1>
-      <p class="deck">An invoice disappears. Customer text changes. A lead ID arrives shortened. Preserve the result before the next handover: choose volume, identity or exact values, then check the relevant output in real n8n.</p>
+      <p class="deck">An invoice disappears. Customer text changes. A lead ID arrives shortened. Amounts land in the wrong order. Preserve the result before the next handover: choose volume, identity, exact values or row order, then check the relevant output in real n8n.</p>
       <div class="actions"><a class="button" href="../../">Build your free check</a><a class="secondary" href="../stop-after/walkthrough/invoice-run-pack.zip" download>Download invoice run pack</a></div>
     </div>
-    <aside class="recorded-check guide-proof" aria-label="Three recorded successful n8n executions with changed data">
+    <aside class="recorded-check guide-proof" aria-label="Four recorded successful n8n executions with changed data">
       <table>
         <caption>What green executions returned.</caption>
         <thead><tr><th scope="col">Input</th><th scope="col">n8n run</th><th scope="col">Returned result</th></tr></thead>
@@ -35,13 +35,14 @@
           <tr><th scope="row">Two invoices</th><td class="pass">Success</td><td class="returned">One invoice</td></tr>
           <tr><th scope="row"><code>Küçük</code></th><td class="pass">Success</td><td class="returned"><code>K眉莽眉k</code></td></tr>
           <tr><th scope="row"><code>website:demo,a</code></th><td class="pass">Success</td><td class="returned"><code>website:demo</code></td></tr>
+          <tr><th scope="row">Largest amount: <code>452.8</code></th><td class="pass">Success</td><td class="returned"><code>96.74</code> ranks first</td></tr>
         </tbody>
       </table>
       <p>Recorded native runs with synthetic inputs. Versions and replay instructions below.</p>
     </aside>
   </section>
 
-  <nav class="symptoms" aria-label="Choose your symptom"><a href="#missing-items">Rows are missing</a><a href="#changed-text">Text is garbled</a><a href="#changed-ids">An ID changed</a><a href="#preview-null">Preview works; execution gives null</a><a href="#editor-waiting">Editor still waiting</a></nav>
+  <nav class="symptoms" aria-label="Choose your symptom"><a href="#missing-items">Rows are missing</a><a href="#changed-text">Text is garbled</a><a href="#changed-ids">An ID changed</a><a href="#wrong-order">Amounts are out of order</a><a href="#preview-null">Preview works; execution gives null</a><a href="#editor-waiting">Editor still waiting</a></nav>
 
   <section id="missing-items" aria-labelledby="missing-title">
     <h2 id="missing-title">Missing items: check volume.</h2>
@@ -66,6 +67,13 @@
     <p>Recorded <strong>n8n 2.41.7 / PostgreSQL 18.6</strong> returns two rows in both modes. Scalar Query Parameters shorten <code>website:demo,a</code> to <code>website:demo</code>. A single array expression retains it:</p>
     <pre><code>={{ [$json.client_id, $json.lead_key] }}</code></pre>
     <p>Keep the credentialed SELECT in native n8n. For downstream n8n-check coverage, use the returned rows as fixtures at the database-output boundary and check the transformation after Postgres.</p>
+  </section>
+
+  <section id="wrong-order" aria-labelledby="order-title">
+    <h2 id="order-title">Wrong ranking: check row order.</h2>
+    <p>Choose <strong>Full JSON items</strong> and list the complete orders in the required sequence. Our <a href="https://github.com/blucca/n8n-check/tree/main/examples/amount-sort">amount-sort case</a> keeps the original amount strings and customer IDs while sorting a temporary numeric key.</p>
+    <p>With Sort <strong>typeVersion 1 / Simple</strong>, the string <code>"96.74"</code> ranks ahead of <code>"452.8"</code> in descending order. Recorded <strong>n8n 2.41.7 and 2.47.7</strong> both finish that ordinary run successfully. Numeric-key sorting passes the complete three-order contract in both directions; original-string controls fail it.</p>
+    <p><a href="../amount-sort/fixed-descending.editor-test.json" download>Download the descending editor test</a> or <a href="../amount-sort/fixed-ascending.editor-test.json" download>the ascending test</a>. Import into your n8n and <strong>Execute workflow</strong>; <strong>Check expected output</strong> returns passed, count 3. Then replace the fixture and expected rows with your own contract.</p>
   </section>
 
   <section id="preview-null" class="preview-recipe" aria-labelledby="preview-title">

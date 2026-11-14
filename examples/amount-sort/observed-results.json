@@ -1,0 +1,566 @@
+{
+  "schemaVersion": 1,
+  "recordedOn": "2026-11-14",
+  "actor": "Blucca native lab",
+  "inputScope": "Three amount strings reconstructed from the first three displayed amounts in n8n issue 43864; order IDs and customers are invented.",
+  "contract": "Complete JSON rows, count 3, independently stated numeric ascending/descending order; fixed output retains the original amount strings.",
+  "execution": "Each supplied workflow was imported and executed by the stock n8n CLI with a local SQLite home. The ordinary baseline succeeds; the two raw-string output contracts intentionally fail.",
+  "runtimes": [
+    {
+      "n8nVersion": "2.41.7",
+      "nodeVersion": "v26.12.0",
+      "platform": "Linux x86_64",
+      "sortNodeVersion": 1,
+      "numericKeyNodeVersion": 3.4,
+      "codeNodeVersion": 2,
+      "runs": [
+        {
+          "file": "raw-descending.workflow.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-A",
+            "order-B",
+            "order-C"
+          ],
+          "oracleExecuted": false,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders"
+          ]
+        },
+        {
+          "file": "raw-descending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 1,
+          "executionSuccess": false,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-A",
+            "order-B",
+            "order-C"
+          ],
+          "error": "n8n-check: Sort orders: output 0 differs. Expected [{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"}]; got [{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"}] [line 26]",
+          "oracleExecuted": true,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "raw-ascending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 1,
+          "executionSuccess": false,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-B",
+            "order-A"
+          ],
+          "error": "n8n-check: Sort orders: output 0 differs. Expected [{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"}]; got [{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"}] [line 26]",
+          "oracleExecuted": true,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "fixed-descending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Return original orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-A",
+            "order-B"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Add numeric sort key",
+            "Sort orders",
+            "Return original orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "fixed-ascending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Return original orders",
+          "rows": [
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-B",
+            "order-A",
+            "order-C"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Add numeric sort key",
+            "Sort orders",
+            "Return original orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "numbers-descending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": 452.8,
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": 96.74,
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": 83.28,
+              "customer": "Example Beta"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-A",
+            "order-B"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "numbers-ascending.editor-test.json",
+          "n8nVersion": "2.41.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-B",
+              "orderTotal": 83.28,
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": 96.74,
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": 452.8,
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-B",
+            "order-A",
+            "order-C"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        }
+      ]
+    },
+    {
+      "n8nVersion": "2.47.7",
+      "nodeVersion": "v24.21.0",
+      "platform": "Linux x86_64",
+      "sortNodeVersion": 1,
+      "numericKeyNodeVersion": 3.4,
+      "codeNodeVersion": 2,
+      "runs": [
+        {
+          "file": "raw-descending.workflow.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-A",
+            "order-B",
+            "order-C"
+          ],
+          "oracleExecuted": false,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders"
+          ]
+        },
+        {
+          "file": "raw-descending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 1,
+          "executionSuccess": false,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-A",
+            "order-B",
+            "order-C"
+          ],
+          "error": "n8n-check: Sort orders: output 0 differs. Expected [{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"}]; got [{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"}] [line 26]",
+          "oracleExecuted": true,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "raw-ascending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 1,
+          "executionSuccess": false,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-B",
+            "order-A"
+          ],
+          "error": "n8n-check: Sort orders: output 0 differs. Expected [{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"},{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"}]; got [{\"id\":\"order-C\",\"orderTotal\":\"452.8\",\"customer\":\"Example Gamma\"},{\"id\":\"order-B\",\"orderTotal\":\"83.28\",\"customer\":\"Example Beta\"},{\"id\":\"order-A\",\"orderTotal\":\"96.74\",\"customer\":\"Example Alpha\"}] [line 26]",
+          "oracleExecuted": true,
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "fixed-descending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Return original orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-A",
+            "order-B"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Add numeric sort key",
+            "Sort orders",
+            "Return original orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "fixed-ascending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Return original orders",
+          "rows": [
+            {
+              "id": "order-B",
+              "orderTotal": "83.28",
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": "96.74",
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": "452.8",
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-B",
+            "order-A",
+            "order-C"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Add numeric sort key",
+            "Sort orders",
+            "Return original orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "numbers-descending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-C",
+              "orderTotal": 452.8,
+              "customer": "Example Gamma"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": 96.74,
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-B",
+              "orderTotal": 83.28,
+              "customer": "Example Beta"
+            }
+          ],
+          "ids": [
+            "order-C",
+            "order-A",
+            "order-B"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        },
+        {
+          "file": "numbers-ascending.editor-test.json",
+          "n8nVersion": "2.47.7",
+          "cliExit": 0,
+          "executionSuccess": true,
+          "sortNodeSuccess": true,
+          "outputNode": "Sort orders",
+          "rows": [
+            {
+              "id": "order-B",
+              "orderTotal": 83.28,
+              "customer": "Example Beta"
+            },
+            {
+              "id": "order-A",
+              "orderTotal": 96.74,
+              "customer": "Example Alpha"
+            },
+            {
+              "id": "order-C",
+              "orderTotal": 452.8,
+              "customer": "Example Gamma"
+            }
+          ],
+          "ids": [
+            "order-B",
+            "order-A",
+            "order-C"
+          ],
+          "oracleExecuted": true,
+          "oracleStatus": "passed",
+          "runOrder": [
+            "n8n-check start",
+            "Orders",
+            "Sort orders",
+            "Check expected output"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "name": "raw amounts: descending, complete order rows",
+  "input": {
+    "node": "Orders",
+    "items": [
+      {
+        "id": "order-A",
+        "orderTotal": "96.74",
+        "customer": "Example Alpha"
+      },
+      {
+        "id": "order-B",
+        "orderTotal": "83.28",
+        "customer": "Example Beta"
+      },
+      {
+        "id": "order-C",
+        "orderTotal": "452.8",
+        "customer": "Example Gamma"
+      }
+    ]
+  },
+  "mocks": [],
+  "assertions": [
+    {
+      "node": "Sort orders",
+      "count": 3,
+      "equals": [
+        {
+          "id": "order-C",
+          "orderTotal": "452.8",
+          "customer": "Example Gamma"
+        },
+        {
+          "id": "order-A",
+          "orderTotal": "96.74",
+          "customer": "Example Alpha"
+        },
+        {
+          "id": "order-B",
+          "orderTotal": "83.28",
+          "customer": "Example Beta"
+        }
+      ]
+    }
+  ]
+}
