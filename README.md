@@ -99,6 +99,8 @@ For local Docker runs, use `docker build --build-arg N8N_VERSION=2.38.4 -t n8n-c
 
 **Working with a coding agent?** Install the [output-regression skill](skills/n8n-output-regression/SKILL.md): `npx skills add https://github.com/blucca/n8n-check --skill n8n-output-regression`. It guides fixture, expected-output and real-run checks using the existing editor/CLI paths.
 
+**Using OpenClaw?** [Install the same output-regression method from ClawHub](https://clawhub.ai/blucca/skills/n8n-output-regression) (v0.1.9, MIT-0 text edition). The test generator remains pinned to `@blucca/n8n-check@0.1.9`.
+
 **[Watch the one-minute first-case walkthrough](https://blucca.github.io/n8n-check/examples/stop-after/walkthrough/)** — import a full export, stop after its transformation, download the case and inspect the actual results. The current 0.1.8 native replay keeps both invoices in the fixed Code and catches the controlled one-row regression; both n8n runs succeed. [Watch on YouTube](https://youtu.be/I1PMlJbWXB0).
 
 **[Open the local case builder](https://blucca.github.io/n8n-check/)** — import an n8n export, choose the fixture boundary and the output to preserve, then download an **editor test**, **local run pack** or GitHub Actions file. The QA-workbook view pairs editable fixture and expected JSON with the selected execution slice and a direct review/download link. A recorded nine-row regression shows how the data check responds when a successful engine run loses the expected rows.
