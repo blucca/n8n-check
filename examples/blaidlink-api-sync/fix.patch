@@ -1,0 +1,30 @@
+--- original.workflow.json
++++ fixed.workflow.json
+@@ -130,7 +130,8 @@
+         "options": {
+           "response": {
+             "response": {
+-              "responseFormat": "json"
++              "responseFormat": "json",
++              "fullResponse": true
+             }
+           },
+           "timeout": 10000
+@@ -151,7 +152,7 @@
+     },
+     {
+       "parameters": {
+-        "jsCode": "const incoming = $input.all();\nconst flattened = incoming.length === 1 && Array.isArray(incoming[0].json)\n  ? incoming[0].json\n  : incoming.map((item) => item.json);\nconst requiredFields = String(\n  $('Set Demo Configuration').first().json.required_fields || 'id,name,email'\n)\n  .split(',')\n  .map((field) => field.trim())\n  .filter(Boolean);\n\nif (flattened.length === 0) {\n  throw new Error('EMPTY_RESPONSE: The upstream API returned no records.');\n}\n\nreturn flattened.map((record, index) => {\n  const missing = requiredFields.filter((field) => {\n    const value = record?.[field];\n    return value === undefined || value === null || String(value).trim() === '';\n  });\n\n  return {\n    json: {\n      source_index: index,\n      record_id: record?.id ?? null,\n      name: String(record?.name ?? '').trim(),\n      email: String(record?.email ?? '').trim().toLowerCase(),\n      validation_status: missing.length === 0 ? 'valid' : 'invalid',\n      missing_fields: missing,\n      source_domain: record?.website ?? null\n    }\n  };\n});"
++        "jsCode": "const incoming = $input.all();\n// Full response preserves [] as one item so the empty-response guard runs.\nconst flattened = incoming.flatMap((item) => {\n  const records = item.json.body;\n  return Array.isArray(records) ? records : [records];\n});\nconst requiredFields = String(\n  $('Set Demo Configuration').first().json.required_fields || 'id,name,email'\n)\n  .split(',')\n  .map((field) => field.trim())\n  .filter(Boolean);\n\nif (flattened.length === 0) {\n  throw new Error('EMPTY_RESPONSE: The upstream API returned no records.');\n}\n\nreturn flattened.map((record, index) => {\n  const missing = requiredFields.filter((field) => {\n    const value = record?.[field];\n    return value === undefined || value === null || String(value).trim() === '';\n  });\n\n  return {\n    json: {\n      source_index: index,\n      record_id: record?.id ?? null,\n      name: String(record?.name ?? '').trim(),\n      email: String(record?.email ?? '').trim().toLowerCase(),\n      validation_status: missing.length === 0 ? 'valid' : 'invalid',\n      missing_fields: missing,\n      source_domain: record?.website ?? null\n    }\n  };\n});"
+       },
+       "id": "6db98386-50d1-4880-b374-71701fe7ec10",
+       "name": "Normalize and Validate Records",
+@@ -176,7 +177,7 @@
+     },
+     {
+       "parameters": {
+-        "jsCode": "const failure = $input.first().json;\nconst raw = String(\n  failure?.error?.message ||\n  failure?.error?.description ||\n  failure?.message ||\n  'The upstream request failed.'\n);\n\nconst sanitized = raw\n  .replace(/(?:bearer|token|api[_-]?key|password|authorization)\\s*[:=]\\s*[^\\s,;]+/gi, '[credential redacted]')\n  .replace(/[?&](?:key|token|api_key|access_token)=[^&\\s]+/gi, '?credential=[redacted]')\n  .slice(0, 240);\n\nreturn [{\n  json: {\n    status: 'failed',\n    error: 'upstream_request_failed',\n    message: sanitized,\n    retryable: true,\n    failed_at: new Date().toISOString(),\n    next_step: 'Verify the URL and authentication, then run the workflow again.'\n  }\n}];"
++        "jsCode": "const failure = $input.first().json;\nconst raw = String(\n  failure?.error?.message ||\n  failure?.error?.description ||\n  (typeof failure?.error === 'string' ? failure.error : undefined) ||\n  failure?.message ||\n  'The upstream request failed.'\n);\n\nconst sanitized = raw\n  .replace(/(?:bearer|token|api[_-]?key|password|authorization)\\s*[:=]\\s*[^\\s,;]+/gi, '[credential redacted]')\n  .replace(/[?&](?:key|token|api_key|access_token)=[^&\\s]+/gi, '?credential=[redacted]')\n  .slice(0, 240);\n\nreturn [{\n  json: {\n    status: 'failed',\n    error: 'upstream_request_failed',\n    message: sanitized,\n    retryable: true,\n    failed_at: new Date().toISOString(),\n    next_step: 'Verify the URL and authentication, then run the workflow again.'\n  }\n}];"
+       },
+       "id": "5a4ace78-3334-4103-9d51-e59c48e5138f",
+       "name": "Sanitize Failure",

@@ -1,0 +1,440 @@
+{
+  "recorded_at": "2026-11-14T00:31:42.371200+00:00",
+  "source_repository": "BlaidLink/blaidlink-n8n-reliability-starters",
+  "source_commit": "e7a2c621e5c28ffe1d4dd82c14059acd22055707",
+  "runtime_note": "Recorded with released registry n8n-check 0.1.9 and n8n 2.41.7, in an enforced loopback-only namespace. run.sh supplies the existing Docker reproduction route.",
+  "diagnostic_expectation": "The empty response message includes n8n2.41.7 Code-node suffix [line 15]. Initial literal-only expectation and two intermediate failed runs are retained in the private/local acceptance evidence. Core missing Failure Record count1 obligation is unchanged.",
+  "external_author_runs": 0,
+  "runs": [
+    {
+      "name": "original-empty",
+      "report_status": "failed",
+      "cli_exit_code": 1,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 6,
+      "checks_total": 11,
+      "request_count": 1,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Validated Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Sanitize Failure": {
+          "executed": false,
+          "branches": []
+        },
+        "Failure Record": {
+          "executed": false,
+          "branches": []
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 10398,
+      "case_file": "empty.literal-message.case.json",
+      "workflow_file": "original.workflow.json",
+      "recorded_report": "recorded-results/original-empty.report.json",
+      "recorded_junit": "recorded-results/original-empty.junit.xml",
+      "recorded_execution": "recorded-results/original-empty.execution.json"
+    },
+    {
+      "name": "original-success",
+      "report_status": "passed",
+      "cli_exit_code": 0,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 9,
+      "checks_total": 9,
+      "request_count": 1,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records",
+        "Normalize and Validate Records",
+        "Validated Records"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              2,
+              0
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": true,
+          "branches": [
+            [
+              2,
+              0
+            ]
+          ]
+        },
+        "Validated Records": {
+          "executed": true,
+          "branches": [
+            [
+              2
+            ]
+          ]
+        },
+        "Sanitize Failure": {
+          "executed": false,
+          "branches": []
+        },
+        "Failure Record": {
+          "executed": false,
+          "branches": []
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 9407,
+      "case_file": "success.case.json",
+      "workflow_file": "original.workflow.json",
+      "recorded_report": "recorded-results/original-success.report.json",
+      "recorded_junit": "recorded-results/original-success.junit.xml",
+      "recorded_execution": "recorded-results/original-success.execution.json"
+    },
+    {
+      "name": "original-request-error",
+      "report_status": "passed",
+      "cli_exit_code": 0,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 11,
+      "checks_total": 11,
+      "request_count": 3,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records",
+        "Sanitize Failure",
+        "Failure Record"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Validated Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Sanitize Failure": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        },
+        "Failure Record": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 15359,
+      "failure_record": {
+        "status": "failed",
+        "error": "upstream_request_failed",
+        "message": "503 - {\"message\":\"synthetic upstream unavailable\"}",
+        "retryable": true,
+        "failed_at": "2026-11-14T00:22:09.754Z",
+        "next_step": "Verify the URL and authentication, then run the workflow again."
+      },
+      "case_file": "request-error.case.json",
+      "workflow_file": "original.workflow.json",
+      "recorded_report": "recorded-results/original-request-error.report.json",
+      "recorded_junit": "recorded-results/original-request-error.junit.xml",
+      "recorded_execution": "recorded-results/original-request-error.execution.json"
+    },
+    {
+      "name": "fixed-empty",
+      "report_status": "passed",
+      "cli_exit_code": 0,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 11,
+      "checks_total": 11,
+      "request_count": 1,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records",
+        "Normalize and Validate Records",
+        "Sanitize Failure",
+        "Failure Record"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              1,
+              0
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": true,
+          "branches": [
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        "Validated Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Sanitize Failure": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        },
+        "Failure Record": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 9419,
+      "failure_record": {
+        "status": "failed",
+        "error": "upstream_request_failed",
+        "message": "EMPTY_RESPONSE: The upstream API returned no records. [line 15]",
+        "retryable": true,
+        "failed_at": "2026-11-14T00:29:36.244Z",
+        "next_step": "Verify the URL and authentication, then run the workflow again."
+      },
+      "case_file": "empty.case.json",
+      "workflow_file": "fixed.workflow.json",
+      "recorded_report": "recorded-results/fixed-empty.report.json",
+      "recorded_junit": "recorded-results/fixed-empty.junit.xml",
+      "recorded_execution": "recorded-results/fixed-empty.execution.json"
+    },
+    {
+      "name": "fixed-success",
+      "report_status": "passed",
+      "cli_exit_code": 0,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 9,
+      "checks_total": 9,
+      "request_count": 1,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records",
+        "Normalize and Validate Records",
+        "Validated Records"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              1,
+              0
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": true,
+          "branches": [
+            [
+              2,
+              0
+            ]
+          ]
+        },
+        "Validated Records": {
+          "executed": true,
+          "branches": [
+            [
+              2
+            ]
+          ]
+        },
+        "Sanitize Failure": {
+          "executed": false,
+          "branches": []
+        },
+        "Failure Record": {
+          "executed": false,
+          "branches": []
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 9360,
+      "case_file": "success.case.json",
+      "workflow_file": "fixed.workflow.json",
+      "recorded_report": "recorded-results/fixed-success.report.json",
+      "recorded_junit": "recorded-results/fixed-success.junit.xml",
+      "recorded_execution": "recorded-results/fixed-success.execution.json"
+    },
+    {
+      "name": "fixed-request-error",
+      "report_status": "passed",
+      "cli_exit_code": 0,
+      "engine_status": "success",
+      "n8n_version": "2.41.7",
+      "runner_version": "0.1.9",
+      "node_version": "v26.12.0",
+      "checks_passed": 11,
+      "checks_total": 11,
+      "request_count": 3,
+      "executed_nodes": [
+        "n8n-check start",
+        "Run Demo",
+        "Set Demo Configuration",
+        "Fetch API Records",
+        "Sanitize Failure",
+        "Failure Record"
+      ],
+      "node_outputs": {
+        "Fetch API Records": {
+          "executed": true,
+          "branches": [
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        "Normalize and Validate Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Validated Records": {
+          "executed": false,
+          "branches": []
+        },
+        "Sanitize Failure": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        },
+        "Failure Record": {
+          "executed": true,
+          "branches": [
+            [
+              1
+            ]
+          ]
+        }
+      },
+      "network": {
+        "mode": "loopback-only",
+        "enforced": true,
+        "interfaces": [
+          "lo"
+        ]
+      },
+      "duration_ms": 15296,
+      "failure_record": {
+        "status": "failed",
+        "error": "upstream_request_failed",
+        "message": "503 - {\"message\":\"synthetic upstream unavailable\"}",
+        "retryable": true,
+        "failed_at": "2026-11-14T00:30:01.137Z",
+        "next_step": "Verify the URL and authentication, then run the workflow again."
+      },
+      "case_file": "request-error.case.json",
+      "workflow_file": "fixed.workflow.json",
+      "recorded_report": "recorded-results/fixed-request-error.report.json",
+      "recorded_junit": "recorded-results/fixed-request-error.junit.xml",
+      "recorded_execution": "recorded-results/fixed-request-error.execution.json"
+    }
+  ]
+}

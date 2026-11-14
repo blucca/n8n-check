@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "input": {
+    "node": "Run Demo",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Fetch API Records",
+      "url": "/users",
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/users",
+          "responses": [
+            {
+              "status": 200,
+              "json": []
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Validated Records",
+      "count": 0
+    },
+    {
+      "node": "Failure Record",
+      "count": 1,
+      "pluck": "json.status",
+      "equals": [
+        "failed"
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.error",
+      "equals": [
+        "upstream_request_failed"
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.message",
+      "equals": [
+        "EMPTY_RESPONSE: The upstream API returned no records."
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.retryable",
+      "equals": [
+        true
+      ]
+    }
+  ],
+  "name": "Blaidlink empty API response emits explicit failure evidence"
+}

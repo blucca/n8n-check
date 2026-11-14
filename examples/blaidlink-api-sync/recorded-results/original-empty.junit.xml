@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="11" failures="5" errors="0">
+  <testsuite name="Blaidlink empty API response emits explicit failure evidence" tests="11" failures="5" errors="0" time="10.398">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Validated Records: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 count">
+      <failure message="Failure Record: output 0 count">{
+  &quot;expected&quot;: 1,
+  &quot;actual&quot;: 0
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.status">
+      <failure message="Failure Record: output 0 pluck json.status">{
+  &quot;expected&quot;: [
+    &quot;failed&quot;
+  ],
+  &quot;actual&quot;: []
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.error">
+      <failure message="Failure Record: output 0 pluck json.error">{
+  &quot;expected&quot;: [
+    &quot;upstream_request_failed&quot;
+  ],
+  &quot;actual&quot;: []
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.message">
+      <failure message="Failure Record: output 0 pluck json.message">{
+  &quot;expected&quot;: [
+    &quot;EMPTY_RESPONSE: The upstream API returned no records.&quot;
+  ],
+  &quot;actual&quot;: []
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.retryable">
+      <failure message="Failure Record: output 0 pluck json.retryable">{
+  &quot;expected&quot;: [
+    true
+  ],
+  &quot;actual&quot;: []
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request count"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request bodies"></testcase>
+  </testsuite>
+</testsuites>

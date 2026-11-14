@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "runnerVersion": "0.1.9",
+  "name": "Blaidlink persistent request error emits sanitized failure evidence",
+  "startedAt": "2026-11-14T00:29:45.986Z",
+  "nodeVersion": "v26.12.0",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "n8n execution succeeds",
+      "passed": true,
+      "actual": {
+        "cliExitCode": 0,
+        "lastNode": "Failure Record",
+        "executionFound": true
+      }
+    },
+    {
+      "name": "Validated Records: output 0 count",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "Failure Record: output 0 count",
+      "passed": true,
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "name": "Failure Record: output 0 pluck json.status",
+      "passed": true,
+      "expected": [
+        "failed"
+      ],
+      "actual": [
+        "failed"
+      ]
+    },
+    {
+      "name": "Failure Record: output 0 pluck json.error",
+      "passed": true,
+      "expected": [
+        "upstream_request_failed"
+      ],
+      "actual": [
+        "upstream_request_failed"
+      ]
+    },
+    {
+      "name": "Failure Record: output 0 pluck json.retryable",
+      "passed": true,
+      "expected": [
+        true
+      ],
+      "actual": [
+        true
+      ]
+    },
+    {
+      "name": "Failure Record: output 0 pluck json.next_step",
+      "passed": true,
+      "expected": [
+        "Verify the URL and authentication, then run the workflow again."
+      ],
+      "actual": [
+        "Verify the URL and authentication, then run the workflow again."
+      ]
+    },
+    {
+      "name": "mock: all requests match routes",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "mock: request limits and server",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "Fetch API Records: GET /users request count",
+      "passed": true,
+      "expected": 3,
+      "actual": 3
+    },
+    {
+      "name": "Fetch API Records: GET /users request bodies",
+      "passed": true,
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "actual": [
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "artifacts": "recorded-run/verified-request-error",
+  "network": {
+    "mode": "loopback-only",
+    "enforced": true,
+    "interfaces": [
+      "lo"
+    ]
+  },
+  "preparation": {
+    "inputNode": "Run Demo",
+    "changes": [
+      {
+        "node": "Run Demo",
+        "change": "replace with fixture JSON items"
+      },
+      {
+        "node": "Fetch API Records",
+        "change": "route URL to local mock; remove credential references; authentication=none"
+      }
+    ],
+    "omittedNodes": [
+      "Template Guide",
+      "Step 1 Configure Demo",
+      "Step 2 Fetch Safely",
+      "Step 3A Validate Success",
+      "Step 3B Sanitize Failure",
+      "Production Checklist"
+    ]
+  },
+  "runDirectory": "recorded-run/verified-request-error/run-ehEQmo",
+  "n8nVersion": "2.41.7",
+  "requests": [
+    {
+      "node": "Fetch API Records",
+      "method": "GET",
+      "path": "/users",
+      "body": null,
+      "matched": true,
+      "status": 503,
+      "response": {
+        "message": "synthetic upstream unavailable"
+      }
+    },
+    {
+      "node": "Fetch API Records",
+      "method": "GET",
+      "path": "/users",
+      "body": null,
+      "matched": true,
+      "status": 503,
+      "response": {
+        "message": "synthetic upstream unavailable"
+      }
+    },
+    {
+      "node": "Fetch API Records",
+      "method": "GET",
+      "path": "/users",
+      "body": null,
+      "matched": true,
+      "status": 503,
+      "response": {
+        "message": "synthetic upstream unavailable"
+      }
+    }
+  ],
+  "durationMs": 15296,
+  "exitCode": 0
+}

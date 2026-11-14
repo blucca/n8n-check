@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="11" failures="0" errors="0">
+  <testsuite name="Blaidlink persistent request error emits sanitized failure evidence" tests="11" failures="0" errors="0" time="15.359">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Validated Records: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.status"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.error"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.retryable"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 pluck json.next_step"></testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request count"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request bodies"></testcase>
+  </testsuite>
+</testsuites>

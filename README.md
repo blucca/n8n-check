@@ -151,6 +151,8 @@ One HTTP request failed, and n8n retried **both** input items. We ran the same t
 
 Each case checks request counts, bodies, and final outputs with the actual engine. Item-level looping narrows the HTTP retry input; server-side idempotency handles repeated attempts of the same write.
 
+**[Catch an empty API response that skips its own error handler](examples/blaidlink-api-sync/):** a complete third-party REST-sync template succeeds with zero failure records. Three recorded cases exercise the minimal fix, intact success rows and handled retries; import the workflow into your own n8n for a no-CLI first check.
+
 **[Keep UTF-8 JSON intact after a successful HTTP request](examples/http-utf8/):** complete Auto/JSON workflows and six field-exact fixtures for n8n #43713.
 
 **[Preserve comma-bearing PostgreSQL parameters](examples/postgres-parameters/):** two native Postgres 2.7 queries both succeed, but scalar parameters shorten an ID. A single array expression preserves both complete rows.

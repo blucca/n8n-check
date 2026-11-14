@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "input": {
+    "node": "Run Demo",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Fetch API Records",
+      "url": "/users",
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/users",
+          "responses": [
+            {
+              "status": 503,
+              "json": {
+                "message": "synthetic upstream unavailable"
+              }
+            }
+          ],
+          "expect": {
+            "count": 3,
+            "bodies": [
+              null,
+              null,
+              null
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Validated Records",
+      "count": 0
+    },
+    {
+      "node": "Failure Record",
+      "count": 1,
+      "pluck": "json.status",
+      "equals": [
+        "failed"
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.error",
+      "equals": [
+        "upstream_request_failed"
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.retryable",
+      "equals": [
+        true
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "pluck": "json.next_step",
+      "equals": [
+        "Verify the URL and authentication, then run the workflow again."
+      ]
+    }
+  ],
+  "name": "Blaidlink persistent request error emits sanitized failure evidence"
+}

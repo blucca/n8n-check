@@ -1,0 +1,255 @@
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "n8n-check start": [
+          {
+            "startTime": 1794616175480,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Run Demo": [
+          {
+            "startTime": 1794616175488,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "n8n-check start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 682,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Set Demo Configuration": [
+          {
+            "startTime": 1794616176176,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Run Demo",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "request_url": "https://jsonplaceholder.typicode.com/users",
+                      "required_fields": "id,name,email"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Fetch API Records": [
+          {
+            "startTime": 1794616176183,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Set Demo Configuration",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 26,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "body": [],
+                      "headers": {
+                        "content-type": "application/json",
+                        "date": "Sat, 14 Nov 2026 00:29:36 GMT",
+                        "connection": "close",
+                        "transfer-encoding": "chunked"
+                      },
+                      "statusCode": 200,
+                      "statusMessage": "OK"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Normalize and Validate Records": [
+          {
+            "startTime": 1794616176220,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Fetch API Records",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 11,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "error": "EMPTY_RESPONSE: The upstream API returned no records. [line 15]"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Sanitize Failure": [
+          {
+            "startTime": 1794616176237,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Normalize and Validate Records",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 8,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "status": "failed",
+                      "error": "upstream_request_failed",
+                      "message": "EMPTY_RESPONSE: The upstream API returned no records. [line 15]",
+                      "retryable": true,
+                      "failed_at": "2026-11-14T00:29:36.244Z",
+                      "next_step": "Verify the URL and authentication, then run the workflow again."
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Failure Record": [
+          {
+            "startTime": 1794616176251,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Sanitize Failure",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "status": "failed",
+                      "error": "upstream_request_failed",
+                      "message": "EMPTY_RESPONSE: The upstream API returned no records. [line 15]",
+                      "retryable": true,
+                      "failed_at": "2026-11-14T00:29:36.244Z",
+                      "next_step": "Verify the URL and authentication, then run the workflow again."
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Failure Record"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1794616175479,
+        "source": "cli",
+        "triggerNode": {
+          "name": "n8n-check start",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "0083da00a1d4101a9a84cace7762f6ac3f945b541c208eaa52cafac5998e9ff0"
+  },
+  "mode": "cli",
+  "startedAt": "2026-11-14T00:29:35.474Z",
+  "stoppedAt": "2026-11-14T00:29:36.256Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

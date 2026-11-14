@@ -1,0 +1,255 @@
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "n8n-check start": [
+          {
+            "startTime": 1794615713536,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Run Demo": [
+          {
+            "startTime": 1794615713550,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "n8n-check start",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 679,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Set Demo Configuration": [
+          {
+            "startTime": 1794615714234,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Run Demo",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "request_url": "https://jsonplaceholder.typicode.com/users",
+                      "required_fields": "id,name,email"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Fetch API Records": [
+          {
+            "startTime": 1794615714241,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Set Demo Configuration",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 26,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": 42,
+                      "name": "  Ada Example  ",
+                      "email": " ADA@EXAMPLE.TEST ",
+                      "website": "ada.example.test"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 43,
+                      "name": " Bob Sample ",
+                      "email": " BOB@EXAMPLE.TEST ",
+                      "website": "bob.example.test"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Normalize and Validate Records": [
+          {
+            "startTime": 1794615714279,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Fetch API Records",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 9,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source_index": 0,
+                      "record_id": 42,
+                      "name": "Ada Example",
+                      "email": "ada@example.test",
+                      "validation_status": "valid",
+                      "missing_fields": [],
+                      "source_domain": "ada.example.test"
+                    }
+                  },
+                  {
+                    "json": {
+                      "source_index": 1,
+                      "record_id": 43,
+                      "name": "Bob Sample",
+                      "email": "bob@example.test",
+                      "validation_status": "valid",
+                      "missing_fields": [],
+                      "source_domain": "bob.example.test"
+                    }
+                  }
+                ],
+                []
+              ]
+            }
+          }
+        ],
+        "Validated Records": [
+          {
+            "startTime": 1794615714294,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Normalize and Validate Records",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source_index": 0,
+                      "record_id": 42,
+                      "name": "Ada Example",
+                      "email": "ada@example.test",
+                      "validation_status": "valid",
+                      "missing_fields": [],
+                      "source_domain": "ada.example.test"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "source_index": 1,
+                      "record_id": 43,
+                      "name": "Bob Sample",
+                      "email": "bob@example.test",
+                      "validation_status": "valid",
+                      "missing_fields": [],
+                      "source_domain": "bob.example.test"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Validated Records"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1794615713536,
+        "source": "cli",
+        "triggerNode": {
+          "name": "n8n-check start",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "4b1b242aaee8d43db27ecfccb11125aaf3e3bf87e5c10758c20df0028592e4b7"
+  },
+  "mode": "cli",
+  "startedAt": "2026-11-14T00:21:53.530Z",
+  "stoppedAt": "2026-11-14T00:21:54.299Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

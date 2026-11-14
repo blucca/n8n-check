@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="9" failures="0" errors="0">
+  <testsuite name="Blaidlink nonempty response preserves normalized records" tests="9" failures="0" errors="0" time="9.360">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Validated Records: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Validated Records: output 0"></testcase>
+    <testcase classname="n8n-check" name="Validated Records: output 0 pluck json.record_id"></testcase>
+    <testcase classname="n8n-check" name="Failure Record: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request count"></testcase>
+    <testcase classname="n8n-check" name="Fetch API Records: GET /users request bodies"></testcase>
+  </testsuite>
+</testsuites>

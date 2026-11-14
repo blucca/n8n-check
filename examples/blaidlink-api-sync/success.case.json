@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "input": {
+    "node": "Run Demo",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [
+    {
+      "node": "Fetch API Records",
+      "url": "/users",
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/users",
+          "responses": [
+            {
+              "status": 200,
+              "json": [
+                {
+                  "id": 42,
+                  "name": "  Ada Example  ",
+                  "email": " ADA@EXAMPLE.TEST ",
+                  "website": "ada.example.test"
+                },
+                {
+                  "id": 43,
+                  "name": " Bob Sample ",
+                  "email": " BOB@EXAMPLE.TEST ",
+                  "website": "bob.example.test"
+                }
+              ]
+            }
+          ],
+          "expect": {
+            "count": 1,
+            "bodies": [
+              null
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "node": "Validated Records",
+      "count": 2,
+      "equals": [
+        {
+          "source_index": 0,
+          "record_id": 42,
+          "name": "Ada Example",
+          "email": "ada@example.test",
+          "validation_status": "valid",
+          "missing_fields": [],
+          "source_domain": "ada.example.test"
+        },
+        {
+          "source_index": 1,
+          "record_id": 43,
+          "name": "Bob Sample",
+          "email": "bob@example.test",
+          "validation_status": "valid",
+          "missing_fields": [],
+          "source_domain": "bob.example.test"
+        }
+      ]
+    },
+    {
+      "node": "Validated Records",
+      "pluck": "json.record_id",
+      "equals": [
+        42,
+        43
+      ]
+    },
+    {
+      "node": "Failure Record",
+      "count": 0
+    }
+  ],
+  "name": "Blaidlink nonempty response preserves normalized records"
+}
