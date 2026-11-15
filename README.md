@@ -10,8 +10,9 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 
 | Start here | What you need | What you get |
 |---|---|---|
+| [Have your first test built free](#free-first-test-setup) | Synthetic export + input batch + expected result | A separate editor test for you to import and run |
 | [Add a check to CI](#add-a-check-to-github-actions) | Workflow export + case JSON | A pass/fail job, request trace, JSON + JUnit |
-| [Build your first case](https://blucca.github.io/n8n-check/) | Your n8n export | A local Docker run pack and CI file |
+| [Build your first case](https://blucca.github.io/n8n-check/) | Your n8n export | An editor test, local Docker run pack or CI file |
 | [Inspect saved child calls](https://blucca.github.io/n8n-check/inspect/) | Complete parent + child execution JSON | A local, zero-install ancestry report |
 | [Try a known regression](#try-it-in-your-browser) | A GitHub account | An eight-row data-loss failure, then its fix |
 | [Review a saved call in Jira](forge-mcp/) | Four saved parent/child exports + an MCP client | Before/after ancestry, raw pointers, a same-issue dossier |
@@ -27,6 +28,14 @@ Featured in [Web Tools Weekly #691 — Testing & Debugging Tools](https://webtoo
 Have a parent execution ID? [Download the standalone GET-only collector](https://blucca.github.io/n8n-check/experiments/execution-graph/fetch-bundle.cjs). Node.js 24+, your local `N8N_API_KEY`, instance URL and a fresh output directory are sufficient; [see the command](https://blucca.github.io/n8n-check/inspect/#get-files). It saves the complete API responses locally. The inspector accepts the `execution-*.json` files and keeps an optionally selected acquisition manifest separate.
 
 **New research:** [Green JSON snapshots, wrong customers](experiments/lineage-boundary/) — a real parent/child case where all 11 business-node JSON snapshots match, yet HTTP requests target the wrong customers. Includes the reduced input, shared ancestry repair and real-engine results. [Inspect your own saved parent/child execution exports locally](experiments/lineage-boundary/#inspect-your-own-saved-child-call) with the read-only boundary auditor.
+
+## Free first-test setup
+
+We're offering three free setups for people testing their own workflows. [Email for a free first test](mailto:belgialucca@gmail.com?subject=n8n%20free%20first%20test&body=Hi%20Blucca%2C%0A%0AI%20would%20like%20a%20free%20first%20output%20test%20for%20my%20own%20workflow.%0A%0An8n%20version%3A%0ATransformation%20%2F%20output%20node%3A%0AExpected%20result%20%28count%2C%20ordered%20IDs%2C%20or%20exact%20JSON%20rows%29%3A%0A%0ASynthetic%20workflow%20export%20and%20one%20input%20batch%20%28attach%20or%20link%29%3A%0A) with a synthetic workflow export, one input batch, your n8n version and the output you want to preserve: an item count, ordered stable IDs or exact JSON rows.
+
+You define the business expectation; we handle fixture and test setup. Scope: one self-contained local JSON transformation, up to 15 standard nodes, one incoming connection per node and v1 execution order. We return a separate inactive editor test. You import it into your existing n8n, execute it and share the final result and version. Keep the case for your next change. [Supported nodes and native controls](examples/editor-tests/).
+
+Workflow repairs and external-system work use the paid scope below.
 
 ## Paid help for one failing workflow
 
