@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="10" failures="4" errors="0">
+  <testsuite name="SEVENEDGE release: preserve C1–C5, C3 blocker, DO_NOT_SIGN" tests="10" failures="4" errors="0" time="10.634">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Batch Process Clauses: output 1 count"></testcase>
+    <testcase classname="n8n-check" name="Batch Process Clauses: output 1 pluck json.clause_id"></testcase>
+    <testcase classname="n8n-check" name="Store Assessment Outcome: output 0 count">
+      <failure message="Store Assessment Outcome: output 0 count">{
+  &quot;expected&quot;: 5,
+  &quot;actual&quot;: 2
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Store Assessment Outcome: output 0">
+      <failure message="Store Assessment Outcome: output 0">{
+  &quot;expected&quot;: [
+    {
+      &quot;clause_id&quot;: &quot;C1&quot;,
+      &quot;heading&quot;: &quot;Supplier liability&quot;,
+      &quot;topic&quot;: &quot;liability&quot;,
+      &quot;summary&quot;: &quot;Supplier liability is capped at 12 months of fees.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;The supplier liability cap is twelve months of fees.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    },
+    {
+      &quot;clause_id&quot;: &quot;C2&quot;,
+      &quot;heading&quot;: &quot;Customer termination&quot;,
+      &quot;topic&quot;: &quot;termination&quot;,
+      &quot;summary&quot;: &quot;Customer may terminate for convenience on 30 days notice.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;The customer may terminate for convenience on thirty days notice.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    },
+    {
+      &quot;clause_id&quot;: &quot;C3&quot;,
+      &quot;heading&quot;: &quot;Supplier ownership&quot;,
+      &quot;topic&quot;: &quot;ip_ownership&quot;,
+      &quot;summary&quot;: &quot;Supplier owns customer data and all work built specifically for the customer.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;The supplier owns all customer data and all work built specifically for the customer.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;off_playbook&quot;,
+      &quot;severity&quot;: &quot;blocker&quot;,
+      &quot;breaches_hard_limit&quot;: true,
+      &quot;which_hard_limit&quot;: &quot;Supplier claims ownership of our data or of work built specifically for us.&quot;,
+      &quot;explanation&quot;: &quot;Supplier claims ownership of customer data and customer-specific work.&quot;,
+      &quot;business_impact&quot;: &quot;Customer loses ownership of its data and bespoke deliverables.&quot;,
+      &quot;suggested_redline&quot;: &quot;The customer owns its data and all work built specifically for the customer.&quot;,
+      &quot;question_for_counsel&quot;: &quot;Confirm customer ownership of data and bespoke deliverables.&quot;
+    },
+    {
+      &quot;clause_id&quot;: &quot;C4&quot;,
+      &quot;heading&quot;: &quot;Payment&quot;,
+      &quot;topic&quot;: &quot;payment&quot;,
+      &quot;summary&quot;: &quot;Correct invoices are payable net 30, with annual increases capped at 5%.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;Correct invoices are payable net thirty days and annual price increases are capped at five percent.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    },
+    {
+      &quot;clause_id&quot;: &quot;C5&quot;,
+      &quot;heading&quot;: &quot;Confidentiality&quot;,
+      &quot;topic&quot;: &quot;confidentiality&quot;,
+      &quot;summary&quot;: &quot;Confidentiality is mutual and survives for 3 years.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;Mutual confidentiality obligations survive termination for three years.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    }
+  ],
+  &quot;actual&quot;: [
+    {
+      &quot;clause_id&quot;: &quot;C1&quot;,
+      &quot;heading&quot;: &quot;Supplier liability&quot;,
+      &quot;topic&quot;: &quot;liability&quot;,
+      &quot;summary&quot;: &quot;Supplier liability is capped at 12 months of fees.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;The supplier liability cap is twelve months of fees.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    },
+    {
+      &quot;clause_id&quot;: &quot;C4&quot;,
+      &quot;heading&quot;: &quot;Payment&quot;,
+      &quot;topic&quot;: &quot;payment&quot;,
+      &quot;summary&quot;: &quot;Correct invoices are payable net 30, with annual increases capped at 5%.&quot;,
+      &quot;verbatim_key_sentence&quot;: &quot;Correct invoices are payable net thirty days and annual price increases are capped at five percent.&quot;,
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;total_clauses&quot;: 5,
+      &quot;position&quot;: &quot;matches_playbook&quot;,
+      &quot;severity&quot;: &quot;none&quot;,
+      &quot;breaches_hard_limit&quot;: false,
+      &quot;which_hard_limit&quot;: &quot;&quot;,
+      &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+      &quot;business_impact&quot;: &quot;&quot;,
+      &quot;suggested_redline&quot;: &quot;&quot;,
+      &quot;question_for_counsel&quot;: &quot;&quot;
+    }
+  ]
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0">
+      <failure message="Collate Clause Findings: output 0">{
+  &quot;expected&quot;: [
+    {
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;clauses_assessed&quot;: 5,
+      &quot;count_blocker&quot;: 1,
+      &quot;count_high&quot;: 0,
+      &quot;count_medium&quot;: 0,
+      &quot;count_low&quot;: 0,
+      &quot;hard_limit_breaches&quot;: &quot;C3 (Supplier claims ownership of our data or of work built specifically for us.)&quot;,
+      &quot;verdict&quot;: &quot;DO_NOT_SIGN&quot;,
+      &quot;needs_human&quot;: true,
+      &quot;findings&quot;: [
+        {
+          &quot;clause_id&quot;: &quot;C1&quot;,
+          &quot;heading&quot;: &quot;Supplier liability&quot;,
+          &quot;topic&quot;: &quot;liability&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;The supplier liability cap is twelve months of fees.&quot;
+        },
+        {
+          &quot;clause_id&quot;: &quot;C2&quot;,
+          &quot;heading&quot;: &quot;Customer termination&quot;,
+          &quot;topic&quot;: &quot;termination&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;The customer may terminate for convenience on thirty days notice.&quot;
+        },
+        {
+          &quot;clause_id&quot;: &quot;C3&quot;,
+          &quot;heading&quot;: &quot;Supplier ownership&quot;,
+          &quot;topic&quot;: &quot;ip_ownership&quot;,
+          &quot;position&quot;: &quot;off_playbook&quot;,
+          &quot;severity&quot;: &quot;blocker&quot;,
+          &quot;breaches_hard_limit&quot;: true,
+          &quot;which_hard_limit&quot;: &quot;Supplier claims ownership of our data or of work built specifically for us.&quot;,
+          &quot;explanation&quot;: &quot;Supplier claims ownership of customer data and customer-specific work.&quot;,
+          &quot;business_impact&quot;: &quot;Customer loses ownership of its data and bespoke deliverables.&quot;,
+          &quot;suggested_redline&quot;: &quot;The customer owns its data and all work built specifically for the customer.&quot;,
+          &quot;question_for_counsel&quot;: &quot;Confirm customer ownership of data and bespoke deliverables.&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;The supplier owns all customer data and all work built specifically for the customer.&quot;
+        },
+        {
+          &quot;clause_id&quot;: &quot;C4&quot;,
+          &quot;heading&quot;: &quot;Payment&quot;,
+          &quot;topic&quot;: &quot;payment&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;Correct invoices are payable net thirty days and annual price increases are capped at five percent.&quot;
+        },
+        {
+          &quot;clause_id&quot;: &quot;C5&quot;,
+          &quot;heading&quot;: &quot;Confidentiality&quot;,
+          &quot;topic&quot;: &quot;confidentiality&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;Mutual confidentiality obligations survive termination for three years.&quot;
+        }
+      ]
+    }
+  ],
+  &quot;actual&quot;: [
+    {
+      &quot;file_name&quot;: &quot;synthetic-sevenedge-contract.pdf&quot;,
+      &quot;file_id&quot;: &quot;SYNTHETIC-CONTRACT-604&quot;,
+      &quot;contract_type&quot;: &quot;Software services&quot;,
+      &quot;parties&quot;: &quot;Fixture Customer Ltd | Fixture Supplier Ltd&quot;,
+      &quot;governing_law&quot;: &quot;England and Wales&quot;,
+      &quot;effective_date&quot;: &quot;2026-11-01&quot;,
+      &quot;term_description&quot;: &quot;12 months&quot;,
+      &quot;clauses_assessed&quot;: 2,
+      &quot;count_blocker&quot;: 0,
+      &quot;count_high&quot;: 0,
+      &quot;count_medium&quot;: 0,
+      &quot;count_low&quot;: 0,
+      &quot;hard_limit_breaches&quot;: &quot;&quot;,
+      &quot;verdict&quot;: &quot;CLEAN&quot;,
+      &quot;needs_human&quot;: false,
+      &quot;findings&quot;: [
+        {
+          &quot;clause_id&quot;: &quot;C1&quot;,
+          &quot;heading&quot;: &quot;Supplier liability&quot;,
+          &quot;topic&quot;: &quot;liability&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;The supplier liability cap is twelve months of fees.&quot;
+        },
+        {
+          &quot;clause_id&quot;: &quot;C4&quot;,
+          &quot;heading&quot;: &quot;Payment&quot;,
+          &quot;topic&quot;: &quot;payment&quot;,
+          &quot;position&quot;: &quot;matches_playbook&quot;,
+          &quot;severity&quot;: &quot;none&quot;,
+          &quot;breaches_hard_limit&quot;: false,
+          &quot;which_hard_limit&quot;: &quot;&quot;,
+          &quot;explanation&quot;: &quot;The synthetic clause matches the corresponding playbook position.&quot;,
+          &quot;business_impact&quot;: &quot;&quot;,
+          &quot;suggested_redline&quot;: &quot;&quot;,
+          &quot;question_for_counsel&quot;: &quot;&quot;,
+          &quot;verbatim_key_sentence&quot;: &quot;Correct invoices are payable net thirty days and annual price increases are capped at five percent.&quot;
+        }
+      ]
+    }
+  ]
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0 pluck json.verdict">
+      <failure message="Collate Clause Findings: output 0 pluck json.verdict">{
+  &quot;expected&quot;: [
+    &quot;DO_NOT_SIGN&quot;
+  ],
+  &quot;actual&quot;: [
+    &quot;CLEAN&quot;
+  ]
+}</failure>
+    </testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+  </testsuite>
+</testsuites>

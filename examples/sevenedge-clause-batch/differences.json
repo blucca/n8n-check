@@ -1,0 +1,134 @@
+{
+  "sourceNodes": 35,
+  "sourceStandardNonStickyNodes": 21,
+  "fixtureSliceNodes": 7,
+  "preparedCliNodes": 8,
+  "editorTestNodes": 9,
+  "unchangedRepoSourceNodesInOriginal": [
+    "Configure Review Settings",
+    "Batch Process Clauses",
+    "Store Assessment Outcome",
+    "Collate Clause Findings"
+  ],
+  "unchangedOfficialSourceNodesInFixed": [
+    "Configure Review Settings",
+    "Batch Process Clauses",
+    "Store Assessment Outcome",
+    "Collate Clause Findings"
+  ],
+  "unchangedSourceJsCode": [
+    "Store Assessment Outcome",
+    "Collate Clause Findings"
+  ],
+  "replacement": {
+    "node": "Evaluate Clauses with Agent",
+    "preservedMetadata": [
+      "id",
+      "name",
+      "position"
+    ],
+    "changedFields": [
+      "type",
+      "typeVersion",
+      "parameters",
+      "notes"
+    ],
+    "reason": "Fixed assessment Code, one item per input clause; model/provider boundary excluded."
+  },
+  "additions": [
+    "Fixed contract fixture",
+    "Fixture extracted clauses",
+    "n8n-check start (CLI preparation)",
+    "Check five-clause release contract (editor exports only)"
+  ],
+  "omittedSourceNodes": [
+    "Sticky Note",
+    "Sticky Note1",
+    "Sticky Note2",
+    "Sticky Note3",
+    "Sticky Note4",
+    "Sticky Note5",
+    "Sticky Note6",
+    "Sticky Note7",
+    "Sticky Note8",
+    "Sticky Note9",
+    "Sticky Note10",
+    "When Contract Uploaded",
+    "Manual Start Trigger",
+    "Retrieve Contract from Drive",
+    "Encode File to Base64",
+    "Prepare Extraction Request",
+    "Post Extraction to Anthropic API",
+    "Process Extracted Clauses",
+    "Claude AI Model for Review",
+    "Structure Assessment Results",
+    "Determine Escalation Necessity",
+    "Auto-Clear Clauses",
+    "Craft Escalation Notice",
+    "Notify via Review Channel",
+    "Pause for Reviewer Input",
+    "Log Reviewer Judgment",
+    "Compile Review Report",
+    "Assemble Ledger Entry",
+    "Log to Review Spreadsheet",
+    "Alert Completion of Review"
+  ],
+  "connections": {
+    "preserved": [
+      "Batch Process Clauses output 0 -> Collate, output 1 -> Evaluate",
+      "Evaluate -> Store",
+      "Store -> Batch"
+    ],
+    "cut": [
+      "Original triggers/Drive/PDF/Anthropic extraction replaced by synthetic fixture before the loop",
+      "Agent model/parser ai inputs omitted",
+      "Configure -> Fixture extracted clauses",
+      "Collate outgoing escalation/wait/report/Sheets/notification boundary removed"
+    ]
+  },
+  "configuration": "Original/broken retain the entire repo Configure node with clauseBatchSize string 3. Canonical fixed retains the entire actual official template Config (8 assignments, clauseBatchSize removed) and Batch (explicit numeric batchSize 1). Store/Collate Code is identical in both sources. The earlier delete-batchSize version is retained separately as default-one-control.",
+  "originalToDefaultOneControlDifference": [
+    "delete Batch Process Clauses.parameters.batchSize"
+  ],
+  "originalToFixedCliDifference": [
+    "Configure Review Settings.parameters: actual official source, clauseBatchSize assignment removed",
+    "Batch Process Clauses.parameters: actual official source, explicit batchSize 1"
+  ],
+  "originalToBrokenCliDifference": [],
+  "fixedToBrokenContractDifference": [],
+  "originalToFixedEditorDifferences": [
+    "workflow id",
+    "workflow name",
+    "Configure Review Settings.parameters: actual official source",
+    "Batch Process Clauses.parameters: actual official source, explicit batchSize 1"
+  ],
+  "sourceStatus": "The official n8n template 18748 already contains the author fix. This pack preserves it as a repeatable publication regression; the repo snapshot still contains batch 3.",
+  "preparedMetadata": "Existing CLI creates inactive workflow id/name/manual trigger and replaces only the added fixture input; clears source ownership/pins/static data and keeps timezone/executionOrder with timeout/saveExecutionProgress. Source node IDs, positions, notes and typeVersions retained as listed.",
+  "generalEditorGenerator": "Unchanged; still excludes loops. These two exports have a fixture-specific terminal-summary oracle, tested separately.",
+  "fixtures": {
+    "syntheticClauses": 5,
+    "blocker": "C3",
+    "hardLimit": "C3",
+    "sdkProviderCalls": 0,
+    "providerCalls": 0,
+    "externalHttpCalls": 0
+  },
+  "fullSourceFieldDifferences": {
+    "Configure Review Settings": [
+      "parameters"
+    ],
+    "Evaluate Clauses with Agent": [
+      "typeVersion"
+    ],
+    "Batch Process Clauses": [
+      "parameters"
+    ],
+    "Pause for Reviewer Input": [
+      "webhookId"
+    ]
+  },
+  "outsideFixtureSourceDifferences": {
+    "Evaluate Clauses with Agent.typeVersion": "Replaced by the same deterministic assessment Code boundary",
+    "Pause for Reviewer Input.webhookId": "Reviewer Wait node lies outside this fixture"
+  }
+}

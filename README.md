@@ -157,6 +157,8 @@ Each case checks request counts, bodies, and final outputs with the actual engin
 
 **[Migrate a Function filter and preserve its complete output](examples/sunset-migration/):** an independent case from n8n-sunset’s MIT lead example. Three fixed scored leads produce two complete rows; the equivalent Code node passes, and a controlled one-row migration fails the output contract. Download the ready-to-import tests and run them in your own n8n.
 
+**[Preserve all five clauses across a real loop](examples/sevenedge-clause-batch/):** import two fixture-specific tests into your existing n8n. SEVENEDGE’s current fixed template preserves every ID and the C3 blocker; its old batch-3 snapshot fails the same check. Recorded with n8n 2.41.7 and synthetic assessments, without model calls.
+
 **[Catch an empty API response that skips its own error handler](examples/blaidlink-api-sync/):** a complete third-party REST-sync template succeeds with zero failure records. Three recorded cases exercise the minimal fix, intact success rows and handled retries; import the workflow into your own n8n for a no-CLI first check.
 
 **[Keep UTF-8 JSON intact after a successful HTTP request](examples/http-utf8/):** complete Auto/JSON workflows and six field-exact fixtures for n8n #43713.

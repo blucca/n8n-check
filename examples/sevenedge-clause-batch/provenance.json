@@ -1,0 +1,45 @@
+{
+  "original": {
+    "repository": "https://github.com/sevenedge-pl/n8n-workflows",
+    "commit": "ef565f8473d427b8144f719e7267742b0dc58909",
+    "repository_path": "workflows/multi-agent-patterns/contract-review-playbook/workflow.json",
+    "copy": "source/repo-original.workflow.json",
+    "url": "https://raw.githubusercontent.com/sevenedge-pl/n8n-workflows/ef565f8473d427b8144f719e7267742b0dc58909/workflows/multi-agent-patterns/contract-review-playbook/workflow.json",
+    "retrieved_at": "2026-11-15T11:11:55.119350+00:00",
+    "sha256": "9b9620de4342aff00c74a73e6742bd59ab47fc124b75a1835fa6afd3da9cf941",
+    "state": "Batch expression evaluates the Config clauseBatchSize string 3"
+  },
+  "official_current": {
+    "template_id": 18748,
+    "url": "https://api.n8n.io/api/templates/workflows/18748",
+    "copy": "source/official-current.workflow.json",
+    "retrieved_at": "2026-11-15T11:22:11.403976+00:00",
+    "sha256": "507714592e6713d08ff2533faf6310ebfe15a6e59d27088ceba45b12d3e61753",
+    "state": "Author fix already present: Batch numeric 1; full Config has 8 assignments, clauseBatchSize removed"
+  },
+  "author_record": {
+    "author": "Adrian Hunia / SEVENEDGE",
+    "url": "https://sevenedge.pl/en/workflows/przeglad-umow-playbook-ai",
+    "verified_date": "2026-11-05",
+    "runtime": "2.8.4",
+    "reported_original": {
+      "ids": [
+        "C1",
+        "C4"
+      ],
+      "verdict": "CLEAN"
+    },
+    "reported_fixed": {
+      "clauses_assessed": 5,
+      "verdict": "DO_NOT_SIGN"
+    }
+  },
+  "this_pack_native_record": {
+    "date": "2026-11-15",
+    "runtime": "2.41.7",
+    "runner": "n8n-check 0.1.9 for CLI controls; native import/execute for the editor exports",
+    "provider_calls": 0,
+    "sdk_provider_calls": 0
+  },
+  "source_license": "MIT; Copyright (c) 2026 SEVENEDGE; complete notices included in LICENSE and source/LICENSE"
+}

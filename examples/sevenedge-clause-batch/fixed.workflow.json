@@ -1,0 +1,237 @@
+{
+  "name": "SEVENEDGE playbook review — deterministic five-clause regression",
+  "active": false,
+  "nodes": [
+    {
+      "id": "8a503ac4-6e1e-45b7-8989-0f4c77af7818",
+      "name": "Fixed contract fixture",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        432
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all();"
+      }
+    },
+    {
+      "id": "df291f6a-a3c0-48f1-a875-c2572321ac5a",
+      "name": "Configure Review Settings",
+      "type": "n8n-nodes-base.set",
+      "notes": "playbook and hardLimits are read into the assessment prompt verbatim. Hard limits are checked deterministically afterwards, so write them as things you would actually walk away over.",
+      "position": [
+        1008,
+        544
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0",
+              "name": "ourSide",
+              "type": "string",
+              "value": "We are the customer buying software services. The other party is the supplier."
+            },
+            {
+              "id": "1",
+              "name": "playbook",
+              "type": "string",
+              "value": "Liability: supplier's cap should be at least 12 months of fees; we do not accept a cap below the annual contract value. Indemnity: supplier indemnifies us for IP infringement and data breaches caused by them. Termination: we can terminate for convenience with 30 days notice. Payment: net 30 from a correct invoice, no auto-escalation above 5% per year. Data: we own our data, it is returned on exit in a usable format, sub-processors are disclosed. IP: anything built specifically for us belongs to us. Confidentiality: mutual, surviving 3 years."
+            },
+            {
+              "id": "2",
+              "name": "hardLimits",
+              "type": "string",
+              "value": "Supplier claims ownership of our data or of work built specifically for us. Unlimited liability on our side. No termination right for us at any point. Automatic renewal with no notice window. Governing law outside the EU or the UK."
+            },
+            {
+              "id": "3",
+              "name": "anthropicModel",
+              "type": "string",
+              "value": "claude-sonnet-4-6"
+            },
+            {
+              "id": "5",
+              "name": "alwaysEscalate",
+              "type": "string",
+              "value": "false"
+            },
+            {
+              "id": "6",
+              "name": "notifyWebhookUrl",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "7",
+              "name": "testFileId",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "8",
+              "name": "extractionSystemPrompt",
+              "type": "string",
+              "value": "You extract clauses from a contract. You do NOT judge them — a later step does that.\n\nRead the document and return ONLY a JSON object, no markdown fences and no other text:\n\n{\n  \"contract_type\": string or null,\n  \"parties\": [string],\n  \"governing_law\": string or null,\n  \"effective_date\": \"YYYY-MM-DD\" or null,\n  \"term_description\": string or null,\n  \"clauses\": [\n    {\n      \"clause_id\": string,\n      \"heading\": string,\n      \"topic\": string,\n      \"summary\": string,\n      \"verbatim_key_sentence\": string\n    }\n  ],\n  \"extraction_notes\": string\n}\n\nRules:\n- `topic` should be a short normalised label such as: liability, indemnity, termination, payment, confidentiality, ip_ownership, data_protection, warranty, sla, non_compete, assignment, dispute_resolution, other.\n- `verbatim_key_sentence` must be copied exactly from the document — it is what a lawyer will check against the original. Never paraphrase it.\n- If a field is not present in the document, use null. Never guess a date, a party name, or a governing law.\n- If this does not look like a contract, return an empty clauses array and explain why in extraction_notes."
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "d347a6da-fbf3-4f4b-b8eb-3b055b3d89b3",
+      "name": "Fixture extracted clauses",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        432
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Synthetic extraction boundary; no PDF, Drive or model calls.\nconst fixture = $('Fixed contract fixture').first().json;\nreturn fixture.clauses.map(clause => ({ json: {\n  ...clause, ...fixture.contract, total_clauses: fixture.clauses.length,\n} }));"
+      }
+    },
+    {
+      "id": "97540e23-5bbb-4cd7-ad84-be6edd2ee7d0",
+      "name": "Batch Process Clauses",
+      "type": "n8n-nodes-base.splitInBatches",
+      "notes": "Output 0 = done, output 1 = loop. 'Aggregate Clause Findings' is on the done output deliberately — it sums up every clause after the loop finishes. Some validators flag this as a mistake; it is not.",
+      "position": [
+        2448,
+        432
+      ],
+      "parameters": {
+        "options": {},
+        "batchSize": 1
+      },
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Fixture-specific assessment adapter. One output per input clause.\n// Fixed outcomes are declared in the input, independently of the loop.\nconst fixture = $('Fixed contract fixture').first().json;\nreturn $input.all().map((item, index) => {\n  const assessment = fixture.assessments_by_clause[item.json.clause_id];\n  if (!assessment) throw new Error('Missing fixed assessment for ' + item.json.clause_id);\n  return { json: { output: assessment }, pairedItem: { item: index } };\n});"
+      },
+      "id": "ad6e4f69-ca01-4812-b170-b811046aa6ca",
+      "name": "Evaluate Clauses with Agent",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2688,
+        544
+      ],
+      "typeVersion": 2,
+      "notes": "Fixture adapter replacing the model/agent boundary; no provider or SDK calls."
+    },
+    {
+      "id": "588c5f3f-d252-4eee-82e4-69f9d24d18bf",
+      "name": "Store Assessment Outcome",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2928,
+        544
+      ],
+      "parameters": {
+        "jsCode": "const a = $json.output ?? $json;\nconst c = $('Batch Process Clauses').first().json;\nreturn [{ json: {\n  ...c,\n  position: a.position ?? 'unclear',\n  severity: a.severity ?? 'low',\n  breaches_hard_limit: !!a.breaches_hard_limit,\n  which_hard_limit: a.which_hard_limit ?? '',\n  explanation: a.explanation ?? '',\n  business_impact: a.business_impact ?? '',\n  suggested_redline: a.suggested_redline ?? '',\n  question_for_counsel: a.question_for_counsel ?? '',\n} }];"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "bdd4fd58-c8a7-4f44-8c6a-18c6c362fae5",
+      "name": "Collate Clause Findings",
+      "type": "n8n-nodes-base.code",
+      "notes": "Runs ONCE, on the loop's done output, with every assessed clause arriving as a separate item. This is the only node with the whole picture, which is why the verdict is computed here in plain code rather than by a model: a breached hard limit governs regardless of per-clause severity.",
+      "position": [
+        3248,
+        304
+      ],
+      "parameters": {
+        "jsCode": "// Runs once, on the loop's \"done\" output. Every assessed clause arrives here\n// as a separate item, so this is the only place with the whole picture.\nconst items = $input.all().map(i => i.json);\nconst cfg = $('Configure Review Settings').first().json;\n\nconst RANK = { blocker: 4, high: 3, medium: 2, low: 1, none: 0 };\nconst counts = { blocker: 0, high: 0, medium: 0, low: 0, none: 0 };\nitems.forEach(i => { counts[i.severity] = (counts[i.severity] || 0) + 1; });\n\nconst hardLimitBreaches = items.filter(i => i.breaches_hard_limit);\nconst worst = items.reduce((m, i) => Math.max(m, RANK[i.severity] ?? 0), 0);\n\n// Deterministic verdict. A hard-limit breach governs regardless of how the\n// individual clause was scored — the playbook's limits are the whole point of\n// having a playbook, and no per-clause judgement overrides them.\nlet verdict;\nif (hardLimitBreaches.length) verdict = 'DO_NOT_SIGN';\nelse if (worst >= 4) verdict = 'DO_NOT_SIGN';\nelse if (worst === 3) verdict = 'NEGOTIATE_BEFORE_SIGNING';\nelse if (worst === 2) verdict = 'SIGN_WITH_NOTED_RISKS';\nelse verdict = 'CLEAN';\n\nconst head = items[0] || {};\nreturn [{ json: {\n  file_name: head.file_name || '', file_id: head.file_id || '',\n  contract_type: head.contract_type || '', parties: head.parties || '',\n  governing_law: head.governing_law || '', effective_date: head.effective_date || '',\n  term_description: head.term_description || '',\n  clauses_assessed: items.length,\n  count_blocker: counts.blocker, count_high: counts.high,\n  count_medium: counts.medium, count_low: counts.low,\n  hard_limit_breaches: hardLimitBreaches.map(i => `${i.clause_id} (${i.which_hard_limit})`).join(' | '),\n  verdict,\n  needs_human: verdict !== 'CLEAN'\n               || Number(cfg.alwaysEscalate === 'true' ? 1 : 0) === 1,\n  findings: items.map(i => ({\n    clause_id: i.clause_id, heading: i.heading, topic: i.topic,\n    position: i.position, severity: i.severity,\n    breaches_hard_limit: i.breaches_hard_limit, which_hard_limit: i.which_hard_limit,\n    explanation: i.explanation, business_impact: i.business_impact,\n    suggested_redline: i.suggested_redline, question_for_counsel: i.question_for_counsel,\n    verbatim_key_sentence: i.verbatim_key_sentence,\n  })),\n} }];"
+      },
+      "typeVersion": 2
+    }
+  ],
+  "connections": {
+    "Fixed contract fixture": {
+      "main": [
+        [
+          {
+            "node": "Configure Review Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configure Review Settings": {
+      "main": [
+        [
+          {
+            "node": "Fixture extracted clauses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixture extracted clauses": {
+      "main": [
+        [
+          {
+            "node": "Batch Process Clauses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Process Clauses": {
+      "main": [
+        [
+          {
+            "node": "Collate Clause Findings",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evaluate Clauses with Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate Clauses with Agent": {
+      "main": [
+        [
+          {
+            "node": "Store Assessment Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Assessment Outcome": {
+      "main": [
+        [
+          {
+            "node": "Batch Process Clauses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  }
+}

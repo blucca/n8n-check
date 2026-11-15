@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "runnerVersion": "0.1.9",
+  "name": "SEVENEDGE published-batch observation control: C1,C4 / CLEAN",
+  "startedAt": "2026-11-15T11:21:43.013Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "n8n execution succeeds",
+      "passed": true,
+      "actual": {
+        "cliExitCode": 0,
+        "lastNode": "Collate Clause Findings",
+        "executionFound": true
+      }
+    },
+    {
+      "name": "Batch Process Clauses: output 1 count",
+      "passed": true,
+      "expected": 5,
+      "actual": 5
+    },
+    {
+      "name": "Batch Process Clauses: output 1 pluck json.clause_id",
+      "passed": true,
+      "expected": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "actual": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "name": "Store Assessment Outcome: output 0 count",
+      "passed": true,
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "name": "Store Assessment Outcome: output 0",
+      "passed": true,
+      "expected": [
+        {
+          "clause_id": "C1",
+          "heading": "Supplier liability",
+          "topic": "liability",
+          "summary": "Supplier liability is capped at 12 months of fees.",
+          "verbatim_key_sentence": "The supplier liability cap is twelve months of fees.",
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "total_clauses": 5,
+          "position": "matches_playbook",
+          "severity": "none",
+          "breaches_hard_limit": false,
+          "which_hard_limit": "",
+          "explanation": "The synthetic clause matches the corresponding playbook position.",
+          "business_impact": "",
+          "suggested_redline": "",
+          "question_for_counsel": ""
+        },
+        {
+          "clause_id": "C4",
+          "heading": "Payment",
+          "topic": "payment",
+          "summary": "Correct invoices are payable net 30, with annual increases capped at 5%.",
+          "verbatim_key_sentence": "Correct invoices are payable net thirty days and annual price increases are capped at five percent.",
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "total_clauses": 5,
+          "position": "matches_playbook",
+          "severity": "none",
+          "breaches_hard_limit": false,
+          "which_hard_limit": "",
+          "explanation": "The synthetic clause matches the corresponding playbook position.",
+          "business_impact": "",
+          "suggested_redline": "",
+          "question_for_counsel": ""
+        }
+      ],
+      "actual": [
+        {
+          "clause_id": "C1",
+          "heading": "Supplier liability",
+          "topic": "liability",
+          "summary": "Supplier liability is capped at 12 months of fees.",
+          "verbatim_key_sentence": "The supplier liability cap is twelve months of fees.",
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "total_clauses": 5,
+          "position": "matches_playbook",
+          "severity": "none",
+          "breaches_hard_limit": false,
+          "which_hard_limit": "",
+          "explanation": "The synthetic clause matches the corresponding playbook position.",
+          "business_impact": "",
+          "suggested_redline": "",
+          "question_for_counsel": ""
+        },
+        {
+          "clause_id": "C4",
+          "heading": "Payment",
+          "topic": "payment",
+          "summary": "Correct invoices are payable net 30, with annual increases capped at 5%.",
+          "verbatim_key_sentence": "Correct invoices are payable net thirty days and annual price increases are capped at five percent.",
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "total_clauses": 5,
+          "position": "matches_playbook",
+          "severity": "none",
+          "breaches_hard_limit": false,
+          "which_hard_limit": "",
+          "explanation": "The synthetic clause matches the corresponding playbook position.",
+          "business_impact": "",
+          "suggested_redline": "",
+          "question_for_counsel": ""
+        }
+      ]
+    },
+    {
+      "name": "Collate Clause Findings: output 0 count",
+      "passed": true,
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "name": "Collate Clause Findings: output 0",
+      "passed": true,
+      "expected": [
+        {
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "clauses_assessed": 2,
+          "count_blocker": 0,
+          "count_high": 0,
+          "count_medium": 0,
+          "count_low": 0,
+          "hard_limit_breaches": "",
+          "verdict": "CLEAN",
+          "needs_human": false,
+          "findings": [
+            {
+              "clause_id": "C1",
+              "heading": "Supplier liability",
+              "topic": "liability",
+              "position": "matches_playbook",
+              "severity": "none",
+              "breaches_hard_limit": false,
+              "which_hard_limit": "",
+              "explanation": "The synthetic clause matches the corresponding playbook position.",
+              "business_impact": "",
+              "suggested_redline": "",
+              "question_for_counsel": "",
+              "verbatim_key_sentence": "The supplier liability cap is twelve months of fees."
+            },
+            {
+              "clause_id": "C4",
+              "heading": "Payment",
+              "topic": "payment",
+              "position": "matches_playbook",
+              "severity": "none",
+              "breaches_hard_limit": false,
+              "which_hard_limit": "",
+              "explanation": "The synthetic clause matches the corresponding playbook position.",
+              "business_impact": "",
+              "suggested_redline": "",
+              "question_for_counsel": "",
+              "verbatim_key_sentence": "Correct invoices are payable net thirty days and annual price increases are capped at five percent."
+            }
+          ]
+        }
+      ],
+      "actual": [
+        {
+          "file_name": "synthetic-sevenedge-contract.pdf",
+          "file_id": "SYNTHETIC-CONTRACT-604",
+          "contract_type": "Software services",
+          "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+          "governing_law": "England and Wales",
+          "effective_date": "2026-11-01",
+          "term_description": "12 months",
+          "clauses_assessed": 2,
+          "count_blocker": 0,
+          "count_high": 0,
+          "count_medium": 0,
+          "count_low": 0,
+          "hard_limit_breaches": "",
+          "verdict": "CLEAN",
+          "needs_human": false,
+          "findings": [
+            {
+              "clause_id": "C1",
+              "heading": "Supplier liability",
+              "topic": "liability",
+              "position": "matches_playbook",
+              "severity": "none",
+              "breaches_hard_limit": false,
+              "which_hard_limit": "",
+              "explanation": "The synthetic clause matches the corresponding playbook position.",
+              "business_impact": "",
+              "suggested_redline": "",
+              "question_for_counsel": "",
+              "verbatim_key_sentence": "The supplier liability cap is twelve months of fees."
+            },
+            {
+              "clause_id": "C4",
+              "heading": "Payment",
+              "topic": "payment",
+              "position": "matches_playbook",
+              "severity": "none",
+              "breaches_hard_limit": false,
+              "which_hard_limit": "",
+              "explanation": "The synthetic clause matches the corresponding playbook position.",
+              "business_impact": "",
+              "suggested_redline": "",
+              "question_for_counsel": "",
+              "verbatim_key_sentence": "Correct invoices are payable net thirty days and annual price increases are capped at five percent."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Collate Clause Findings: output 0 pluck json.verdict",
+      "passed": true,
+      "expected": [
+        "CLEAN"
+      ],
+      "actual": [
+        "CLEAN"
+      ]
+    },
+    {
+      "name": "mock: all requests match routes",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "mock: request limits and server",
+      "passed": true,
+      "actual": []
+    }
+  ],
+  "n8nVersion": "2.41.7",
+  "exitCode": 0,
+  "recordedVariant": "Pinned repo batch-3 original observation control",
+  "providerCalls": 0,
+  "sdkProviderCalls": 0
+}

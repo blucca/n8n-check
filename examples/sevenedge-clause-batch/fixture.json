@@ -1,0 +1,101 @@
+{
+  "fixture_label": "SEVENEDGE playbook review: five synthetic clauses, C3 is the sole blocker",
+  "contract": {
+    "file_name": "synthetic-sevenedge-contract.pdf",
+    "file_id": "SYNTHETIC-CONTRACT-604",
+    "contract_type": "Software services",
+    "parties": "Fixture Customer Ltd | Fixture Supplier Ltd",
+    "governing_law": "England and Wales",
+    "effective_date": "2026-11-01",
+    "term_description": "12 months"
+  },
+  "clauses": [
+    {
+      "clause_id": "C1",
+      "heading": "Supplier liability",
+      "topic": "liability",
+      "summary": "Supplier liability is capped at 12 months of fees.",
+      "verbatim_key_sentence": "The supplier liability cap is twelve months of fees."
+    },
+    {
+      "clause_id": "C2",
+      "heading": "Customer termination",
+      "topic": "termination",
+      "summary": "Customer may terminate for convenience on 30 days notice.",
+      "verbatim_key_sentence": "The customer may terminate for convenience on thirty days notice."
+    },
+    {
+      "clause_id": "C3",
+      "heading": "Supplier ownership",
+      "topic": "ip_ownership",
+      "summary": "Supplier owns customer data and all work built specifically for the customer.",
+      "verbatim_key_sentence": "The supplier owns all customer data and all work built specifically for the customer."
+    },
+    {
+      "clause_id": "C4",
+      "heading": "Payment",
+      "topic": "payment",
+      "summary": "Correct invoices are payable net 30, with annual increases capped at 5%.",
+      "verbatim_key_sentence": "Correct invoices are payable net thirty days and annual price increases are capped at five percent."
+    },
+    {
+      "clause_id": "C5",
+      "heading": "Confidentiality",
+      "topic": "confidentiality",
+      "summary": "Confidentiality is mutual and survives for 3 years.",
+      "verbatim_key_sentence": "Mutual confidentiality obligations survive termination for three years."
+    }
+  ],
+  "assessments_by_clause": {
+    "C1": {
+      "position": "matches_playbook",
+      "severity": "none",
+      "breaches_hard_limit": false,
+      "which_hard_limit": "",
+      "explanation": "The synthetic clause matches the corresponding playbook position.",
+      "business_impact": "",
+      "suggested_redline": "",
+      "question_for_counsel": ""
+    },
+    "C2": {
+      "position": "matches_playbook",
+      "severity": "none",
+      "breaches_hard_limit": false,
+      "which_hard_limit": "",
+      "explanation": "The synthetic clause matches the corresponding playbook position.",
+      "business_impact": "",
+      "suggested_redline": "",
+      "question_for_counsel": ""
+    },
+    "C3": {
+      "position": "off_playbook",
+      "severity": "blocker",
+      "breaches_hard_limit": true,
+      "which_hard_limit": "Supplier claims ownership of our data or of work built specifically for us.",
+      "explanation": "Supplier claims ownership of customer data and customer-specific work.",
+      "business_impact": "Customer loses ownership of its data and bespoke deliverables.",
+      "suggested_redline": "The customer owns its data and all work built specifically for the customer.",
+      "question_for_counsel": "Confirm customer ownership of data and bespoke deliverables."
+    },
+    "C4": {
+      "position": "matches_playbook",
+      "severity": "none",
+      "breaches_hard_limit": false,
+      "which_hard_limit": "",
+      "explanation": "The synthetic clause matches the corresponding playbook position.",
+      "business_impact": "",
+      "suggested_redline": "",
+      "question_for_counsel": ""
+    },
+    "C5": {
+      "position": "matches_playbook",
+      "severity": "none",
+      "breaches_hard_limit": false,
+      "which_hard_limit": "",
+      "explanation": "The synthetic clause matches the corresponding playbook position.",
+      "business_impact": "",
+      "suggested_redline": "",
+      "question_for_counsel": ""
+    }
+  }
+}

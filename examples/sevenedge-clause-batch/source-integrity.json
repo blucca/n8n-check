@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "sourceCommit": "ef565f8473d427b8144f719e7267742b0dc58909",
+  "sourceSha256": "9b9620de4342aff00c74a73e6742bd59ab47fc124b75a1835fa6afd3da9cf941",
+  "officialSourceSha256": "507714592e6713d08ff2533faf6310ebfe15a6e59d27088ceba45b12d3e61753",
+  "sourceAndNodeEquality": true,
+  "canonicalFixedSource": "actual official n8n template 18748 Config/Batch/Store/Collate",
+  "defaultOneControlOnlyFix": "delete Batch.parameters.batchSize",
+  "fixedBrokenIdenticalContract": true,
+  "originalBrokenIdenticalWorkflow": true,
+  "completeFiveClauseContract": true,
+  "originalConfigurationIntact": true,
+  "providerCalls": 0,
+  "sdkProviderCalls": 0,
+  "sourceFiles": [
+    "source/repo-original.workflow.json",
+    "source/official-current.workflow.json"
+  ],
+  "unchangedOriginalNodes": [
+    "Configure Review Settings",
+    "Batch Process Clauses",
+    "Store Assessment Outcome",
+    "Collate Clause Findings"
+  ],
+  "unchangedOfficialFixedNodes": [
+    "Configure Review Settings",
+    "Batch Process Clauses",
+    "Store Assessment Outcome",
+    "Collate Clause Findings"
+  ],
+  "storeCodeSha256": "cb39c8fa7d67d4fc98801ee262c15a11e53f0adeb3e7f65c80c6b104422bd0df",
+  "collateCodeSha256": "d755cd4026148aa7dc659b5e08a5efd46a9591344411b9cc2eb0ff53f01212f9"
+}

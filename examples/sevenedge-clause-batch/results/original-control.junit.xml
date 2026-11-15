@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="10" failures="0" errors="0">
+  <testsuite name="SEVENEDGE published-batch observation control: C1,C4 / CLEAN" tests="10" failures="0" errors="0" time="10.472">
+    <testcase classname="n8n-check" name="n8n execution succeeds"></testcase>
+    <testcase classname="n8n-check" name="Batch Process Clauses: output 1 count"></testcase>
+    <testcase classname="n8n-check" name="Batch Process Clauses: output 1 pluck json.clause_id"></testcase>
+    <testcase classname="n8n-check" name="Store Assessment Outcome: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Store Assessment Outcome: output 0"></testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0 count"></testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0"></testcase>
+    <testcase classname="n8n-check" name="Collate Clause Findings: output 0 pluck json.verdict"></testcase>
+    <testcase classname="n8n-check" name="mock: all requests match routes"></testcase>
+    <testcase classname="n8n-check" name="mock: request limits and server"></testcase>
+  </testsuite>
+</testsuites>
