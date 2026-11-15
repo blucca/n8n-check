@@ -234,7 +234,10 @@ $('assertion-mode').addEventListener('change', () => {
   update();
 });
 $('pluck-path').addEventListener('input', () => {
-  seedExpectation();
+  // A field edit keeps the same output branch and its authored business oracle.
+  const count = $('expected-count').value;
+  if ($('expected-origin').textContent !== 'Edited expectation') seedExpectation();
+  $('expected-count').value = count;
   update();
 });
 $('expected-count').addEventListener('input', update);
