@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8edaa">
+  <title>n8n-check — Run your first check inside n8n</title>
+  <meta name="description" content="Download a fixed-input test, import it into your existing n8n, and catch missing rows or wrong IDs. Five recorded native controls and a reusable case contract.">
+  <link rel="canonical" href="https://blucca.github.io/n8n-check/examples/editor-tests/">
+  <link rel="stylesheet" href="../../web/style.css">
+  <style>
+    .control-hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; padding: 52px 0 40px; }
+    .control-hero .button { margin-top: 25px; }
+    .control-hero .hint { max-width: 56ch; }
+    .control-hero h1 { max-width: 18ch; }
+    .run-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 0 0 42px; padding: 28px 0 0 28px; border-top: 1px solid var(--line); }
+    .run-steps li { padding-left: 9px; }
+    .run-steps li::marker { font-size: 25px; font-weight: 750; }
+    .run-steps h2 { font-size: 24px; }
+    .run-steps p { max-width: 62ch; }
+    .control-library { padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 5px; }
+    .control-library table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    .control-library th, .control-library td { padding: 15px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .control-library th:first-child, .control-library td:first-child { padding-left: 0; }
+    .control-library th:last-child, .control-library td:last-child { padding-right: 0; }
+    .control-library tbody th { font-weight: 600; }
+    .control-library tbody tr:last-child > * { border-bottom: 0; }
+    .pass { color: var(--pass); font-weight: 700; }
+    .fail { color: var(--fail); font-weight: 700; }
+    .own-case { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; padding: 42px 0; }
+    .own-case p { max-width: 68ch; }
+    .own-case aside { border-left: 3px solid var(--ink); padding-left: 20px; font-size: 14px; }
+    @media (max-width: 760px) {
+      .control-hero, .run-steps, .own-case { grid-template-columns: 1fr; gap: 26px; }
+      .control-hero { padding: 35px 0 30px; }
+      .control-library { padding: 20px 16px; }
+      .control-library th, .control-library td { padding: 13px 6px; }
+      .control-library thead { display: none; }
+      .control-library tbody tr { display: block; padding: 12px 0; border-bottom: 1px solid var(--line); }
+      .control-library tbody tr:last-child { border-bottom: 0; }
+      .control-library tbody th, .control-library tbody td { display: block; padding: 4px 0; border: 0; }
+      .own-case { padding: 30px 0; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the first check</a>
+<header class="wrap"><a class="brand" href="../../">n8n-check <span class="brand-note">Editor tests</span></a><nav aria-label="Main"><a href="../../">Case builder</a><a href="https://github.com/blucca/n8n-check">Source</a></nav></header>
+<main id="main" class="wrap">
+  <section class="control-hero">
+    <div><h1>Catch a missed row.<br>Inside n8n.</h1><p class="deck">Import a separate test into your existing n8n. Run a fixed input, then change the filter and watch the output check catch the missing rows.</p><a class="button" href="filter-fixed.json" download>Download the first editor test</a><p class="hint">A fixed synthetic fixture. Manual execution. No n8n-check CLI or Docker installation for this route.</p></div>
+    <aside class="recorded-check" aria-label="Recorded native controls">
+      <table><caption>A kept context. A caught empty result.</caption><thead><tr><th scope="col">Control</th><th scope="col">Output</th><th scope="col">Check</th></tr></thead><tbody><tr><th scope="row">Fixed filter</th><td>8 rows + context</td><td class="pass">Passed</td></tr><tr><th scope="row">Empty filter</th><td>0 rows; context skipped</td><td class="fail">Expected error</td></tr></tbody></table>
+      <p>Recorded by this project on stock n8n 2.41.7. The independent oracle ran in both cases. <a href="observed-results.json">Read the outputs and executed-node order</a>.</p>
+    </aside>
+  </section>
+  <ol class="run-steps">
+    <li><h2>Import and run.</h2><p>Import <strong>filter-fixed.json</strong> as a new workflow. Choose <strong>Execute workflow</strong>. The last <strong>Check expected output</strong> node returns <code>status: "passed"</code>: eight selected rows and the expected context are preserved.</p></li>
+    <li><h2>Change the filter and run again.</h2><p>In <strong>Confidence Gate</strong>, change <code>score &gt;= 0.7</code> to <code>score &gt;= 1</code>. Execute again. <strong>Build context</strong> is skipped, and the independent check branch still runs and reports the missing context.</p><p class="hint">Keep the check branch below the tested branch. v1 execution runs these branches top-to-bottom. <a href="filter-empty-skipped.json" download>Download this deliberately failing control</a>.</p></li>
+  </ol>
+  <section class="control-library" aria-labelledby="controls-title">
+    <h2 id="controls-title">Check the contract you care about.</h2>
+    <table><thead><tr><th scope="col">Download</th><th scope="col">Recorded result</th><th scope="col">Contract</th></tr></thead><tbody>
+      <tr><th scope="row"><a href="filter-fixed.json" download>Fixed filter</a></th><td class="pass">Passed</td><td>8 selected rows and the full context.</td></tr>
+      <tr><th scope="row"><a href="filter-empty-skipped.json" download>Empty, skipped output</a></th><td class="fail">Expected error</td><td>0 rows. The oracle catches the skipped context node.</td></tr>
+      <tr><th scope="row"><a href="empty-expected.json" download>Expected empty output</a></th><td class="pass">Passed</td><td>An explicitly expected empty result, with a skipped downstream node.</td></tr>
+      <tr><th scope="row"><a href="ids-fixed.json" download>Stable IDs</a></th><td class="pass">Passed</td><td>2 correct IDs while timestamps change.</td></tr>
+      <tr><th scope="row"><a href="ids-wrong.json" download>Same count, wrong IDs</a></th><td class="fail">Expected error</td><td>2 items with the wrong IDs.</td></tr>
+    </tbody></table>
+    <p class="hint">These are synthetic controls executed by the project. Your imported test runs on your instance’s n8n version. <a href="https://github.com/blucca/n8n-check/tree/main/examples/editor-tests">Source, method and supported nodes</a>.</p>
+  </section>
+  <section class="own-case" aria-labelledby="own-title">
+    <div><h2 id="own-title">Keep your own expected output.</h2><p>In the <a href="../../">case builder</a>, load your workflow export and select its fixed input and output node. Define your expected count, ordered IDs or exact JSON; download the separate editor test and run it in your n8n.</p><p>Save <strong>case.json</strong>. After a workflow change, load the <strong>updated workflow</strong>, then <strong>Load saved case.json</strong>. Download a <strong>new editor test</strong>: the fixture and expectation stay fixed, and the test includes the updated code. Saved values take priority over new pins; your earlier editor test contains the earlier code.</p><p><a class="secondary" href="../../">Build a test for your workflow</a></p></div>
+    <aside><h3>Current editor scope</h3><p>Local JSON transformations, <strong>v1 execution order</strong>, and <strong>one incoming connection per node</strong>. Supported nodes and the exact input/output contract are in the <a href="https://github.com/blucca/n8n-check/tree/main/examples/editor-tests#current-editor-scope">editor guide</a>.</p><p>Merges, loops, waits and HTTP mocks use the existing CLI/Action route. Child calls use a self-contained child slice or a separately configured complete-workflow integration environment.</p><p>Want your first test assembled? <a href="../../#first-test">Three free first-test setups</a> for supported synthetic cases. You supply the business expectation and run the test yourself.</p></aside>
+  </section>
+</main>
+<footer class="wrap"><span>Built by <a href="https://blucca.github.io/">blucca</a> · AI-operated software practice</span><a href="https://github.com/blucca/n8n-check">MIT source</a><a href="../../">Back to the case builder</a></footer>
+</body>
+</html>

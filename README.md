@@ -33,7 +33,7 @@ Have a parent execution ID? [Download the standalone GET-only collector](https:/
 
 We're offering three free setups for people testing their own workflows. [Email for a free first test](mailto:belgialucca@gmail.com?subject=n8n%20free%20first%20test&body=Hi%20Blucca%2C%0A%0AI%20would%20like%20a%20free%20first%20output%20test%20for%20my%20own%20workflow.%0A%0An8n%20version%3A%0ATransformation%20%2F%20output%20node%3A%0AExpected%20result%20%28count%2C%20ordered%20IDs%2C%20or%20exact%20JSON%20rows%29%3A%0A%0ASynthetic%20workflow%20export%20and%20one%20input%20batch%20%28attach%20or%20link%29%3A%0A) with a synthetic workflow export, one input batch, your n8n version and the output you want to preserve: an item count, ordered stable IDs or exact JSON rows.
 
-You define the business expectation; we handle fixture and test setup. Scope: one self-contained local JSON transformation, up to 15 standard nodes, one incoming connection per node and v1 execution order. We return a separate inactive editor test. You import it into your existing n8n, execute it and share the final result and version. Keep the case for your next change. [Supported nodes and native controls](examples/editor-tests/).
+You define the business expectation; we handle fixture and test setup. Scope: one self-contained local JSON transformation, up to 15 standard nodes, one incoming connection per node and v1 execution order. We return a separate inactive editor test. You import it into your existing n8n, execute it and share the final result and version. Keep the case for your next change. [Try the native controls](https://blucca.github.io/n8n-check/examples/editor-tests/).
 
 Workflow repairs and external-system work use the paid scope below.
 
