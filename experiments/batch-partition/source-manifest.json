@@ -1,0 +1,19 @@
+{
+  "sourceRepo": "https://github.com/blucca/n8n-check",
+  "sourceCommit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+  "frozenFiles": [
+    "examples/stop-after/fixed.json",
+    "examples/stop-after/broken.json",
+    "examples/identity-projection/workflow.json",
+    "examples/identity-projection/wrong-id.json",
+    "examples/silent-filter/fixed.json",
+    "examples/silent-filter/broken.json"
+  ],
+  "nativeControls": 10,
+  "executions": 36,
+  "fixtureChanges": "silent-filter uses the frozen first two relevant rows and last distractor; duplicate and all-rejected controls reuse frozen rows; same-count broadcast mutation and shared counter are newly declared synthetic controls. Existing hand-written case.expected values are never read by the relation runner.",
+  "semanticScope": "local deterministic independent JSON outputs, explicit selected fields; aggregate/shared-state controls intentionally outside scope",
+  "nativeRuntime": "official n8n 2.46.6",
+  "role": "Frozen control corpus for a research observer; control labels test the observer, not a supplied business-output table.",
+  "comparison": "JSON multiset; duplicate multiplicity and nested array order retained; explicit top-level id/score projection on time-dependent identity controls."
+}

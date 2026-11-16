@@ -1,0 +1,454 @@
+{
+  "n8nVersion": "2.46.6",
+  "providerCalls": 0,
+  "businessExpectedUsedByRelation": false,
+  "completedExecutions": 36,
+  "results": [
+    {
+      "name": "invoice-fixed",
+      "input": "Read invoices",
+      "output": "Prepare notification",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 2,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "Each invoice independently becomes one notification."
+    },
+    {
+      "name": "invoice-first-only",
+      "input": "Read invoices",
+      "output": "Prepare notification",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": false,
+        "batchCount": 1,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          }
+        ]
+      },
+      "status": "partition_sensitive",
+      "firstObservedDivergence": {
+        "node": "Prepare notification",
+        "consistent": false,
+        "batchCount": 1,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          }
+        ]
+      },
+      "witnessInputs": [
+        {
+          "invoiceId": "INV-42",
+          "totalCents": 65000
+        },
+        {
+          "invoiceId": "INV-43",
+          "totalCents": 12050
+        }
+      ],
+      "witnessRecordCount": 2,
+      "knownControl": "Controlled first-record truncation of the frozen invoice slice."
+    },
+    {
+      "name": "invoice-first-id-broadcast",
+      "input": "Read invoices",
+      "output": "Prepare notification",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": false,
+        "batchCount": 2,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $120.50"
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          },
+          {
+            "row": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          }
+        ]
+      },
+      "status": "partition_sensitive",
+      "firstObservedDivergence": {
+        "node": "Prepare notification",
+        "consistent": false,
+        "batchCount": 2,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $120.50"
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          },
+          {
+            "row": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          }
+        ]
+      },
+      "witnessInputs": [
+        {
+          "invoiceId": "INV-42",
+          "totalCents": 65000
+        },
+        {
+          "invoiceId": "INV-43",
+          "totalCents": 12050
+        }
+      ],
+      "witnessRecordCount": 2,
+      "knownControl": "New controlled same-count contamination: each notification borrows the first invoice ID."
+    },
+    {
+      "name": "invoice-duplicate-preserved",
+      "input": "Read invoices",
+      "output": "Prepare notification",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 3,
+        "partitionCount": 3,
+        "fields": null,
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "Duplicate input records are valid and both output copies must survive the relation."
+    },
+    {
+      "name": "filter-independent",
+      "input": "Rows",
+      "output": "Select rows",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 2,
+        "partitionCount": 2,
+        "fields": [
+          "id",
+          "score"
+        ],
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "Per-record score filter; explicit id/score projection leaves time-dependent processedAt outside this relation."
+    },
+    {
+      "name": "filter-constant-wrong-id",
+      "input": "Rows",
+      "output": "Select rows",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 2,
+        "partitionCount": 2,
+        "fields": [
+          "id",
+          "score"
+        ],
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "Known business failure passes the relation: wrong-row ID is applied consistently to every retained record."
+    },
+    {
+      "name": "filter-all-rejected",
+      "input": "Rows",
+      "output": "Select rows",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 0,
+        "partitionCount": 0,
+        "fields": [
+          "id",
+          "score"
+        ],
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "A legitimate per-record filter returns no output in every partition."
+    },
+    {
+      "name": "filter-uniform-obsolete-rule",
+      "input": "Retrieved rows",
+      "output": "Confidence Gate",
+      "semanticContract": "independent-records",
+      "relation": {
+        "consistent": true,
+        "batchCount": 0,
+        "partitionCount": 0,
+        "fields": null,
+        "differences": []
+      },
+      "status": "partition_consistent",
+      "firstObservedDivergence": null,
+      "witnessInputs": null,
+      "witnessRecordCount": null,
+      "knownControl": "Known business data loss passes the relation: the obsolete legacy-index filter rejects the same records everywhere."
+    },
+    {
+      "name": "legal-global-summary",
+      "input": "Retrieved rows",
+      "output": "Build context",
+      "semanticContract": "whole-batch-summary",
+      "relation": {
+        "consistent": false,
+        "batchCount": 1,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "count": 1,
+              "ids": [
+                "policy-01"
+              ]
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "count": 1,
+              "ids": [
+                "policy-02"
+              ]
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "count": 2,
+              "ids": [
+                "policy-01",
+                "policy-02"
+              ]
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          }
+        ]
+      },
+      "status": "scope_required",
+      "firstObservedDivergence": {
+        "node": "Build context",
+        "consistent": false,
+        "batchCount": 1,
+        "partitionCount": 2,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "count": 1,
+              "ids": [
+                "policy-01"
+              ]
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "count": 1,
+              "ids": [
+                "policy-02"
+              ]
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "count": 2,
+              "ids": [
+                "policy-01",
+                "policy-02"
+              ]
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          }
+        ]
+      },
+      "witnessInputs": [
+        {
+          "id": "policy-01",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "policy-02",
+          "score": 0.9,
+          "source": "current-index"
+        },
+        {
+          "id": "distractor-09",
+          "score": 0.2,
+          "source": "current-index"
+        }
+      ],
+      "witnessRecordCount": 3,
+      "knownControl": "A whole-batch summary is intentionally non-independent; mismatched relation is not adjudicated as a fault."
+    },
+    {
+      "name": "legal-shared-counter",
+      "input": "Rows",
+      "output": "Allocate sequence",
+      "semanticContract": "shared-state",
+      "relation": {
+        "consistent": false,
+        "batchCount": 3,
+        "partitionCount": 3,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "id": "distractor",
+              "sequence": 1
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "id": "distractor",
+              "sequence": 3
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          },
+          {
+            "row": {
+              "id": "row-B",
+              "sequence": 1
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "id": "row-B",
+              "sequence": 2
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          }
+        ]
+      },
+      "status": "scope_required",
+      "firstObservedDivergence": {
+        "node": "Allocate sequence",
+        "consistent": false,
+        "batchCount": 3,
+        "partitionCount": 3,
+        "fields": null,
+        "differences": [
+          {
+            "row": {
+              "id": "distractor",
+              "sequence": 1
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "id": "distractor",
+              "sequence": 3
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          },
+          {
+            "row": {
+              "id": "row-B",
+              "sequence": 1
+            },
+            "batchCount": 0,
+            "partitionCount": 1
+          },
+          {
+            "row": {
+              "id": "row-B",
+              "sequence": 2
+            },
+            "batchCount": 1,
+            "partitionCount": 0
+          }
+        ]
+      },
+      "witnessInputs": [
+        {
+          "id": "row-A",
+          "score": 0.9
+        },
+        {
+          "id": "row-B",
+          "score": 0.8
+        },
+        {
+          "id": "distractor",
+          "score": 0.2
+        }
+      ],
+      "witnessRecordCount": 3,
+      "knownControl": "The counter deliberately shares state between records; each prepared workflow starts from the same empty staticData."
+    }
+  ]
+}

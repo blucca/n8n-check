@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { compareRows } from './compare.mjs';
+assert.equal(compareRows([{ a: 1, b: { c: 2, d: 3 } }], [[{ b: { d: 3, c: 2 }, a: 1 }]]).consistent, true);
+assert.equal(compareRows([{ id: 'A' }, { id: 'A' }], [[{ id: 'A' }]]).consistent, false);
+assert.equal(compareRows([{ ids: ['A', 'B'] }], [[{ ids: ['B', 'A'] }]]).consistent, false);
+assert.equal(compareRows([{ id: 'A' }, { id: 'B' }], [[{ id: 'B' }], [{ id: 'A' }]]).consistent, true);
+assert.equal(compareRows([{ id: 'A', timestamp: 1 }], [[{ id: 'A', timestamp: 2 }]], ['id']).consistent, true);
+assert.throws(() => compareRows([{ id: 'A' }], [[{}]], ['id']), /Missing selected field/);
+assert.equal(compareRows([], [[], []]).consistent, true);
+console.log('multiset/projection checks passed');

@@ -1,0 +1,1228 @@
+[
+  {
+    "name": "invoice-fixed",
+    "workflow": {
+      "name": "Invoice notifications — complete synthetic export",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "read-invoices",
+          "name": "Read invoices",
+          "type": "n8n-nodes-base.googleSheets",
+          "typeVersion": 4.7,
+          "position": [
+            220,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "synthetic-sheets",
+              "name": "Synthetic Sheets"
+            }
+          }
+        },
+        {
+          "id": "prepare-notification",
+          "name": "Prepare notification",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            440,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().map(({ json }) => ({ json: { invoiceId: json.invoiceId, text: `Invoice ${json.invoiceId}: $${(json.totalCents / 100).toFixed(2)}` } }));"
+          }
+        },
+        {
+          "id": "notify-team",
+          "name": "Notify team",
+          "type": "n8n-nodes-base.slack",
+          "typeVersion": 2.3,
+          "position": [
+            660,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "slackApi": {
+              "id": "synthetic-slack",
+              "name": "Synthetic Slack"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Read invoices",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Read invoices": {
+          "main": [
+            [
+              {
+                "node": "Prepare notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Prepare notification": {
+          "main": [
+            [
+              {
+                "node": "Notify team",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "pinData": {
+        "Read invoices": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "totalCents": 65000
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "totalCents": 12050
+            }
+          }
+        ],
+        "Prepare notification": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          }
+        ]
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "timezone": "UTC"
+      },
+      "active": false
+    },
+    "items": [
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-43",
+        "totalCents": 12050
+      }
+    ],
+    "input": "Read invoices",
+    "output": "Prepare notification",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "Each invoice independently becomes one notification.",
+    "expectedRelation": true
+  },
+  {
+    "name": "invoice-first-only",
+    "workflow": {
+      "name": "Invoice notifications — complete synthetic export",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "read-invoices",
+          "name": "Read invoices",
+          "type": "n8n-nodes-base.googleSheets",
+          "typeVersion": 4.7,
+          "position": [
+            220,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "synthetic-sheets",
+              "name": "Synthetic Sheets"
+            }
+          }
+        },
+        {
+          "id": "prepare-notification",
+          "name": "Prepare notification",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            440,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().slice(0, 1).map(({ json }) => ({ json: { invoiceId: json.invoiceId, text: `Invoice ${json.invoiceId}: $${(json.totalCents / 100).toFixed(2)}` } }));"
+          }
+        },
+        {
+          "id": "notify-team",
+          "name": "Notify team",
+          "type": "n8n-nodes-base.slack",
+          "typeVersion": 2.3,
+          "position": [
+            660,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "slackApi": {
+              "id": "synthetic-slack",
+              "name": "Synthetic Slack"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Read invoices",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Read invoices": {
+          "main": [
+            [
+              {
+                "node": "Prepare notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Prepare notification": {
+          "main": [
+            [
+              {
+                "node": "Notify team",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "pinData": {
+        "Read invoices": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "totalCents": 65000
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "totalCents": 12050
+            }
+          }
+        ],
+        "Prepare notification": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          }
+        ]
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "timezone": "UTC"
+      },
+      "active": false
+    },
+    "items": [
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-43",
+        "totalCents": 12050
+      }
+    ],
+    "input": "Read invoices",
+    "output": "Prepare notification",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_sensitive",
+    "knownControl": "Controlled first-record truncation of the frozen invoice slice.",
+    "expectedRelation": false,
+    "expectedDivergence": "Prepare notification"
+  },
+  {
+    "name": "invoice-first-id-broadcast",
+    "workflow": {
+      "name": "Invoice notifications — complete synthetic export",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "read-invoices",
+          "name": "Read invoices",
+          "type": "n8n-nodes-base.googleSheets",
+          "typeVersion": 4.7,
+          "position": [
+            220,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "synthetic-sheets",
+              "name": "Synthetic Sheets"
+            }
+          }
+        },
+        {
+          "id": "prepare-notification",
+          "name": "Prepare notification",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            440,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "const all = $input.all(); return all.map(({json}) => ({json:{invoiceId:all[0].json.invoiceId,text:`Invoice ${all[0].json.invoiceId}: $${(json.totalCents/100).toFixed(2)}`}}));"
+          }
+        },
+        {
+          "id": "notify-team",
+          "name": "Notify team",
+          "type": "n8n-nodes-base.slack",
+          "typeVersion": 2.3,
+          "position": [
+            660,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "slackApi": {
+              "id": "synthetic-slack",
+              "name": "Synthetic Slack"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Read invoices",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Read invoices": {
+          "main": [
+            [
+              {
+                "node": "Prepare notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Prepare notification": {
+          "main": [
+            [
+              {
+                "node": "Notify team",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "pinData": {
+        "Read invoices": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "totalCents": 65000
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "totalCents": 12050
+            }
+          }
+        ],
+        "Prepare notification": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          }
+        ]
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "timezone": "UTC"
+      },
+      "active": false
+    },
+    "items": [
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-43",
+        "totalCents": 12050
+      }
+    ],
+    "input": "Read invoices",
+    "output": "Prepare notification",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_sensitive",
+    "knownControl": "New controlled same-count contamination: each notification borrows the first invoice ID.",
+    "expectedRelation": false,
+    "expectedDivergence": "Prepare notification"
+  },
+  {
+    "name": "invoice-duplicate-preserved",
+    "workflow": {
+      "name": "Invoice notifications — complete synthetic export",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "read-invoices",
+          "name": "Read invoices",
+          "type": "n8n-nodes-base.googleSheets",
+          "typeVersion": 4.7,
+          "position": [
+            220,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "synthetic-sheets",
+              "name": "Synthetic Sheets"
+            }
+          }
+        },
+        {
+          "id": "prepare-notification",
+          "name": "Prepare notification",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            440,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().map(({ json }) => ({ json: { invoiceId: json.invoiceId, text: `Invoice ${json.invoiceId}: $${(json.totalCents / 100).toFixed(2)}` } }));"
+          }
+        },
+        {
+          "id": "notify-team",
+          "name": "Notify team",
+          "type": "n8n-nodes-base.slack",
+          "typeVersion": 2.3,
+          "position": [
+            660,
+            0
+          ],
+          "parameters": {},
+          "credentials": {
+            "slackApi": {
+              "id": "synthetic-slack",
+              "name": "Synthetic Slack"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Read invoices",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Read invoices": {
+          "main": [
+            [
+              {
+                "node": "Prepare notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Prepare notification": {
+          "main": [
+            [
+              {
+                "node": "Notify team",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "pinData": {
+        "Read invoices": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "totalCents": 65000
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "totalCents": 12050
+            }
+          }
+        ],
+        "Prepare notification": [
+          {
+            "json": {
+              "invoiceId": "INV-42",
+              "text": "Invoice INV-42: $650.00"
+            }
+          },
+          {
+            "json": {
+              "invoiceId": "INV-43",
+              "text": "Invoice INV-43: $120.50"
+            }
+          }
+        ]
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "timezone": "UTC"
+      },
+      "active": false
+    },
+    "items": [
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-42",
+        "totalCents": 65000
+      },
+      {
+        "invoiceId": "INV-43",
+        "totalCents": 12050
+      }
+    ],
+    "input": "Read invoices",
+    "output": "Prepare notification",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "Duplicate input records are valid and both output copies must survive the relation.",
+    "expectedRelation": true
+  },
+  {
+    "name": "filter-independent",
+    "workflow": {
+      "name": "Stable row identities",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            -400,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "rows",
+          "name": "Rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all();"
+          }
+        },
+        {
+          "id": "select",
+          "name": "Select rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().filter(item => item.json.score >= 0.7).map(item => ({ json: { ...item.json, processedAt: new Date().toISOString() } }));"
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Rows": {
+          "main": [
+            [
+              {
+                "node": "Select rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      }
+    },
+    "items": [
+      {
+        "id": "row-A",
+        "score": 0.9
+      },
+      {
+        "id": "row-B",
+        "score": 0.8
+      },
+      {
+        "id": "distractor",
+        "score": 0.2
+      }
+    ],
+    "input": "Rows",
+    "output": "Select rows",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "Per-record score filter; explicit id/score projection leaves time-dependent processedAt outside this relation.",
+    "fields": [
+      "id",
+      "score"
+    ],
+    "expectedRelation": true
+  },
+  {
+    "name": "filter-constant-wrong-id",
+    "workflow": {
+      "name": "Stable row identities",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            -400,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "rows",
+          "name": "Rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all();"
+          }
+        },
+        {
+          "id": "select",
+          "name": "Select rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().filter(item => item.json.score >= 0.7).map(item => ({ json: { ...item.json, id: \"wrong-row\", processedAt: new Date().toISOString() } }));"
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Rows": {
+          "main": [
+            [
+              {
+                "node": "Select rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      }
+    },
+    "items": [
+      {
+        "id": "row-A",
+        "score": 0.9
+      },
+      {
+        "id": "row-B",
+        "score": 0.8
+      },
+      {
+        "id": "distractor",
+        "score": 0.2
+      }
+    ],
+    "input": "Rows",
+    "output": "Select rows",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "Known business failure passes the relation: wrong-row ID is applied consistently to every retained record.",
+    "fields": [
+      "id",
+      "score"
+    ],
+    "expectedRelation": true
+  },
+  {
+    "name": "filter-all-rejected",
+    "workflow": {
+      "name": "Stable row identities",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            -400,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "rows",
+          "name": "Rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all();"
+          }
+        },
+        {
+          "id": "select",
+          "name": "Select rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().filter(item => item.json.score >= 0.7).map(item => ({ json: { ...item.json, processedAt: new Date().toISOString() } }));"
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Rows": {
+          "main": [
+            [
+              {
+                "node": "Select rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      }
+    },
+    "items": [
+      {
+        "id": "distractor",
+        "score": 0.2
+      },
+      {
+        "id": "distractor",
+        "score": 0.2
+      }
+    ],
+    "input": "Rows",
+    "output": "Select rows",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "A legitimate per-record filter returns no output in every partition.",
+    "fields": [
+      "id",
+      "score"
+    ],
+    "expectedRelation": true
+  },
+  {
+    "name": "filter-uniform-obsolete-rule",
+    "workflow": {
+      "name": "Silent retrieval filter regression",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            -400,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "retrieved",
+          "name": "Retrieved rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return [{\"id\": \"policy-01\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-02\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-03\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-04\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-05\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-06\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-07\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-08\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"distractor-09\", \"score\": 0.2, \"source\": \"current-index\"}] .map(json => ({json}));"
+          }
+        },
+        {
+          "id": "gate",
+          "name": "Confidence Gate",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().filter(item => item.json.score >= 0.7 && item.json.source === \"legacy-index\");"
+          }
+        },
+        {
+          "id": "context",
+          "name": "Build context",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "const ids = $input.all().map(item => item.json.id);\nreturn [{ json: { count: ids.length, ids } }];"
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Retrieved rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Retrieved rows": {
+          "main": [
+            [
+              {
+                "node": "Confidence Gate",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Confidence Gate": {
+          "main": [
+            [
+              {
+                "node": "Build context",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      }
+    },
+    "items": [
+      {
+        "id": "policy-01",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-02",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "distractor-09",
+        "score": 0.2,
+        "source": "current-index"
+      }
+    ],
+    "input": "Retrieved rows",
+    "output": "Confidence Gate",
+    "semanticContract": "independent-records",
+    "expectedStatus": "partition_consistent",
+    "knownControl": "Known business data loss passes the relation: the obsolete legacy-index filter rejects the same records everywhere.",
+    "expectedRelation": true
+  },
+  {
+    "name": "legal-global-summary",
+    "workflow": {
+      "name": "Silent retrieval filter regression",
+      "nodes": [
+        {
+          "id": "start",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            -400,
+            0
+          ],
+          "parameters": {}
+        },
+        {
+          "id": "retrieved",
+          "name": "Retrieved rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            -200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return [{\"id\": \"policy-01\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-02\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-03\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-04\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-05\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-06\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-07\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-08\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"distractor-09\", \"score\": 0.2, \"source\": \"current-index\"}] .map(json => ({json}));"
+          }
+        },
+        {
+          "id": "gate",
+          "name": "Confidence Gate",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all().filter(item => item.json.score >= 0.7);"
+          }
+        },
+        {
+          "id": "context",
+          "name": "Build context",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            200,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "const ids = $input.all().map(item => item.json.id);\nreturn [{ json: { count: ids.length, ids } }];"
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Retrieved rows",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Retrieved rows": {
+          "main": [
+            [
+              {
+                "node": "Confidence Gate",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Confidence Gate": {
+          "main": [
+            [
+              {
+                "node": "Build context",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      }
+    },
+    "items": [
+      {
+        "id": "policy-01",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "policy-02",
+        "score": 0.9,
+        "source": "current-index"
+      },
+      {
+        "id": "distractor-09",
+        "score": 0.2,
+        "source": "current-index"
+      }
+    ],
+    "input": "Retrieved rows",
+    "output": "Build context",
+    "semanticContract": "whole-batch-summary",
+    "expectedStatus": "scope_required",
+    "knownControl": "A whole-batch summary is intentionally non-independent; mismatched relation is not adjudicated as a fault.",
+    "expectedRelation": false,
+    "expectedDivergence": "Build context"
+  },
+  {
+    "name": "legal-shared-counter",
+    "workflow": {
+      "name": "Synthetic per-batch allocation counter",
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "nodes": [
+        {
+          "id": "rows",
+          "name": "Rows",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            0,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "return $input.all();"
+          }
+        },
+        {
+          "id": "allocate",
+          "name": "Allocate sequence",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            240,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForAllItems",
+            "jsCode": "const state = $getWorkflowStaticData('global'); state.n ??= 0; return $input.all().map(({json}) => ({json:{id:json.id,sequence:++state.n}}));"
+          }
+        }
+      ],
+      "connections": {
+        "Rows": {
+          "main": [
+            [
+              {
+                "node": "Allocate sequence",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "items": [
+      {
+        "id": "row-A",
+        "score": 0.9
+      },
+      {
+        "id": "row-B",
+        "score": 0.8
+      },
+      {
+        "id": "distractor",
+        "score": 0.2
+      }
+    ],
+    "input": "Rows",
+    "output": "Allocate sequence",
+    "semanticContract": "shared-state",
+    "expectedStatus": "scope_required",
+    "knownControl": "The counter deliberately shares state between records; each prepared workflow starts from the same empty staticData.",
+    "expectedRelation": false,
+    "expectedDivergence": "Allocate sequence"
+  }
+]
