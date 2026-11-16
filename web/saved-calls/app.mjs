@@ -1,8 +1,11 @@
 import { auditExecutions } from './core.mjs';
+import { usage } from '../usage.mjs';
+
+usage('inspect-open', 'page');
 
 const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
-let report;
+let report, sourceKind = 'import';
 const controls = ['files', 'wrong-example', 'good-example'];
 function busy(value) { for (const id of controls) $(id).disabled = value; }
 function status(message, error = false) {
@@ -66,8 +69,11 @@ function render(value, names) {
     section.append(details); $('boundaries').append(section);
   }
   $('report').textContent = pretty(report);
+  usage(report.status === 'incomplete' ? 'inspect-incomplete' : 'inspect-ready', sourceKind);
 }
-async function load(readers) {
+async function load(readers, example = false) {
+  sourceKind = example ? 'example' : 'import';
+  usage('inspect-import', sourceKind);
   busy(true);
   status('Reading saved files locally…');
   try {
@@ -104,8 +110,8 @@ function example(selection) {
       const response = await fetch(`../experiments/execution-graph/recorded/${name}`);
       if (!response.ok) throw new Error(`Example file ${name}: HTTP ${response.status}.`);
       return response.text();
-    } };
-  }));
+  } };
+  }), true);
 }
 $('wrong-example').addEventListener('click', () => example(2));
 $('good-example').addEventListener('click', () => example(1));
@@ -124,5 +130,6 @@ $('download').addEventListener('click', () => {
   const url = URL.createObjectURL(new Blob([pretty(report) + '\n'], { type: 'application/json' }));
   const link = document.createElement('a');
   link.href = url; link.download = 'n8n-saved-call-report.json'; link.click();
+  usage('download-report', sourceKind);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });

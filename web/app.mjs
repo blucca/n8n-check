@@ -1,6 +1,9 @@
 import { inspectWorkflow, draftCase, savedCaseOptions } from '../src/case-draft.mjs';
 import { buildLocalBundle } from '../src/local-bundle.mjs';
 import { editorTestWorkflow } from '../src/editor-test.mjs';
+import { usage } from './usage.mjs';
+
+usage('builder-open', 'page');
 
 const $ = id => document.getElementById(id);
 const pretty = value => JSON.stringify(value, null, 2);
@@ -106,6 +109,7 @@ function update() {
       } catch (error) { $('editor-test-status').textContent = error.message; }
     }
     $('download-editor-test').disabled = !editorTest;
+    usage(plan.ready ? 'builder-ready' : 'builder-preparation-needed', isExample ? 'example' : 'import');
   } catch (error) {
     plan = null;
     editorTest = null;
@@ -125,6 +129,7 @@ function load(text, label, example = false) {
   const parsed = JSON.parse(text);
   const checked = inspectWorkflow(parsed);
   source = parsed; inspection = checked; originalText = text; isExample = example;
+  usage('builder-import', isExample ? 'example' : 'import');
   const workflow = Array.isArray(source) ? source[0] : source;
   $('workflow-name').textContent = workflow.name || label;
   $('node-count').textContent = `${checked.nodes.length} nodes`;
@@ -175,22 +180,27 @@ function loadSavedCase(text, label) {
     : plan?.ready ? 'Use the local run pack or CI for this case; see the editor scope below.'
       : 'Resolve the preparation items below before downloading a test.';
   $('case-import-status').textContent = `${label} loaded. Saved fixture and expectation kept for this export. ${action}`;
+  usage('builder-case-reused', isExample ? 'example' : 'import');
 }
 function download(name, contents, type = 'application/json') {
   const url = URL.createObjectURL(new Blob([typeof contents === 'string' && !contents.endsWith('\n') ? contents + '\n' : contents], { type }));
   const link = document.createElement('a'); link.href = url; link.download = name;
   document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  const event = { 'case.json': 'download-case', 'case.draft.json': 'download-draft',
+    'n8n-editor-test.json': 'download-editor', 'n8n-check.yml': 'download-ci',
+    'n8n-check-local.zip': 'download-bundle', 'workflow.json': 'download-workflow' }[name];
+  if (event) usage(event, isExample ? 'example' : 'import');
 }
 $('file').addEventListener('change', async event => {
   const file = event.target.files[0];
   if (!file) return;
   try { load(await file.text(), file.name); }
-  catch (error) { $('builder').hidden = true; importStatus(`Import: ${error.message}`, true); }
+  catch (error) { usage('builder-import-error', 'import'); $('builder').hidden = true; importStatus(`Import: ${error.message}`, true); }
   event.target.value = '';
 });
 $('load-paste').addEventListener('click', () => {
   try { load($('source').value, 'Pasted workflow'); }
-  catch (error) { $('builder').hidden = true; importStatus(`Import: ${error.message}`, true); }
+  catch (error) { usage('builder-import-error', 'import'); $('builder').hidden = true; importStatus(`Import: ${error.message}`, true); }
 });
 $('case-file').addEventListener('change', async event => {
   const file = event.target.files[0];
@@ -223,7 +233,7 @@ $('identity-example').addEventListener('click', async () => {
       [spec.input.node]: spec.input.items.map(json => ({ json })),
       'Select rows': spec.assertions[0].equals.map(id => ({ json: { ...spec.input.items.find(item => item.id === id), processedAt: '2026-10-07T00:00:00.000Z' } })),
     };
-    load(pretty(workflow), 'Synthetic stable-ID example');
+    load(pretty(workflow), 'Synthetic stable-ID example', true);
     $('assertion-mode').value = previousMode = 'pluck';
     seedExpectation(); update();
     $('example-detail').hidden = false;

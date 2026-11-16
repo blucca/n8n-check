@@ -342,6 +342,10 @@ The default runner checks the Linux network namespace has only `lo`; Docker's **
 
 Run trusted workflow exports. n8n executes their Code, file and process-capable nodes with the runner's permissions. The Docker mount exposes the mounted directory. Use a dedicated fixture directory containing synthetic data. The child n8n process receives a small OS-environment allowlist and fresh n8n configuration; production database settings and credential environment variables stay outside it. Inline literals in exported parameters remain part of the prepared workflow and artifacts, so prepare synthetic exports before sharing reports.
 
+### Hosted browser action counts
+
+Until **24 November 2026, 01:00 UTC**, the two official hosted pages count fixed action labels (open, import, prepare, download and saved-case reuse), separating example buttons from file imports. A random per-page ID groups these actions for that page lifetime; the collector stores the labels and time. Workflow JSON, file names, node names and report contents stay in the tab. **Do Not Track**, **Global Privacy Control** and [`?usage=off`](https://blucca.github.io/n8n-check/?usage=off) select the local-only path. Local copies and other hosting origins also use that path. Action counts describe preparation and downloads; execution results come from your n8n instance. [Experiment source](ops/usage-server.mjs).
+
 ## Reports and CI
 
 ```sh
