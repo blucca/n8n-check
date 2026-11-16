@@ -43,7 +43,9 @@
     <div class="workspace-heading"><h2 id="workflow-name"></h2><div class="workbook-actions"><span id="node-count" class="chip"></span><a href="#readiness">Review &amp; download</a></div></div>
     <div class="workspace">
       <section class="panel editor" aria-label="Case editor">
-        <div class="editor-heading"><h3>Case contract</h3></div>
+        <div class="editor-heading"><h3>Case contract</h3><label class="secondary file-button">Load saved case.json<input id="case-file" type="file" accept=".json,application/json"></label></div>
+        <p class="hint saved-case-help">Recheck a change: load the updated workflow above, then your saved case here. Its fixture and expectation stay fixed; download a new test or run pack for the updated code.</p>
+        <p id="case-import-status" class="hint" role="status" aria-live="polite"></p>
         <label for="case-name">Case name</label><input id="case-name" type="text" autocomplete="off">
         <div class="two-col selectors"><div><label for="input-node">Fixture boundary</label><select id="input-node"></select><p class="hint">This node is replaced by the input items below. Its downstream nodes execute.</p></div><div><label for="assert-node">Output to preserve</label><select id="assert-node"></select><p class="hint">Choose the result node you pinned. To check a transformation before Slack or another integration, select that transformation here and enable Stop after selected output.</p></div></div>
         <div class="stop-boundary"><label for="stop-after"><input id="stop-after" type="checkbox"> Stop after selected output</label><p class="hint">Run the selected output node, then stop this branch before its downstream integrations. Other branches reachable from the fixture still run; review the selected slice below. For loops, choose a node after the completed output.</p></div>

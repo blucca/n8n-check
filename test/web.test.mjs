@@ -70,4 +70,35 @@ test('field edits preserve authored expectations/count while untouched pins foll
   assert.equal(get('expected-count').value, '1');
   assert.deepEqual(JSON.parse(get('expected-items').value), [true]);
   assert.equal(get('download-editor-test').disabled, false);
+
+  const saved = { version: 1, name: 'Old business contract',
+    input: { node: 'Input', items: [{ id: 'old-fixture' }] }, stopAfter: 'Mapped', mocks: [],
+    assertions: [{ node: 'Mapped', count: 1, pluck: 'json.id', equals: ['old-fixture'] }] };
+  const importCase = async value => {
+    get('case-file').files = [{ name: 'case.json', text: async () => typeof value === 'string' ? value : JSON.stringify(value) }];
+    await get('case-file').handlers.change({ target: get('case-file') });
+  };
+  load();
+  await importCase(saved);
+  assert.deepEqual(JSON.parse(get('preview').textContent), saved);
+  assert.equal(get('expected-origin').textContent, 'Saved case expectation');
+  edit('pluck-path', 'json.id');
+  assert.deepEqual(JSON.parse(get('preview').textContent), saved);
+  assert.equal(get('download-editor-test').disabled, false);
+  const unchanged = get('preview').textContent;
+  await importCase('{bad');
+  assert.match(get('case-import-status').textContent, /Case import failed/);
+  assert.equal(get('preview').textContent, unchanged);
+  await importCase({ ...saved, assertions: [...saved.assertions, ...saved.assertions] });
+  assert.match(get('case-import-status').textContent, /one output assertion/);
+  assert.equal(get('preview').textContent, unchanged);
+  await importCase({ ...saved, input: { ...saved.input, node: 'Renamed input' } });
+  assert.match(get('case-import-status').textContent, /Renamed input.*missing/);
+  assert.equal(get('preview').textContent, unchanged);
+  for (const assertion of [{ node: 'Mapped', equals: [] }, { node: 'Mapped', output: 1, count: 0 }]) {
+    const empty = { ...saved, assertions: [assertion] };
+    await importCase(empty);
+    assert.deepEqual(JSON.parse(get('preview').textContent), empty);
+    assert.equal(get('download-editor-test').disabled, false);
+  }
 });

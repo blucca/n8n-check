@@ -49,6 +49,35 @@ export function inspectWorkflow(raw) {
   return { nodes, suggestedInputNode, suggestedAssertNode: targetFor(source, suggestedInputNode, links) };
 }
 
+/** Restore a completed builder case against a new export; never seed from its pins. */
+export function savedCaseOptions(spec) {
+  validateCase(spec);
+  // The UI edits one output contract. Extended CLI cases stay on the CLI until
+  // a user needs that editor; reject them rather than dropping their checks.
+  if (spec.assertions.length !== 1) throw new Error('Load a case with one output assertion. Keep multi-assertion cases on the CLI or Action.');
+  const assertion = spec.assertions[0];
+  for (const [value, keys] of [
+    [spec, ['version', 'name', 'input', 'stopAfter', 'mocks', 'assertions']],
+    [spec.input, ['node', 'items']],
+    [assertion, ['node', 'output', 'equals', 'count', 'pluck']],
+  ]) {
+    const extra = Object.keys(value).find(key => !keys.includes(key));
+    if (extra) throw new Error(`Saved case field "${extra}" uses the CLI or Action. Load a builder-format case here.`);
+  }
+  if (spec.stopAfter !== undefined && spec.stopAfter !== assertion.node)
+    throw new Error('Builder cases stop after the selected output. Keep this separate stopAfter boundary on the CLI or Action.');
+  if (assertion.pluck ? assertion.count !== assertion.equals.length : assertion.equals !== undefined && assertion.count !== undefined)
+    throw new Error('Load a builder-format exact, count, or selected-field + count assertion. Keep this combined contract on the CLI or Action.');
+  return { name: spec.name, inputNode: spec.input.node, inputItems: spec.input.items,
+    assertNode: assertion.node, output: assertion.output ?? 0, mocks: spec.mocks,
+    ...(spec.stopAfter === undefined ? {} : { stopAfter: spec.stopAfter }),
+    ...(assertion.pluck ? { assertionMode: 'pluck', pluck: assertion.pluck,
+      expectedValues: assertion.equals, expectedCount: assertion.count }
+      : assertion.equals !== undefined ? { assertionMode: 'exact', expectedItems: assertion.equals }
+        : { assertionMode: 'count', expectedCount: assertion.count }),
+  };
+}
+
 /** Pure local planning: exported pins supply JSON snapshots; HTTP contracts are supplied by the author. */
 export function draftCase(raw, options = {}) {
   const source = workflowFrom(raw);

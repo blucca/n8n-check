@@ -28,6 +28,10 @@ The download replaces the fixture boundary with the fixed input, removes output 
 
 The test validates the recorded node-output contract. External delivery and business/source relationships retain their own evidence contracts.
 
+## Recheck a change with your saved case
+
+Keep **case.json** from the builder alongside your test. Export your updated workflow, load it in the builder, then **Load saved case.json** under Case contract. Download a new editor test and execute it in your n8n. The saved fixture and expectation stay fixed even when the new export's pins differ. Your earlier editor test contains the earlier code, so rerunning it tests that earlier copy. Single-assertion builder cases load here; extended CLI cases keep their existing CLI/Action route. Restore renamed nodes or update the case explicitly before importing it.
+
 ## Current editor scope
 
 - v1 execution order; one incoming connection per node, no loops or waiting joins.

@@ -84,7 +84,10 @@ details[open] > summary { margin-bottom: 16px; }
 .paste button { margin-top: 13px; }
 #import-status { grid-column: 1 / -1; margin: 10px 0 0; }
 #import-status:empty { display: none; }
-#import-status.error { color: var(--fail); }
+#import-status.error, #case-import-status.error { color: var(--fail); }
+.saved-case-help { margin-bottom: 16px; }
+#case-import-status:empty { display: none; }
+#case-import-status:not(:empty) { margin-bottom: 16px; }
 #builder { scroll-margin-top: 24px; }
 .workspace-heading { display: flex; justify-content: space-between; align-items: center; gap: 25px; margin: 39px 0 21px; }
 .workspace-heading h2 { margin: 0; overflow-wrap: anywhere; font-size: 28px; max-width: 36ch; }
@@ -92,7 +95,7 @@ details[open] > summary { margin-bottom: 16px; }
 .workbook-actions a { font-size: 14px; font-weight: 600; }
 .chip { border: 1px solid var(--line); border-radius: 3px; padding: 5px 9px; font-size: 13px; white-space: nowrap; }
 .workspace { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(300px, 1fr); gap: 24px; align-items: start; }
-.editor-heading { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; margin-bottom: 23px; border-bottom: 1px solid var(--line); }
+.editor-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 18px; margin-bottom: 23px; border-bottom: 1px solid var(--line); }
 .editor-heading h3 { margin: 0; font-size: 21px; }
 label { display: block; font-size: 15px; font-weight: 600; margin: 0 0 8px; }
 input[type=text], input[type=number], select, textarea { width: 100%; min-width: 0; border: 1px solid #a2afbf; border-radius: 3px; padding: 11px 12px; background: var(--paper); color: var(--ink); }

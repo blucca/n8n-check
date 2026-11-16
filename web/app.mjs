@@ -1,4 +1,4 @@
-import { inspectWorkflow, draftCase } from '../src/case-draft.mjs';
+import { inspectWorkflow, draftCase, savedCaseOptions } from '../src/case-draft.mjs';
 import { buildLocalBundle } from '../src/local-bundle.mjs';
 import { editorTestWorkflow } from '../src/editor-test.mjs';
 
@@ -139,8 +139,42 @@ function load(text, label, example = false) {
   $('pluck-path').value = 'json.id';
   $('builder').hidden = false;
   $('example-detail').hidden = !isExample;
+  $('case-import-status').textContent = '';
   seedEditors();
   importStatus(`${label} loaded locally. Choose the boundary and review the expected items.`);
+}
+function loadSavedCase(text, label) {
+  if (!source) throw new Error('Load your updated workflow export first.');
+  const options = savedCaseOptions(JSON.parse(text));
+  const next = draftCase(source, options);
+  const nodes = inspection.nodes.filter(node => node.type !== 'n8n-nodes-base.stickyNote');
+  for (const name of [options.inputNode, options.assertNode])
+    if (!nodes.some(node => node.name === name)) throw new Error(`Saved case node "${name}" is missing from this export. Restore its name or update the case explicitly.`);
+  const outputs = nodes.filter(node => next.summary.keptNodes.includes(node.name) && node.name !== options.inputNode);
+  if (!outputs.some(node => node.name === options.assertNode))
+    throw new Error('The saved output must be downstream of the saved fixture boundary. Review this export and the case.');
+  optionsFor($('input-node'), nodes, options.inputNode);
+  optionsFor($('assert-node'), outputs, options.assertNode);
+  $('case-name').value = options.name;
+  $('output').value = String(options.output);
+  $('stop-after').checked = options.stopAfter !== undefined;
+  $('assertion-mode').value = previousMode = options.assertionMode;
+  $('pluck-path').value = options.pluck ?? 'json.id';
+  $('input-items').value = pretty(options.inputItems);
+  $('expected-items').value = pretty(options.expectedItems ?? options.expectedValues ?? null);
+  $('expected-count').value = options.expectedCount ?? '';
+  $('mocks').value = pretty(options.mocks);
+  $('input-origin').textContent = 'Saved case fixture';
+  $('expected-origin').textContent = 'Saved case expectation';
+  expectationDrafts = {};
+  $('mock-section').open = next.summary.httpNodes.length > 0;
+  showAssertionMode();
+  update();
+  $('case-import-status').className = 'hint';
+  const action = editorTest ? 'Download a new test and run it in your n8n.'
+    : plan?.ready ? 'Use the local run pack or CI for this case; see the editor scope below.'
+      : 'Resolve the preparation items below before downloading a test.';
+  $('case-import-status').textContent = `${label} loaded. Saved fixture and expectation kept for this export. ${action}`;
 }
 function download(name, contents, type = 'application/json') {
   const url = URL.createObjectURL(new Blob([typeof contents === 'string' && !contents.endsWith('\n') ? contents + '\n' : contents], { type }));
@@ -157,6 +191,16 @@ $('file').addEventListener('change', async event => {
 $('load-paste').addEventListener('click', () => {
   try { load($('source').value, 'Pasted workflow'); }
   catch (error) { $('builder').hidden = true; importStatus(`Import: ${error.message}`, true); }
+});
+$('case-file').addEventListener('change', async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  try { loadSavedCase(await file.text(), file.name); }
+  catch (error) {
+    $('case-import-status').className = 'hint error';
+    $('case-import-status').textContent = `Case import failed: ${error.message} The current draft is unchanged.`;
+  }
+  event.target.value = '';
 });
 $('example').addEventListener('click', async () => {
   $('example').disabled = true;
@@ -236,7 +280,7 @@ $('assertion-mode').addEventListener('change', () => {
 $('pluck-path').addEventListener('input', () => {
   // A field edit keeps the same output branch and its authored business oracle.
   const count = $('expected-count').value;
-  if ($('expected-origin').textContent !== 'Edited expectation') seedExpectation();
+  if (['Prefilled from exported pins', 'Enter the expected values'].includes($('expected-origin').textContent)) seedExpectation();
   $('expected-count').value = count;
   update();
 });

@@ -4,7 +4,7 @@ import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { inspectWorkflow, draftCase } from '../src/case-draft.mjs';
+import { inspectWorkflow, draftCase, savedCaseOptions } from '../src/case-draft.mjs';
 import { prepareWorkflow } from '../src/workflow.mjs';
 
 const source = {
@@ -18,6 +18,26 @@ const source = {
   pinData: { Input: [{ json: { id: 42 }, pairedItem: { item: 0 } }], Mapped: [{ json: { id: 42, accepted: true } }] },
 };
 const copy = () => structuredClone(source);
+
+test('saved builder contracts override new pins and reject partial CLI imports', () => {
+  const original = draftCase(source, { assertionMode: 'pluck', stopAfter: 'Mapped' }).spec;
+  const workflow = copy();
+  workflow.pinData.Input = [{ json: { id: 'new-fixture' } }];
+  workflow.pinData.Mapped = [];
+  assert.deepEqual(draftCase(workflow, savedCaseOptions(original)).spec, original);
+  const zero = { ...original, assertions: [{ node: 'Mapped', output: 1, count: 0 }] };
+  assert.deepEqual(draftCase(workflow, savedCaseOptions(zero)).spec, zero);
+  const exact = draftCase(source).spec;
+  assert.deepEqual(draftCase(workflow, savedCaseOptions(exact)).spec, exact);
+  const http = { ...exact, mocks: [{ node: 'Mapped', url: '/test', routes: [{
+    method: 'POST', path: '/test', responses: [{ status: 200, json: { id: 42 } }],
+    expect: { count: 1, bodies: [{ id: 42 }] },
+  }] }] };
+  assert.deepEqual(savedCaseOptions(http).mocks, http.mocks);
+  assert.throws(() => savedCaseOptions({ ...exact, assertions: [...exact.assertions, ...exact.assertions] }), /one output assertion/);
+  assert.throws(() => savedCaseOptions({ ...exact, maxRequests: 2 }), /maxRequests.*CLI/);
+  assert.throws(() => savedCaseOptions({ ...exact, stopAfter: 'Input' }), /separate stopAfter/);
+});
 
 test('pinned local workflow yields a runnable case without modifying its export', () => {
   const workflow = copy(); const before = structuredClone(workflow);
