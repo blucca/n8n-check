@@ -1,0 +1,175 @@
+{
+  "source": "https://werun.dev/blog/shopify-inventory-sync-fix",
+  "runtime": "v26.12.0",
+  "sourceAdaptation": "Only ENDPOINT constant changed to STOCK_FIXTURE_ENDPOINT; function and fetch logic unchanged.",
+  "fixture": "Actual loopback HTTP, unconditional absolute write, successful GraphQL response. No Shopify store or production queue.",
+  "expectedBasis": "Independent latest source version: v2=7 at the same inventory item and location.",
+  "panels": [
+    {
+      "name": "in-source-order",
+      "calls": [
+        {
+          "eventId": "source-v1",
+          "sourceVersion": 1,
+          "quantity": 12,
+          "result": "updated"
+        },
+        {
+          "eventId": "source-v2",
+          "sourceVersion": 2,
+          "quantity": 7,
+          "result": "updated"
+        }
+      ],
+      "expectedLatestSourceQuantity": 7,
+      "receiverFinalAvailable": 7,
+      "latestSourceContractPassed": true,
+      "successfulEventDuplicate": {
+        "result": "duplicate",
+        "extraHttpRequests": 0
+      },
+      "physicalHttpRequests": [
+        {
+          "body": {
+            "query": "\n  mutation SetStock($input: InventorySetQuantitiesInput!) {\n    inventorySetQuantities(input: $input) {\n      inventoryAdjustmentGroup { id }\n      userErrors { field message code }\n    }\n  }\n",
+            "variables": {
+              "input": {
+                "name": "available",
+                "reason": "correction",
+                "referenceDocumentUri": "logistics://inventory-sync/source-v1",
+                "ignoreCompareQuantity": true,
+                "quantities": [
+                  {
+                    "inventoryItemId": "gid://shopify/InventoryItem/123456",
+                    "locationId": "gid://shopify/Location/456789",
+                    "quantity": 12
+                  }
+                ]
+              }
+            }
+          },
+          "referenceDocumentUri": "logistics://inventory-sync/source-v1",
+          "ignoreCompareQuantity": true,
+          "line": {
+            "inventoryItemId": "gid://shopify/InventoryItem/123456",
+            "locationId": "gid://shopify/Location/456789",
+            "quantity": 12
+          },
+          "available": 12
+        },
+        {
+          "body": {
+            "query": "\n  mutation SetStock($input: InventorySetQuantitiesInput!) {\n    inventorySetQuantities(input: $input) {\n      inventoryAdjustmentGroup { id }\n      userErrors { field message code }\n    }\n  }\n",
+            "variables": {
+              "input": {
+                "name": "available",
+                "reason": "correction",
+                "referenceDocumentUri": "logistics://inventory-sync/source-v2",
+                "ignoreCompareQuantity": true,
+                "quantities": [
+                  {
+                    "inventoryItemId": "gid://shopify/InventoryItem/123456",
+                    "locationId": "gid://shopify/Location/456789",
+                    "quantity": 7
+                  }
+                ]
+              }
+            }
+          },
+          "referenceDocumentUri": "logistics://inventory-sync/source-v2",
+          "ignoreCompareQuantity": true,
+          "line": {
+            "inventoryItemId": "gid://shopify/InventoryItem/123456",
+            "locationId": "gid://shopify/Location/456789",
+            "quantity": 7
+          },
+          "available": 7
+        }
+      ]
+    },
+    {
+      "name": "late-first-delivery",
+      "calls": [
+        {
+          "eventId": "source-v2",
+          "sourceVersion": 2,
+          "quantity": 7,
+          "result": "updated"
+        },
+        {
+          "eventId": "source-v1",
+          "sourceVersion": 1,
+          "quantity": 12,
+          "result": "updated"
+        }
+      ],
+      "expectedLatestSourceQuantity": 7,
+      "receiverFinalAvailable": 12,
+      "latestSourceContractPassed": false,
+      "successfulEventDuplicate": {
+        "result": "duplicate",
+        "extraHttpRequests": 0
+      },
+      "physicalHttpRequests": [
+        {
+          "body": {
+            "query": "\n  mutation SetStock($input: InventorySetQuantitiesInput!) {\n    inventorySetQuantities(input: $input) {\n      inventoryAdjustmentGroup { id }\n      userErrors { field message code }\n    }\n  }\n",
+            "variables": {
+              "input": {
+                "name": "available",
+                "reason": "correction",
+                "referenceDocumentUri": "logistics://inventory-sync/source-v2",
+                "ignoreCompareQuantity": true,
+                "quantities": [
+                  {
+                    "inventoryItemId": "gid://shopify/InventoryItem/123456",
+                    "locationId": "gid://shopify/Location/456789",
+                    "quantity": 7
+                  }
+                ]
+              }
+            }
+          },
+          "referenceDocumentUri": "logistics://inventory-sync/source-v2",
+          "ignoreCompareQuantity": true,
+          "line": {
+            "inventoryItemId": "gid://shopify/InventoryItem/123456",
+            "locationId": "gid://shopify/Location/456789",
+            "quantity": 7
+          },
+          "available": 7
+        },
+        {
+          "body": {
+            "query": "\n  mutation SetStock($input: InventorySetQuantitiesInput!) {\n    inventorySetQuantities(input: $input) {\n      inventoryAdjustmentGroup { id }\n      userErrors { field message code }\n    }\n  }\n",
+            "variables": {
+              "input": {
+                "name": "available",
+                "reason": "correction",
+                "referenceDocumentUri": "logistics://inventory-sync/source-v1",
+                "ignoreCompareQuantity": true,
+                "quantities": [
+                  {
+                    "inventoryItemId": "gid://shopify/InventoryItem/123456",
+                    "locationId": "gid://shopify/Location/456789",
+                    "quantity": 12
+                  }
+                ]
+              }
+            }
+          },
+          "referenceDocumentUri": "logistics://inventory-sync/source-v1",
+          "ignoreCompareQuantity": true,
+          "line": {
+            "inventoryItemId": "gid://shopify/InventoryItem/123456",
+            "locationId": "gid://shopify/Location/456789",
+            "quantity": 12
+          },
+          "available": 12
+        }
+      ]
+    }
+  ],
+  "experimentObservationsPassed": true,
+  "scope": "setStock invoked in the listed source-version order. A queue enforcing source order can exclude the reversed panel."
+}
