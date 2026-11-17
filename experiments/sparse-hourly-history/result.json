@@ -1,0 +1,79 @@
+{
+  "status": "REPRODUCED_FALSE_SILENCE",
+  "sourceScope": "immutable detector + native PostgreSQL sparse GROUP BY fixture; no Next.js/ORM/client service run",
+  "serverVersion": "18.6",
+  "now": "2026-11-17T00:00:00+00:00",
+  "baselineStart": "2026-11-10T00:00:00+00:00",
+  "recentStart": "2026-11-16T18:00:00+00:00",
+  "baselineHours": 162,
+  "recentHours": 6,
+  "results": {
+    "no_history": {
+      "occupiedHours": 0,
+      "elapsedHours": 162,
+      "baselineRuns": 0,
+      "recentRuns": 0,
+      "originalExpectedRuns": 0,
+      "elapsedExpectedRuns": 0,
+      "original": [],
+      "normalized": []
+    },
+    "daily_batch": {
+      "occupiedHours": 7,
+      "elapsedHours": 162,
+      "baselineRuns": 70,
+      "recentRuns": 0,
+      "originalExpectedRuns": 60,
+      "elapsedExpectedRuns": 2.5925925925925926,
+      "original": [
+        {
+          "kind": "silence",
+          "severity": "warning",
+          "score": 60,
+          "observed": 0,
+          "expected": 60,
+          "message": "No executions in the last 6h (expected ~60)"
+        }
+      ],
+      "normalized": []
+    },
+    "steady_live": {
+      "occupiedHours": 162,
+      "elapsedHours": 162,
+      "baselineRuns": 648,
+      "recentRuns": 24,
+      "originalExpectedRuns": 24,
+      "elapsedExpectedRuns": 24,
+      "original": [],
+      "normalized": []
+    },
+    "steady_stopped": {
+      "occupiedHours": 162,
+      "elapsedHours": 162,
+      "baselineRuns": 648,
+      "recentRuns": 0,
+      "originalExpectedRuns": 24,
+      "elapsedExpectedRuns": 24,
+      "original": [
+        {
+          "kind": "silence",
+          "severity": "warning",
+          "score": 24,
+          "observed": 0,
+          "expected": 24,
+          "message": "No executions in the last 6h (expected ~24)"
+        }
+      ],
+      "normalized": [
+        {
+          "kind": "silence",
+          "severity": "warning",
+          "score": 24,
+          "observed": 0,
+          "expected": 24,
+          "message": "No executions in the last 6h (expected ~24)"
+        }
+      ]
+    }
+  }
+}
