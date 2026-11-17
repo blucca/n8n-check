@@ -87,6 +87,41 @@ Replace `workflow` and `case` with paths in your repository. The action builds t
 - The container sees the two input files and the writable report directory. Prepare a self-contained JSON workflow slice and synthetic fixtures; workflow code executes inside that container. Source inline values and assertion differences appear in reports and job summaries.
 - `pull_request` runs checks; selecting this job as a **required status check** in your repository rules enables merge gating.
 
+<details>
+<summary>Organizations allowing only official or verified GitHub Actions</summary>
+
+Keep the workflow triggers and job settings above, and use this steps block. All three `uses:` entries are GitHub-created Actions pinned to full commit SHAs; the fixed npm test dependency uses the package’s existing Docker wrapper.
+
+```yaml
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+      - name: Install the fixed test runner
+        run: npm install --prefix "$RUNNER_TEMP/n8n-check-tool" --ignore-scripts --no-audit --no-fund @blucca/n8n-check@0.1.8
+      - name: Check the workflow contract
+        env:
+          ACTION_ROOT: ${{ runner.temp }}/n8n-check-tool/node_modules/@blucca/n8n-check
+          CHECK_WORKFLOW: workflows/render.json
+          CHECK_CASE: tests/render.case.json
+          CHECK_OUT: results/render
+          CHECK_N8N_VERSION: '2.41.7'
+        run: node "$ACTION_ROOT/src/action.mjs"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v6.0.1
+        if: always()
+        with:
+          name: n8n-check-results
+          path: |
+            results/render/report.json
+            results/render/junit.xml
+```
+
+Set `CHECK_N8N_VERSION` to your exact n8n release. The pinned package contains the same runner and Docker wrapper as Action v0.1.8: read-only inputs, loopback-only networking, JSON/JUnit, and the job summary stay the same. Keep `ACTION_ROOT` in the step’s `env`, where GitHub makes `runner.temp` available. [Complete two-case consumer and verified run](https://github.com/blucca/doodle-note/blob/247f914dfab1d12756887a775ae1dc7039d67ed8/.github/workflows/download-lead-native.yml).
+
+</details>
+
 [See the action source](action.yml) · [Runnable consumer example](https://github.com/blucca/flowdelta/tree/main/examples/ci-checks)
 
 ### Choose your runtime or compare an upgrade
