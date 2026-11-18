@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 1,
+  "corpus": "r664-semantic-canaries",
+  "seeds": {
+    "development": 1716330534,
+    "holdout": 1716130080
+  },
+  "plannedExecutions": 20,
+  "supportCommands": [
+    "one n8n --version",
+    "one n8n import:workflow"
+  ],
+  "executionMode": "serial; no additional matrix",
+  "relationScope": "rename only identity field via frozen bijection, or perturb declared diagnostic source label; compare declared ordered projections",
+  "domainScope": "membership in all input identity values; occurrence overdraw is separate diagnostic, exact multiplicity and order belong to the independent anchor",
+  "expectedSource": "only new business input plus frozen independent contract functions",
+  "groups": [
+    {
+      "id": "D-score-correct",
+      "contractKey": "score",
+      "fixtureKey": "score",
+      "transformation": "rename",
+      "identityMap": {
+        "r664-score-b-0-8b79a142": "r664-score-r-0-ceae191a",
+        "r664-score-b-1-556663aa": "r664-score-r-1-bc26a45c",
+        "r664-score-b-2-bb7e8b43": "r664-score-r-2-7d0f114a",
+        "r664-score-b-3-28cd1748": "r664-score-r-3-7be5c5f9"
+      },
+      "runs": [
+        "D-score-correct-base",
+        "D-score-correct-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 3,
+      "functionalSourceNodeCount": 3
+    },
+    {
+      "id": "D-score-outside-literal",
+      "contractKey": "score",
+      "fixtureKey": "score",
+      "transformation": "rename",
+      "identityMap": {
+        "r664-score-b-0-8b79a142": "r664-score-r-0-ceae191a",
+        "r664-score-b-1-556663aa": "r664-score-r-1-bc26a45c",
+        "r664-score-b-2-bb7e8b43": "r664-score-r-2-7d0f114a",
+        "r664-score-b-3-28cd1748": "r664-score-r-3-7be5c5f9"
+      },
+      "runs": [
+        "D-score-outside-literal-base",
+        "D-score-outside-literal-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          false,
+          false
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 3,
+      "functionalSourceNodeCount": 3
+    },
+    {
+      "id": "D-score-inside-literal",
+      "contractKey": "score",
+      "fixtureKey": "score",
+      "transformation": "rename",
+      "identityMap": {
+        "r664-score-b-0-8b79a142": "r664-score-r-0-ceae191a",
+        "r664-score-b-1-556663aa": "r664-score-r-1-bc26a45c",
+        "r664-score-b-2-bb7e8b43": "r664-score-r-2-7d0f114a",
+        "r664-score-b-3-28cd1748": "r664-score-r-3-7be5c5f9"
+      },
+      "runs": [
+        "D-score-inside-literal-base",
+        "D-score-inside-literal-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          true,
+          false
+        ],
+        "relationStatus": "inconsistent"
+      },
+      "sourceNodeCount": 3,
+      "functionalSourceNodeCount": 3
+    },
+    {
+      "id": "D-score-always-empty",
+      "contractKey": "score",
+      "fixtureKey": "score",
+      "transformation": "rename",
+      "identityMap": {
+        "r664-score-b-0-8b79a142": "r664-score-r-0-ceae191a",
+        "r664-score-b-1-556663aa": "r664-score-r-1-bc26a45c",
+        "r664-score-b-2-bb7e8b43": "r664-score-r-2-7d0f114a",
+        "r664-score-b-3-28cd1748": "r664-score-r-3-7be5c5f9"
+      },
+      "runs": [
+        "D-score-always-empty-base",
+        "D-score-always-empty-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 3,
+      "functionalSourceNodeCount": 3
+    },
+    {
+      "id": "D-silent-correct",
+      "contractKey": "silent",
+      "fixtureKey": "silent",
+      "transformation": "source-noise",
+      "identityMap": {},
+      "runs": [
+        "D-silent-correct-base",
+        "D-silent-correct-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 4,
+      "functionalSourceNodeCount": 4
+    },
+    {
+      "id": "D-silent-obsolete-source",
+      "contractKey": "silent",
+      "fixtureKey": "silent",
+      "transformation": "source-noise",
+      "identityMap": {},
+      "runs": [
+        "D-silent-obsolete-source-base",
+        "D-silent-obsolete-source-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "inconsistent"
+      },
+      "sourceNodeCount": 4,
+      "functionalSourceNodeCount": 4
+    },
+    {
+      "id": "H-relaybrook-original",
+      "contractKey": "holdout",
+      "fixtureKey": "holdout",
+      "transformation": "rename",
+      "identityMap": {
+        "canary2aebb7871+first@canary.example.org": "alias27d84ce0e+first@canary.example.org",
+        "canary0a9ae61f7+first@canary.example.org": "alias0e7c9875e+first@canary.example.org",
+        "canary2aebb7871+repeat@canary.example.org": "alias27d84ce0e+repeat@canary.example.org",
+        "canary3f7122dcb+first@canary.example.org": "alias36ceaf9ac+first@canary.example.org",
+        "canary1d786d4df+first@canary.example.org": "alias13367b52f+first@canary.example.org",
+        "canary3f7122dcb+repeat@canary.example.org": "alias36ceaf9ac+repeat@canary.example.org"
+      },
+      "runs": [
+        "H-relaybrook-original-base",
+        "H-relaybrook-original-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 21,
+      "functionalSourceNodeCount": 17
+    },
+    {
+      "id": "H-relaybrook-repaired",
+      "contractKey": "holdout",
+      "fixtureKey": "holdout",
+      "transformation": "rename",
+      "identityMap": {
+        "canary2aebb7871+first@canary.example.org": "alias27d84ce0e+first@canary.example.org",
+        "canary0a9ae61f7+first@canary.example.org": "alias0e7c9875e+first@canary.example.org",
+        "canary2aebb7871+repeat@canary.example.org": "alias27d84ce0e+repeat@canary.example.org",
+        "canary3f7122dcb+first@canary.example.org": "alias36ceaf9ac+first@canary.example.org",
+        "canary1d786d4df+first@canary.example.org": "alias13367b52f+first@canary.example.org",
+        "canary3f7122dcb+repeat@canary.example.org": "alias36ceaf9ac+repeat@canary.example.org"
+      },
+      "runs": [
+        "H-relaybrook-repaired-base",
+        "H-relaybrook-repaired-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "sourceNodeCount": 21,
+      "functionalSourceNodeCount": 17
+    },
+    {
+      "id": "L-literal-whitelist",
+      "contractKey": "whitelist",
+      "fixtureKey": "score",
+      "transformation": "rename",
+      "identityMap": {
+        "r664-score-b-0-8b79a142": "r664-score-r-0-ceae191a",
+        "r664-score-b-1-556663aa": "r664-score-r-1-bc26a45c",
+        "r664-score-b-2-bb7e8b43": "r664-score-r-2-7d0f114a",
+        "r664-score-b-3-28cd1748": "r664-score-r-3-7be5c5f9"
+      },
+      "runs": [
+        "L-literal-whitelist-base",
+        "L-literal-whitelist-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "scope_required"
+      },
+      "sourceNodeCount": 3,
+      "functionalSourceNodeCount": 3
+    },
+    {
+      "id": "L-current-only",
+      "contractKey": "currentOnly",
+      "fixtureKey": "silent",
+      "transformation": "source-noise",
+      "identityMap": {},
+      "runs": [
+        "L-current-only-base",
+        "L-current-only-changed"
+      ],
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "scope_required"
+      },
+      "sourceNodeCount": 4,
+      "functionalSourceNodeCount": 4
+    }
+  ],
+  "runs": [
+    {
+      "label": "D-score-correct-base",
+      "group": "D-score-correct",
+      "side": "base",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-base.json",
+      "workflowFile": "matrix/D-score-correct-base/workflow.json",
+      "caseFile": "matrix/D-score-correct-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-b-1-556663aa"
+        },
+        {
+          "id": "r664-score-b-2-bb7e8b43"
+        },
+        {
+          "id": "r664-score-b-3-28cd1748"
+        },
+        {
+          "id": "r664-score-b-1-556663aa"
+        }
+      ]
+    },
+    {
+      "label": "D-score-correct-changed",
+      "group": "D-score-correct",
+      "side": "changed",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-changed.json",
+      "workflowFile": "matrix/D-score-correct-changed/workflow.json",
+      "caseFile": "matrix/D-score-correct-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        },
+        {
+          "id": "r664-score-r-2-7d0f114a"
+        },
+        {
+          "id": "r664-score-r-3-7be5c5f9"
+        },
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        }
+      ]
+    },
+    {
+      "label": "D-score-outside-literal-base",
+      "group": "D-score-outside-literal",
+      "side": "base",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-base.json",
+      "workflowFile": "matrix/D-score-outside-literal-base/workflow.json",
+      "caseFile": "matrix/D-score-outside-literal-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-b-1-556663aa"
+        },
+        {
+          "id": "r664-score-b-2-bb7e8b43"
+        },
+        {
+          "id": "r664-score-b-3-28cd1748"
+        },
+        {
+          "id": "r664-score-b-1-556663aa"
+        }
+      ]
+    },
+    {
+      "label": "D-score-outside-literal-changed",
+      "group": "D-score-outside-literal",
+      "side": "changed",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-changed.json",
+      "workflowFile": "matrix/D-score-outside-literal-changed/workflow.json",
+      "caseFile": "matrix/D-score-outside-literal-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        },
+        {
+          "id": "r664-score-r-2-7d0f114a"
+        },
+        {
+          "id": "r664-score-r-3-7be5c5f9"
+        },
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        }
+      ]
+    },
+    {
+      "label": "D-score-inside-literal-base",
+      "group": "D-score-inside-literal",
+      "side": "base",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-base.json",
+      "workflowFile": "matrix/D-score-inside-literal-base/workflow.json",
+      "caseFile": "matrix/D-score-inside-literal-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-b-1-556663aa"
+        },
+        {
+          "id": "r664-score-b-2-bb7e8b43"
+        },
+        {
+          "id": "r664-score-b-3-28cd1748"
+        },
+        {
+          "id": "r664-score-b-1-556663aa"
+        }
+      ]
+    },
+    {
+      "label": "D-score-inside-literal-changed",
+      "group": "D-score-inside-literal",
+      "side": "changed",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-changed.json",
+      "workflowFile": "matrix/D-score-inside-literal-changed/workflow.json",
+      "caseFile": "matrix/D-score-inside-literal-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        },
+        {
+          "id": "r664-score-r-2-7d0f114a"
+        },
+        {
+          "id": "r664-score-r-3-7be5c5f9"
+        },
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        }
+      ]
+    },
+    {
+      "label": "D-score-always-empty-base",
+      "group": "D-score-always-empty",
+      "side": "base",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-base.json",
+      "workflowFile": "matrix/D-score-always-empty-base/workflow.json",
+      "caseFile": "matrix/D-score-always-empty-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-b-1-556663aa"
+        },
+        {
+          "id": "r664-score-b-2-bb7e8b43"
+        },
+        {
+          "id": "r664-score-b-3-28cd1748"
+        },
+        {
+          "id": "r664-score-b-1-556663aa"
+        }
+      ]
+    },
+    {
+      "label": "D-score-always-empty-changed",
+      "group": "D-score-always-empty",
+      "side": "changed",
+      "contractKey": "score",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-changed.json",
+      "workflowFile": "matrix/D-score-always-empty-changed/workflow.json",
+      "caseFile": "matrix/D-score-always-empty-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        },
+        {
+          "id": "r664-score-r-2-7d0f114a"
+        },
+        {
+          "id": "r664-score-r-3-7be5c5f9"
+        },
+        {
+          "id": "r664-score-r-1-bc26a45c"
+        }
+      ]
+    },
+    {
+      "label": "D-silent-correct-base",
+      "group": "D-silent-correct",
+      "side": "base",
+      "contractKey": "silent",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-base.json",
+      "workflowFile": "matrix/D-silent-correct-base/workflow.json",
+      "caseFile": "matrix/D-silent-correct-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        }
+      ]
+    },
+    {
+      "label": "D-silent-correct-changed",
+      "group": "D-silent-correct",
+      "side": "changed",
+      "contractKey": "silent",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-changed.json",
+      "workflowFile": "matrix/D-silent-correct-changed/workflow.json",
+      "caseFile": "matrix/D-silent-correct-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        }
+      ]
+    },
+    {
+      "label": "D-silent-obsolete-source-base",
+      "group": "D-silent-obsolete-source",
+      "side": "base",
+      "contractKey": "silent",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-base.json",
+      "workflowFile": "matrix/D-silent-obsolete-source-base/workflow.json",
+      "caseFile": "matrix/D-silent-obsolete-source-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        }
+      ]
+    },
+    {
+      "label": "D-silent-obsolete-source-changed",
+      "group": "D-silent-obsolete-source",
+      "side": "changed",
+      "contractKey": "silent",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-changed.json",
+      "workflowFile": "matrix/D-silent-obsolete-source-changed/workflow.json",
+      "caseFile": "matrix/D-silent-obsolete-source-changed/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        }
+      ]
+    },
+    {
+      "label": "H-relaybrook-original-base",
+      "group": "H-relaybrook-original",
+      "side": "base",
+      "contractKey": "holdout",
+      "output": "Merge duplicate leads",
+      "businessInputFile": "fixtures/holdout-base.json",
+      "workflowFile": "matrix/H-relaybrook-original-base/workflow.json",
+      "caseFile": "matrix/H-relaybrook-original-base/case.json",
+      "expectedProjection": [
+        {
+          "email": "canary2aebb7871+first@canary.example.org",
+          "full_name": "Evelyn Park"
+        },
+        {
+          "email": "canary0a9ae61f7+first@canary.example.org",
+          "full_name": "Nico Reed"
+        },
+        {
+          "email": "canary3f7122dcb+first@canary.example.org",
+          "full_name": "Mila Hart"
+        },
+        {
+          "email": "canary1d786d4df+first@canary.example.org",
+          "full_name": "Owen Dale"
+        }
+      ]
+    },
+    {
+      "label": "H-relaybrook-original-changed",
+      "group": "H-relaybrook-original",
+      "side": "changed",
+      "contractKey": "holdout",
+      "output": "Merge duplicate leads",
+      "businessInputFile": "fixtures/holdout-changed.json",
+      "workflowFile": "matrix/H-relaybrook-original-changed/workflow.json",
+      "caseFile": "matrix/H-relaybrook-original-changed/case.json",
+      "expectedProjection": [
+        {
+          "email": "alias27d84ce0e+first@canary.example.org",
+          "full_name": "Evelyn Park"
+        },
+        {
+          "email": "alias0e7c9875e+first@canary.example.org",
+          "full_name": "Nico Reed"
+        },
+        {
+          "email": "alias36ceaf9ac+first@canary.example.org",
+          "full_name": "Mila Hart"
+        },
+        {
+          "email": "alias13367b52f+first@canary.example.org",
+          "full_name": "Owen Dale"
+        }
+      ]
+    },
+    {
+      "label": "H-relaybrook-repaired-base",
+      "group": "H-relaybrook-repaired",
+      "side": "base",
+      "contractKey": "holdout",
+      "output": "Merge duplicate leads",
+      "businessInputFile": "fixtures/holdout-base.json",
+      "workflowFile": "matrix/H-relaybrook-repaired-base/workflow.json",
+      "caseFile": "matrix/H-relaybrook-repaired-base/case.json",
+      "expectedProjection": [
+        {
+          "email": "canary2aebb7871+first@canary.example.org",
+          "full_name": "Evelyn Park"
+        },
+        {
+          "email": "canary0a9ae61f7+first@canary.example.org",
+          "full_name": "Nico Reed"
+        },
+        {
+          "email": "canary3f7122dcb+first@canary.example.org",
+          "full_name": "Mila Hart"
+        },
+        {
+          "email": "canary1d786d4df+first@canary.example.org",
+          "full_name": "Owen Dale"
+        }
+      ]
+    },
+    {
+      "label": "H-relaybrook-repaired-changed",
+      "group": "H-relaybrook-repaired",
+      "side": "changed",
+      "contractKey": "holdout",
+      "output": "Merge duplicate leads",
+      "businessInputFile": "fixtures/holdout-changed.json",
+      "workflowFile": "matrix/H-relaybrook-repaired-changed/workflow.json",
+      "caseFile": "matrix/H-relaybrook-repaired-changed/case.json",
+      "expectedProjection": [
+        {
+          "email": "alias27d84ce0e+first@canary.example.org",
+          "full_name": "Evelyn Park"
+        },
+        {
+          "email": "alias0e7c9875e+first@canary.example.org",
+          "full_name": "Nico Reed"
+        },
+        {
+          "email": "alias36ceaf9ac+first@canary.example.org",
+          "full_name": "Mila Hart"
+        },
+        {
+          "email": "alias13367b52f+first@canary.example.org",
+          "full_name": "Owen Dale"
+        }
+      ]
+    },
+    {
+      "label": "L-literal-whitelist-base",
+      "group": "L-literal-whitelist",
+      "side": "base",
+      "contractKey": "whitelist",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-base.json",
+      "workflowFile": "matrix/L-literal-whitelist-base/workflow.json",
+      "caseFile": "matrix/L-literal-whitelist-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-score-b-1-556663aa"
+        },
+        {
+          "id": "r664-score-b-1-556663aa"
+        }
+      ]
+    },
+    {
+      "label": "L-literal-whitelist-changed",
+      "group": "L-literal-whitelist",
+      "side": "changed",
+      "contractKey": "whitelist",
+      "output": "Select rows",
+      "businessInputFile": "fixtures/score-changed.json",
+      "workflowFile": "matrix/L-literal-whitelist-changed/workflow.json",
+      "caseFile": "matrix/L-literal-whitelist-changed/case.json",
+      "expectedProjection": []
+    },
+    {
+      "label": "L-current-only-base",
+      "group": "L-current-only",
+      "side": "base",
+      "contractKey": "currentOnly",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-base.json",
+      "workflowFile": "matrix/L-current-only-base/workflow.json",
+      "caseFile": "matrix/L-current-only-base/case.json",
+      "expectedProjection": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc"
+        }
+      ]
+    },
+    {
+      "label": "L-current-only-changed",
+      "group": "L-current-only",
+      "side": "changed",
+      "contractKey": "currentOnly",
+      "output": "Confidence Gate",
+      "businessInputFile": "fixtures/silent-changed.json",
+      "workflowFile": "matrix/L-current-only-changed/workflow.json",
+      "caseFile": "matrix/L-current-only-changed/case.json",
+      "expectedProjection": []
+    }
+  ]
+}

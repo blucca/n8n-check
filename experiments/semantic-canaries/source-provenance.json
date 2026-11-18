@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "file": "sources/identity-projection.workflow.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/workflow.json",
+      "sha256": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/identity-projection.wrong-id.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/wrong-id.json",
+      "sha256": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/silent-filter.fixed.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/fixed.json",
+      "sha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/silent-filter.broken.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/broken.json",
+      "sha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/identity-projection.README.md",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/README.md",
+      "sha256": "a847bf8abac4d1de9c3b498b43b556a15c2adaa0d4084bb76e93695fef0de54c",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/silent-filter.README.md",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/README.md",
+      "sha256": "babefd6a5456899081e3a6640fcb232e7c22291a45c7f81983b488de51d6af94",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/n8n-check.LICENSE",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a",
+      "role": "license"
+    },
+    {
+      "file": "sources/relaybrook.original.json",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/workflow.json",
+      "sha256": "c71ee14335830644bb4a94170960674aebf7b2a30f5864ba6291097d1387f806",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/relaybrook.README.md",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/README.md",
+      "sha256": "4a705624d3c95b50c34344164bc6feeff218872eba4c775c4fe5c9d3364aba2b",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/relaybrook.LICENSE",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "LICENSE",
+      "sha256": "d91cdceb1fa1b3d84af6669e54cb93c9c0f12593f94f7708175866d3e1014f50",
+      "role": "license"
+    },
+    {
+      "file": "sources/relaybrook.repaired.json",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "baseCommit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/workflow.json",
+      "sha256": "3b0bf63f6c811457a6a07068d3535b3e87917f6ed0e6d8931c0dbda92e06c684",
+      "role": "target-source",
+      "repair": "639 existing one-line HONORIFICS /^ -> /^\\s*; exact full object matches ee3 plus this single jsCode substitution",
+      "localSource": "temp/round639/relaybrook-native/repaired-workflow.json"
+    },
+    {
+      "file": "core/runner.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/runner.mjs",
+      "sha256": "8baa2c01b3791152abca65f4198cca99ef48c78b28b6827f2eea6193e156e77b",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/workflow.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/workflow.mjs",
+      "sha256": "27546e47f72e9fa53016dd3ebcf80a0d493aa0cbe0d8d78d3889066dcc118352",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/report.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/report.mjs",
+      "sha256": "5cddff8e63c5391f3a62528fb4e91ccf05f89c12fbf8fdf87db4db95d77ecefc",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/mock.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/mock.mjs",
+      "sha256": "7985369bb613f31014bda08b10b4a70124b5ff998a351f5393309e90e5de6b82",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/version.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/version.mjs",
+      "sha256": "e679df15a9c2c80f212645f1d80d70518e736aee1baa538519674a51770ba400",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "package.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "package.json",
+      "sha256": "93a4d111fb6eec777f802eb2d68323f685d27091d20fd97919980336c5ad95d7",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "LICENSE",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a",
+      "role": "unchanged-existing-core"
+    }
+  ],
+  "coreCommit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+  "networkReads": 0,
+  "nativeRuns": 0,
+  "sourceRuleSeparation": "Workflow/old case/pin/observed outputs never generate expected. Independent contract functions use only new input rows and frozen README-backed synthetic contracts."
+}

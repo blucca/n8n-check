@@ -1,0 +1,6891 @@
+{
+  "n8nVersion": "2.46.6",
+  "attemptedExecutions": 20,
+  "completedExecutions": 20,
+  "plannedExecutions": 20,
+  "expectedFromOldOutputs": false,
+  "pairs": [
+    {
+      "group": "D-score-correct",
+      "contract": "independent-score-copy",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "rename",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "changedProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-b-0-8b79a142",
+            "r664-score-b-1-556663aa",
+            "r664-score-b-2-bb7e8b43",
+            "r664-score-b-3-28cd1748",
+            "r664-score-b-1-556663aa"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-b-0-8b79a142",
+              1
+            ],
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-r-0-ceae191a",
+            "r664-score-r-1-bc26a45c",
+            "r664-score-r-2-7d0f114a",
+            "r664-score-r-3-7be5c5f9",
+            "r664-score-r-1-bc26a45c"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-r-0-ceae191a",
+              1
+            ],
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-b-1-556663aa"
+            },
+            {
+              "id": "r664-score-b-2-bb7e8b43"
+            },
+            {
+              "id": "r664-score-b-3-28cd1748"
+            },
+            {
+              "id": "r664-score-b-1-556663aa"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-2-bb7e8b43",
+                "r664-score-b-3-28cd1748",
+                "r664-score-b-1-556663aa"
+              ],
+              "actual": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-2-bb7e8b43",
+                "r664-score-b-3-28cd1748",
+                "r664-score-b-1-556663aa"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-base.json",
+            "contract": "independent-score-copy"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            },
+            {
+              "id": "r664-score-r-2-7d0f114a"
+            },
+            {
+              "id": "r664-score-r-3-7be5c5f9"
+            },
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-score-r-1-bc26a45c",
+                "r664-score-r-2-7d0f114a",
+                "r664-score-r-3-7be5c5f9",
+                "r664-score-r-1-bc26a45c"
+              ],
+              "actual": [
+                "r664-score-r-1-bc26a45c",
+                "r664-score-r-2-7d0f114a",
+                "r664-score-r-3-7be5c5f9",
+                "r664-score-r-1-bc26a45c"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-changed.json",
+            "contract": "independent-score-copy"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "D-score-outside-literal",
+      "contract": "independent-score-copy",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "rename",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          }
+        ],
+        "changedProjection": [
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          },
+          {
+            "id": "wrong-row"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": false,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-b-0-8b79a142",
+            "r664-score-b-1-556663aa",
+            "r664-score-b-2-bb7e8b43",
+            "r664-score-b-3-28cd1748",
+            "r664-score-b-1-556663aa"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [
+            {
+              "index": 0,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 1,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 2,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 3,
+              "identity": "wrong-row"
+            }
+          ],
+          "inputOccurrences": [
+            [
+              "r664-score-b-0-8b79a142",
+              1
+            ],
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "wrong-row",
+              4
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": false,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-r-0-ceae191a",
+            "r664-score-r-1-bc26a45c",
+            "r664-score-r-2-7d0f114a",
+            "r664-score-r-3-7be5c5f9",
+            "r664-score-r-1-bc26a45c"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [
+            {
+              "index": 0,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 1,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 2,
+              "identity": "wrong-row"
+            },
+            {
+              "index": 3,
+              "identity": "wrong-row"
+            }
+          ],
+          "inputOccurrences": [
+            [
+              "r664-score-r-0-ceae191a",
+              1
+            ],
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "wrong-row",
+              4
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": false,
+          "countPassed": true,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "wrong-row",
+              4
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-b-1-556663aa"
+            },
+            {
+              "id": "r664-score-b-2-bb7e8b43"
+            },
+            {
+              "id": "r664-score-b-3-28cd1748"
+            },
+            {
+              "id": "r664-score-b-1-556663aa"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-2-bb7e8b43",
+                "r664-score-b-3-28cd1748",
+                "r664-score-b-1-556663aa"
+              ],
+              "actual": [
+                "wrong-row",
+                "wrong-row",
+                "wrong-row",
+                "wrong-row"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-base.json",
+            "contract": "independent-score-copy"
+          }
+        },
+        "changed": {
+          "passed": false,
+          "countPassed": true,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "wrong-row",
+              4
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            },
+            {
+              "id": "r664-score-r-2-7d0f114a"
+            },
+            {
+              "id": "r664-score-r-3-7be5c5f9"
+            },
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-r-1-bc26a45c",
+                "r664-score-r-2-7d0f114a",
+                "r664-score-r-3-7be5c5f9",
+                "r664-score-r-1-bc26a45c"
+              ],
+              "actual": [
+                "wrong-row",
+                "wrong-row",
+                "wrong-row",
+                "wrong-row"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-changed.json",
+            "contract": "independent-score-copy"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          false,
+          false
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "D-score-inside-literal",
+      "contract": "independent-score-copy",
+      "relation": {
+        "status": "inconsistent",
+        "consistent": false,
+        "transformation": "rename",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "changedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-b-0-8b79a142",
+            "r664-score-b-1-556663aa",
+            "r664-score-b-2-bb7e8b43",
+            "r664-score-b-3-28cd1748",
+            "r664-score-b-1-556663aa"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-b-0-8b79a142",
+              1
+            ],
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              4
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [
+            {
+              "identity": "r664-score-b-1-556663aa",
+              "inputOccurrences": 2,
+              "outputOccurrences": 4
+            }
+          ],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": false,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-r-0-ceae191a",
+            "r664-score-r-1-bc26a45c",
+            "r664-score-r-2-7d0f114a",
+            "r664-score-r-3-7be5c5f9",
+            "r664-score-r-1-bc26a45c"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [
+            {
+              "index": 0,
+              "identity": "r664-score-b-1-556663aa"
+            },
+            {
+              "index": 1,
+              "identity": "r664-score-b-1-556663aa"
+            },
+            {
+              "index": 2,
+              "identity": "r664-score-b-1-556663aa"
+            },
+            {
+              "index": 3,
+              "identity": "r664-score-b-1-556663aa"
+            }
+          ],
+          "inputOccurrences": [
+            [
+              "r664-score-r-0-ceae191a",
+              1
+            ],
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              4
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": false,
+          "countPassed": true,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              4
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-b-1-556663aa"
+            },
+            {
+              "id": "r664-score-b-2-bb7e8b43"
+            },
+            {
+              "id": "r664-score-b-3-28cd1748"
+            },
+            {
+              "id": "r664-score-b-1-556663aa"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-2-bb7e8b43",
+                "r664-score-b-3-28cd1748",
+                "r664-score-b-1-556663aa"
+              ],
+              "actual": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-base.json",
+            "contract": "independent-score-copy"
+          }
+        },
+        "changed": {
+          "passed": false,
+          "countPassed": true,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              4
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            },
+            {
+              "id": "r664-score-r-2-7d0f114a"
+            },
+            {
+              "id": "r664-score-r-3-7be5c5f9"
+            },
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-r-1-bc26a45c",
+                "r664-score-r-2-7d0f114a",
+                "r664-score-r-3-7be5c5f9",
+                "r664-score-r-1-bc26a45c"
+              ],
+              "actual": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-changed.json",
+            "contract": "independent-score-copy"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          true,
+          false
+        ],
+        "relationStatus": "inconsistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "D-score-always-empty",
+      "contract": "independent-score-copy",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "rename",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [],
+        "changedProjection": []
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-b-0-8b79a142",
+            "r664-score-b-1-556663aa",
+            "r664-score-b-2-bb7e8b43",
+            "r664-score-b-3-28cd1748",
+            "r664-score-b-1-556663aa"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-b-0-8b79a142",
+              1
+            ],
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values, including ineligible records",
+          "inputIdentities": [
+            "r664-score-r-0-ceae191a",
+            "r664-score-r-1-bc26a45c",
+            "r664-score-r-2-7d0f114a",
+            "r664-score-r-3-7be5c5f9",
+            "r664-score-r-1-bc26a45c"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-r-0-ceae191a",
+              1
+            ],
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": false,
+          "countPassed": false,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "expectedProjection": [
+            {
+              "id": "r664-score-b-1-556663aa"
+            },
+            {
+              "id": "r664-score-b-2-bb7e8b43"
+            },
+            {
+              "id": "r664-score-b-3-28cd1748"
+            },
+            {
+              "id": "r664-score-b-1-556663aa"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": false,
+              "expected": 4,
+              "actual": 0
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-2-bb7e8b43",
+                "r664-score-b-3-28cd1748",
+                "r664-score-b-1-556663aa"
+              ],
+              "actual": []
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-base.json",
+            "contract": "independent-score-copy"
+          }
+        },
+        "changed": {
+          "passed": false,
+          "countPassed": false,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "expectedProjection": [
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            },
+            {
+              "id": "r664-score-r-2-7d0f114a"
+            },
+            {
+              "id": "r664-score-r-3-7be5c5f9"
+            },
+            {
+              "id": "r664-score-r-1-bc26a45c"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": false,
+              "expected": 4,
+              "actual": 0
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-score-r-1-bc26a45c",
+                "r664-score-r-2-7d0f114a",
+                "r664-score-r-3-7be5c5f9",
+                "r664-score-r-1-bc26a45c"
+              ],
+              "actual": []
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-changed.json",
+            "contract": "independent-score-copy"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          false
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "D-silent-correct",
+      "contract": "independent-score-with-diagnostic-source",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "source-noise",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "changedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            },
+            {
+              "id": "r664-silent-b-2-ab7ddf80"
+            },
+            {
+              "id": "r664-silent-b-3-01372f06"
+            },
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ],
+              "actual": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-base.json",
+            "contract": "independent-score-with-diagnostic-source"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            },
+            {
+              "id": "r664-silent-b-2-ab7ddf80"
+            },
+            {
+              "id": "r664-silent-b-3-01372f06"
+            },
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ],
+              "actual": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-changed.json",
+            "contract": "independent-score-with-diagnostic-source"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "D-silent-obsolete-source",
+      "contract": "independent-score-with-diagnostic-source",
+      "relation": {
+        "status": "inconsistent",
+        "consistent": false,
+        "transformation": "source-noise",
+        "fields": [
+          "id"
+        ],
+        "transportedBaseProjection": [],
+        "changedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": false,
+          "countPassed": false,
+          "orderedProjectionPassed": false,
+          "identityMultiplicityPassed": false,
+          "expectedOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "expectedProjection": [
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            },
+            {
+              "id": "r664-silent-b-2-ab7ddf80"
+            },
+            {
+              "id": "r664-silent-b-3-01372f06"
+            },
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": false,
+              "expected": 4,
+              "actual": 0
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": false,
+              "expected": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ],
+              "actual": []
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-base.json",
+            "contract": "independent-score-with-diagnostic-source"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            },
+            {
+              "id": "r664-silent-b-2-ab7ddf80"
+            },
+            {
+              "id": "r664-silent-b-3-01372f06"
+            },
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ],
+              "actual": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-changed.json",
+            "contract": "independent-score-with-diagnostic-source"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          false,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "inconsistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "development control"
+    },
+    {
+      "group": "H-relaybrook-original",
+      "contract": "relaybrook-valid-mailbox-first-row",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "rename",
+        "fields": [
+          "email",
+          "full_name"
+        ],
+        "transportedBaseProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "changedProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+          "inputIdentities": [
+            "canary2aebb7871+first@canary.example.org",
+            "canary0a9ae61f7+first@canary.example.org",
+            "canary2aebb7871+repeat@canary.example.org",
+            "canary3f7122dcb+first@canary.example.org",
+            "canary1d786d4df+first@canary.example.org",
+            "canary3f7122dcb+repeat@canary.example.org"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+repeat@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+repeat@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+          "inputIdentities": [
+            "alias27d84ce0e+first@canary.example.org",
+            "alias0e7c9875e+first@canary.example.org",
+            "alias27d84ce0e+repeat@canary.example.org",
+            "alias36ceaf9ac+first@canary.example.org",
+            "alias13367b52f+first@canary.example.org",
+            "alias36ceaf9ac+repeat@canary.example.org"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+repeat@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+repeat@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "email": "canary2aebb7871+first@canary.example.org",
+              "full_name": "Evelyn Park"
+            },
+            {
+              "email": "canary0a9ae61f7+first@canary.example.org",
+              "full_name": "Nico Reed"
+            },
+            {
+              "email": "canary3f7122dcb+first@canary.example.org",
+              "full_name": "Mila Hart"
+            },
+            {
+              "email": "canary1d786d4df+first@canary.example.org",
+              "full_name": "Owen Dale"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Merge duplicate leads: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.email",
+              "passed": true,
+              "expected": [
+                "canary2aebb7871+first@canary.example.org",
+                "canary0a9ae61f7+first@canary.example.org",
+                "canary3f7122dcb+first@canary.example.org",
+                "canary1d786d4df+first@canary.example.org"
+              ],
+              "actual": [
+                "canary2aebb7871+first@canary.example.org",
+                "canary0a9ae61f7+first@canary.example.org",
+                "canary3f7122dcb+first@canary.example.org",
+                "canary1d786d4df+first@canary.example.org"
+              ]
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.full_name",
+              "passed": true,
+              "expected": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ],
+              "actual": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 count",
+              "passed": true,
+              "expected": 1,
+              "actual": 1
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+              "passed": true,
+              "expected": [
+                6
+              ],
+              "actual": [
+                6
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+              "passed": true,
+              "expected": [
+                4
+              ],
+              "actual": [
+                4
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+              "passed": true,
+              "expected": [
+                2
+              ],
+              "actual": [
+                2
+              ]
+            },
+            {
+              "name": "Read CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Parse CSV rows: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Read leads from Google Sheets: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Convert to CSV: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Write cleaned CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Upsert into cleaned tab: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/holdout-base.json",
+            "contract": "relaybrook-valid-mailbox-first-row"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "email": "alias27d84ce0e+first@canary.example.org",
+              "full_name": "Evelyn Park"
+            },
+            {
+              "email": "alias0e7c9875e+first@canary.example.org",
+              "full_name": "Nico Reed"
+            },
+            {
+              "email": "alias36ceaf9ac+first@canary.example.org",
+              "full_name": "Mila Hart"
+            },
+            {
+              "email": "alias13367b52f+first@canary.example.org",
+              "full_name": "Owen Dale"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Merge duplicate leads: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.email",
+              "passed": true,
+              "expected": [
+                "alias27d84ce0e+first@canary.example.org",
+                "alias0e7c9875e+first@canary.example.org",
+                "alias36ceaf9ac+first@canary.example.org",
+                "alias13367b52f+first@canary.example.org"
+              ],
+              "actual": [
+                "alias27d84ce0e+first@canary.example.org",
+                "alias0e7c9875e+first@canary.example.org",
+                "alias36ceaf9ac+first@canary.example.org",
+                "alias13367b52f+first@canary.example.org"
+              ]
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.full_name",
+              "passed": true,
+              "expected": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ],
+              "actual": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 count",
+              "passed": true,
+              "expected": 1,
+              "actual": 1
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+              "passed": true,
+              "expected": [
+                6
+              ],
+              "actual": [
+                6
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+              "passed": true,
+              "expected": [
+                4
+              ],
+              "actual": [
+                4
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+              "passed": true,
+              "expected": [
+                2
+              ],
+              "actual": [
+                2
+              ]
+            },
+            {
+              "name": "Read CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Parse CSV rows: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Read leads from Google Sheets: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Convert to CSV: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Write cleaned CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Upsert into cleaned tab: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/holdout-changed.json",
+            "contract": "relaybrook-valid-mailbox-first-row"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "new-input lawful holdout migration; no new defect claim"
+    },
+    {
+      "group": "H-relaybrook-repaired",
+      "contract": "relaybrook-valid-mailbox-first-row",
+      "relation": {
+        "status": "consistent",
+        "consistent": true,
+        "transformation": "rename",
+        "fields": [
+          "email",
+          "full_name"
+        ],
+        "transportedBaseProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "changedProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ]
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+          "inputIdentities": [
+            "canary2aebb7871+first@canary.example.org",
+            "canary0a9ae61f7+first@canary.example.org",
+            "canary2aebb7871+repeat@canary.example.org",
+            "canary3f7122dcb+first@canary.example.org",
+            "canary1d786d4df+first@canary.example.org",
+            "canary3f7122dcb+repeat@canary.example.org"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+repeat@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+repeat@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+          "inputIdentities": [
+            "alias27d84ce0e+first@canary.example.org",
+            "alias0e7c9875e+first@canary.example.org",
+            "alias27d84ce0e+repeat@canary.example.org",
+            "alias36ceaf9ac+first@canary.example.org",
+            "alias13367b52f+first@canary.example.org",
+            "alias36ceaf9ac+repeat@canary.example.org"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+repeat@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+repeat@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "canary0a9ae61f7+first@canary.example.org",
+              1
+            ],
+            [
+              "canary1d786d4df+first@canary.example.org",
+              1
+            ],
+            [
+              "canary2aebb7871+first@canary.example.org",
+              1
+            ],
+            [
+              "canary3f7122dcb+first@canary.example.org",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "email": "canary2aebb7871+first@canary.example.org",
+              "full_name": "Evelyn Park"
+            },
+            {
+              "email": "canary0a9ae61f7+first@canary.example.org",
+              "full_name": "Nico Reed"
+            },
+            {
+              "email": "canary3f7122dcb+first@canary.example.org",
+              "full_name": "Mila Hart"
+            },
+            {
+              "email": "canary1d786d4df+first@canary.example.org",
+              "full_name": "Owen Dale"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Merge duplicate leads: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.email",
+              "passed": true,
+              "expected": [
+                "canary2aebb7871+first@canary.example.org",
+                "canary0a9ae61f7+first@canary.example.org",
+                "canary3f7122dcb+first@canary.example.org",
+                "canary1d786d4df+first@canary.example.org"
+              ],
+              "actual": [
+                "canary2aebb7871+first@canary.example.org",
+                "canary0a9ae61f7+first@canary.example.org",
+                "canary3f7122dcb+first@canary.example.org",
+                "canary1d786d4df+first@canary.example.org"
+              ]
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.full_name",
+              "passed": true,
+              "expected": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ],
+              "actual": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 count",
+              "passed": true,
+              "expected": 1,
+              "actual": 1
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+              "passed": true,
+              "expected": [
+                6
+              ],
+              "actual": [
+                6
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+              "passed": true,
+              "expected": [
+                4
+              ],
+              "actual": [
+                4
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+              "passed": true,
+              "expected": [
+                2
+              ],
+              "actual": [
+                2
+              ]
+            },
+            {
+              "name": "Read CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Parse CSV rows: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Read leads from Google Sheets: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Convert to CSV: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Write cleaned CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Upsert into cleaned tab: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/holdout-base.json",
+            "contract": "relaybrook-valid-mailbox-first-row"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "alias0e7c9875e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias13367b52f+first@canary.example.org",
+              1
+            ],
+            [
+              "alias27d84ce0e+first@canary.example.org",
+              1
+            ],
+            [
+              "alias36ceaf9ac+first@canary.example.org",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "email": "alias27d84ce0e+first@canary.example.org",
+              "full_name": "Evelyn Park"
+            },
+            {
+              "email": "alias0e7c9875e+first@canary.example.org",
+              "full_name": "Nico Reed"
+            },
+            {
+              "email": "alias36ceaf9ac+first@canary.example.org",
+              "full_name": "Mila Hart"
+            },
+            {
+              "email": "alias13367b52f+first@canary.example.org",
+              "full_name": "Owen Dale"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Merge duplicate leads: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.email",
+              "passed": true,
+              "expected": [
+                "alias27d84ce0e+first@canary.example.org",
+                "alias0e7c9875e+first@canary.example.org",
+                "alias36ceaf9ac+first@canary.example.org",
+                "alias13367b52f+first@canary.example.org"
+              ],
+              "actual": [
+                "alias27d84ce0e+first@canary.example.org",
+                "alias0e7c9875e+first@canary.example.org",
+                "alias36ceaf9ac+first@canary.example.org",
+                "alias13367b52f+first@canary.example.org"
+              ]
+            },
+            {
+              "name": "Merge duplicate leads: output 0 pluck json.full_name",
+              "passed": true,
+              "expected": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ],
+              "actual": [
+                "Evelyn Park",
+                "Nico Reed",
+                "Mila Hart",
+                "Owen Dale"
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 count",
+              "passed": true,
+              "expected": 1,
+              "actual": 1
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+              "passed": true,
+              "expected": [
+                6
+              ],
+              "actual": [
+                6
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+              "passed": true,
+              "expected": [
+                4
+              ],
+              "actual": [
+                4
+              ]
+            },
+            {
+              "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+              "passed": true,
+              "expected": [
+                2
+              ],
+              "actual": [
+                2
+              ]
+            },
+            {
+              "name": "Read CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Parse CSV rows: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Read leads from Google Sheets: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Convert to CSV: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Write cleaned CSV file: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Upsert into cleaned tab: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/holdout-changed.json",
+            "contract": "relaybrook-valid-mailbox-first-row"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "consistent"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "new-input lawful holdout migration; no new defect claim"
+    },
+    {
+      "group": "L-literal-whitelist",
+      "contract": "legal-literal-id-whitelist",
+      "relation": {
+        "status": "scope_required",
+        "consistent": null,
+        "transformation": "rename",
+        "reason": "literal identity values participate in the business whitelist; rename is outside this contract"
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-score-b-0-8b79a142",
+            "r664-score-b-1-556663aa",
+            "r664-score-b-2-bb7e8b43",
+            "r664-score-b-3-28cd1748",
+            "r664-score-b-1-556663aa"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-b-0-8b79a142",
+              1
+            ],
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ],
+            [
+              "r664-score-b-2-bb7e8b43",
+              1
+            ],
+            [
+              "r664-score-b-3-28cd1748",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-score-r-0-ceae191a",
+            "r664-score-r-1-bc26a45c",
+            "r664-score-r-2-7d0f114a",
+            "r664-score-r-3-7be5c5f9",
+            "r664-score-r-1-bc26a45c"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-score-r-0-ceae191a",
+              1
+            ],
+            [
+              "r664-score-r-1-bc26a45c",
+              2
+            ],
+            [
+              "r664-score-r-2-7d0f114a",
+              1
+            ],
+            [
+              "r664-score-r-3-7be5c5f9",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-score-b-1-556663aa",
+              2
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-score-b-1-556663aa"
+            },
+            {
+              "id": "r664-score-b-1-556663aa"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 2,
+              "actual": 2
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa"
+              ],
+              "actual": [
+                "r664-score-b-1-556663aa",
+                "r664-score-b-1-556663aa"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-base.json",
+            "contract": "legal-literal-id-whitelist"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [],
+          "actualOccurrences": [],
+          "expectedProjection": [],
+          "checks": [
+            {
+              "name": "Select rows: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Select rows: output 0 pluck json.id",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/score-changed.json",
+            "contract": "legal-literal-id-whitelist"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "scope_required"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "lawful business semantics; metamorphic scope closed in advance"
+    },
+    {
+      "group": "L-current-only",
+      "contract": "legal-current-source-only",
+      "relation": {
+        "status": "scope_required",
+        "consistent": null,
+        "transformation": "source-noise",
+        "reason": "source is business-significant; source perturbation is outside this contract"
+      },
+      "domain": {
+        "base": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        },
+        "changed": {
+          "passed": true,
+          "definition": "all input id values",
+          "inputIdentities": [
+            "r664-silent-b-0-a80a0ed4",
+            "r664-silent-b-1-d3cfbdbc",
+            "r664-silent-b-2-ab7ddf80",
+            "r664-silent-b-3-01372f06",
+            "r664-silent-b-1-d3cfbdbc"
+          ],
+          "missingIdentityItems": [],
+          "outsideItems": [],
+          "inputOccurrences": [
+            [
+              "r664-silent-b-0-a80a0ed4",
+              1
+            ],
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [],
+          "occurrenceOverdrawDiagnostic": [],
+          "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+        }
+      },
+      "anchor": {
+        "base": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "actualOccurrences": [
+            [
+              "r664-silent-b-1-d3cfbdbc",
+              2
+            ],
+            [
+              "r664-silent-b-2-ab7ddf80",
+              1
+            ],
+            [
+              "r664-silent-b-3-01372f06",
+              1
+            ]
+          ],
+          "expectedProjection": [
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            },
+            {
+              "id": "r664-silent-b-2-ab7ddf80"
+            },
+            {
+              "id": "r664-silent-b-3-01372f06"
+            },
+            {
+              "id": "r664-silent-b-1-d3cfbdbc"
+            }
+          ],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": true,
+              "expected": 4,
+              "actual": 4
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": true,
+              "expected": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ],
+              "actual": [
+                "r664-silent-b-1-d3cfbdbc",
+                "r664-silent-b-2-ab7ddf80",
+                "r664-silent-b-3-01372f06",
+                "r664-silent-b-1-d3cfbdbc"
+              ]
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-base.json",
+            "contract": "legal-current-source-only"
+          }
+        },
+        "changed": {
+          "passed": true,
+          "countPassed": true,
+          "orderedProjectionPassed": true,
+          "identityMultiplicityPassed": true,
+          "expectedOccurrences": [],
+          "actualOccurrences": [],
+          "expectedProjection": [],
+          "checks": [
+            {
+              "name": "Confidence Gate: output 0 count",
+              "passed": true,
+              "expected": 0,
+              "actual": 0
+            },
+            {
+              "name": "Confidence Gate: output 0 pluck json.id",
+              "passed": true,
+              "expected": [],
+              "actual": []
+            }
+          ],
+          "generatedFrom": {
+            "businessInputFile": "fixtures/silent-changed.json",
+            "contract": "legal-current-source-only"
+          }
+        }
+      },
+      "anticipated": {
+        "anchorPassed": [
+          true,
+          true
+        ],
+        "membershipPassed": [
+          true,
+          true
+        ],
+        "relationStatus": "scope_required"
+      },
+      "anticipatedChecks": {
+        "anchors": true,
+        "memberships": true,
+        "relation": true
+      },
+      "interpretation": "lawful business semantics; metamorphic scope closed in advance"
+    }
+  ],
+  "runs": [
+    {
+      "label": "D-score-correct-base",
+      "group": "D-score-correct",
+      "side": "base",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:49.921Z"
+        },
+        {
+          "id": "r664-score-b-2-bb7e8b43",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:16:49.921Z"
+        },
+        {
+          "id": "r664-score-b-3-28cd1748",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:16:49.921Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:49.921Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-b-0-8b79a142",
+          "r664-score-b-1-556663aa",
+          "r664-score-b-2-bb7e8b43",
+          "r664-score-b-3-28cd1748",
+          "r664-score-b-1-556663aa"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-b-0-8b79a142",
+            1
+          ],
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-2-bb7e8b43"
+          },
+          {
+            "id": "r664-score-b-3-28cd1748"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-2-bb7e8b43",
+              "r664-score-b-3-28cd1748",
+              "r664-score-b-1-556663aa"
+            ],
+            "actual": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-2-bb7e8b43",
+              "r664-score-b-3-28cd1748",
+              "r664-score-b-1-556663aa"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-base.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-correct-changed",
+      "group": "D-score-correct",
+      "side": "changed",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-score-r-1-bc26a45c",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:53.980Z"
+        },
+        {
+          "id": "r664-score-r-2-7d0f114a",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:16:53.980Z"
+        },
+        {
+          "id": "r664-score-r-3-7be5c5f9",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:16:53.980Z"
+        },
+        {
+          "id": "r664-score-r-1-bc26a45c",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:53.980Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-r-0-ceae191a",
+          "r664-score-r-1-bc26a45c",
+          "r664-score-r-2-7d0f114a",
+          "r664-score-r-3-7be5c5f9",
+          "r664-score-r-1-bc26a45c"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-r-0-ceae191a",
+            1
+          ],
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-score-r-1-bc26a45c",
+              "r664-score-r-2-7d0f114a",
+              "r664-score-r-3-7be5c5f9",
+              "r664-score-r-1-bc26a45c"
+            ],
+            "actual": [
+              "r664-score-r-1-bc26a45c",
+              "r664-score-r-2-7d0f114a",
+              "r664-score-r-3-7be5c5f9",
+              "r664-score-r-1-bc26a45c"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-changed.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-outside-literal-base",
+      "group": "D-score-outside-literal",
+      "side": "base",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "wrong-row",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:57.882Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:16:57.882Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:16:57.882Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:16:57.882Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": false,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-b-0-8b79a142",
+          "r664-score-b-1-556663aa",
+          "r664-score-b-2-bb7e8b43",
+          "r664-score-b-3-28cd1748",
+          "r664-score-b-1-556663aa"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [
+          {
+            "index": 0,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 1,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 2,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 3,
+            "identity": "wrong-row"
+          }
+        ],
+        "inputOccurrences": [
+          [
+            "r664-score-b-0-8b79a142",
+            1
+          ],
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "wrong-row",
+            4
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": true,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "wrong-row",
+            4
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-2-bb7e8b43"
+          },
+          {
+            "id": "r664-score-b-3-28cd1748"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-2-bb7e8b43",
+              "r664-score-b-3-28cd1748",
+              "r664-score-b-1-556663aa"
+            ],
+            "actual": [
+              "wrong-row",
+              "wrong-row",
+              "wrong-row",
+              "wrong-row"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-base.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-outside-literal-changed",
+      "group": "D-score-outside-literal",
+      "side": "changed",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "wrong-row",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:02.037Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:17:02.038Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:17:02.038Z"
+        },
+        {
+          "id": "wrong-row",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:02.038Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": false,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-r-0-ceae191a",
+          "r664-score-r-1-bc26a45c",
+          "r664-score-r-2-7d0f114a",
+          "r664-score-r-3-7be5c5f9",
+          "r664-score-r-1-bc26a45c"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [
+          {
+            "index": 0,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 1,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 2,
+            "identity": "wrong-row"
+          },
+          {
+            "index": 3,
+            "identity": "wrong-row"
+          }
+        ],
+        "inputOccurrences": [
+          [
+            "r664-score-r-0-ceae191a",
+            1
+          ],
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "wrong-row",
+            4
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": true,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "wrong-row",
+            4
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-r-1-bc26a45c",
+              "r664-score-r-2-7d0f114a",
+              "r664-score-r-3-7be5c5f9",
+              "r664-score-r-1-bc26a45c"
+            ],
+            "actual": [
+              "wrong-row",
+              "wrong-row",
+              "wrong-row",
+              "wrong-row"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-changed.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-inside-literal-base",
+      "group": "D-score-inside-literal",
+      "side": "base",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:05.897Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:17:05.897Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:17:05.897Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:05.897Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-b-0-8b79a142",
+          "r664-score-b-1-556663aa",
+          "r664-score-b-2-bb7e8b43",
+          "r664-score-b-3-28cd1748",
+          "r664-score-b-1-556663aa"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-b-0-8b79a142",
+            1
+          ],
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            4
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [
+          {
+            "identity": "r664-score-b-1-556663aa",
+            "inputOccurrences": 2,
+            "outputOccurrences": 4
+          }
+        ],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": true,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            4
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-2-bb7e8b43"
+          },
+          {
+            "id": "r664-score-b-3-28cd1748"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-2-bb7e8b43",
+              "r664-score-b-3-28cd1748",
+              "r664-score-b-1-556663aa"
+            ],
+            "actual": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-base.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-inside-literal-changed",
+      "group": "D-score-inside-literal",
+      "side": "changed",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:09.984Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "processedAt": "2026-11-18T11:17:09.984Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "processedAt": "2026-11-18T11:17:09.984Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:09.984Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": false,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-r-0-ceae191a",
+          "r664-score-r-1-bc26a45c",
+          "r664-score-r-2-7d0f114a",
+          "r664-score-r-3-7be5c5f9",
+          "r664-score-r-1-bc26a45c"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [
+          {
+            "index": 0,
+            "identity": "r664-score-b-1-556663aa"
+          },
+          {
+            "index": 1,
+            "identity": "r664-score-b-1-556663aa"
+          },
+          {
+            "index": 2,
+            "identity": "r664-score-b-1-556663aa"
+          },
+          {
+            "index": 3,
+            "identity": "r664-score-b-1-556663aa"
+          }
+        ],
+        "inputOccurrences": [
+          [
+            "r664-score-r-0-ceae191a",
+            1
+          ],
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            4
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": true,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            4
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-r-1-bc26a45c",
+              "r664-score-r-2-7d0f114a",
+              "r664-score-r-3-7be5c5f9",
+              "r664-score-r-1-bc26a45c"
+            ],
+            "actual": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-changed.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-always-empty-base",
+      "group": "D-score-always-empty",
+      "side": "base",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-b-0-8b79a142",
+          "r664-score-b-1-556663aa",
+          "r664-score-b-2-bb7e8b43",
+          "r664-score-b-3-28cd1748",
+          "r664-score-b-1-556663aa"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-b-0-8b79a142",
+            1
+          ],
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": false,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "expectedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-2-bb7e8b43"
+          },
+          {
+            "id": "r664-score-b-3-28cd1748"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": false,
+            "expected": 4,
+            "actual": 0
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-2-bb7e8b43",
+              "r664-score-b-3-28cd1748",
+              "r664-score-b-1-556663aa"
+            ],
+            "actual": []
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-base.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-score-always-empty-changed",
+      "group": "D-score-always-empty",
+      "side": "changed",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values, including ineligible records",
+        "inputIdentities": [
+          "r664-score-r-0-ceae191a",
+          "r664-score-r-1-bc26a45c",
+          "r664-score-r-2-7d0f114a",
+          "r664-score-r-3-7be5c5f9",
+          "r664-score-r-1-bc26a45c"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-r-0-ceae191a",
+            1
+          ],
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": false,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "expectedProjection": [
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          },
+          {
+            "id": "r664-score-r-2-7d0f114a"
+          },
+          {
+            "id": "r664-score-r-3-7be5c5f9"
+          },
+          {
+            "id": "r664-score-r-1-bc26a45c"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": false,
+            "expected": 4,
+            "actual": 0
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-score-r-1-bc26a45c",
+              "r664-score-r-2-7d0f114a",
+              "r664-score-r-3-7be5c5f9",
+              "r664-score-r-1-bc26a45c"
+            ],
+            "actual": []
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-changed.json",
+          "contract": "independent-score-copy"
+        }
+      }
+    },
+    {
+      "label": "D-silent-correct-base",
+      "group": "D-silent-correct",
+      "side": "base",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "current-index"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ],
+            "actual": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-base.json",
+          "contract": "independent-score-with-diagnostic-source"
+        }
+      }
+    },
+    {
+      "label": "D-silent-correct-changed",
+      "group": "D-silent-correct",
+      "side": "changed",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "legacy-index"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ],
+            "actual": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-changed.json",
+          "contract": "independent-score-with-diagnostic-source"
+        }
+      }
+    },
+    {
+      "label": "D-silent-obsolete-source-base",
+      "group": "D-silent-obsolete-source",
+      "side": "base",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": false,
+        "countPassed": false,
+        "orderedProjectionPassed": false,
+        "identityMultiplicityPassed": false,
+        "expectedOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "expectedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": false,
+            "expected": 4,
+            "actual": 0
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": false,
+            "expected": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ],
+            "actual": []
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-base.json",
+          "contract": "independent-score-with-diagnostic-source"
+        }
+      }
+    },
+    {
+      "label": "D-silent-obsolete-source-changed",
+      "group": "D-silent-obsolete-source",
+      "side": "changed",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "source": "legacy-index"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "legacy-index"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ],
+            "actual": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-changed.json",
+          "contract": "independent-score-with-diagnostic-source"
+        }
+      }
+    },
+    {
+      "label": "H-relaybrook-original-base",
+      "group": "H-relaybrook-original",
+      "side": "base",
+      "output": "Merge duplicate leads",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Summarize cleaning run",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "source_row": 2,
+          "first_name": "Evelyn",
+          "last_name": "Park",
+          "full_name": "Evelyn Park",
+          "email": "canary2aebb7871+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "2, 4",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary2aebb7871@canary.example.org"
+        },
+        {
+          "source_row": 3,
+          "first_name": "Nico",
+          "last_name": "Reed",
+          "full_name": "Nico Reed",
+          "email": "canary0a9ae61f7+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary0a9ae61f7@canary.example.org"
+        },
+        {
+          "source_row": 5,
+          "first_name": "Mila",
+          "last_name": "Hart",
+          "full_name": "Mila Hart",
+          "email": "canary3f7122dcb+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "5, 7",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary3f7122dcb@canary.example.org"
+        },
+        {
+          "source_row": 6,
+          "first_name": "Owen",
+          "last_name": "Dale",
+          "full_name": "Owen Dale",
+          "email": "canary1d786d4df+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary1d786d4df@canary.example.org"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Run cleaner",
+        "Cleaner settings",
+        "Source is CSV?",
+        "Source is Google Sheets?",
+        "Sample messy leads",
+        "Normalize and validate leads",
+        "Merge duplicate leads",
+        "Write to CSV?",
+        "Write to Google Sheets?",
+        "Preview cleaned leads",
+        "Summarize cleaning run"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+        "inputIdentities": [
+          "canary2aebb7871+first@canary.example.org",
+          "canary0a9ae61f7+first@canary.example.org",
+          "canary2aebb7871+repeat@canary.example.org",
+          "canary3f7122dcb+first@canary.example.org",
+          "canary1d786d4df+first@canary.example.org",
+          "canary3f7122dcb+repeat@canary.example.org"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+repeat@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+repeat@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "email": "canary2aebb7871+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "canary0a9ae61f7+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "canary3f7122dcb+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "canary1d786d4df+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Merge duplicate leads: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.email",
+            "passed": true,
+            "expected": [
+              "canary2aebb7871+first@canary.example.org",
+              "canary0a9ae61f7+first@canary.example.org",
+              "canary3f7122dcb+first@canary.example.org",
+              "canary1d786d4df+first@canary.example.org"
+            ],
+            "actual": [
+              "canary2aebb7871+first@canary.example.org",
+              "canary0a9ae61f7+first@canary.example.org",
+              "canary3f7122dcb+first@canary.example.org",
+              "canary1d786d4df+first@canary.example.org"
+            ]
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.full_name",
+            "passed": true,
+            "expected": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ],
+            "actual": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 count",
+            "passed": true,
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+            "passed": true,
+            "expected": [
+              6
+            ],
+            "actual": [
+              6
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+            "passed": true,
+            "expected": [
+              4
+            ],
+            "actual": [
+              4
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+            "passed": true,
+            "expected": [
+              2
+            ],
+            "actual": [
+              2
+            ]
+          },
+          {
+            "name": "Read CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Parse CSV rows: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Read leads from Google Sheets: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Convert to CSV: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Write cleaned CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Upsert into cleaned tab: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/holdout-base.json",
+          "contract": "relaybrook-valid-mailbox-first-row"
+        }
+      }
+    },
+    {
+      "label": "H-relaybrook-original-changed",
+      "group": "H-relaybrook-original",
+      "side": "changed",
+      "output": "Merge duplicate leads",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Summarize cleaning run",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "source_row": 2,
+          "first_name": "Evelyn",
+          "last_name": "Park",
+          "full_name": "Evelyn Park",
+          "email": "alias27d84ce0e+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "2, 4",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias27d84ce0e@canary.example.org"
+        },
+        {
+          "source_row": 3,
+          "first_name": "Nico",
+          "last_name": "Reed",
+          "full_name": "Nico Reed",
+          "email": "alias0e7c9875e+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias0e7c9875e@canary.example.org"
+        },
+        {
+          "source_row": 5,
+          "first_name": "Mila",
+          "last_name": "Hart",
+          "full_name": "Mila Hart",
+          "email": "alias36ceaf9ac+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "5, 7",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias36ceaf9ac@canary.example.org"
+        },
+        {
+          "source_row": 6,
+          "first_name": "Owen",
+          "last_name": "Dale",
+          "full_name": "Owen Dale",
+          "email": "alias13367b52f+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias13367b52f@canary.example.org"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Run cleaner",
+        "Cleaner settings",
+        "Source is CSV?",
+        "Source is Google Sheets?",
+        "Sample messy leads",
+        "Normalize and validate leads",
+        "Merge duplicate leads",
+        "Write to CSV?",
+        "Write to Google Sheets?",
+        "Preview cleaned leads",
+        "Summarize cleaning run"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+        "inputIdentities": [
+          "alias27d84ce0e+first@canary.example.org",
+          "alias0e7c9875e+first@canary.example.org",
+          "alias27d84ce0e+repeat@canary.example.org",
+          "alias36ceaf9ac+first@canary.example.org",
+          "alias13367b52f+first@canary.example.org",
+          "alias36ceaf9ac+repeat@canary.example.org"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+repeat@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+repeat@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Merge duplicate leads: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.email",
+            "passed": true,
+            "expected": [
+              "alias27d84ce0e+first@canary.example.org",
+              "alias0e7c9875e+first@canary.example.org",
+              "alias36ceaf9ac+first@canary.example.org",
+              "alias13367b52f+first@canary.example.org"
+            ],
+            "actual": [
+              "alias27d84ce0e+first@canary.example.org",
+              "alias0e7c9875e+first@canary.example.org",
+              "alias36ceaf9ac+first@canary.example.org",
+              "alias13367b52f+first@canary.example.org"
+            ]
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.full_name",
+            "passed": true,
+            "expected": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ],
+            "actual": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 count",
+            "passed": true,
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+            "passed": true,
+            "expected": [
+              6
+            ],
+            "actual": [
+              6
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+            "passed": true,
+            "expected": [
+              4
+            ],
+            "actual": [
+              4
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+            "passed": true,
+            "expected": [
+              2
+            ],
+            "actual": [
+              2
+            ]
+          },
+          {
+            "name": "Read CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Parse CSV rows: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Read leads from Google Sheets: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Convert to CSV: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Write cleaned CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Upsert into cleaned tab: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/holdout-changed.json",
+          "contract": "relaybrook-valid-mailbox-first-row"
+        }
+      }
+    },
+    {
+      "label": "H-relaybrook-repaired-base",
+      "group": "H-relaybrook-repaired",
+      "side": "base",
+      "output": "Merge duplicate leads",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Summarize cleaning run",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "source_row": 2,
+          "first_name": "Evelyn",
+          "last_name": "Park",
+          "full_name": "Evelyn Park",
+          "email": "canary2aebb7871+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "2, 4",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary2aebb7871@canary.example.org"
+        },
+        {
+          "source_row": 3,
+          "first_name": "Nico",
+          "last_name": "Reed",
+          "full_name": "Nico Reed",
+          "email": "canary0a9ae61f7+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary0a9ae61f7@canary.example.org"
+        },
+        {
+          "source_row": 5,
+          "first_name": "Mila",
+          "last_name": "Hart",
+          "full_name": "Mila Hart",
+          "email": "canary3f7122dcb+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "5, 7",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary3f7122dcb@canary.example.org"
+        },
+        {
+          "source_row": 6,
+          "first_name": "Owen",
+          "last_name": "Dale",
+          "full_name": "Owen Dale",
+          "email": "canary1d786d4df+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "canary1d786d4df@canary.example.org"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Run cleaner",
+        "Cleaner settings",
+        "Source is CSV?",
+        "Source is Google Sheets?",
+        "Sample messy leads",
+        "Normalize and validate leads",
+        "Merge duplicate leads",
+        "Write to CSV?",
+        "Write to Google Sheets?",
+        "Preview cleaned leads",
+        "Summarize cleaning run"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+        "inputIdentities": [
+          "canary2aebb7871+first@canary.example.org",
+          "canary0a9ae61f7+first@canary.example.org",
+          "canary2aebb7871+repeat@canary.example.org",
+          "canary3f7122dcb+first@canary.example.org",
+          "canary1d786d4df+first@canary.example.org",
+          "canary3f7122dcb+repeat@canary.example.org"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+repeat@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+repeat@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "canary0a9ae61f7+first@canary.example.org",
+            1
+          ],
+          [
+            "canary1d786d4df+first@canary.example.org",
+            1
+          ],
+          [
+            "canary2aebb7871+first@canary.example.org",
+            1
+          ],
+          [
+            "canary3f7122dcb+first@canary.example.org",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "email": "canary2aebb7871+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "canary0a9ae61f7+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "canary3f7122dcb+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "canary1d786d4df+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Merge duplicate leads: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.email",
+            "passed": true,
+            "expected": [
+              "canary2aebb7871+first@canary.example.org",
+              "canary0a9ae61f7+first@canary.example.org",
+              "canary3f7122dcb+first@canary.example.org",
+              "canary1d786d4df+first@canary.example.org"
+            ],
+            "actual": [
+              "canary2aebb7871+first@canary.example.org",
+              "canary0a9ae61f7+first@canary.example.org",
+              "canary3f7122dcb+first@canary.example.org",
+              "canary1d786d4df+first@canary.example.org"
+            ]
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.full_name",
+            "passed": true,
+            "expected": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ],
+            "actual": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 count",
+            "passed": true,
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+            "passed": true,
+            "expected": [
+              6
+            ],
+            "actual": [
+              6
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+            "passed": true,
+            "expected": [
+              4
+            ],
+            "actual": [
+              4
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+            "passed": true,
+            "expected": [
+              2
+            ],
+            "actual": [
+              2
+            ]
+          },
+          {
+            "name": "Read CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Parse CSV rows: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Read leads from Google Sheets: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Convert to CSV: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Write cleaned CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Upsert into cleaned tab: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/holdout-base.json",
+          "contract": "relaybrook-valid-mailbox-first-row"
+        }
+      }
+    },
+    {
+      "label": "H-relaybrook-repaired-changed",
+      "group": "H-relaybrook-repaired",
+      "side": "changed",
+      "output": "Merge duplicate leads",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Summarize cleaning run",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "source_row": 2,
+          "first_name": "Evelyn",
+          "last_name": "Park",
+          "full_name": "Evelyn Park",
+          "email": "alias27d84ce0e+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "2, 4",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias27d84ce0e@canary.example.org"
+        },
+        {
+          "source_row": 3,
+          "first_name": "Nico",
+          "last_name": "Reed",
+          "full_name": "Nico Reed",
+          "email": "alias0e7c9875e+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias0e7c9875e@canary.example.org"
+        },
+        {
+          "source_row": 5,
+          "first_name": "Mila",
+          "last_name": "Hart",
+          "full_name": "Mila Hart",
+          "email": "alias36ceaf9ac+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 1,
+          "merged_rows": "5, 7",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias36ceaf9ac@canary.example.org"
+        },
+        {
+          "source_row": 6,
+          "first_name": "Owen",
+          "last_name": "Dale",
+          "full_name": "Owen Dale",
+          "email": "alias13367b52f+first@canary.example.org",
+          "email_status": "valid",
+          "email_type": "business",
+          "is_free_mail": false,
+          "company": "Canary Works",
+          "company_domain": "canary.example.org",
+          "domain_source": "email",
+          "fixes": "",
+          "issues": "",
+          "duplicates_merged": 0,
+          "merged_rows": "",
+          "other_emails": "",
+          "lead_status": "ready",
+          "dedupe_key": "alias13367b52f@canary.example.org"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Run cleaner",
+        "Cleaner settings",
+        "Source is CSV?",
+        "Source is Google Sheets?",
+        "Sample messy leads",
+        "Normalize and validate leads",
+        "Merge duplicate leads",
+        "Write to CSV?",
+        "Write to Google Sheets?",
+        "Preview cleaned leads",
+        "Summarize cleaning run"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "lowercased Email values from all input rows, before mailbox deduplication",
+        "inputIdentities": [
+          "alias27d84ce0e+first@canary.example.org",
+          "alias0e7c9875e+first@canary.example.org",
+          "alias27d84ce0e+repeat@canary.example.org",
+          "alias36ceaf9ac+first@canary.example.org",
+          "alias13367b52f+first@canary.example.org",
+          "alias36ceaf9ac+repeat@canary.example.org"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+repeat@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+repeat@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "alias0e7c9875e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias13367b52f+first@canary.example.org",
+            1
+          ],
+          [
+            "alias27d84ce0e+first@canary.example.org",
+            1
+          ],
+          [
+            "alias36ceaf9ac+first@canary.example.org",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "email": "alias27d84ce0e+first@canary.example.org",
+            "full_name": "Evelyn Park"
+          },
+          {
+            "email": "alias0e7c9875e+first@canary.example.org",
+            "full_name": "Nico Reed"
+          },
+          {
+            "email": "alias36ceaf9ac+first@canary.example.org",
+            "full_name": "Mila Hart"
+          },
+          {
+            "email": "alias13367b52f+first@canary.example.org",
+            "full_name": "Owen Dale"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Merge duplicate leads: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.email",
+            "passed": true,
+            "expected": [
+              "alias27d84ce0e+first@canary.example.org",
+              "alias0e7c9875e+first@canary.example.org",
+              "alias36ceaf9ac+first@canary.example.org",
+              "alias13367b52f+first@canary.example.org"
+            ],
+            "actual": [
+              "alias27d84ce0e+first@canary.example.org",
+              "alias0e7c9875e+first@canary.example.org",
+              "alias36ceaf9ac+first@canary.example.org",
+              "alias13367b52f+first@canary.example.org"
+            ]
+          },
+          {
+            "name": "Merge duplicate leads: output 0 pluck json.full_name",
+            "passed": true,
+            "expected": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ],
+            "actual": [
+              "Evelyn Park",
+              "Nico Reed",
+              "Mila Hart",
+              "Owen Dale"
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 count",
+            "passed": true,
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.input_rows",
+            "passed": true,
+            "expected": [
+              6
+            ],
+            "actual": [
+              6
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.output_rows",
+            "passed": true,
+            "expected": [
+              4
+            ],
+            "actual": [
+              4
+            ]
+          },
+          {
+            "name": "Summarize cleaning run: output 0 pluck json.duplicates_merged",
+            "passed": true,
+            "expected": [
+              2
+            ],
+            "actual": [
+              2
+            ]
+          },
+          {
+            "name": "Read CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Parse CSV rows: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Read leads from Google Sheets: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Convert to CSV: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Write cleaned CSV file: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Upsert into cleaned tab: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/holdout-changed.json",
+          "contract": "relaybrook-valid-mailbox-first-row"
+        }
+      }
+    },
+    {
+      "label": "L-literal-whitelist-base",
+      "group": "L-literal-whitelist",
+      "side": "base",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:54.281Z"
+        },
+        {
+          "id": "r664-score-b-1-556663aa",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "processedAt": "2026-11-18T11:17:54.281Z"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-score-b-0-8b79a142",
+          "r664-score-b-1-556663aa",
+          "r664-score-b-2-bb7e8b43",
+          "r664-score-b-3-28cd1748",
+          "r664-score-b-1-556663aa"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-b-0-8b79a142",
+            1
+          ],
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ],
+          [
+            "r664-score-b-2-bb7e8b43",
+            1
+          ],
+          [
+            "r664-score-b-3-28cd1748",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-score-b-1-556663aa",
+            2
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-score-b-1-556663aa"
+          },
+          {
+            "id": "r664-score-b-1-556663aa"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 2,
+            "actual": 2
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa"
+            ],
+            "actual": [
+              "r664-score-b-1-556663aa",
+              "r664-score-b-1-556663aa"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-base.json",
+          "contract": "legal-literal-id-whitelist"
+        }
+      }
+    },
+    {
+      "label": "L-literal-whitelist-changed",
+      "group": "L-literal-whitelist",
+      "side": "changed",
+      "output": "Select rows",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Select rows",
+          "executionFound": true
+        }
+      },
+      "actualRows": [],
+      "executedNodes": [
+        "n8n-check start",
+        "Rows",
+        "Select rows"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-score-r-0-ceae191a",
+          "r664-score-r-1-bc26a45c",
+          "r664-score-r-2-7d0f114a",
+          "r664-score-r-3-7be5c5f9",
+          "r664-score-r-1-bc26a45c"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-score-r-0-ceae191a",
+            1
+          ],
+          [
+            "r664-score-r-1-bc26a45c",
+            2
+          ],
+          [
+            "r664-score-r-2-7d0f114a",
+            1
+          ],
+          [
+            "r664-score-r-3-7be5c5f9",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [],
+        "actualOccurrences": [],
+        "expectedProjection": [],
+        "checks": [
+          {
+            "name": "Select rows: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Select rows: output 0 pluck json.id",
+            "passed": true,
+            "expected": [],
+            "actual": []
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/score-changed.json",
+          "contract": "legal-literal-id-whitelist"
+        }
+      }
+    },
+    {
+      "label": "L-current-only-base",
+      "group": "L-current-only",
+      "side": "base",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-2-ab7ddf80",
+          "score": 0.701,
+          "marker": "diagnostic-2",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-3-01372f06",
+          "score": 0.93,
+          "marker": "diagnostic-3",
+          "source": "current-index"
+        },
+        {
+          "id": "r664-silent-b-1-d3cfbdbc",
+          "score": 0.7,
+          "marker": "diagnostic-1",
+          "source": "current-index"
+        }
+      ],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "expectedProjection": [
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          },
+          {
+            "id": "r664-silent-b-2-ab7ddf80"
+          },
+          {
+            "id": "r664-silent-b-3-01372f06"
+          },
+          {
+            "id": "r664-silent-b-1-d3cfbdbc"
+          }
+        ],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": true,
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": true,
+            "expected": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ],
+            "actual": [
+              "r664-silent-b-1-d3cfbdbc",
+              "r664-silent-b-2-ab7ddf80",
+              "r664-silent-b-3-01372f06",
+              "r664-silent-b-1-d3cfbdbc"
+            ]
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-base.json",
+          "contract": "legal-current-source-only"
+        }
+      }
+    },
+    {
+      "label": "L-current-only-changed",
+      "group": "L-current-only",
+      "side": "changed",
+      "output": "Confidence Gate",
+      "engine": {
+        "name": "n8n execution succeeds",
+        "passed": true,
+        "actual": {
+          "cliExitCode": 0,
+          "lastNode": "Confidence Gate",
+          "executionFound": true
+        }
+      },
+      "actualRows": [],
+      "executedNodes": [
+        "n8n-check start",
+        "Retrieved rows",
+        "Confidence Gate"
+      ],
+      "domain": {
+        "passed": true,
+        "definition": "all input id values",
+        "inputIdentities": [
+          "r664-silent-b-0-a80a0ed4",
+          "r664-silent-b-1-d3cfbdbc",
+          "r664-silent-b-2-ab7ddf80",
+          "r664-silent-b-3-01372f06",
+          "r664-silent-b-1-d3cfbdbc"
+        ],
+        "missingIdentityItems": [],
+        "outsideItems": [],
+        "inputOccurrences": [
+          [
+            "r664-silent-b-0-a80a0ed4",
+            1
+          ],
+          [
+            "r664-silent-b-1-d3cfbdbc",
+            2
+          ],
+          [
+            "r664-silent-b-2-ab7ddf80",
+            1
+          ],
+          [
+            "r664-silent-b-3-01372f06",
+            1
+          ]
+        ],
+        "actualOccurrences": [],
+        "occurrenceOverdrawDiagnostic": [],
+        "occurrenceVerdictLocation": "independent anchor; membership verdict checks identity range only"
+      },
+      "anchor": {
+        "passed": true,
+        "countPassed": true,
+        "orderedProjectionPassed": true,
+        "identityMultiplicityPassed": true,
+        "expectedOccurrences": [],
+        "actualOccurrences": [],
+        "expectedProjection": [],
+        "checks": [
+          {
+            "name": "Confidence Gate: output 0 count",
+            "passed": true,
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "name": "Confidence Gate: output 0 pluck json.id",
+            "passed": true,
+            "expected": [],
+            "actual": []
+          }
+        ],
+        "generatedFrom": {
+          "businessInputFile": "fixtures/silent-changed.json",
+          "contract": "legal-current-source-only"
+        }
+      }
+    }
+  ]
+}

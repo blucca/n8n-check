@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "name": "D-silent-obsolete-source-changed",
+  "input": {
+    "node": "Retrieved rows",
+    "items": [
+      {
+        "id": "r664-silent-b-0-a80a0ed4",
+        "score": 0.699,
+        "marker": "diagnostic-0",
+        "source": "legacy-index"
+      },
+      {
+        "id": "r664-silent-b-1-d3cfbdbc",
+        "score": 0.7,
+        "marker": "diagnostic-1",
+        "source": "legacy-index"
+      },
+      {
+        "id": "r664-silent-b-2-ab7ddf80",
+        "score": 0.701,
+        "marker": "diagnostic-2",
+        "source": "legacy-index"
+      },
+      {
+        "id": "r664-silent-b-3-01372f06",
+        "score": 0.93,
+        "marker": "diagnostic-3",
+        "source": "legacy-index"
+      },
+      {
+        "id": "r664-silent-b-1-d3cfbdbc",
+        "score": 0.7,
+        "marker": "diagnostic-1",
+        "source": "legacy-index"
+      }
+    ]
+  },
+  "stopAfter": "Confidence Gate",
+  "mocks": [],
+  "timeoutMs": 60000,
+  "assertions": [
+    {
+      "node": "Confidence Gate",
+      "count": 4,
+      "pluck": "json.id",
+      "equals": [
+        "r664-silent-b-1-d3cfbdbc",
+        "r664-silent-b-2-ab7ddf80",
+        "r664-silent-b-3-01372f06",
+        "r664-silent-b-1-d3cfbdbc"
+      ]
+    }
+  ]
+}

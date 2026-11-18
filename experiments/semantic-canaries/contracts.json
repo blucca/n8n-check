@@ -1,0 +1,122 @@
+{
+  "score": {
+    "id": "independent-score-copy",
+    "family": "ids",
+    "identityField": "id",
+    "fields": [
+      "id"
+    ],
+    "rule": "one output per input occurrence with numeric score >= 0.7; preserve its id and input order",
+    "multiplicity": "one per eligible input occurrence; duplicates remain duplicates",
+    "membershipDomain": "all input id values, including ineligible records",
+    "ignoredOutputFields": [
+      "processedAt",
+      "marker",
+      "source"
+    ],
+    "renameAllowed": true,
+    "sourceNoiseAllowed": true,
+    "attribution": "our independent synthetic acceptance contract; no external owner authorization",
+    "evidence": [
+      "sources/identity-projection.README.md",
+      "sources/silent-filter.README.md"
+    ]
+  },
+  "silent": {
+    "id": "independent-score-with-diagnostic-source",
+    "family": "ids",
+    "identityField": "id",
+    "fields": [
+      "id"
+    ],
+    "rule": "one output per numeric score >= 0.7, independent of source label; preserve id, duplicates and order",
+    "multiplicity": "one per eligible input occurrence",
+    "membershipDomain": "all input id values",
+    "ignoredOutputFields": [
+      "source",
+      "marker",
+      "processedAt"
+    ],
+    "renameAllowed": true,
+    "sourceNoiseAllowed": true,
+    "sourceRole": "diagnostic label declared by this synthetic contract",
+    "attribution": "our synthetic reconstruction; source-is-diagnostic is our new declaration, not a real user authorization",
+    "evidence": [
+      "sources/silent-filter.README.md"
+    ]
+  },
+  "holdout": {
+    "id": "relaybrook-valid-mailbox-first-row",
+    "family": "leads",
+    "identityField": "email",
+    "fields": [
+      "email",
+      "full_name"
+    ],
+    "rule": "lowercase valid email; same mailbox ignores case and +tags; first row wins; preserve first-appearance order and its canonical Full Name",
+    "multiplicity": "one output per mailbox equivalence class",
+    "membershipDomain": "lowercased Email values from all input rows, before mailbox deduplication",
+    "fixtureScope": "valid business emails at a fixed canary.example.org domain; simple already-canonical ASCII names; no titles, padding, Anna, Gmail, lookup or sorting",
+    "ignoredOutputFields": [
+      "source_row",
+      "fixes",
+      "issues",
+      "dedupe_key",
+      "other_emails",
+      "company_domain",
+      "email_type",
+      "merged_rows"
+    ],
+    "renameAllowed": true,
+    "sourceNoiseAllowed": false,
+    "attribution": "original Relaybrook README business semantics; our new synthetic input family, not owner adoption or a new bug discovery",
+    "evidence": [
+      "sources/relaybrook.README.md"
+    ]
+  },
+  "whitelist": {
+    "id": "legal-literal-id-whitelist",
+    "family": "ids",
+    "identityField": "id",
+    "fields": [
+      "id"
+    ],
+    "rule": "numeric score >= 0.7 AND id in the frozen literal whitelist; preserve id, duplicates and input order",
+    "literalWhitelist": [
+      "r664-score-b-1-556663aa"
+    ],
+    "multiplicity": "one per eligible occurrence",
+    "membershipDomain": "all input id values",
+    "ignoredOutputFields": [
+      "processedAt",
+      "marker"
+    ],
+    "renameAllowed": false,
+    "sourceNoiseAllowed": true,
+    "scopeReason": "literal identity values participate in the business whitelist; rename is outside this contract",
+    "attribution": "our independent synthetic lawful semantic counterexample",
+    "evidence": []
+  },
+  "currentOnly": {
+    "id": "legal-current-source-only",
+    "family": "ids",
+    "identityField": "id",
+    "fields": [
+      "id"
+    ],
+    "rule": "numeric score >= 0.7 AND source is current-index; preserve id, duplicates and input order",
+    "currentSourceOnly": true,
+    "sourceRole": "business selector",
+    "multiplicity": "one per eligible occurrence",
+    "membershipDomain": "all input id values",
+    "ignoredOutputFields": [
+      "marker",
+      "processedAt"
+    ],
+    "renameAllowed": true,
+    "sourceNoiseAllowed": false,
+    "scopeReason": "source is business-significant; source perturbation is outside this contract",
+    "attribution": "our independent synthetic lawful semantic counterexample",
+    "evidence": []
+  }
+}

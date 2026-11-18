@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "name": "H-relaybrook-repaired-changed",
+  "input": {
+    "node": "Run cleaner",
+    "items": [
+      {}
+    ]
+  },
+  "mocks": [],
+  "timeoutMs": 60000,
+  "assertions": [
+    {
+      "node": "Merge duplicate leads",
+      "count": 4,
+      "pluck": "json.email",
+      "equals": [
+        "alias27d84ce0e+first@canary.example.org",
+        "alias0e7c9875e+first@canary.example.org",
+        "alias36ceaf9ac+first@canary.example.org",
+        "alias13367b52f+first@canary.example.org"
+      ]
+    },
+    {
+      "node": "Merge duplicate leads",
+      "pluck": "json.full_name",
+      "equals": [
+        "Evelyn Park",
+        "Nico Reed",
+        "Mila Hart",
+        "Owen Dale"
+      ]
+    },
+    {
+      "node": "Summarize cleaning run",
+      "count": 1,
+      "pluck": "json.input_rows",
+      "equals": [
+        6
+      ]
+    },
+    {
+      "node": "Summarize cleaning run",
+      "pluck": "json.output_rows",
+      "equals": [
+        4
+      ]
+    },
+    {
+      "node": "Summarize cleaning run",
+      "pluck": "json.duplicates_merged",
+      "equals": [
+        2
+      ]
+    },
+    {
+      "node": "Read CSV file",
+      "count": 0
+    },
+    {
+      "node": "Parse CSV rows",
+      "count": 0
+    },
+    {
+      "node": "Read leads from Google Sheets",
+      "count": 0
+    },
+    {
+      "node": "Convert to CSV",
+      "count": 0
+    },
+    {
+      "node": "Write cleaned CSV file",
+      "count": 0
+    },
+    {
+      "node": "Upsert into cleaned tab",
+      "count": 0
+    }
+  ]
+}

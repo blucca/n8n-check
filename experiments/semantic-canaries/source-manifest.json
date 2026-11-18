@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "corpus": "r664-semantic-canaries",
+  "seeds": {
+    "development": 1716330534,
+    "holdout": 1716130080
+  },
+  "plannedExecutions": 20,
+  "phase": "prepared-before-native; root freeze and independent review pending",
+  "sourceProvenance": [
+    {
+      "file": "sources/identity-projection.workflow.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/workflow.json",
+      "sha256": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/identity-projection.wrong-id.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/wrong-id.json",
+      "sha256": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/silent-filter.fixed.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/fixed.json",
+      "sha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/silent-filter.broken.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/broken.json",
+      "sha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/identity-projection.README.md",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/identity-projection/README.md",
+      "sha256": "a847bf8abac4d1de9c3b498b43b556a15c2adaa0d4084bb76e93695fef0de54c",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/silent-filter.README.md",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "examples/silent-filter/README.md",
+      "sha256": "babefd6a5456899081e3a6640fcb232e7c22291a45c7f81983b488de51d6af94",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/n8n-check.LICENSE",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "f3303229e3f7cdeba89568fac44dddb00ec8bb1b",
+      "path": "LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a",
+      "role": "license"
+    },
+    {
+      "file": "sources/relaybrook.original.json",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/workflow.json",
+      "sha256": "c71ee14335830644bb4a94170960674aebf7b2a30f5864ba6291097d1387f806",
+      "role": "target-source"
+    },
+    {
+      "file": "sources/relaybrook.README.md",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/README.md",
+      "sha256": "4a705624d3c95b50c34344164bc6feeff218872eba4c775c4fe5c9d3364aba2b",
+      "role": "reference-document"
+    },
+    {
+      "file": "sources/relaybrook.LICENSE",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "commit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "LICENSE",
+      "sha256": "d91cdceb1fa1b3d84af6669e54cb93c9c0f12593f94f7708175866d3e1014f50",
+      "role": "license"
+    },
+    {
+      "file": "sources/relaybrook.repaired.json",
+      "repository": "https://github.com/Relaybrook/n8n-free-workflows",
+      "baseCommit": "ee3ceb3821ece7277fa5074fbbe30bfa6a2d1c8d",
+      "path": "workflows/lead-list-cleaner/workflow.json",
+      "sha256": "3b0bf63f6c811457a6a07068d3535b3e87917f6ed0e6d8931c0dbda92e06c684",
+      "role": "target-source",
+      "repair": "639 existing one-line HONORIFICS /^ -> /^\\s*; exact full object matches ee3 plus this single jsCode substitution",
+      "localSource": "temp/round639/relaybrook-native/repaired-workflow.json"
+    },
+    {
+      "file": "core/runner.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/runner.mjs",
+      "sha256": "8baa2c01b3791152abca65f4198cca99ef48c78b28b6827f2eea6193e156e77b",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/workflow.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/workflow.mjs",
+      "sha256": "27546e47f72e9fa53016dd3ebcf80a0d493aa0cbe0d8d78d3889066dcc118352",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/report.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/report.mjs",
+      "sha256": "5cddff8e63c5391f3a62528fb4e91ccf05f89c12fbf8fdf87db4db95d77ecefc",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/mock.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/mock.mjs",
+      "sha256": "7985369bb613f31014bda08b10b4a70124b5ff998a351f5393309e90e5de6b82",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "core/version.mjs",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "src/version.mjs",
+      "sha256": "e679df15a9c2c80f212645f1d80d70518e736aee1baa538519674a51770ba400",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "package.json",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "package.json",
+      "sha256": "93a4d111fb6eec777f802eb2d68323f685d27091d20fd97919980336c5ad95d7",
+      "role": "unchanged-existing-core"
+    },
+    {
+      "file": "LICENSE",
+      "repository": "https://github.com/blucca/n8n-check",
+      "commit": "baf8fc41650fbb0d1c4a830136756b0a89583936",
+      "path": "LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a",
+      "role": "unchanged-existing-core"
+    }
+  ],
+  "ruleEvidence": [
+    {
+      "file": "sources/silent-filter.README.md",
+      "quote": "The intended gate accepts scores ≥ 0.7.",
+      "role": "independent intended score threshold"
+    },
+    {
+      "file": "sources/identity-projection.README.md",
+      "quote": "The contract checks two ordered IDs; timestamps can change between runs.",
+      "role": "identity/order projection and dynamic timestamp exclusion"
+    },
+    {
+      "file": "sources/relaybrook.README.md",
+      "quote": "The first row wins and empty fields are filled from its duplicates.",
+      "role": "first-row business rule"
+    },
+    {
+      "file": "sources/relaybrook.README.md",
+      "quote": "same mailbox (case, `+tags` and Gmail dots ignored)",
+      "role": "mailbox equivalence rule; this fixture fixes a non-Gmail business domain"
+    }
+  ],
+  "files": [
+    {
+      "file": "LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a"
+    },
+    {
+      "file": "PROTOCOL.md",
+      "sha256": "878e7103ebfc84bec232c957ef97f45194f470d7c432216d330b21cdadeab3b7"
+    },
+    {
+      "file": "canaries.mjs",
+      "sha256": "b623f6b2bff6c4a86620dca91b165043c2bec84e4accc59d23f1e5131d680fad"
+    },
+    {
+      "file": "check-canaries.mjs",
+      "sha256": "3b58b4e4f23586b8d52b8d0af51bfb5e497784c293dc248c3c010d79551f3179"
+    },
+    {
+      "file": "contracts.json",
+      "sha256": "77087fff3845e30e60e70ec07e28b42e2c655f6df3f22282963ef4d871e203b9"
+    },
+    {
+      "file": "core/mock.mjs",
+      "sha256": "7985369bb613f31014bda08b10b4a70124b5ff998a351f5393309e90e5de6b82"
+    },
+    {
+      "file": "core/report.mjs",
+      "sha256": "5cddff8e63c5391f3a62528fb4e91ccf05f89c12fbf8fdf87db4db95d77ecefc"
+    },
+    {
+      "file": "core/runner.mjs",
+      "sha256": "8baa2c01b3791152abca65f4198cca99ef48c78b28b6827f2eea6193e156e77b"
+    },
+    {
+      "file": "core/version.mjs",
+      "sha256": "e679df15a9c2c80f212645f1d80d70518e736aee1baa538519674a51770ba400"
+    },
+    {
+      "file": "core/workflow.mjs",
+      "sha256": "27546e47f72e9fa53016dd3ebcf80a0d493aa0cbe0d8d78d3889066dcc118352"
+    },
+    {
+      "file": "fixtures/holdout-base.json",
+      "sha256": "c00faf09fbe9ae0a3d0ab1183f1dee4a51809fa73564b572bdcdee013cd35020"
+    },
+    {
+      "file": "fixtures/holdout-changed.json",
+      "sha256": "1f5a71566b66fe36c748f296d602b6630528843b1409a3a21421897bf5a97f86"
+    },
+    {
+      "file": "fixtures/holdout-map.json",
+      "sha256": "da4149343dc75366985046f37663521fcb0a6fbeb1c62856bf643e6ca679674a"
+    },
+    {
+      "file": "fixtures/score-base.json",
+      "sha256": "5991a07523db46972de18ee83b090e317fa05923e514c3df8d85cf3e87812cfc"
+    },
+    {
+      "file": "fixtures/score-changed.json",
+      "sha256": "c8850b718be292b694af0bc4ca3ca8db0e4c7bfbd1175793971739036f8a626e"
+    },
+    {
+      "file": "fixtures/score-map.json",
+      "sha256": "be9bc09fe616f6a7487e6926549c1ef161fb2d02163850f69beaed0410637e52"
+    },
+    {
+      "file": "fixtures/silent-base.json",
+      "sha256": "dc08fc2c1b00d7303ae61fdefb976c645dd0147409809d9b5750f30e5355f1a8"
+    },
+    {
+      "file": "fixtures/silent-changed.json",
+      "sha256": "df285bb33ea12cbb02a0465211e6ef681fc177b9fa707804debb144ae9e83f6e"
+    },
+    {
+      "file": "fixtures/silent-map.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "file": "matrix/D-score-always-empty-base/case.json",
+      "sha256": "f672a1dada4a1bbb1f8f5482baea927fdc17b4a55872f655234b61a98ea7bce4"
+    },
+    {
+      "file": "matrix/D-score-always-empty-base/workflow.json",
+      "sha256": "9fe696d9baf55f36231002c6cf28f97c0f2c0dc3acd61326605558ceddeaabea"
+    },
+    {
+      "file": "matrix/D-score-always-empty-changed/case.json",
+      "sha256": "8d632bbcd487cf0aef6769ba78564e260c6341ca582f1f1aa6f80cfb99060973"
+    },
+    {
+      "file": "matrix/D-score-always-empty-changed/workflow.json",
+      "sha256": "9fe696d9baf55f36231002c6cf28f97c0f2c0dc3acd61326605558ceddeaabea"
+    },
+    {
+      "file": "matrix/D-score-correct-base/case.json",
+      "sha256": "f6494b5272da83c98774af4709251706366c51c97832f659ea155bb24f500ec0"
+    },
+    {
+      "file": "matrix/D-score-correct-base/workflow.json",
+      "sha256": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31"
+    },
+    {
+      "file": "matrix/D-score-correct-changed/case.json",
+      "sha256": "82887707e964f59358d3c0f51ec52ac52d145187beeeef964b069a17879623eb"
+    },
+    {
+      "file": "matrix/D-score-correct-changed/workflow.json",
+      "sha256": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31"
+    },
+    {
+      "file": "matrix/D-score-inside-literal-base/case.json",
+      "sha256": "748c1fa20ad8080989744ee9859899964649aa321dc3d93357e795eac406b8cd"
+    },
+    {
+      "file": "matrix/D-score-inside-literal-base/workflow.json",
+      "sha256": "1dd9d4d73595c7af89dda2b41df9be132648cdb63d7d56b3216bb96557a90340"
+    },
+    {
+      "file": "matrix/D-score-inside-literal-changed/case.json",
+      "sha256": "90135025ec08402eb6dfd148db302c4e26287e808032e0a5dfccdf21fd46685e"
+    },
+    {
+      "file": "matrix/D-score-inside-literal-changed/workflow.json",
+      "sha256": "1dd9d4d73595c7af89dda2b41df9be132648cdb63d7d56b3216bb96557a90340"
+    },
+    {
+      "file": "matrix/D-score-outside-literal-base/case.json",
+      "sha256": "5cf570d9aa0e2769f3ea77a6f93d9aa62218d3bcc22b22c0831f36c5b0318953"
+    },
+    {
+      "file": "matrix/D-score-outside-literal-base/workflow.json",
+      "sha256": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf"
+    },
+    {
+      "file": "matrix/D-score-outside-literal-changed/case.json",
+      "sha256": "d291a226c084318b3f020a8c4a044ba2ae95bd9f1b5bf7ac16417ea4b3208f0b"
+    },
+    {
+      "file": "matrix/D-score-outside-literal-changed/workflow.json",
+      "sha256": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf"
+    },
+    {
+      "file": "matrix/D-silent-correct-base/case.json",
+      "sha256": "094b0e06825b0d98df7e4adcd7754c5a5a10080684f4c83575a38113943b2244"
+    },
+    {
+      "file": "matrix/D-silent-correct-base/workflow.json",
+      "sha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844"
+    },
+    {
+      "file": "matrix/D-silent-correct-changed/case.json",
+      "sha256": "719ee3f0415facbfe7906d2bd1a4e3737ed75bb8c7cb03eb055f153eb42eb7a2"
+    },
+    {
+      "file": "matrix/D-silent-correct-changed/workflow.json",
+      "sha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844"
+    },
+    {
+      "file": "matrix/D-silent-obsolete-source-base/case.json",
+      "sha256": "2d52d1793d0bc4c66100e2ee8efec5ce518a18c53f534b4b1bc2e101ec0a3b60"
+    },
+    {
+      "file": "matrix/D-silent-obsolete-source-base/workflow.json",
+      "sha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7"
+    },
+    {
+      "file": "matrix/D-silent-obsolete-source-changed/case.json",
+      "sha256": "20b2bf83ac3ad07547f8c7ac2937c67b6d5dffe7a4430b742b96efa6031eb78d"
+    },
+    {
+      "file": "matrix/D-silent-obsolete-source-changed/workflow.json",
+      "sha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7"
+    },
+    {
+      "file": "matrix/H-relaybrook-original-base/case.json",
+      "sha256": "c97dc7ab23f0081f555ae822b791b2fd23a898abfaedea30a35ad4ff90cd8b69"
+    },
+    {
+      "file": "matrix/H-relaybrook-original-base/workflow.json",
+      "sha256": "fa03d354cc9d109913655ca049ced07ce08792b2698ccdb270d55d6d60017256"
+    },
+    {
+      "file": "matrix/H-relaybrook-original-changed/case.json",
+      "sha256": "d20fda0685a36aec9afad1d3a7c8929c641b6c40c59aa51161fbc5789b82f724"
+    },
+    {
+      "file": "matrix/H-relaybrook-original-changed/workflow.json",
+      "sha256": "8e876502812173bec59e3b8fdecef8d97aa66e6718b53b53ab8a08e237010516"
+    },
+    {
+      "file": "matrix/H-relaybrook-repaired-base/case.json",
+      "sha256": "f676b3a144ba297de08b9a7691dc2b687e648244e76a7a4fae364009e3e76d40"
+    },
+    {
+      "file": "matrix/H-relaybrook-repaired-base/workflow.json",
+      "sha256": "d9c18086f63d43e2ec528d73674d83f44b7e8d807e61b79dd93592c954576c7a"
+    },
+    {
+      "file": "matrix/H-relaybrook-repaired-changed/case.json",
+      "sha256": "4fb61b118d3b6c8fb4420b363b97da66ab16745f290390da5313f3e3dbd8be33"
+    },
+    {
+      "file": "matrix/H-relaybrook-repaired-changed/workflow.json",
+      "sha256": "6dbca8c12ff408fd0f7083374e479071341577a41c6e2a2e517d2ea1836b493c"
+    },
+    {
+      "file": "matrix/L-current-only-base/case.json",
+      "sha256": "4104c0059f98ea8de03ba7fb0d0c62dd2478343dceb0774ea6274dde879ba5df"
+    },
+    {
+      "file": "matrix/L-current-only-base/workflow.json",
+      "sha256": "cd14c2798e455ac8f295afc7cf2a739bcdc7c63962de44782ac3c2ddb18f44cc"
+    },
+    {
+      "file": "matrix/L-current-only-changed/case.json",
+      "sha256": "1f3eab998e07a2d10e9564a4f2a5093c6bbd9821893a45f1bd0f76ae1078297b"
+    },
+    {
+      "file": "matrix/L-current-only-changed/workflow.json",
+      "sha256": "cd14c2798e455ac8f295afc7cf2a739bcdc7c63962de44782ac3c2ddb18f44cc"
+    },
+    {
+      "file": "matrix/L-literal-whitelist-base/case.json",
+      "sha256": "4ab7d70b460e21eb6d2e5cbd54a658f9a5ad0e52e9d64476ff305f02eed790fd"
+    },
+    {
+      "file": "matrix/L-literal-whitelist-base/workflow.json",
+      "sha256": "0b04ee2f37ce5a4c4326b511054381133f0b3b979de2436edb3f6824b19d07e2"
+    },
+    {
+      "file": "matrix/L-literal-whitelist-changed/case.json",
+      "sha256": "8c5e4e8688a02593b91a257ad5e468d614a764d6759603cc96f7e4ff14d18b8e"
+    },
+    {
+      "file": "matrix/L-literal-whitelist-changed/workflow.json",
+      "sha256": "0b04ee2f37ce5a4c4326b511054381133f0b3b979de2436edb3f6824b19d07e2"
+    },
+    {
+      "file": "package.json",
+      "sha256": "93a4d111fb6eec777f802eb2d68323f685d27091d20fd97919980336c5ad95d7"
+    },
+    {
+      "file": "plan.json",
+      "sha256": "ad75307d8a7f1d26e681a03b916e03906581756195f0f8da7d007e284463969c"
+    },
+    {
+      "file": "run-native.mjs",
+      "sha256": "eec9382e52bca9ae19d8d1faa91784e70aa7b59fe44447c6ba12cb78001e9b04"
+    },
+    {
+      "file": "source-provenance.json",
+      "sha256": "caeda5fe2a4c23dd38956a650974a1a0e0c734a99c426800db2d0415e8a3e8c7"
+    },
+    {
+      "file": "sources/identity-projection.README.md",
+      "sha256": "a847bf8abac4d1de9c3b498b43b556a15c2adaa0d4084bb76e93695fef0de54c"
+    },
+    {
+      "file": "sources/identity-projection.workflow.json",
+      "sha256": "52268bee2c061ddfde870b8775dc8f0da0f08745286962eaff5f1736cf8ece31"
+    },
+    {
+      "file": "sources/identity-projection.wrong-id.json",
+      "sha256": "cf05d59ee7ca254481ecf5db43b006da79379528c2c80d704baa78a817e5d0bf"
+    },
+    {
+      "file": "sources/n8n-check.LICENSE",
+      "sha256": "233bee775837cc23295a65210d436e2a80d7b85c58f78c028802fba07b9a9e6a"
+    },
+    {
+      "file": "sources/relaybrook.LICENSE",
+      "sha256": "d91cdceb1fa1b3d84af6669e54cb93c9c0f12593f94f7708175866d3e1014f50"
+    },
+    {
+      "file": "sources/relaybrook.README.md",
+      "sha256": "4a705624d3c95b50c34344164bc6feeff218872eba4c775c4fe5c9d3364aba2b"
+    },
+    {
+      "file": "sources/relaybrook.original.json",
+      "sha256": "c71ee14335830644bb4a94170960674aebf7b2a30f5864ba6291097d1387f806"
+    },
+    {
+      "file": "sources/relaybrook.repaired.json",
+      "sha256": "3b0bf63f6c811457a6a07068d3535b3e87917f6ed0e6d8931c0dbda92e06c684"
+    },
+    {
+      "file": "sources/silent-filter.README.md",
+      "sha256": "babefd6a5456899081e3a6640fcb232e7c22291a45c7f81983b488de51d6af94"
+    },
+    {
+      "file": "sources/silent-filter.broken.json",
+      "sha256": "5663d261bd4995451550ee3c8f48793299074d523866dc9c8bea04740a7a43b7"
+    },
+    {
+      "file": "sources/silent-filter.fixed.json",
+      "sha256": "849879b71262f8a03a96116f01c1791cd6bbe6d76d42b5836dbd780fb045d844"
+    }
+  ],
+  "businessExpectedFromWorkflow": false,
+  "businessExpectedFromOldCases": false,
+  "businessExpectedFromPins": false,
+  "businessExpectedFromObservedOutputs": false,
+  "networkRequests": 0,
+  "nativeExecutions": 0,
+  "productChanges": 0,
+  "holdout": "new valid alias family; prior Anna and padding fixtures excluded; original and repaired source equivalence is not a new bug discovery"
+}

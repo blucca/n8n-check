@@ -1,0 +1,96 @@
+{
+  "name": "Silent retrieval filter regression",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "retrieved",
+      "name": "Retrieved rows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{\"id\": \"policy-01\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-02\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-03\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-04\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-05\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-06\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-07\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"policy-08\", \"score\": 0.9, \"source\": \"current-index\"}, {\"id\": \"distractor-09\", \"score\": 0.2, \"source\": \"current-index\"}] .map(json => ({json}));"
+      }
+    },
+    {
+      "id": "gate",
+      "name": "Confidence Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().filter(item => item.json.score >= 0.7 && item.json.source === \"legacy-index\");"
+      }
+    },
+    {
+      "id": "context",
+      "name": "Build context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const ids = $input.all().map(item => item.json.id);\nreturn [{ json: { count: ids.length, ids } }];"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Retrieved rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieved rows": {
+      "main": [
+        [
+          {
+            "node": "Confidence Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confidence Gate": {
+      "main": [
+        [
+          {
+            "node": "Build context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

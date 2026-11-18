@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "name": "D-score-outside-literal-changed",
+  "input": {
+    "node": "Rows",
+    "items": [
+      {
+        "id": "r664-score-r-0-ceae191a",
+        "score": 0.699,
+        "marker": "diagnostic-0"
+      },
+      {
+        "id": "r664-score-r-1-bc26a45c",
+        "score": 0.7,
+        "marker": "diagnostic-1"
+      },
+      {
+        "id": "r664-score-r-2-7d0f114a",
+        "score": 0.701,
+        "marker": "diagnostic-2"
+      },
+      {
+        "id": "r664-score-r-3-7be5c5f9",
+        "score": 0.93,
+        "marker": "diagnostic-3"
+      },
+      {
+        "id": "r664-score-r-1-bc26a45c",
+        "score": 0.7,
+        "marker": "diagnostic-1"
+      }
+    ]
+  },
+  "stopAfter": "Select rows",
+  "mocks": [],
+  "timeoutMs": 60000,
+  "assertions": [
+    {
+      "node": "Select rows",
+      "count": 4,
+      "pluck": "json.id",
+      "equals": [
+        "r664-score-r-1-bc26a45c",
+        "r664-score-r-2-7d0f114a",
+        "r664-score-r-3-7be5c5f9",
+        "r664-score-r-1-bc26a45c"
+      ]
+    }
+  ]
+}
