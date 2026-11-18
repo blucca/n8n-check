@@ -37,6 +37,8 @@ We're offering three free setups for people testing their own workflows. [Email 
 
 You define the business expectation; we handle fixture and test setup. Scope: one self-contained local JSON transformation, up to 15 standard nodes, one incoming connection per node and v1 execution order. We return a separate inactive editor test. You import it into your existing n8n, execute it and share the final result and version. Keep the case for your next change. [Try the native controls](https://blucca.github.io/n8n-check/examples/editor-tests/).
 
+**Handing the workflow to a teammate? [Copy a one-page acceptance card](docs/workflow-handoff.md).** Keep the fixed input, business expectation, current export and their own run receipt together; use the same case after the next change.
+
 Workflow repairs and external-system work use the paid scope below.
 
 ## Paid help for one failing workflow
