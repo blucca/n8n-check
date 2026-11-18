@@ -1,0 +1,3258 @@
+{
+  "status": "passed",
+  "scope": "demo-orders",
+  "startedAt": "2026-11-18T13:44:19.496Z",
+  "provenance": {
+    "source": "original synthetic IDs and frozen PROTOCOL.md; see ORACLES.md",
+    "sourceTruthPassedToCollectors": false
+  },
+  "groups": [
+    {
+      "name": "offset_static_present",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "83",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"C\"},{\"id\":\"D\"}],\"total\":4,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "C"
+                  },
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": true,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": true,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": false
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "C"
+                },
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 4,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "continuous": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [],
+        "missingFinal": [],
+        "observedAbsentFromFinal": [],
+        "continuousCovered": true,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "offset_shift_present",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "72",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"}],\"total\":3,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 3,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 3,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [
+          "C"
+        ],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [
+          "C"
+        ],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": false,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "offset_shift_absent",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "72",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"}],\"total\":3,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 3,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "C"
+          ],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "C"
+              ],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "A",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 3,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "continuous": [
+          "A",
+          "B",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [],
+        "observedAbsentFromFinal": [],
+        "continuousCovered": true,
+        "targetFinalPresent": false,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "offset_churn_present",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "83",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"},{\"id\":\"X\"}],\"total\":4,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  },
+                  {
+                    "id": "X"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": true,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": [
+            "X"
+          ]
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": [
+                "X"
+              ]
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                },
+                {
+                  "id": "X"
+                }
+              ],
+              "total": 4,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [
+          "C"
+        ],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [
+          "C"
+        ],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": false,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "offset_static_absent",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "83",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"},{\"id\":\"X\"}],\"total\":4,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  },
+                  {
+                    "id": "X"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": true,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "transition": {
+          "remove": [],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "D",
+            "X"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ],
+            "after": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                },
+                {
+                  "id": "X"
+                }
+              ],
+              "total": 4,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "final": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "continuous": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [],
+        "missingFinal": [],
+        "observedAbsentFromFinal": [],
+        "continuousCovered": true,
+        "targetFinalPresent": false,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "snapshot_churn",
+      "mode": "snapshot",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/snapshot?scope=demo-orders&offset=0&limit=2",
+              "path": "/snapshot?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "96",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\",\"snapshot\":\"S0\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders",
+                "snapshot": "S0"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/snapshot?scope=demo-orders&offset=2&limit=2",
+              "path": "/snapshot?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "99",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"C\"},{\"id\":\"D\"}],\"total\":4,\"nextOffset\":null,\"scope\":\"demo-orders\",\"snapshot\":\"S0\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "C"
+                  },
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": null,
+                "scope": "demo-orders",
+                "snapshot": "S0"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": true,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": true,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": false
+        },
+        "coverageStatement": {
+          "kind": "snapshot_traversal",
+          "snapshot": "S0",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": [
+            "X"
+          ]
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "snapshot",
+            "requestPath": "/snapshot?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders",
+              "snapshot": "S0"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": [
+                "X"
+              ]
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "snapshot",
+            "requestPath": "/snapshot?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "C"
+                },
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 4,
+              "nextOffset": null,
+              "scope": "demo-orders",
+              "snapshot": "S0"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [],
+        "missingFinal": [
+          "X"
+        ],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": true,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "keyset_churn",
+      "mode": "keyset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/keyset?scope=demo-orders&limit=2",
+              "path": "/keyset?scope=demo-orders&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "81",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextAfter\":\"B\",\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextAfter": "B",
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/keyset?scope=demo-orders&after=B&limit=2",
+              "path": "/keyset?scope=demo-orders&after=B&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "81",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"C\"},{\"id\":\"D\"}],\"total\":4,\"nextAfter\":\"D\",\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "C"
+                  },
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 4,
+                "nextAfter": "D",
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/keyset?scope=demo-orders&after=D&limit=2",
+              "path": "/keyset?scope=demo-orders&after=D&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "71",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"X\"}],\"total\":4,\"nextAfter\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "X"
+                  }
+                ],
+                "total": 4,
+                "nextAfter": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 3,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "target": "C",
+        "targetObserved": true,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": false,
+          "missingIdAbsenceCandidate": false
+        },
+        "coverageStatement": {
+          "kind": "immutable_keyset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": [
+            "X"
+          ]
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "keyset",
+            "requestPath": "/keyset?scope=demo-orders&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextAfter": "B",
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": [
+                "X"
+              ]
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "keyset",
+            "requestPath": "/keyset?scope=demo-orders&after=B&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "C"
+                },
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 4,
+              "nextAfter": "D",
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "page",
+            "page": 3,
+            "mode": "keyset",
+            "requestPath": "/keyset?scope=demo-orders&after=D&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "X"
+                }
+              ],
+              "total": 4,
+              "nextAfter": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [],
+        "missingFinal": [],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": true,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "keyset_low_insert",
+      "mode": "keyset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/keyset?scope=demo-orders&limit=2",
+              "path": "/keyset?scope=demo-orders&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "81",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextAfter\":\"B\",\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextAfter": "B",
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/keyset?scope=demo-orders&after=B&limit=2",
+              "path": "/keyset?scope=demo-orders&after=B&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "82",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"C\"},{\"id\":\"D\"}],\"total\":5,\"nextAfter\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "C"
+                  },
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 5,
+                "nextAfter": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": true,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": false,
+          "missingIdAbsenceCandidate": false
+        },
+        "coverageStatement": {
+          "kind": "immutable_keyset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": null,
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [],
+          "insert": [
+            "AA"
+          ]
+        },
+        "transitionApplied": true,
+        "final": [
+          "A",
+          "AA",
+          "B",
+          "C",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "keyset",
+            "requestPath": "/keyset?scope=demo-orders&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextAfter": "B",
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [],
+              "insert": [
+                "AA"
+              ]
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "A",
+              "AA",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "keyset",
+            "requestPath": "/keyset?scope=demo-orders&after=B&limit=2",
+            "liveState": [
+              "A",
+              "AA",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "AA",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "C"
+                },
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 5,
+              "nextAfter": null,
+              "scope": "demo-orders"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "A",
+          "AA",
+          "B",
+          "C",
+          "D"
+        ],
+        "continuous": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [],
+        "missingFinal": [
+          "AA"
+        ],
+        "observedAbsentFromFinal": [],
+        "continuousCovered": true,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "confirm_present",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "72",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"}],\"total\":3,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 3,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": {
+        "exchange": {
+          "request": {
+            "method": "GET",
+            "url": "http://127.0.0.1:35049/point?scope=demo-orders&id=C",
+            "path": "/point?scope=demo-orders&id=C",
+            "headers": {
+              "accept": "application/json",
+              "connection": "close",
+              "host": "127.0.0.1:35049"
+            }
+          },
+          "response": {
+            "status": 200,
+            "statusMessage": "OK",
+            "httpVersion": "1.1",
+            "rawHeaders": [
+              "Content-Type",
+              "application/json",
+              "Content-Length",
+              "64",
+              "Connection",
+              "close"
+            ],
+            "rawBody": "{\"item\":{\"id\":\"C\"},\"scope\":\"demo-orders\",\"lookupCut\":\"lookup-1\"}",
+            "body": {
+              "item": {
+                "id": "C"
+              },
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        },
+        "result": {
+          "target": "C",
+          "classification": "present",
+          "status": 200,
+          "scope": "demo-orders",
+          "lookupCut": "lookup-1",
+          "authority": "membership_at_lookup_response_cut"
+        }
+      },
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 3,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "point_lookup",
+            "id": "C",
+            "lookupCut": "lookup-1",
+            "scope": "demo-orders",
+            "state": [
+              "B",
+              "C",
+              "D"
+            ],
+            "sourcePresent": true,
+            "status": 200,
+            "response": {
+              "item": {
+                "id": "C"
+              },
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [
+          "C"
+        ],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [
+          "C"
+        ],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": false,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "confirm_absent",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "72",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"}],\"total\":3,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  }
+                ],
+                "total": 3,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": false,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": {
+        "exchange": {
+          "request": {
+            "method": "GET",
+            "url": "http://127.0.0.1:35049/point?scope=demo-orders&id=C",
+            "path": "/point?scope=demo-orders&id=C",
+            "headers": {
+              "accept": "application/json",
+              "connection": "close",
+              "host": "127.0.0.1:35049"
+            }
+          },
+          "response": {
+            "status": 404,
+            "statusMessage": "Not Found",
+            "httpVersion": "1.1",
+            "rawHeaders": [
+              "Content-Type",
+              "application/json",
+              "Content-Length",
+              "73",
+              "Connection",
+              "close"
+            ],
+            "rawBody": "{\"error\":\"object_not_found\",\"scope\":\"demo-orders\",\"lookupCut\":\"lookup-1\"}",
+            "body": {
+              "error": "object_not_found",
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        },
+        "result": {
+          "target": "C",
+          "classification": "absent_at_lookup_cut",
+          "status": 404,
+          "scope": "demo-orders",
+          "lookupCut": "lookup-1",
+          "authority": "membership_at_lookup_response_cut"
+        }
+      },
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "C"
+          ],
+          "insert": []
+        },
+        "transitionApplied": true,
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "C"
+              ],
+              "insert": []
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "A",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                }
+              ],
+              "total": 3,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "point_lookup",
+            "id": "C",
+            "lookupCut": "lookup-1",
+            "scope": "demo-orders",
+            "state": [
+              "A",
+              "B",
+              "D"
+            ],
+            "sourcePresent": false,
+            "status": 404,
+            "response": {
+              "error": "object_not_found",
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "continuous": [
+          "A",
+          "B",
+          "D"
+        ],
+        "missingContinuous": [],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [],
+        "observedAbsentFromFinal": [],
+        "continuousCovered": true,
+        "targetFinalPresent": false,
+        "frozenPredictionPassed": true
+      }
+    },
+    {
+      "name": "confirm_error",
+      "mode": "offset",
+      "scan": {
+        "trace": [
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=0&limit=2",
+              "path": "/offset?scope=demo-orders&offset=0&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "80",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"A\"},{\"id\":\"B\"}],\"total\":4,\"nextOffset\":2,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "A"
+                  },
+                  {
+                    "id": "B"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": 2,
+                "scope": "demo-orders"
+              }
+            }
+          },
+          {
+            "request": {
+              "method": "GET",
+              "url": "http://127.0.0.1:35049/offset?scope=demo-orders&offset=2&limit=2",
+              "path": "/offset?scope=demo-orders&offset=2&limit=2",
+              "headers": {
+                "accept": "application/json",
+                "connection": "close",
+                "host": "127.0.0.1:35049"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusMessage": "OK",
+              "httpVersion": "1.1",
+              "rawHeaders": [
+                "Content-Type",
+                "application/json",
+                "Content-Length",
+                "83",
+                "Connection",
+                "close"
+              ],
+              "rawBody": "{\"items\":[{\"id\":\"D\"},{\"id\":\"X\"}],\"total\":4,\"nextOffset\":null,\"scope\":\"demo-orders\"}",
+              "body": {
+                "items": [
+                  {
+                    "id": "D"
+                  },
+                  {
+                    "id": "X"
+                  }
+                ],
+                "total": 4,
+                "nextOffset": null,
+                "scope": "demo-orders"
+              }
+            }
+          }
+        ],
+        "pageCount": 2,
+        "terminal": true,
+        "scope": "demo-orders",
+        "observedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "uniqueObservedIds": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "target": "C",
+        "targetObserved": false,
+        "weakHeuristics": {
+          "duplicateFree": true,
+          "stableTotalsAndUniqueCountMatch": true,
+          "uniqueCountMatchesLastTotal": true,
+          "missingIdAbsenceCandidate": true
+        },
+        "coverageStatement": {
+          "kind": "live_offset_terminal_traversal",
+          "scope": "demo-orders",
+          "endStateCoverageAsserted": false
+        }
+      },
+      "confirmation": {
+        "exchange": {
+          "request": {
+            "method": "GET",
+            "url": "http://127.0.0.1:35049/point?scope=demo-orders&id=C",
+            "path": "/point?scope=demo-orders&id=C",
+            "headers": {
+              "accept": "application/json",
+              "connection": "close",
+              "host": "127.0.0.1:35049"
+            }
+          },
+          "response": {
+            "status": 503,
+            "statusMessage": "Service Unavailable",
+            "httpVersion": "1.1",
+            "rawHeaders": [
+              "Content-Type",
+              "application/json",
+              "Content-Length",
+              "76",
+              "Connection",
+              "close"
+            ],
+            "rawBody": "{\"error\":\"service_unavailable\",\"scope\":\"demo-orders\",\"lookupCut\":\"lookup-1\"}",
+            "body": {
+              "error": "service_unavailable",
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        },
+        "result": {
+          "target": "C",
+          "classification": "unknown",
+          "status": 503,
+          "scope": "demo-orders",
+          "lookupCut": "lookup-1",
+          "authority": "no_membership_result"
+        }
+      },
+      "sourceTruth": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "transition": {
+          "remove": [
+            "A"
+          ],
+          "insert": [
+            "X"
+          ]
+        },
+        "transitionApplied": true,
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "snapshot": {
+          "id": "S0",
+          "state": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "journal": [
+          {
+            "kind": "initial",
+            "state": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 1,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=0&limit=2",
+            "liveState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "servedState": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "A"
+                },
+                {
+                  "id": "B"
+                }
+              ],
+              "total": 4,
+              "nextOffset": 2,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "transition_after_first_response",
+            "transition": {
+              "remove": [
+                "A"
+              ],
+              "insert": [
+                "X"
+              ]
+            },
+            "before": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "after": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ]
+          },
+          {
+            "kind": "page",
+            "page": 2,
+            "mode": "offset",
+            "requestPath": "/offset?scope=demo-orders&offset=2&limit=2",
+            "liveState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "servedState": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "response": {
+              "items": [
+                {
+                  "id": "D"
+                },
+                {
+                  "id": "X"
+                }
+              ],
+              "total": 4,
+              "nextOffset": null,
+              "scope": "demo-orders"
+            }
+          },
+          {
+            "kind": "point_lookup",
+            "id": "C",
+            "lookupCut": "lookup-1",
+            "scope": "demo-orders",
+            "state": [
+              "B",
+              "C",
+              "D",
+              "X"
+            ],
+            "sourcePresent": true,
+            "status": 503,
+            "response": {
+              "error": "service_unavailable",
+              "scope": "demo-orders",
+              "lookupCut": "lookup-1"
+            }
+          }
+        ]
+      },
+      "evaluation": {
+        "initial": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuous": [
+          "B",
+          "C",
+          "D"
+        ],
+        "missingContinuous": [
+          "C"
+        ],
+        "missingInitial": [
+          "C"
+        ],
+        "missingFinal": [
+          "C"
+        ],
+        "observedAbsentFromFinal": [
+          "A"
+        ],
+        "continuousCovered": false,
+        "targetFinalPresent": true,
+        "frozenPredictionPassed": true
+      }
+    }
+  ],
+  "identicalTranscriptChecks": [
+    {
+      "left": "offset_shift_present",
+      "right": "offset_shift_absent",
+      "completeExchangesIdentical": true,
+      "targetFinalMembershipDifferent": true,
+      "comparedFields": "all_saved_request_and_response_fields"
+    },
+    {
+      "left": "offset_churn_present",
+      "right": "offset_static_absent",
+      "completeExchangesIdentical": true,
+      "targetFinalMembershipDifferent": true,
+      "comparedFields": "all_saved_request_and_response_fields"
+    }
+  ],
+  "finite": {
+    "universe": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "pageSize": 2,
+    "maxPagesAllowed": 6,
+    "countOracle": {
+      "initialSubsets": 63,
+      "noOp": 63,
+      "deletion": 192,
+      "insertion": 186,
+      "exchange": 480,
+      "histories": 921,
+      "scansPerStrategy": 921
+    },
+    "counts": {
+      "initialSubsets": 63,
+      "noOp": 63,
+      "deletion": 192,
+      "insertion": 186,
+      "exchange": 480,
+      "histories": 921
+    },
+    "uniqueHistories": 921,
+    "offsetScans": 921,
+    "keysetScans": 921,
+    "maxOffsetPages": 3,
+    "maxKeysetPages": 3,
+    "offsetCounterexamples": 144,
+    "keysetCounterexamples": 0,
+    "coverageCut": "continuous_initial_ids_under_single_transition_no_resurrection",
+    "historyFile": "finite-histories.jsonl",
+    "counterexampleFile": "offset-counterexamples.json"
+  },
+  "modelBoundary": "read_only_API_protocol_model; not_n8n_engine; no_destination_write_or_deletion",
+  "monotoneOrderArgument": "A continuously alive immutable key remaining above the cursor is eligible for every subsequent read. A nonterminal read advances to its last returned key, so advancing past that key must return it first. At a terminal read every remaining eligible key is returned. Thus continuous initial keys are covered under this fixed scope and single-transition, no-resurrection model. Keys inserted below a prior cursor and final freshness have separate cuts.",
+  "httpOrigin": "http://127.0.0.1:35049",
+  "serverClosed": true,
+  "finishedAt": "2026-11-18T13:44:19.700Z",
+  "resources": {
+    "maxRssKiB": 72340,
+    "memoryUsageBytes": {
+      "rss": 74076160,
+      "heapTotal": 13676544,
+      "heapUsed": 8900176,
+      "external": 2425903,
+      "arrayBuffers": 205978
+    },
+    "nodeVersion": "v26.12.0",
+    "execArgv": [
+      "--max-old-space-size=128"
+    ]
+  }
+}

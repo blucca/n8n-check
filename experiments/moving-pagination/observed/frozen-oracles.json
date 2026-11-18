@@ -1,0 +1,582 @@
+{
+  "provenance": "defined in source before any HTTP or finite execution",
+  "scenarios": [
+    {
+      "name": "offset_static_present",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [],
+        "insert": []
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          4
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [],
+        "staleObserved": [],
+        "stableCount": true,
+        "lastCount": true
+      }
+    },
+    {
+      "name": "offset_shift_present",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": []
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          3
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "continuousMissing": [
+          "C"
+        ],
+        "finalMissing": [
+          "C"
+        ],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": false,
+        "lastCount": true
+      }
+    },
+    {
+      "name": "offset_shift_absent",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "C"
+        ],
+        "insert": []
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          3
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [],
+        "staleObserved": [],
+        "stableCount": false,
+        "lastCount": true
+      }
+    },
+    {
+      "name": "offset_churn_present",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": [
+          "X"
+        ]
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D",
+            "X"
+          ]
+        ],
+        "totals": [
+          4,
+          4
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuousMissing": [
+          "C"
+        ],
+        "finalMissing": [
+          "C"
+        ],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": true,
+        "lastCount": true
+      }
+    },
+    {
+      "name": "offset_static_absent",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "D",
+        "X"
+      ],
+      "transition": {
+        "remove": [],
+        "insert": []
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D",
+            "X"
+          ]
+        ],
+        "totals": [
+          4,
+          4
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "A",
+          "B",
+          "D",
+          "X"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [],
+        "staleObserved": [],
+        "stableCount": true,
+        "lastCount": true
+      }
+    },
+    {
+      "name": "snapshot_churn",
+      "mode": "snapshot",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": [
+          "X"
+        ]
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          4
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [
+          "X"
+        ],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": true,
+        "lastCount": true,
+        "snapshot": "S0"
+      }
+    },
+    {
+      "name": "keyset_churn",
+      "mode": "keyset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": [
+          "X"
+        ]
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "D"
+          ],
+          [
+            "X"
+          ]
+        ],
+        "totals": [
+          4,
+          4,
+          4
+        ],
+        "next": [
+          "B",
+          "D",
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": false,
+        "lastCount": false
+      }
+    },
+    {
+      "name": "keyset_low_insert",
+      "mode": "keyset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [],
+        "insert": [
+          "AA"
+        ]
+      },
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "C",
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          5
+        ],
+        "next": [
+          "B",
+          null
+        ],
+        "final": [
+          "A",
+          "AA",
+          "B",
+          "C",
+          "D"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [
+          "AA"
+        ],
+        "staleObserved": [],
+        "stableCount": false,
+        "lastCount": false
+      }
+    },
+    {
+      "name": "confirm_present",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": []
+      },
+      "confirm": true,
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          3
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D"
+        ],
+        "continuousMissing": [
+          "C"
+        ],
+        "finalMissing": [
+          "C"
+        ],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": false,
+        "lastCount": true,
+        "point": {
+          "status": 200,
+          "classification": "present"
+        }
+      }
+    },
+    {
+      "name": "confirm_absent",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "C"
+        ],
+        "insert": []
+      },
+      "confirm": true,
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D"
+          ]
+        ],
+        "totals": [
+          4,
+          3
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "A",
+          "B",
+          "D"
+        ],
+        "continuousMissing": [],
+        "finalMissing": [],
+        "staleObserved": [],
+        "stableCount": false,
+        "lastCount": true,
+        "point": {
+          "status": 404,
+          "classification": "absent_at_lookup_cut"
+        }
+      }
+    },
+    {
+      "name": "confirm_error",
+      "mode": "offset",
+      "initial": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "transition": {
+        "remove": [
+          "A"
+        ],
+        "insert": [
+          "X"
+        ]
+      },
+      "confirm": true,
+      "pointError": true,
+      "expected": {
+        "pages": [
+          [
+            "A",
+            "B"
+          ],
+          [
+            "D",
+            "X"
+          ]
+        ],
+        "totals": [
+          4,
+          4
+        ],
+        "next": [
+          2,
+          null
+        ],
+        "final": [
+          "B",
+          "C",
+          "D",
+          "X"
+        ],
+        "continuousMissing": [
+          "C"
+        ],
+        "finalMissing": [
+          "C"
+        ],
+        "staleObserved": [
+          "A"
+        ],
+        "stableCount": true,
+        "lastCount": true,
+        "point": {
+          "status": 503,
+          "classification": "unknown"
+        }
+      }
+    }
+  ],
+  "finiteCountOracle": {
+    "initialSubsets": 63,
+    "noOp": 63,
+    "deletion": 192,
+    "insertion": 186,
+    "exchange": 480,
+    "histories": 921,
+    "scansPerStrategy": 921
+  }
+}

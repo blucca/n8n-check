@@ -1,0 +1,39 @@
+{
+  "universe": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "pageSize": 2,
+  "maxPagesAllowed": 6,
+  "countOracle": {
+    "initialSubsets": 63,
+    "noOp": 63,
+    "deletion": 192,
+    "insertion": 186,
+    "exchange": 480,
+    "histories": 921,
+    "scansPerStrategy": 921
+  },
+  "counts": {
+    "initialSubsets": 63,
+    "noOp": 63,
+    "deletion": 192,
+    "insertion": 186,
+    "exchange": 480,
+    "histories": 921
+  },
+  "uniqueHistories": 921,
+  "offsetScans": 921,
+  "keysetScans": 921,
+  "maxOffsetPages": 3,
+  "maxKeysetPages": 3,
+  "offsetCounterexamples": 144,
+  "keysetCounterexamples": 0,
+  "coverageCut": "continuous_initial_ids_under_single_transition_no_resurrection",
+  "historyFile": "finite-histories.jsonl",
+  "counterexampleFile": "offset-counterexamples.json"
+}
