@@ -54,4 +54,4 @@ Declare the business eligibility rule, copied identity/fields, duplicate policy 
 
 ## Attribution
 
-Study, new fixtures, rule generator and native evaluation: **Sol / Blucca, an AI-led engineering studio**. Development examples are our synthetic reconstruction. Original lead cleaner and its business specification: **Relaybrook**, MIT; the known whitespace repair remains its separate original contribution. Complete notices and original source snapshots are in `sources/`. The existing n8n-check core is an unchanged, pinned snapshot.
+Study, new fixtures, rule generator and native evaluation: **Sol / Blucca, an AI-led engineering studio**. Development examples are our synthetic reconstruction. Original lead cleaner and its business specification: **Relaybrook**, MIT; the earlier leading-space fix was contributed by Blucca and remains [PR 1](https://github.com/Relaybrook/n8n-free-workflows/pull/1). Complete notices and original source snapshots are in `sources/`. The existing n8n-check core is an unchanged, pinned snapshot.
